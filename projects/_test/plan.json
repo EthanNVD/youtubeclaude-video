@@ -26,12 +26,62 @@
   },
   "us_pilot": {
    "preset": "american_pilot"
+  },
+  "host": {
+   "preset": "host"
+  },
+  "nagumo": {
+   "preset": "nagumo"
+  },
+  "jp_sailor": {
+   "preset": "japanese_sailor"
+  },
+  "cryptanalyst": {
+   "preset": "american_sailor",
+   "hat": "none",
+   "hair": "part",
+   "glasses": "round"
   }
  },
  "scenes": [
   {
-   "id": "s01",
+   "id": "s01a",
    "start": 0,
+   "end": 2.2,
+   "type": "stage",
+   "beat": "10:22 - a US dive bomber tips over into its dive",
+   "set": {
+    "kind": "cockpit",
+    "bank": -6
+   },
+   "date": "4 JUNE 1942",
+   "clock": "10:22 AM",
+   "camera": [
+    {
+     "t": 0,
+     "zoom": 1,
+     "rotate": 0
+    },
+    {
+     "t": 2.2,
+     "zoom": 1.12,
+     "rotate": -6,
+     "shake": 3
+    }
+   ],
+   "elements": [],
+   "sfx": [
+    {
+     "t": 0.2,
+     "id": "plane_dive",
+     "dur": 2
+    }
+   ],
+   "ambience": "engine"
+  },
+  {
+   "id": "s01b",
+   "start": 2.2,
    "end": 4.2,
    "type": "stage",
    "beat": "10:22, June 4 1942 — dive bombers above Kaga",
@@ -64,7 +114,7 @@
      "rotate": 32,
      "keys": [
       {
-       "t": 4.2,
+       "t": 2.0,
        "x": 560,
        "y": 820,
        "ease": "in"
@@ -83,7 +133,7 @@
      "enter": "none",
      "keys": [
       {
-       "t": 4.2,
+       "t": 2.0,
        "x": 1000,
        "y": 700,
        "ease": "in"
@@ -102,7 +152,7 @@
      "enter": "none",
      "keys": [
       {
-       "t": 4.2,
+       "t": 2.0,
        "x": 1350,
        "y": 520,
        "ease": "in"
@@ -119,8 +169,83 @@
    "chapter": "Six Minutes at Midway"
   },
   {
-   "id": "s02",
+   "id": "s02a",
    "start": 4.2,
+   "end": 6.4,
+   "type": "stage",
+   "beat": "on Kaga's deck the crew looks up",
+   "set": {
+    "kind": "deck",
+    "nation": "JPN",
+    "planes": 4
+   },
+   "clock": "10:23 AM",
+   "camera": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "x": 960
+    },
+    {
+     "t": 2.2,
+     "zoom": 1.15,
+     "x": 1000
+    }
+   ],
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "jp_sailor",
+     "x": 700,
+     "y": 960,
+     "scale": 1.5,
+     "pose": "idle",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 0.7,
+       "pose": "pointUp",
+       "expr": "shocked"
+      }
+     ]
+    },
+    {
+     "kind": "actor",
+     "who": "japanese_officer",
+     "x": 1250,
+     "y": 960,
+     "scale": 1.55,
+     "pose": "binoculars",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 1.1,
+       "pose": "head",
+       "expr": "panic"
+      }
+     ]
+    },
+    {
+     "kind": "fx",
+     "type": "exclaim",
+     "x": 1250,
+     "y": 420,
+     "in": 1.2
+    }
+   ],
+   "sfx": [
+    {
+     "t": 0.2,
+     "id": "plane_dive",
+     "dur": 2,
+     "vol": -4
+    }
+   ],
+   "ambience": "sea"
+  },
+  {
+   "id": "s02",
+   "start": 6.4,
    "end": 8.6,
    "type": "stage",
    "beat": "fell on the carrier Kaga",
@@ -135,11 +260,11 @@
      "zoom": 1
     },
     {
-     "t": 2.4,
+     "t": 0.5,
      "zoom": 1.0
     },
     {
-     "t": 2.6,
+     "t": 0.7,
      "zoom": 1.25,
      "x": 900,
      "y": 640,
@@ -162,7 +287,7 @@
      "scale": 1.0,
      "keys": [
       {
-       "t": 4.4,
+       "t": 2.2,
        "x": 1000
       }
      ]
@@ -173,21 +298,21 @@
      "style": "tag",
      "x": 1180,
      "y": 420,
-     "in": 0.6,
+     "in": 0,
      "size": 44
     },
     {
      "kind": "burst",
      "x": 820,
      "y": 640,
-     "in": 2.4,
+     "in": 0.5,
      "size": 0.9
     },
     {
      "kind": "burst",
      "x": 1060,
      "y": 650,
-     "in": 2.9,
+     "in": 1.0,
      "size": 0.7
     },
     {
@@ -195,7 +320,7 @@
      "type": "fire",
      "x": 830,
      "y": 650,
-     "in": 2.6,
+     "in": 0.7,
      "enter": "fade"
     },
     {
@@ -203,7 +328,7 @@
      "type": "smoke",
      "x": 850,
      "y": 610,
-     "in": 2.8,
+     "in": 0.9,
      "enter": "fade"
     },
     {
@@ -214,11 +339,11 @@
      "y": 120,
      "scale": 0.5,
      "rotate": -15,
-     "in": 2.6,
+     "in": 0.7,
      "enter": "none",
      "keys": [
       {
-       "t": 4.4,
+       "t": 2.2,
        "x": 1900,
        "y": -100
       }
@@ -227,18 +352,87 @@
    ],
    "sfx": [
     {
-     "t": 2.4,
+     "t": 0.5,
      "id": "explosion_big"
     },
     {
-     "t": 2.9,
+     "t": 1.0,
      "id": "explosion"
     }
    ]
   },
   {
-   "id": "s03",
+   "id": "s03a",
    "start": 8.6,
+   "end": 10.8,
+   "type": "stage",
+   "beat": "Nagumo on the bridge watches it happen",
+   "set": {
+    "kind": "bridge",
+    "nation": "JPN"
+   },
+   "clock": "10:25 AM",
+   "camera": [
+    {
+     "t": 0,
+     "zoom": 1.0
+    },
+    {
+     "t": 2.2,
+     "zoom": 1.2,
+     "x": 1000,
+     "y": 560,
+     "shake": 2
+    }
+   ],
+   "elements": [
+    {
+     "kind": "fx",
+     "type": "smoke",
+     "x": 640,
+     "y": 380,
+     "size": 1.2
+    },
+    {
+     "kind": "fx",
+     "type": "fire",
+     "x": 640,
+     "y": 470,
+     "size": 0.8
+    },
+    {
+     "kind": "actor",
+     "who": "nagumo",
+     "x": 1000,
+     "y": 900,
+     "scale": 1.6,
+     "pose": "binoculars",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 0.9,
+       "pose": "idle",
+       "expr": "shocked"
+      },
+      {
+       "t": 1.5,
+       "pose": "head",
+       "expr": "panic"
+      }
+     ]
+    }
+   ],
+   "sfx": [
+    {
+     "t": 0.4,
+     "id": "boom_distant"
+    }
+   ],
+   "ambience": "sea"
+  },
+  {
+   "id": "s03",
+   "start": 10.8,
    "end": 13.0,
    "type": "stage",
    "beat": "within six minutes three carriers burning",
@@ -284,7 +478,7 @@
      "y": 660,
      "scale": 0.46,
      "burning": true,
-     "in": 1.0,
+     "in": 0,
      "enter": "fade"
     },
     {
@@ -318,7 +512,7 @@
      "y": 750,
      "style": "plain",
      "size": 36,
-     "in": 1.0
+     "in": 0
     },
     {
      "kind": "counter",
@@ -328,7 +522,7 @@
      "x": 960,
      "y": 220,
      "size": 110,
-     "in": 1.4,
+     "in": 0.4,
      "hud": true
     }
    ],
@@ -345,34 +539,57 @@
    "start": 13.0,
    "end": 18.0,
    "type": "stage",
-   "beat": "told as five minutes of bad luck — it wasn't",
+   "beat": "HOST: told as five minutes of bad luck - it wasn't",
    "set": {
-    "kind": "studio",
-    "color": "#2c2a28"
+    "kind": "study",
+    "desk": false,
+    "shelf": true,
+    "lamp": true,
+    "portrait": false,
+    "fg": "plant",
+    "fgSide": "left"
    },
    "transition": "flash",
    "camera": [
     {
      "t": 0,
-     "zoom": 1.0
+     "zoom": 1.0,
+     "x": 960
     },
     {
-     "t": 5,
-     "zoom": 1.1
+     "t": 3.0,
+     "zoom": 1.0,
+     "x": 960
+    },
+    {
+     "t": 3.3,
+     "zoom": 1.3,
+     "x": 980,
+     "y": 520,
+     "ease": "out"
     }
    ],
    "elements": [
     {
-     "kind": "prop",
-     "item": "stopwatch",
-     "x": 960,
-     "y": 560,
-     "scale": 2.6,
-     "value": 0,
+     "kind": "actor",
+     "who": "host",
+     "x": 980,
+     "y": 900,
+     "scale": 1.7,
+     "pose": "show",
+     "holds": "stopwatch",
+     "expr": "neutral",
+     "talk": true,
      "keys": [
       {
        "t": 3.0,
-       "value": 300
+       "pose": "stop",
+       "expr": "determined",
+       "headMove": "shake"
+      },
+      {
+       "t": 4.2,
+       "headMove": "none"
       }
      ]
     },
@@ -381,16 +598,16 @@
      "text": "\"FIVE MINUTES OF BAD LUCK\"",
      "style": "plain",
      "x": 960,
-     "y": 850,
-     "size": 54,
-     "in": 0.6
+     "y": 150,
+     "size": 58,
+     "in": 0.5
     },
     {
      "kind": "stamp",
      "text": "MYTH",
-     "x": 1260,
-     "y": 360,
-     "in": 3.4,
+     "x": 1420,
+     "y": 420,
+     "in": 3.2,
      "enter": "stamp",
      "size": 110
     }
@@ -403,7 +620,7 @@
      "dur": 3
     },
     {
-     "t": 3.4,
+     "t": 3.2,
      "id": "stamp"
     }
    ]
@@ -430,13 +647,13 @@
      "zoom": 1.0
     },
     {
-     "t": 3.0,
+     "t": 3.4,
      "zoom": 1.0
     },
     {
-     "t": 3.2,
-     "zoom": 1.45,
-     "x": 980,
+     "t": 3.7,
+     "zoom": 1.4,
+     "x": 1000,
      "y": 560,
      "ease": "out"
     }
@@ -445,19 +662,29 @@
     {
      "kind": "actor",
      "who": "yamamoto",
-     "x": 980,
+     "x": 300,
      "y": 900,
-     "scale": 1.35,
-     "pose": "chin",
-     "expr": "worried"
-    },
-    {
-     "kind": "prop",
-     "item": "telegram",
-     "x": 760,
-     "y": 860,
-     "scale": 0.9,
-     "text": "PEARL HARBOR"
+     "scale": 1.4,
+     "pose": "idle",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 1.6,
+       "x": 980
+      },
+      {
+       "t": 1.9,
+       "pose": "hold",
+       "expr": "neutral"
+      },
+      {
+       "t": 3.4,
+       "pose": "chin",
+       "expr": "worried"
+      }
+     ],
+     "holds": "telegram",
+     "holdsText": "PEARL HARBOR"
     },
     {
      "kind": "namecard",
@@ -470,7 +697,12 @@
    "ambience": "office",
    "sfx": [
     {
-     "t": 0.6,
+     "t": 0.2,
+     "id": "footsteps",
+     "dur": 1.4
+    },
+    {
+     "t": 1.9,
      "id": "paper"
     }
    ],
@@ -562,8 +794,62 @@
    "ambience": null
   },
   {
-   "id": "s07",
+   "id": "s07a",
    "start": 28.0,
+   "end": 30.5,
+   "type": "stage",
+   "beat": "he drew a trap on the map",
+   "set": {
+    "kind": "office",
+    "flag": "JPN",
+    "portrait": false,
+    "map": "MIDWAY?",
+    "desk": false
+   },
+   "camera": [
+    {
+     "t": 0,
+     "zoom": 1.15,
+     "x": 760,
+     "y": 520
+    },
+    {
+     "t": 2.5,
+     "zoom": 1.25,
+     "x": 720,
+     "y": 480
+    }
+   ],
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "yamamoto",
+     "x": 1000,
+     "y": 900,
+     "scale": 1.5,
+     "pose": "pointL",
+     "expr": "determined",
+     "talk": true,
+     "keys": [
+      {
+       "t": 1.2,
+       "pose": "explain",
+       "expr": "smug"
+      }
+     ]
+    }
+   ],
+   "sfx": [
+    {
+     "t": 0.4,
+     "id": "pen"
+    }
+   ],
+   "ambience": "office"
+  },
+  {
+   "id": "s07",
+   "start": 30.5,
    "end": 33.5,
    "type": "map",
    "beat": "trap: attack Midway, US carriers must come out",
@@ -591,7 +877,7 @@
      "zoom": 0.95
     },
     {
-     "t": 5.5,
+     "t": 3,
      "zoom": 1.1,
      "center": [
       178,
@@ -635,8 +921,8 @@
       ]
      ],
      "color": "red",
-     "in": 0.4,
-     "dur": 1.8
+     "in": 0.22,
+     "dur": 1.08
     },
     {
      "kind": "label",
@@ -646,7 +932,7 @@
       -178,
       34
      ],
-     "in": 2.0,
+     "in": 1.1,
      "size": 48
     },
     {
@@ -668,8 +954,8 @@
      "color": "USA",
      "dashed": true,
      "width": 18,
-     "in": 3.0,
-     "dur": 1.4
+     "in": 1.65,
+     "dur": 0.84
     },
     {
      "kind": "ring",
@@ -678,7 +964,7 @@
       28.21
      ],
      "km": 700,
-     "in": 4.2,
+     "in": 2.31,
      "color": "red",
      "enter": "grow"
     },
@@ -690,48 +976,100 @@
       -172,
       23
      ],
-     "in": 4.4,
+     "in": 2.42,
      "size": 64
     }
    ],
    "sfx": [
     {
-     "t": 0.4,
+     "t": 0.2,
      "id": "map_draw",
-     "dur": 1.8
+     "dur": 1.1
     },
     {
-     "t": 3.0,
+     "t": 1.6,
      "id": "map_draw",
-     "dur": 1.4
+     "dur": 0.9
     },
     {
-     "t": 4.2,
+     "t": 2.3,
      "id": "pop"
     }
    ]
   },
   {
-   "id": "s08",
+   "id": "s08a",
    "start": 33.5,
+   "end": 36.0,
+   "type": "stage",
+   "beat": "Hawaii - a basement with no windows",
+   "set": {
+    "kind": "corridor",
+    "doors": [
+     "STATION HYPO",
+     "NO WINDOWS"
+    ]
+   },
+   "date": "MAY 1942 - PEARL HARBOR",
+   "transition": "dip",
+   "camera": [
+    {
+     "t": 0,
+     "zoom": 1.0
+    },
+    {
+     "t": 2.5,
+     "zoom": 1.12,
+     "x": 1000
+    }
+   ],
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "rochefort",
+     "x": 620,
+     "y": 900,
+     "scale": 1.4,
+     "pose": "hold",
+     "holds": "paper",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 2.2,
+       "x": 1150
+      }
+     ]
+    }
+   ],
+   "ambience": "basement",
+   "sfx": [
+    {
+     "t": 0.2,
+     "id": "footsteps",
+     "dur": 2
+    }
+   ],
+   "chapter": "AF Is Short of Water"
+  },
+  {
+   "id": "s08",
+   "start": 36.0,
    "end": 38.5,
    "type": "stage",
    "beat": "Hawaii basement, Rochefort reading his mail",
    "set": {
     "kind": "codebreak"
    },
-   "date": "MAY 1942 — PEARL HARBOR",
-   "transition": "dip",
    "camera": [
     {
      "t": 0,
-     "zoom": 1.0,
-     "x": 900
+     "zoom": 1.05,
+     "x": 880
     },
     {
-     "t": 5,
-     "zoom": 1.12,
-     "x": 880
+     "t": 2.5,
+     "zoom": 1.15,
+     "x": 860
     }
    ],
    "elements": [
@@ -752,13 +1090,13 @@
      "x": 1650,
      "y": 120,
      "size": 34,
-     "in": 1.2
+     "in": 0.6
     },
     {
      "kind": "namecard",
      "name": "Cmdr. Joseph Rochefort",
      "role": "chief of Station Hypo",
-     "in": 1.0
+     "in": 0.2
     }
    ],
    "ambience": "basement",
@@ -767,58 +1105,85 @@
      "t": 0.4,
      "id": "paper"
     }
-   ],
-   "chapter": "AF Is Short of Water"
+   ]
   },
   {
    "id": "s09",
    "start": 38.5,
    "end": 44.0,
    "type": "stage",
-   "beat": "the target was called AF",
+   "beat": "his team had broken enough of the code: the target was AF",
    "set": {
-    "kind": "studio",
-    "color": "#3a3530"
+    "kind": "radio",
+    "desk": false,
+    "fg": "officedesk"
    },
+   "camera": [
+    {
+     "t": 0,
+     "zoom": 1.0
+    },
+    {
+     "t": 5.5,
+     "zoom": 1.1,
+     "x": 1000
+    }
+   ],
    "elements": [
     {
-     "kind": "document",
-     "style": "blackboard",
-     "title": "TARGET",
-     "lines": [
-      "AF = ?"
-     ],
-     "x": 820,
-     "y": 520,
-     "w": 1000,
-     "h": 600,
-     "speed": 10,
-     "in": 0.3,
-     "size": 150
+     "kind": "actor",
+     "who": "cryptanalyst",
+     "x": 700,
+     "y": 900,
+     "scale": 1.4,
+     "pose": "typing",
+     "expr": "neutral"
     },
     {
      "kind": "actor",
      "who": "rochefort",
-     "x": 1560,
-     "y": 1040,
-     "scale": 1.25,
-     "pose": "pointL",
-     "expr": "determined",
-     "in": 1.8
+     "x": 1250,
+     "y": 900,
+     "scale": 1.45,
+     "pose": "idle",
+     "expr": "neutral",
+     "talk": true,
+     "keys": [
+      {
+       "t": 1.8,
+       "pose": "pointUp",
+       "expr": "determined"
+      }
+     ]
+    },
+    {
+     "kind": "label",
+     "text": "AF = ?",
+     "style": "dark",
+     "x": 960,
+     "y": 180,
+     "size": 110,
+     "in": 2.0,
+     "enter": "pop"
     },
     {
      "kind": "fx",
      "type": "question",
-     "x": 1100,
-     "y": 560,
-     "in": 2.6
+     "x": 1250,
+     "y": 420,
+     "in": 2.8
     }
    ],
+   "ambience": "basement",
    "sfx": [
     {
-     "t": 0.4,
-     "id": "chalk",
-     "dur": 1.2
+     "t": 0.2,
+     "id": "typewriter",
+     "dur": 1.6
+    },
+    {
+     "t": 2.0,
+     "id": "pop"
     }
    ]
   },
@@ -829,8 +1194,9 @@
    "type": "stage",
    "beat": "fake message: Midway is short of water",
    "set": {
-    "kind": "studio",
-    "color": "#d9cdb0"
+    "kind": "radio",
+    "desk": false,
+    "fg": "officedesk"
    },
    "camera": [
     {
@@ -844,6 +1210,15 @@
    ],
    "elements": [
     {
+     "kind": "actor",
+     "who": "cryptanalyst",
+     "x": 420,
+     "y": 900,
+     "scale": 1.3,
+     "pose": "typing",
+     "expr": "smug"
+    },
+    {
      "kind": "document",
      "style": "telegram",
      "title": "MIDWAY  >  PEARL HARBOR",
@@ -853,13 +1228,14 @@
       "FRESH WATER NEEDED",
       "IMMEDIATELY."
      ],
-     "x": 960,
+     "x": 1200,
      "y": 540,
      "w": 900,
      "h": 560,
      "speed": 26,
      "stamp": "FAKE",
-     "in": 0.2
+     "in": 0.2,
+     "scale": 0.8
     }
    ],
    "sfx": [
@@ -905,29 +1281,6 @@
      "speed": 30
     },
     {
-     "kind": "actor",
-     "who": "rochefort",
-     "x": 1300,
-     "y": 900,
-     "scale": 1.3,
-     "pose": "cheer",
-     "expr": "happy",
-     "in": 1.6,
-     "enter": "none"
-    },
-    {
-     "kind": "actor",
-     "who": "rochefort",
-     "x": 1300,
-     "y": 900,
-     "scale": 1.3,
-     "pose": "hold",
-     "holds": "paper",
-     "expr": "neutral",
-     "out": 1.6,
-     "exit": "none"
-    },
-    {
      "kind": "label",
      "text": "AF = MIDWAY",
      "style": "red",
@@ -945,6 +1298,23 @@
      "enter": "stamp",
      "size": 70,
      "color": "green"
+    },
+    {
+     "kind": "actor",
+     "who": "rochefort",
+     "x": 1300,
+     "y": 900,
+     "scale": 1.3,
+     "pose": "hold",
+     "holds": "paper",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 1.6,
+       "pose": "cheer",
+       "expr": "happy"
+      }
+     ]
     }
    ],
    "ambience": "basement",
@@ -966,14 +1336,17 @@
    "type": "stage",
    "beat": "Japan 4 carriers, America 3 — on paper not close",
    "set": {
-    "kind": "paper"
+    "kind": "study",
+    "desk": false,
+    "portrait": false,
+    "shelf": true
    },
    "transition": "fade",
    "elements": [
     {
      "kind": "bars",
      "title": "CARRIERS AT MIDWAY",
-     "x": 1060,
+     "x": 1180,
      "y": 360,
      "max": 5,
      "width": 900,
@@ -1001,6 +1374,23 @@
      "enter": "stamp",
      "size": 70,
      "color": "#5a5048"
+    },
+    {
+     "kind": "actor",
+     "who": "host",
+     "x": 330,
+     "y": 900,
+     "scale": 1.6,
+     "pose": "present",
+     "expr": "neutral",
+     "talk": true,
+     "keys": [
+      {
+       "t": 3.6,
+       "pose": "shrug",
+       "expr": "smug"
+      }
+     ]
     }
    ],
    "sfx": [

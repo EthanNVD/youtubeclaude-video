@@ -6,7 +6,8 @@ python tools/make.py <project> review      stills of every scene -> review/sheet
 python tools/make.py <project> audio       voice + ambience + SFX -> out/audio/mix.wav (+ stems)
 python tools/make.py <project> video       render picture (muted) -> out/picture.mp4
 python tools/make.py <project> mux         picture + mix -> out/<slug>.mp4
-python tools/make.py <project> thumbs      thumbs.json -> out/thumbs/thumb_1..3.png
+python tools/make.py <project> prompts     youtube/thumb_prompts.json -> out/youtube/thumb_prompts.md (+ character reference sheet)
+python tools/make.py <project> thumbs      thumbs.json -> out/thumbs/thumb_1..3 (engine draft, or headline composited on input/thumb_N.png)
 python tools/make.py <project> package     youtube/package.json -> out/youtube/ (checks + publish.txt)
 python tools/make.py <project> all         validate, audio, video, mux, thumbs, package
 options: --from S --to S (partial video), --scenes s1,s2 (review subset)
@@ -91,16 +92,42 @@ def main():
             tmp = proj / "work" / "thumbs.merged.json"
             tmp.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
             src = tmp
-        node("thumb", src, proj / "out" / "thumbs")
+        # AI art dropped by the user (input/thumb_N.png|jpg|webp) becomes the background, the headline is composited on top
+        data = json.loads(src.read_text(encoding="utf-8"))
+        changed = False
+        for i, th in enumerate(data.get("thumbs", []), 1):
+            if not th.get("image"):
+                for ext in ("png", "jpg", "jpeg", "webp"):
+                    f = proj / "input" / f"thumb_{i}.{ext}"
+                    if f.exists():
+                        th["image"] = str(f)
+                        th["grade"] = "none"
+                        changed = True
+                        break
+        if changed:
+            tmp = proj / "work" / "thumbs.image.json"
+            tmp.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+            src = tmp
+        node("thumb", src, proj / "out" / "thumbs", "--base", proj)
         # YouTube limit: < 2 MB -> also write high-quality JPGs
         for p in sorted((proj / "out" / "thumbs").glob("thumb_*.png")):
             run(["ffmpeg", "-v", "error", "-y", "-i", p, "-q:v", "2", p.with_suffix(".jpg")])
+
+    def prompts():
+        run([PY, ROOT / "tools/thumb_prompts.py", proj])
+        refs = proj / "work" / "thumb_refs.json"
+        if refs.exists() and json.loads(refs.read_text(encoding="utf-8")):
+            cast = json.loads(merged.read_text(encoding="utf-8")).get("cast", {}) if merged.exists() else {}
+            spec = proj / "work" / "thumb_refs.props.json"
+            spec.write_text(json.dumps({"names": json.loads(refs.read_text(encoding="utf-8"))[:4], "cast": cast}), encoding="utf-8")
+            (proj / "out" / "thumbs").mkdir(parents=True, exist_ok=True)
+            node("refs", spec, proj / "out" / "thumbs" / "ref_characters.png")
 
     def package():
         run([PY, ROOT / "tools/seo_check.py", proj])
 
     steps = {"analyze": [analyze], "validate": [validate], "review": [review], "audio": [audio], "video": [video], "mux": [mux],
-             "thumbs": [thumbs], "package": [package], "all": [audio, video, mux, thumbs, package]}
+             "thumbs": [thumbs], "prompts": [prompts], "package": [package], "all": [audio, video, mux, prompts, thumbs, package]}
     if step not in steps:
         sys.exit(__doc__)
     for f in steps[step]:

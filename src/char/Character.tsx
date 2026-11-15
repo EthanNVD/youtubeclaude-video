@@ -3,46 +3,62 @@ import { INK, SKIN, nation } from '../theme';
 import { rnd, clamp } from '../lib/anim';
 
 /**
- * Chibi puppet in the channel style: big head (~45% of height), dot/lid eyes, thin curved limbs,
- * identity from hair / moustache / hat / uniform. Origin = between the feet. Height ≈ 305 px at scale 1.
+ * Chibi puppet in the reference-channel style: a big round head sitting directly on a small tapered body
+ * (the chin overlaps the collar — no neck gap), thin rubber-hose arms and legs drawn as smooth curves,
+ * small mitten hands. Origin = between the feet. Height ≈ 280 px at scale 1 (hats add more).
+ *
+ * Motion: poses blend (easeOutBack) from the previous pose, idle hands drift, talking adds beat gestures
+ * and head nods, walking/running uses a stride cycle with bent knees, lean and counter-swinging arms.
  */
 export type CharSpec = {
   nation?: string;
-  outfit?: string; // tunic | suit | navy | navywhite | coat | sailor | civil | dress | party | armor | robe | pilot
+  outfit?: string; // tunic | suit | navy | navywhite | coat | sailor | civil | dress | party | armor | robe | pilot | tweed
   color?: string; // jacket color override
   pants?: string;
   skin?: string;
-  hair?: string; // side | back | bald | baldtop | short | part | curly | bun | long | messy | none
+  hair?: string; // side | back | bald | baldtop | short | part | curly | bun | long | messy | tousled | none
   hairColor?: string;
   facial?: string; // toothbrush | walrus | pencil | handlebar | beard | goatee | stubble | none
-  hat?: string; // peaked | garrison | helmet_de | helmet_us | helmet_uk | helmet_su | helmet_jp | navy | navy_white | beret | bicorne | kepi | ushanka | fedora | tophat | pith | sailor | pilot | roman | crown | none
+  hat?: string; // peaked | garrison | helmet_de | helmet_us | helmet_uk | helmet_su | helmet_jp | navy | navy_white | beret | bicorne | kepi | ushanka | fedora | tophat | pith | sailor | pilot | roman | crown | flatcap | none
   hatColor?: string;
   badge?: string; // hat badge color
   glasses?: string; // round | pince | sun | none
-  extra?: string[]; // cigar pipe medals armband epaulettes tie bowtie scarf monocle wrinkles jowls blush
+  extra?: string[]; // cigar pipe medals armband epaulettes tie bowtie scarf monocle wrinkles jowls blush vest
   eyes?: string; // dot | lid | big
   build?: number; // 0.85 thin .. 1.3 fat
   age?: number; // 0 young .. 1 old (wrinkles, grey)
   female?: boolean;
+  scarf?: string; // scarf colour (with extra 'scarf')
+  vest?: string; // vest colour (tweed / suit with extra 'vest')
 };
 
 export type CharState = {
   pose?: string;
+  prevPose?: string; // pose we are blending from
+  poseK?: number; // 0..1 blend progress (1 = settled)
   expr?: string;
   talk?: boolean;
-  walk?: number; // walk phase speed (set automatically when moving)
+  walk?: number; // >0 = walking (set automatically when x/at is keyframed)
+  run?: boolean;
+  dir?: number; // walking direction in local space: 1 = right, -1 = left
   look?: number; // -1 left .. 1 right (pupil offset)
   view?: 'front' | 'back';
   seated?: boolean;
-  holds?: string;
+  kneel?: boolean;
+  headMove?: string; // nod | shake | tilt
 };
 
-const Lw = 4;
+export type Held = { node: React.ReactNode; scale?: number; rotate?: number; dx?: number; dy?: number; both?: boolean };
 
-// 2-bone IK: returns elbow given shoulder, hand target, lengths, bend direction (+1 outward/down)
+const Lw = 4;
+const ARM_INK = 16.5, ARM_FILL = 9.5;
+const LEG_INK = 19, LEG_FILL = 11.5;
+
+type V = { x: number; y: number };
+// 2-bone IK: returns joint position given root, end target, lengths, bend direction
 function ik(sx: number, sy: number, hx: number, hy: number, l1: number, l2: number, bend: number) {
   let dx = hx - sx, dy = hy - sy;
-  let d = Math.hypot(dx, dy);
+  let d = Math.hypot(dx, dy) || 0.001;
   const max = l1 + l2 - 0.5;
   if (d > max) {
     dx *= max / d;
@@ -58,35 +74,73 @@ function ik(sx: number, sy: number, hx: number, hy: number, l1: number, l2: numb
   return { ex, ey, hx, hy };
 }
 
-type Pose = { r: [number, number]; l: [number, number]; rb?: number; lb?: number };
-// hand targets for the character's screen-right (r) and screen-left (l) arm, in body coords
-const POSES: Record<string, Pose> = {
-  idle: { r: [50, -82], l: [-50, -82] },
-  hips: { r: [30, -96], l: [-30, -96], rb: -1, lb: 1 },
-  point: { r: [118, -172], l: [-50, -82] },
-  pointL: { r: [50, -82], l: [-118, -172] },
-  pointUp: { r: [70, -250], l: [-50, -82] },
-  raise: { r: [80, -238], l: [-50, -82] },
-  cheer: { r: [84, -236], l: [-84, -236] },
-  chin: { r: [12, -168], l: [-24, -118], rb: -1, lb: 1 },
-  head: { r: [66, -236], l: [-66, -236] },
-  face: { r: [26, -212], l: [-26, -212], rb: 1, lb: -1 },
-  cross: { r: [-26, -126], l: [26, -122], rb: 1, lb: -1 },
-  hold: { r: [20, -118], l: [-20, -118], rb: 1, lb: -1 },
-  holdUp: { r: [30, -190], l: [-30, -190], rb: 1, lb: -1 },
-  talk: { r: [72, -140], l: [-50, -82] },
-  talk2: { r: [72, -140], l: [-72, -140] },
-  shrug: { r: [84, -128], l: [-84, -128], rb: 1, lb: -1 },
-  salute: { r: [52, -262], l: [-50, -82], rb: 1 },
-  phone: { r: [60, -222], l: [-50, -82], rb: 1 },
-  binoculars: { r: [22, -228], l: [-22, -228], rb: 1, lb: -1 },
-  wave: { r: [76, -240], l: [-50, -82] },
-  write: { r: [24, -104], l: [-30, -110], rb: 1, lb: -1 },
-  fist: { r: [44, -150], l: [-44, -150], rb: 1, lb: -1 },
-  slam: { r: [64, -92], l: [-50, -82] },
-  present: { r: [110, -130], l: [-50, -82] },
-  cower: { r: [34, -208], l: [-34, -208], rb: 1, lb: -1 },
-  wipe: { r: [-8, -262], l: [-50, -82], rb: 1 },
+/** Smooth rubber-hose limb: quadratic curve from root through the IK joint to the end. */
+function hose(r: V, j: V, e: V, k = 0.62) {
+  // control point between the chord midpoint and the point that would pass through the joint: soft rubber-hose bend
+  const mx = (r.x + e.x) / 2, my = (r.y + e.y) / 2;
+  const c = { x: mx + (2 * j.x - mx - mx) * k, y: my + (2 * j.y - my - my) * k };
+  return { d: `M${r.x} ${r.y} Q${c.x} ${c.y} ${e.x} ${e.y}`, c };
+}
+function qpts(r: V, c: V, e: V, t0: number, t1: number, n = 10): string {
+  const out: string[] = [];
+  for (let i = 0; i <= n; i++) {
+    const t = t0 + ((t1 - t0) * i) / n;
+    const u = 1 - t;
+    out.push(`${i ? 'L' : 'M'}${u * u * r.x + 2 * u * t * c.x + t * t * e.x} ${u * u * r.y + 2 * u * t * c.y + t * t * e.y}`);
+  }
+  return out.join(' ');
+}
+
+type HandShape = 'mitten' | 'open' | 'fist' | 'point' | 'grip' | 'none';
+type Pose = { r: [number, number]; l: [number, number]; rb?: number; lb?: number; rh?: HandShape; lh?: HandShape; behind?: boolean; tilt?: number };
+// Hand targets for the character's screen-right (r) and screen-left (l) arm, in body coords.
+// Shoulders sit at (±31, -156); head centre (0, -206), chin ≈ -157, eyes ≈ -210, mouth ≈ -173, hips -98.
+export const POSES: Record<string, Pose> = {
+  idle: { r: [40, -82], l: [-40, -82] },
+  hips: { r: [34, -106], l: [-34, -106], rb: -1, lb: -1, rh: 'fist', lh: 'fist' },
+  point: { r: [122, -176], l: [-44, -92], rh: 'point' },
+  pointL: { r: [44, -92], l: [-122, -176], lh: 'point' },
+  pointUp: { r: [66, -262], l: [-44, -92], rh: 'point', tilt: -4 },
+  pointDown: { r: [96, -104], l: [-44, -92], rh: 'point', tilt: 5 },
+  pointSelf: { r: [12, -132], l: [-44, -92], rb: -1, rh: 'point' },
+  raise: { r: [78, -246], l: [-44, -92], rh: 'open' },
+  cheer: { r: [86, -244], l: [-86, -244], rh: 'fist', lh: 'fist', tilt: -3 },
+  chin: { r: [14, -150], l: [-24, -120], rb: -1, lb: 1, rh: 'fist', tilt: 5 },
+  think: { r: [16, -154], l: [-18, -124], rb: -1, lb: 1, rh: 'point', tilt: 7 },
+  head: { r: [62, -232], l: [-62, -232], rb: -1, lb: -1, rh: 'open', lh: 'open' },
+  face: { r: [26, -196], l: [-26, -196], rb: 1, lb: -1, rh: 'open', lh: 'open', tilt: 4 },
+  facepalm: { r: [12, -206], l: [-44, -92], rb: -1, rh: 'open', tilt: 8 },
+  cross: { r: [-30, -124], l: [30, -130], rb: 1, lb: -1, rh: 'none', lh: 'mitten' },
+  hold: { r: [18, -122], l: [-18, -122], rb: 1, lb: -1, rh: 'grip', lh: 'grip' },
+  holdUp: { r: [40, -250], l: [-40, -250], rb: -1, lb: -1, rh: 'grip', lh: 'grip', tilt: -3 },
+  carry: { r: [40, -128], l: [-40, -128], rb: 1, lb: -1, rh: 'grip', lh: 'grip' },
+  show: { r: [96, -160], l: [-44, -92], rh: 'grip' },
+  talk: { r: [70, -146], l: [-44, -92], rh: 'open' },
+  talk2: { r: [70, -146], l: [-70, -146], rh: 'open', lh: 'open' },
+  explain: { r: [76, -150], l: [-30, -124], rb: 1, lb: -1, rh: 'open', lh: 'mitten' },
+  shrug: { r: [88, -136], l: [-88, -136], rb: 1, lb: -1, rh: 'open', lh: 'open', tilt: 8 },
+  present: { r: [114, -136], l: [-44, -92], rh: 'open' },
+  offer: { r: [96, -122], l: [-44, -92], rh: 'open', tilt: 5 },
+  salute: { r: [44, -236], l: [-44, -92], rb: 1, rh: 'open' },
+  phone: { r: [58, -200], l: [-44, -92], rb: 1, rh: 'grip', tilt: 6 },
+  binoculars: { r: [22, -212], l: [-22, -212], rb: 1, lb: -1, rh: 'grip', lh: 'grip' },
+  wave: { r: [80, -246], l: [-44, -92], rh: 'open' },
+  write: { r: [22, -108], l: [-28, -112], rb: 1, lb: -1, rh: 'grip', lh: 'mitten', tilt: 8 },
+  typing: { r: [22, -112], l: [-22, -112], rb: 1, lb: -1, tilt: 6 },
+  fist: { r: [42, -152], l: [-42, -152], rb: 1, lb: -1, rh: 'fist', lh: 'fist' },
+  slam: { r: [64, -96], l: [-44, -92], rh: 'fist' },
+  cower: { r: [30, -196], l: [-30, -196], rb: 1, lb: -1, rh: 'open', lh: 'open', tilt: -6 },
+  wipe: { r: [-6, -238], l: [-44, -92], rb: 1, rh: 'open', tilt: -4 },
+  drink: { r: [10, -168], l: [-44, -92], rb: 1, rh: 'grip', tilt: -8 },
+  smoke: { r: [26, -168], l: [-30, -124], rb: 1, lb: -1, rh: 'grip' },
+  behind: { r: [16, -112], l: [-16, -112], rb: -1, lb: 1, rh: 'none', lh: 'none', behind: true },
+  pockets: { r: [36, -104], l: [-36, -104], rb: -1, lb: 1, rh: 'none', lh: 'none' },
+  reach: { r: [128, -128], l: [-44, -92], rh: 'open' },
+  stop: { r: [104, -170], l: [-44, -92], rh: 'open' },
+  beg: { r: [22, -150], l: [-22, -150], rb: 1, lb: -1, rh: 'fist', lh: 'fist', tilt: -5 },
+  rub: { r: [10, -132], l: [-10, -132], rb: 1, lb: -1, rh: 'mitten', lh: 'mitten' },
+  scratch: { r: [50, -258], l: [-44, -92], rb: -1, rh: 'mitten', tilt: 6 },
+  count: { r: [70, -150], l: [-44, -92], rh: 'point' },
 };
 
 const shade = (hex: string, k: number) => {
@@ -97,161 +151,322 @@ const shade = (hex: string, k: number) => {
   const r = f((n >> 16) & 255), g = f((n >> 8) & 255), b = f(n & 255);
   return '#' + ((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1);
 };
+const lerp = (a: number, b: number, k: number) => a + (b - a) * k;
+const backOut = (k: number) => {
+  const s = 1.5;
+  const x = clamp(k, 0, 1) - 1;
+  return 1 + (s + 1) * x * x * x + s * x * x;
+};
 
-export const Character: React.FC<{ spec: CharSpec; state: CharState; t: number; seed?: string }> = ({ spec, state, t, seed = 'c' }) => {
+const Hand: React.FC<{ x: number; y: number; ang: number; shape: HandShape; skin: string; side: number }> = ({ x, y, ang, shape, skin, side }) => {
+  if (shape === 'none') return null;
+  const deg = (ang * 180) / Math.PI;
+  return (
+    <g transform={`translate(${x} ${y}) rotate(${deg})`}>
+      {shape === 'point' ? <rect x={2} y={-4.2} width={21} height={8.4} rx={4.2} fill={skin} stroke={INK} strokeWidth={3} /> : null}
+      {shape === 'open' ? (
+        <g>
+          <path d="M-2 -9 Q16 -14 17 -2 Q18 8 2 10 Q-6 6 -2 -9 Z" fill={skin} stroke={INK} strokeWidth={3} strokeLinejoin="round" />
+          <path d={`M4 ${side * -8} q4 ${side * -10} 12 ${side * -9}`} stroke={INK} strokeWidth={3} fill={skin} strokeLinecap="round" />
+        </g>
+      ) : shape === 'fist' ? (
+        <g>
+          <circle cx={5} cy={0} r={10.5} fill={skin} stroke={INK} strokeWidth={3} />
+          <path d="M9 -5 v10" stroke={INK} strokeWidth={2} strokeOpacity={0.5} />
+        </g>
+      ) : (
+        <g>
+          <ellipse cx={5} cy={0} rx={10.5} ry={9} fill={skin} stroke={INK} strokeWidth={3} />
+          {shape === 'grip' ? null : <circle cx={3} cy={side * -8} r={4.2} fill={skin} stroke={INK} strokeWidth={2.5} />}
+        </g>
+      )}
+    </g>
+  );
+};
+
+export const Character: React.FC<{ spec: CharSpec; state: CharState; t: number; seed?: string; held?: Held }> = ({ spec, state, t, seed = 'c', held }) => {
   const nat = nation(spec.nation);
   const outfit = spec.outfit ?? 'tunic';
-  const jacket = spec.color ?? (outfit === 'navy' ? nat.navy : outfit === 'navywhite' || outfit === 'sailor' ? '#f3f1ea' : outfit === 'suit' ? '#3b3a3f' : outfit === 'civil' ? '#c9b48a' : outfit === 'party' ? '#8a6a3e' : nat.uniform);
-  const pants = spec.pants ?? (outfit === 'navywhite' || outfit === 'sailor' ? '#f3f1ea' : outfit === 'suit' || outfit === 'navy' ? shade(jacket, -0.15) : outfit === 'civil' ? '#5a5048' : shade(jacket, -0.22));
+  const jacket = spec.color ?? (outfit === 'navy' ? nat.navy : outfit === 'navywhite' || outfit === 'sailor' ? '#f3f1ea' : outfit === 'suit' ? '#3b3a3f' : outfit === 'civil' ? '#c9b48a' : outfit === 'party' ? '#8a6a3e' : outfit === 'tweed' ? '#7b5a3c' : nat.uniform);
+  const pants = spec.pants ?? (outfit === 'navywhite' || outfit === 'sailor' ? '#f3f1ea' : outfit === 'suit' || outfit === 'navy' ? shade(jacket, -0.15) : outfit === 'civil' ? '#5a5048' : outfit === 'tweed' ? '#3f3a36' : shade(jacket, -0.22));
   const skin = spec.skin ?? SKIN;
   const hairC = spec.hairColor ?? ((spec.age ?? 0) > 0.7 ? '#c9c4bc' : '#3a2e26');
   const build = spec.build ?? 1;
   const extra = new Set(spec.extra ?? []);
   const expr = state.expr ?? 'neutral';
-  const pose = POSES[state.pose ?? 'idle'] ?? POSES.idle;
+  const poseName = state.pose ?? 'idle';
+  const pose = POSES[poseName] ?? POSES.idle;
+  const prev = POSES[state.prevPose ?? poseName] ?? pose;
+  const kRaw = state.poseK ?? 1;
+  const k = backOut(kRaw);
   const back = state.view === 'back';
+  const r1 = rnd(seed), r2 = rnd(seed, 1), r3 = rnd(seed, 2);
 
-  // --- motion ---
-  const walking = (state.walk ?? 0) > 0;
-  const ph = t * 7.5 + rnd(seed) * 6;
-  const bob = walking ? Math.abs(Math.sin(ph)) * -5 : Math.sin(t * 1.6 + rnd(seed, 1) * 6) * 1.2;
-  const breathe = 1 + Math.sin(t * 1.6 + rnd(seed, 2) * 6) * 0.008;
-  // blink: every ~3-5 s for 0.12 s
-  const bp = 3.2 + rnd(seed, 3) * 2;
+  // ---------- motion ----------
+  const walking = (state.walk ?? 0) > 0 && !state.seated && !state.kneel;
+  const run = walking && !!state.run;
+  const dir = state.dir ?? 1;
+  const freq = run ? 2.7 : 1.75; // stride cycles per second
+  const ph = t * Math.PI * 2 * freq + r1 * 6;
+  const stride = run ? 30 : 19;
+  const lift = run ? 26 : 13;
+  const bob = walking ? (Math.abs(Math.cos(ph)) - 0.5) * (run ? -9 : -5) : Math.sin(t * 1.7 + r2 * 6) * 1.1;
+  const lean = walking ? dir * (run ? 8 : 2.5) : Math.sin(t * 0.83 + r3 * 6) * 0.7;
+  const breathe = 1 + Math.sin(t * 1.7 + r2 * 6) * 0.01;
+  const bp = 3.2 + r3 * 2;
   const blink = (t + rnd(seed, 4) * bp) % bp < 0.12;
   const talkOpen = state.talk ? (Math.sin(t * 17 + rnd(seed, 5)) * 0.5 + 0.5) * (Math.sin(t * 5.3) * 0.3 + 0.7) : 0;
   const look = (state.look ?? 0) * 4;
 
-  const hy = -242 + bob; // head center
-  const shY = -160 + bob * 0.6;
-  const shX = 33 * build;
-  const hipY = -86;
-  const L1 = 44, L2 = 42;
+  const hipY = -98;
+  const shY = -172;
+  const hy = shY - 34; // head centre: chin (hy+49) overlaps the collar
+  const tw = 29 * build; // shoulder half-width
+  const bw = 37 * build; // hem half-width
+  const shX = tw + 2;
+  const shoulderY = shY + 16;
+  const L1 = 42, L2 = 41;
 
-  // arms
-  let [rx, ry] = pose.r;
-  let [lx, ly] = pose.l;
+  // ---------- hand targets (pose blend + life) ----------
+  let [rx, ry] = [lerp(prev.r[0], pose.r[0], k), lerp(prev.r[1], pose.r[1], k)];
+  let [lx, ly] = [lerp(prev.l[0], pose.l[0], k), lerp(prev.l[1], pose.l[1], k)];
+  const rb = kRaw < 0.5 ? prev.rb ?? 1 : pose.rb ?? 1;
+  const lb = kRaw < 0.5 ? prev.lb ?? 1 : pose.lb ?? 1;
+  const rh: HandShape = (kRaw < 0.5 ? prev.rh : pose.rh) ?? 'mitten';
+  const lh: HandShape = (kRaw < 0.5 ? prev.lh : pose.lh) ?? 'mitten';
+  // idle drift so hands are never frozen
+  rx += Math.sin(t * 1.3 + r1 * 9) * 2.2;
+  ry += Math.sin(t * 1.9 + r2 * 9) * 2;
+  lx += Math.sin(t * 1.1 + r3 * 9) * 2.2;
+  ly += Math.sin(t * 1.7 + r1 * 7) * 2;
+  // talking: beat gestures on the free hand
+  const restingR = poseName === 'idle' || poseName === 'hips' || poseName === 'pockets';
+  if (state.talk && poseName === 'idle' && !walking) {
+    const beat = Math.pow(0.5 - 0.5 * Math.cos((t / 2.6 + r2) * Math.PI * 2), 2);
+    rx = lerp(rx, 66 + Math.sin(t * 3.1) * 6, beat * 0.85);
+    ry = lerp(ry, -140 + Math.sin(t * 4.3) * 7, beat * 0.85);
+  }
+  if (poseName === 'talk' || poseName === 'talk2' || poseName === 'explain') {
+    rx += Math.sin(t * 2.6 + 1) * 9 + Math.sin(t * 5.3) * 3;
+    ry += Math.sin(t * 3.4) * 9;
+    if (poseName === 'talk2') { lx -= Math.sin(t * 2.4 + 2) * 8; ly += Math.sin(t * 3.0 + 1) * 8; }
+  }
+  if (poseName === 'wave') rx += Math.sin(t * 9) * 18;
+  if (poseName === 'write') { rx += Math.sin(t * 11) * 6; ry += Math.cos(t * 7) * 3; }
+  if (poseName === 'typing') { ry += Math.abs(Math.sin(t * 13)) * -7; ly += Math.abs(Math.sin(t * 13 + 1.6)) * -7; }
+  if (poseName === 'fist' || poseName === 'cheer') { const q = Math.abs(Math.sin(t * 6)) * 10; ry -= q; ly -= q; }
+  if (poseName === 'head' || poseName === 'cower') { rx += Math.sin(t * 7) * 3; lx -= Math.sin(t * 7) * 3; }
+  if (poseName === 'shrug') { const q = Math.max(0, Math.sin(t * 2.2)) * 8; ry -= q; ly -= q; }
+  if (poseName === 'slam') { const q = Math.max(0, Math.sin(t * 5)) ** 3 * 34; ry -= q; }
+  if (poseName === 'rub') { rx += Math.sin(t * 9) * 6; lx -= Math.sin(t * 9) * 6; }
+  if (poseName === 'scratch') { rx += Math.sin(t * 14) * 4; }
+  if (poseName === 'count') { ry += (Math.floor(t * 1.6) % 2) * -10; }
+
+  // walking / running arm swing (only when the arms are free)
   if (walking) {
-    const s = Math.sin(ph);
-    if (state.pose === undefined || state.pose === 'idle') {
-      rx = 46; ry = -84 - s * 10; lx = -46; ly = -84 + s * 10;
-      rx += s * 14; lx += s * 14;
+    const pr = ph, pl = ph + Math.PI;
+    if (restingR || state.pose === undefined) {
+      if (run) {
+        rx = 30 - dir * Math.sin(pr) * 24; ry = -136 - Math.abs(Math.sin(pr)) * 10;
+        lx = -30 - dir * Math.sin(pl) * 24; ly = -136 - Math.abs(Math.sin(pl)) * 10;
+      } else {
+        rx = 36 - dir * Math.sin(pr) * 18; ry = -86 - Math.abs(Math.sin(pr)) * 8;
+        lx = -36 - dir * Math.sin(pl) * 18; ly = -86 - Math.abs(Math.sin(pl)) * 8;
+      }
+    } else if (poseName !== 'carry' && poseName !== 'hold' && poseName !== 'holdUp') {
+      // keep the gesture on the right hand, swing the left one
+      lx = -36 - dir * Math.sin(pl) * 15; ly = -86 - Math.abs(Math.sin(pl)) * 6;
     }
   }
-  if (state.pose === 'wave') rx += Math.sin(t * 9) * 16;
-  if (state.pose === 'write') { rx += Math.sin(t * 11) * 6; ry += Math.cos(t * 7) * 3; }
-  if (state.pose === 'talk' || state.pose === 'talk2') { ry += Math.sin(t * 3.1 + 1) * 6; rx += Math.sin(t * 2.3) * 4; }
-  if (state.pose === 'fist') { const k = Math.abs(Math.sin(t * 6)) * 10; ry -= k; ly -= k; }
-  const R = ik(shX, shY, rx * build ** 0.3, ry + bob * 0.6, L1, L2, -(pose.rb ?? 1));
-  const Lf = ik(-shX, shY, lx * build ** 0.3, ly + bob * 0.6, L1, L2, pose.lb ?? 1);
 
-  // legs
-  const legSw = walking ? Math.sin(ph) * 16 : 0;
-  const legW = 16;
-  const seated = state.seated;
+  const bw2 = build ** 0.3;
+  let R = ik(shX, shoulderY, rx * bw2, ry, L1, L2, run ? -dir : -rb);
+  let Lf = ik(-shX, shoulderY, lx * bw2, ly, L1, L2, run ? -dir : lb);
+  // folded arms: fixed elbows at the sides, forearms stacked across the chest
+  const crossK = poseName === 'cross' ? clamp(kRaw * 1.4, 0, 1) : prev === POSES.cross ? 1 - clamp(kRaw * 1.4, 0, 1) : 0;
+  if (crossK > 0) {
+    const mixJ = (a: typeof R, b: typeof R) => ({ ex: lerp(a.ex, b.ex, crossK), ey: lerp(a.ey, b.ey, crossK), hx: lerp(a.hx, b.hx, crossK), hy: lerp(a.hy, b.hy, crossK) });
+    const breath = Math.sin(t * 1.7 + r2 * 6) * 1.5;
+    R = mixJ(R, { ex: bw - 2, ey: -114 + breath, hx: -bw + 12, hy: -128 + breath });
+    Lf = mixJ(Lf, { ex: -bw + 2, ey: -118 + breath, hx: bw - 12, hy: -133 + breath });
+  }
+  const armK = crossK > 0.5 ? 0.95 : 0.62;
 
   const sleeve = jacket;
   const sleeveDark = shade(jacket, -0.25);
 
-  const arm = (side: number, e: { ex: number; ey: number; hx: number; hy: number }) => {
-    const d = `M${side * shX} ${shY + 4} L${e.ex} ${e.ey} L${e.hx} ${e.hy}`;
+  const armPath = (side: number, e: { ex: number; ey: number; hx: number; hy: number }) => hose({ x: side * shX, y: shoulderY }, { x: e.ex, y: e.ey }, { x: e.hx, y: e.hy }, armK);
+  const armTube = (side: number, e: { ex: number; ey: number; hx: number; hy: number }) => {
+    const { d } = armPath(side, e);
     return (
-      <g key={side}>
-        <path d={d} stroke={INK} strokeWidth={21} fill="none" strokeLinecap="round" strokeLinejoin="round" />
-        <path d={d} stroke={sleeve} strokeWidth={13} fill="none" strokeLinecap="round" strokeLinejoin="round" />
-        {/* cuff */}
-        <circle cx={e.hx} cy={e.hy} r={11} fill={skin} stroke={INK} strokeWidth={Lw} />
+      <g key={'a' + side}>
+        <path d={d} stroke={INK} strokeWidth={ARM_INK} fill="none" strokeLinecap="round" />
+        <path d={d} stroke={sleeve} strokeWidth={ARM_FILL} fill="none" strokeLinecap="round" />
+      </g>
+    );
+  };
+  const handOf = (side: number, e: { ex: number; ey: number; hx: number; hy: number }, shape: HandShape) => {
+    const { c } = armPath(side, e);
+    const ang = Math.atan2(e.hy - c.y, e.hx - c.x);
+    return <Hand key={'h' + side} x={e.hx} y={e.hy} ang={ang} shape={shape} skin={skin} side={side} />;
+  };
+
+  // ---------- legs ----------
+  const shoeC = outfit === 'suit' || outfit === 'civil' || outfit === 'dress' || outfit === 'tweed' ? '#2a2420' : '#2b2522';
+  const booted = outfit === 'tunic' || outfit === 'coat' || outfit === 'pilot' || outfit === 'party';
+  const leg = (s: number) => {
+    const hip = { x: s * 12 * build, y: hipY + bob + 6 };
+    let foot: V;
+    let bend = -dir;
+    if (state.seated) {
+      foot = { x: s * 22, y: hipY + 54 };
+      const knee = { x: s * 22, y: hipY + 16 };
+      const d = `M${hip.x} ${hip.y} L${knee.x} ${knee.y} L${foot.x} ${foot.y}`;
+      return (
+        <g key={'l' + s}>
+          <path d={d} stroke={INK} strokeWidth={LEG_INK} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          <path d={d} stroke={pants} strokeWidth={LEG_FILL} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          <ellipse cx={foot.x + s * 3} cy={foot.y + 4} rx={14} ry={8} fill={shoeC} stroke={INK} strokeWidth={3} />
+        </g>
+      );
+    }
+    if (state.kneel) {
+      const knee = { x: s * 18, y: -6 };
+      const d = `M${hip.x} ${hip.y + 44} Q${s * 20} ${hip.y + 70} ${knee.x} ${knee.y}`;
+      return (
+        <g key={'l' + s}>
+          <path d={d} stroke={INK} strokeWidth={LEG_INK} fill="none" strokeLinecap="round" />
+          <path d={d} stroke={pants} strokeWidth={LEG_FILL} fill="none" strokeLinecap="round" />
+          <ellipse cx={knee.x} cy={knee.y} rx={12} ry={7} fill={pants} stroke={INK} strokeWidth={3} />
+        </g>
+      );
+    }
+    if (walking) {
+      const p = ph + (s > 0 ? 0 : Math.PI);
+      foot = { x: s * 10 + dir * stride * Math.sin(p), y: -6 - Math.max(0, Math.cos(p)) * lift };
+    } else {
+      foot = { x: s * 15 * build, y: -6 };
+      bend = -s; // knees bow slightly outward when standing
+    }
+    const j = ik(hip.x, hip.y, foot.x, foot.y, walking ? 46 : 44, walking ? 46 : 44, bend);
+    const { d, c } = hose(hip, { x: j.ex, y: j.ey }, { x: j.hx, y: j.hy }, walking ? 0.75 : 0.3);
+    const fx = j.hx, fy = j.hy;
+    const toe = walking ? dir : s * 0.4;
+    const footAng = walking ? Math.max(0, Math.cos(ph + (s > 0 ? 0 : Math.PI))) * dir * -16 : 0;
+    return (
+      <g key={'l' + s}>
+        <path d={d} stroke={INK} strokeWidth={LEG_INK} fill="none" strokeLinecap="round" />
+        <path d={d} stroke={pants} strokeWidth={LEG_FILL} fill="none" strokeLinecap="round" />
+        {booted ? <path d={qpts(hip, c, { x: fx, y: fy }, 0.62, 1)} stroke={shoeC} strokeWidth={LEG_FILL + 2} fill="none" strokeLinecap="round" /> : null}
+        <g transform={`translate(${fx} ${fy}) rotate(${footAng})`}>
+          <path d={`M${-10 + toe * -3} 2 Q${-10 + toe * -3} -8 ${toe * 4} -8 Q${12 + toe * 8} -8 ${14 + toe * 8} 2 Q${14 + toe * 8} 8 ${toe * 3} 8 L${-8 + toe * -3} 8 Q${-11 + toe * -3} 8 ${-10 + toe * -3} 2 Z`} fill={shoeC} stroke={INK} strokeWidth={3} strokeLinejoin="round" />
+        </g>
       </g>
     );
   };
 
-  const torsoW = 36 * build;
-  const torso = `M${-shX - 2} ${shY - 2} Q0 ${shY - 12} ${shX + 2} ${shY - 2} L${torsoW + 2} ${hipY + 4} Q0 ${hipY + 12} ${-torsoW - 2} ${hipY + 4} Z`;
+  const torso = `M${-tw} ${shY - 2} C${-tw - 2} ${shY - 12} ${tw + 2} ${shY - 12} ${tw} ${shY - 2} C${tw + 4} ${shY + 10} ${bw - 2} ${hipY - 30} ${bw + 1} ${hipY + 4} Q0 ${hipY + 13} ${-bw - 1} ${hipY + 4} C${-bw + 2} ${hipY - 30} ${-tw - 4} ${shY + 10} ${-tw} ${shY - 2} Z`;
 
-  const legs = seated ? (
-    <g>
-      {[-1, 1].map((s) => (
-        <g key={s}>
-          <path d={`M${s * 15} ${hipY} L${s * 22} ${hipY + 20} L${s * 22} ${hipY + 48}`} stroke={INK} strokeWidth={legW + 8} fill="none" strokeLinecap="round" strokeLinejoin="round" />
-          <path d={`M${s * 15} ${hipY} L${s * 22} ${hipY + 20} L${s * 22} ${hipY + 48}`} stroke={pants} strokeWidth={legW} fill="none" strokeLinecap="round" strokeLinejoin="round" />
-          <ellipse cx={s * 25} cy={hipY + 52} rx={15} ry={9} fill="#2b2522" stroke={INK} strokeWidth={3} />
-        </g>
-      ))}
-    </g>
-  ) : (
-    <g>
-      {[-1, 1].map((s) => {
-        const sw = s * legSw;
-        const lift = walking ? Math.max(0, Math.sin(ph * 1 + (s > 0 ? 0 : Math.PI))) * -8 : 0;
-        const fx = s * 15 + sw, fy = -8 + lift;
-        const knee = `M${s * 14} ${hipY} Q${s * 16 + sw * 0.4} ${-44} ${fx} ${fy}`;
-        const boot = outfit === 'suit' || outfit === 'civil' || outfit === 'dress' ? '#2a2420' : '#2b2522';
-        return (
-          <g key={s}>
-            <path d={knee} stroke={INK} strokeWidth={legW + 8} fill="none" strokeLinecap="round" />
-            <path d={knee} stroke={pants} strokeWidth={legW} fill="none" strokeLinecap="round" />
-            {outfit === 'tunic' || outfit === 'coat' || outfit === 'pilot' ? (
-              <path d={`M${fx - 9} ${fy - 26} L${fx + 9} ${fy - 26} L${fx + 9} ${fy} L${fx - 9} ${fy} Z`} fill={boot} stroke={INK} strokeWidth={3} />
-            ) : null}
-            <ellipse cx={fx + s * 6} cy={fy + 2} rx={17} ry={9} fill={boot} stroke={INK} strokeWidth={3} />
-          </g>
-        );
-      })}
-    </g>
-  );
+  // head tilt: pose bias + talking nods + explicit head moves
+  let tilt = (prev.tilt ?? 0) + ((pose.tilt ?? 0) - (prev.tilt ?? 0)) * clamp(kRaw * 1.5, 0, 1);
+  if (expr === 'worried' || expr === 'sad') tilt -= 3;
+  if (expr === 'smug') tilt += 4;
+  if (state.talk) tilt += Math.sin(t * 4.1 + r2 * 5) * 2.2;
+  let headDy = 0, headDx = 0;
+  if (state.headMove === 'nod') headDy = Math.max(0, Math.sin(t * 7)) * 7;
+  if (state.headMove === 'shake') headDx = Math.sin(t * 9) * 7;
+  if (state.headMove === 'tilt') tilt += 9;
+  if (walking) tilt += Math.sin(ph * 2) * 1.5;
 
-  // ---------- body ----------
   const body = (
-    <g transform={`translate(0 ${bob * 0.6}) scale(${breathe} 1)`}>
-      {outfit === 'coat' ? (
-        <path d={`M${-shX - 4} ${shY - 2} Q0 ${shY - 12} ${shX + 4} ${shY - 2} L${torsoW + 14} ${-34} Q0 ${-26} ${-torsoW - 14} ${-34} Z`} fill={jacket} stroke={INK} strokeWidth={Lw} />
-      ) : null}
-      {outfit === 'dress' ? (
-        <path d={`M${-shX} ${shY} L${shX} ${shY} L${torsoW + 24} ${-30} Q0 ${-22} ${-torsoW - 24} ${-30} Z`} fill={jacket} stroke={INK} strokeWidth={Lw} />
-      ) : null}
-      <path d={torso} fill={jacket} stroke={INK} strokeWidth={Lw} strokeLinejoin="round" />
-      {/* side shade */}
-      <path d={`M${shX - 8} ${shY + 4} L${torsoW - 4} ${hipY + 2} L${torsoW + 1} ${hipY + 4} L${shX + 1} ${shY}`} fill={sleeveDark} opacity={0.45} />
-      {back ? null : <Outfit outfit={outfit} jacket={jacket} shY={shY} hipY={hipY} w={torsoW} nat={spec.nation} extra={extra} />}
+    <g>
+      {outfit === 'coat' ? <path d={`M${-tw - 4} ${shY - 2} C${-tw - 8} ${shY + 20} ${-bw - 16} ${-40} ${-bw - 14} ${-30} Q0 ${-22} ${bw + 14} ${-30} C${bw + 16} ${-40} ${tw + 8} ${shY + 20} ${tw + 4} ${shY - 2} Z`} fill={jacket} stroke={INK} strokeWidth={Lw} /> : null}
+      {outfit === 'dress' ? <path d={`M${-tw} ${shY} L${tw} ${shY} L${bw + 22} ${-30} Q0 ${-22} ${-bw - 22} ${-30} Z`} fill={jacket} stroke={INK} strokeWidth={Lw} /> : null}
+      <path d={torso} fill={jacket} stroke={INK} strokeWidth={Lw} strokeLinejoin="round" transform={`scale(${breathe} 1)`} />
+      <path d={`M${tw - 6} ${shY + 6} C${tw} ${shY + 20} ${bw - 6} ${hipY - 26} ${bw - 3} ${hipY + 3} L${bw} ${hipY + 4} C${bw - 2} ${hipY - 30} ${tw + 3} ${shY + 10} ${tw} ${shY}`} fill={sleeveDark} opacity={0.4} />
+      {back ? null : <Outfit outfit={outfit} jacket={jacket} shY={shY} hipY={hipY} w={bw} nat={spec.nation} extra={extra} vest={spec.vest} />}
       {extra.has('armband') ? (
         <g>
-          <path d={`M${shX - 2} ${shY + 24} l14 4 l-3 14 l-14 -4 z`} fill="#c8352b" stroke={INK} strokeWidth={2.5} />
-          <circle cx={shX + 3} cy={shY + 33} r={4.2} fill="#fff" />
+          <path d={`M${tw - 6} ${shY + 26} l14 3 l-2 14 l-14 -3 z`} fill="#c8352b" stroke={INK} strokeWidth={2.5} />
+          <circle cx={tw + 1} cy={shY + 35} r={4} fill="#fff" />
         </g>
       ) : null}
     </g>
   );
 
+  const scarf = extra.has('scarf') && !back ? (
+    <g>
+      <path d={`M${-tw - 6} ${shY + 4} Q0 ${shY + 24} ${tw + 6} ${shY + 4} L${tw + 4} ${shY - 8} Q0 ${shY + 8} ${-tw - 4} ${shY - 8} Z`} fill={spec.scarf ?? '#b8322a'} stroke={INK} strokeWidth={3} strokeLinejoin="round" />
+      <path d={`M${tw - 6} ${shY + 10} q${6 + Math.sin(t * 2.3) * 2} 22 ${2 + Math.sin(t * 2.3) * 3} 50 l14 -2 q${2 + Math.sin(t * 2.3 + 0.5) * 2} -26 -4 -50 z`} fill={spec.scarf ?? '#b8322a'} stroke={INK} strokeWidth={3} strokeLinejoin="round" />
+      <path d={`M${tw - 2} ${shY + 54} l12 -2 M${tw - 1} ${shY + 49} l12 -2`} stroke="#fff" strokeOpacity={0.5} strokeWidth={2} />
+    </g>
+  ) : null;
+
+  const heldNode = held ? (() => {
+    const two = held.both ?? (poseName === 'hold' || poseName === 'holdUp' || poseName === 'carry' || poseName === 'binoculars');
+    const hx = two ? (R.hx + Lf.hx) / 2 : R.hx;
+    const hyy = two ? (R.hy + Lf.hy) / 2 : R.hy;
+    return <g transform={`translate(${hx + (held.dx ?? 0)} ${hyy + (held.dy ?? 0)}) rotate(${held.rotate ?? 0}) scale(${held.scale ?? 0.55})`}>{held.node}</g>;
+  })() : null;
+
+  const behindArms = pose.behind && kRaw > 0.5;
   return (
     <g>
-      <ellipse cx={0} cy={2} rx={58 * build} ry={10} fill="#000" opacity={0.16} />
-      {legs}
-      {body}
-      {back ? null : null}
-      <Head spec={spec} expr={expr} blink={blink} talk={talkOpen} look={look} hy={hy} hairC={hairC} skin={skin} back={back} extra={extra} t={t} seed={seed} />
-      {back ? null : (
-        <>
-          {arm(-1, Lf)}
-          {arm(1, R)}
-        </>
-      )}
-      {back ? (
-        <>
-          {arm(-1, Lf)}
-          {arm(1, R)}
-        </>
-      ) : null}
+      <ellipse cx={0} cy={2} rx={54 * build} ry={9} fill="#000" opacity={0.16} />
+      <g transform={`rotate(${lean} 0 0)`}>
+        {[-1, 1].map(leg)}
+        <g transform={`translate(0 ${bob + (state.kneel ? 44 : 0)})`}>
+          {back || behindArms ? (
+            <>
+              {armTube(-1, Lf)}
+              {armTube(1, R)}
+            </>
+          ) : null}
+          {body}
+          {scarf}
+          <g transform={`translate(${headDx} ${headDy}) rotate(${tilt} 0 ${hy + 46})`}>
+            <Head spec={spec} expr={expr} blink={blink} talk={talkOpen} look={look} hy={hy} hairC={hairC} skin={skin} back={back} extra={extra} t={t} seed={seed} />
+          </g>
+          {back || behindArms ? null : (
+            <>
+              {armTube(-1, Lf)}
+              {armTube(1, R)}
+            </>
+          )}
+          {heldNode}
+          {back || behindArms ? null : (
+            <>
+              {handOf(-1, Lf, lh)}
+              {handOf(1, R, rh)}
+            </>
+          )}
+        </g>
+      </g>
     </g>
   );
 };
 
-const Outfit: React.FC<{ outfit: string; jacket: string; shY: number; hipY: number; w: number; nat?: string; extra: Set<string> }> = ({ outfit, jacket, shY, hipY, w, extra }) => {
+const Outfit: React.FC<{ outfit: string; jacket: string; shY: number; hipY: number; w: number; nat?: string; extra: Set<string>; vest?: string }> = ({ outfit, jacket, shY, hipY, w, extra, vest }) => {
   const dark = shade(jacket, -0.3);
   const btn = outfit === 'navy' ? '#e3b94a' : outfit === 'navywhite' ? '#d9b44a' : shade(jacket, -0.45);
   switch (outfit) {
+    case 'tweed':
+      return (
+        <g>
+          {/* open tweed jacket over a knitted vest and shirt */}
+          <path d={`M-20 ${shY - 2} L-15 ${hipY - 4} L15 ${hipY - 4} L20 ${shY - 2} Z`} fill={vest ?? '#c99a3a'} stroke={INK} strokeWidth={3} strokeLinejoin="round" />
+          <path d={`M-12 ${shY - 4} L0 ${shY + 18} L12 ${shY - 4} Z`} fill="#f4f1ea" stroke={INK} strokeWidth={2.5} />
+          <path d={`M-4 ${shY + 4} L4 ${shY + 4} L5 ${shY + 22} L0 ${shY + 28} L-5 ${shY + 22} Z`} fill="#2c4a6b" stroke={INK} strokeWidth={2} />
+          {[0, 1, 2].map((i) => <circle key={i} cx={0} cy={shY + 38 + i * 14} r={2.6} fill={INK} opacity={0.7} />)}
+          <path d={`M-22 ${shY - 4} L-8 ${shY + 34} M22 ${shY - 4} L8 ${shY + 34}`} stroke={INK} strokeWidth={3} />
+          <path d={`M${-w + 6} ${shY + 44} h16 M${w - 22} ${shY + 44} h16`} stroke={INK} strokeWidth={2.5} strokeOpacity={0.6} />
+          {[0, 1, 2, 3, 4].map((i) => <path key={i} d={`M${-w + 2 + i * 3} ${shY + 10 + i * 12} l6 4 M${w - 8 - i * 3} ${shY + 10 + i * 12} l6 4`} stroke="#fff" strokeOpacity={0.12} strokeWidth={2} />)}
+        </g>
+      );
     case 'suit':
       return (
         <g>
+          {extra.has('vest') ? <path d={`M-18 ${shY} L-14 ${hipY - 6} L14 ${hipY - 6} L18 ${shY} Z`} fill={vest ?? '#5a4a3a'} stroke={INK} strokeWidth={2.5} /> : null}
           <path d={`M-14 ${shY - 4} L0 ${shY + 34} L14 ${shY - 4} Z`} fill="#f4f1ea" stroke={INK} strokeWidth={3} />
           {extra.has('bowtie') ? (
             <path d={`M-12 ${shY + 2} L0 ${shY + 7} L12 ${shY + 2} L12 ${shY + 14} L0 ${shY + 9} L-12 ${shY + 14} Z`} fill="#8b1d24" stroke={INK} strokeWidth={2.5} />
@@ -345,7 +560,7 @@ const Head: React.FC<{
   const age = spec.age ?? 0.3;
   const face = jowl
     ? `M${-rx} ${hy - 6} C${-rx} ${hy - 106} ${rx} ${hy - 106} ${rx} ${hy - 6} C${rx + 4} ${hy + 62} ${-rx - 4} ${hy + 62} ${-rx} ${hy - 6} Z`
-    : `M${-rx} ${hy} C${-rx} ${hy - 98} ${rx} ${hy - 98} ${rx} ${hy} C${rx} ${hy + 60} ${-rx} ${hy + 60} ${-rx} ${hy} Z`;
+    : `M${-rx} ${hy} C${-rx} ${hy - 98} ${rx} ${hy - 98} ${rx} ${hy} C${rx} ${hy + 66} ${-rx} ${hy + 66} ${-rx} ${hy} Z`;
   const hat = spec.hat ?? 'none';
   const hatC = spec.hatColor ?? nation(spec.nation).uniform;
 
@@ -363,7 +578,7 @@ const Head: React.FC<{
   const eyeY = hy - 4;
   const ex = 24;
   const eyesKind = spec.eyes ?? 'dot';
-  const sweat = expr === 'worried' || expr === 'sweat' || expr === 'panic' || expr === 'nervous';
+  const sweat = expr === 'worried' || expr === 'sweat' || expr === 'panic' || expr === 'nervous' || expr === 'grin';
   const browY = eyeY - 22 + (expr === 'shocked' || expr === 'panic' ? -8 : 0);
   const browC = hairC === '#c9c4bc' ? '#9a948c' : hairC;
   const brow = (s: number) => {
@@ -405,6 +620,15 @@ const Head: React.FC<{
         <ellipse cx={0} cy={my + 2 + h * 0.5} rx={6} ry={Math.max(1, h * 0.35)} fill="#d9787a" />
       </g>
     );
+  } else if (expr === 'grin') {
+    // forced nervous grin: wide mouth with teeth
+    mouth = (
+      <g>
+        <path d={`M-26 ${my - 6} Q0 ${my + 22} 26 ${my - 6} Z`} fill="#fff" stroke={INK} strokeWidth={4} strokeLinejoin="round" />
+        <path d={`M-22 ${my - 1} Q0 ${my + 6} 22 ${my - 1}`} stroke={INK} strokeWidth={2} fill="none" />
+        {[-12, 0, 12].map((x) => <line key={x} x1={x} y1={my - 4} x2={x} y2={my + 8} stroke={INK} strokeWidth={1.8} />)}
+      </g>
+    );
   } else if (expr === 'happy' || expr === 'smile' || expr === 'smug') {
     mouth = <path d={`M-14 ${my - 2} Q0 ${my + (expr === 'smug' ? 5 : 11)} 14 ${my - (expr === 'smug' ? 6 : 2)}`} stroke={INK} strokeWidth={4} fill="none" strokeLinecap="round" />;
   } else if (expr === 'angry' || expr === 'determined') {
@@ -431,7 +655,7 @@ const Head: React.FC<{
       <path d={face} fill={skin} stroke={INK} strokeWidth={Lw} />
       {redFace ? <path d={face} fill="#e0504a" opacity={0.28} /> : null}
       {/* chin shade */}
-      <path d={`M${-rx + 14} ${hy + 32} Q0 ${hy + 62} ${rx - 14} ${hy + 32} Q0 ${hy + 52} ${-rx + 14} ${hy + 32}`} fill="#e6bfa2" opacity={0.6} />
+      <path d={`M${-rx + 16} ${hy + 34} Q0 ${hy + 66} ${rx - 16} ${hy + 34} Q0 ${hy + 56} ${-rx + 16} ${hy + 34}`} fill="#e6bfa2" opacity={0.55} />
       {extra.has('stubble') || spec.facial === 'stubble' ? <path d={`M${-rx + 12} ${hy + 24} Q0 ${hy + 66} ${rx - 12} ${hy + 24} Q0 ${hy + 46} ${-rx + 12} ${hy + 24}`} fill="#8c7f72" opacity={0.35} /> : null}
       {extra.has('blush') || expr === 'happy' || expr === 'smile' ? (
         <>
@@ -537,6 +761,15 @@ const Hair: React.FC<{ kind: string; color: string; hy: number; rx: number; hat:
         <g>
           {kind === 'long' ? <path d={`M${-rx - 6} ${hy - 10} Q${-rx - 14} ${hy + 60} ${-rx + 10} ${hy + 70} L${rx - 10} ${hy + 70} Q${rx + 14} ${hy + 60} ${rx + 6} ${hy - 10} Z`} fill={color} stroke={INK} strokeWidth={Lw} /> : <circle cx={0} cy={top - 12} r={20} fill={color} stroke={INK} strokeWidth={Lw} />}
           <path d={`M${-rx} ${hy - 4} C${-rx - 4} ${hy - 106} ${rx + 4} ${hy - 106} ${rx} ${hy - 4} C${rx - 10} ${hy - 40} ${10} ${hy - 50} 0 ${hy - 46} C${-10} ${hy - 50} ${-rx + 10} ${hy - 40} ${-rx} ${hy - 4} Z`} fill={color} stroke={INK} strokeWidth={Lw} />
+        </g>
+      );
+    case 'tousled':
+      // full brown mop with a swept fringe and a cowlick — the host's silhouette
+      return (
+        <g>
+          <path d={`M${-rx - 3} ${hy + 2} C${-rx - 8} ${hy - 110} ${rx + 8} ${hy - 110} ${rx + 3} ${hy + 2} C${rx - 2} ${hy - 22} ${rx - 10} ${hy - 34} ${rx - 18} ${hy - 38} Q${20} ${hy - 30} ${-6} ${hy - 44} Q${-20} ${hy - 26} ${-40} ${hy - 34} C${-52} ${hy - 30} ${-rx + 2} ${hy - 22} ${-rx - 3} ${hy + 2} Z`} fill={color} stroke={INK} strokeWidth={Lw} strokeLinejoin="round" />
+          <path d={`M${-4} ${top + 2} q-6 -26 14 -34 q-6 14 4 22 q6 -18 22 -16 q-14 8 -10 26 z`} fill={color} stroke={INK} strokeWidth={3} strokeLinejoin="round" />
+          <path d={`M${-34} ${hy - 62} Q0 ${hy - 76} ${34} ${hy - 62}`} stroke="#fff" strokeOpacity={0.22} strokeWidth={5} fill="none" strokeLinecap="round" />
         </g>
       );
     case 'messy':
@@ -735,6 +968,13 @@ export const Hat: React.FC<{ kind: string; color: string; hy: number; badge?: st
       );
     case 'crown':
       return <path d={`M-56 ${top + 8} L-60 ${top - 36} L-30 ${top - 14} L0 ${top - 44} L30 ${top - 14} L60 ${top - 36} L56 ${top + 8} Z`} fill="#e3b94a" stroke={INK} strokeWidth={Lw} strokeLinejoin="round" />;
+    case 'flatcap':
+      return (
+        <g>
+          <path d={`M-70 ${top + 14} Q-76 ${top - 30} 0 ${top - 32} Q74 ${top - 30} 72 ${top + 10} Q0 ${top + 20} -70 ${top + 14} Z`} fill={color} stroke={INK} strokeWidth={Lw} />
+          <path d={`M-30 ${top + 14} Q40 ${top + 4} 96 ${top + 22} Q40 ${top + 34} -30 ${top + 24} Z`} fill={shade(color, -0.2)} stroke={INK} strokeWidth={3} />
+        </g>
+      );
     case 'conical':
       return <path d={`M-110 ${top + 24} L0 ${top - 50} L110 ${top + 24} Q0 ${top + 34} -110 ${top + 24} Z`} fill="#d8c48a" stroke={INK} strokeWidth={Lw} strokeLinejoin="round" />;
     case 'pith_vn':

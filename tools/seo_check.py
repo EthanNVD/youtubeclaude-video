@@ -85,7 +85,7 @@ def main(proj):
     (out / "tags.txt").write_text(", ".join(tags), encoding="utf-8")
     (out / "hashtags.txt").write_text(" ".join(hs), encoding="utf-8")
     (out / "chapters.txt").write_text(chapters_txt, encoding="utf-8")
-    rep = [f"# YouTube package — {proj.name}\n", "## 3 titles (angle → thumbnail)\n"]
+    rep = [f"# YouTube package — {proj.name}\n", "Thumbnail prompts for image models: `out/youtube/thumb_prompts.md` (+ `out/thumbs/ref_characters.png`).\n", "## 3 titles (angle → thumbnail)\n"]
     for i, t in enumerate(titles, 1):
         rep.append(f"{i}. {'**(recommended)** ' if i == rec else ''}**{t['title']}** — {len(t['title'])} chars  \n   angle: {t.get('angle','')}  \n   thumbnail: out/thumbs/thumb_{t.get('thumb', i)}.jpg  \n   hook: {t.get('hook','')}  \n   why: {t.get('why','')}\n")
     rep += ["\n## Description\n", "```\n" + desc + "\n```\n", f"\n## Tags ({len(tags)}, {tag_chars}/500 chars)\n", ", ".join(tags), "\n\n## Hashtags\n", " ".join(hs)]

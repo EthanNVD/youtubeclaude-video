@@ -2,6 +2,7 @@ import React from 'react';
 import type { CameraKey, CastMember, LonLat, Scene } from '../types';
 import { resolveKeys, rnd } from '../lib/anim';
 import { SetBackground } from '../sets/Sets';
+import { Foreground } from '../sets/Rich';
 import { MapLayer, makeProjection } from '../map/MapLayer';
 import { ElementView, type Ctx } from './Elements';
 import { DateBadge } from '../overlays/Overlays';
@@ -64,6 +65,7 @@ export const SceneView: React.FC<{ scene: Scene; t: number; cast?: Record<string
       <g transform={camT || undefined}>
         {world}
         {worldEls.map(({ el, i }) => <ElementView key={i} el={el} ctx={ctx} index={i} />)}
+        {scene.set?.fg ? <g transform={`translate(${(960 - ((cameraAt(scene.camera, t, { x: 960 }) as { x: number }).x ?? 960)) * 0.25} 0)`}><Foreground kind={scene.set.fg as string} t={t} side={scene.set.fgSide as string} /></g> : null}
       </g>
       {weather === 'rain' || weather === 'snow' ? (
         <g transform="translate(960 540)">

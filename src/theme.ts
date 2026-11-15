@@ -4,6 +4,7 @@ import { loadFont as loadOswald } from '@remotion/google-fonts/Oswald';
 import { loadFont as loadMono } from '@remotion/google-fonts/IBMPlexMono';
 import { loadFont as loadSerif } from '@remotion/google-fonts/PlayfairDisplay';
 import { loadFont as loadBangers } from '@remotion/google-fonts/Bangers';
+import { loadFont as loadBaloo } from '@remotion/google-fonts/Baloo2';
 
 const subsets: ('latin' | 'latin-ext' | 'vietnamese')[] = ['latin', 'latin-ext', 'vietnamese'];
 export const FONT = {
@@ -13,6 +14,7 @@ export const FONT = {
   mono: loadMono('normal', { weights: ['400', '600'], subsets }).fontFamily,
   serif: loadSerif('normal', { weights: ['700', '900'], subsets }).fontFamily,
   comic: loadBangers('normal', { weights: ['400'], subsets }).fontFamily,
+  round: loadBaloo('normal', { weights: ['800'], subsets }).fontFamily,
 };
 
 export const INK = '#2a2622';

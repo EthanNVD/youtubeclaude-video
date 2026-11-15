@@ -157,15 +157,41 @@ export const Vehicle: React.FC<{ type: string; nationKey?: string; t: number; co
       );
     }
     case 'carrier': {
+      const hull = color ?? '#6b7480';
+      const jp = nationKey === 'JPN';
       return (
         <g>
-          <path d="M-520 -40 L520 -40 L470 40 L-470 40 Z" fill={color ?? '#6b7480'} stroke={INK} strokeWidth={5} strokeLinejoin="round" />
-          <rect x={-560} y={-62} width={1130} height={24} fill="#8a7a5a" stroke={INK} strokeWidth={4} />
-          <path d="M-540 -50 H550" stroke="#fff" strokeOpacity={0.4} strokeWidth={3} strokeDasharray="30 20" />
-          <path d="M180 -62 V-150 H260 V-62 Z" fill={color ?? '#6b7480'} stroke={INK} strokeWidth={4} />
-          <path d="M210 -150 V-210 M190 -190 H230" stroke={INK} strokeWidth={4} />
-          {Array.from({ length: 16 }, (_, i) => <circle key={i} cx={-440 + i * 58} cy={0} r={6} fill="#2a2a2a" />)}
-          {nationKey ? <g transform="translate(222 -210)"><rect x={0} y={-30} width={46} height={30} fill={nationKey === 'JPN' ? '#fff' : nation(nationKey).flag[0]} stroke={INK} strokeWidth={2} />{nationKey === 'JPN' ? <circle cx={23} cy={-15} r={9} fill="#bc002d" /> : null}</g> : null}
+          {/* hull with flare, waterline and hangar openings */}
+          <path d="M-560 -44 L600 -44 L540 30 Q500 46 440 48 L-460 48 Q-520 40 -540 10 Z" fill={hull} stroke={INK} strokeWidth={5} strokeLinejoin="round" />
+          <path d="M-540 18 L560 18" stroke="#000" strokeOpacity={0.25} strokeWidth={6} />
+          <path d="M-520 34 Q0 44 520 34 L470 48 L-460 48 Z" fill="#8a2a24" opacity={0.85} />
+          {Array.from({ length: 9 }, (_, i) => <rect key={i} x={-430 + i * 100} y={-32} width={70} height={30} rx={4} fill="#3a4048" stroke={INK} strokeWidth={2.5} />)}
+          {Array.from({ length: 22 }, (_, i) => <circle key={i} cx={-470 + i * 46} cy={6} r={4.5} fill="#2a2a2a" />)}
+          {/* overhanging flight deck with supports */}
+          {Array.from({ length: 12 }, (_, i) => <path key={i} d={`M${-520 + i * 96} -44 L${-500 + i * 96} -62`} stroke={INK} strokeWidth={4} />)}
+          <rect x={-600} y={-80} width={1220} height={22} fill="#9a7b52" stroke={INK} strokeWidth={4} />
+          <path d="M-590 -69 H610" stroke="#f2efe6" strokeOpacity={0.6} strokeWidth={3} strokeDasharray="34 22" />
+          {jp ? <ellipse cx={-380} cy={-72} rx={46} ry={8} fill="#bc002d" /> : <text x={-420} y={-62} fontFamily="sans-serif" fontWeight={900} fontSize={22} fill="#f2efe6" opacity={0.8}>CV</text>}
+          {/* parked planes on deck */}
+          {[-470, -300, -140, 380, 470].map((x, i) => (
+            <g key={i} transform={`translate(${x} -84)`}>
+              <path d="M-26 0 L22 0 L30 -8 L-20 -10 Z" fill={jp ? '#c9c4a8' : '#5a7088'} stroke={INK} strokeWidth={2} />
+              <path d="M-4 -6 L-14 -18 L8 -18 L6 -6 Z" fill={jp ? '#b9b49a' : '#4a6078'} stroke={INK} strokeWidth={1.5} />
+            </g>
+          ))}
+          {/* island: bridge, mast, funnel */}
+          <g transform={jp ? 'translate(-120 0)' : 'translate(0 0)'}>
+            <path d="M150 -80 V-170 H290 V-80 Z" fill={hull} stroke={INK} strokeWidth={4} />
+            <rect x={160} y={-200} width={120} height={32} fill="#5a636c" stroke={INK} strokeWidth={3} />
+            {[0, 1, 2, 3].map((i) => <rect key={i} x={168 + i * 28} y={-194} width={20} height={14} fill="#9fd0e8" stroke={INK} strokeWidth={1.5} />)}
+            <path d="M200 -200 V-280 M176 -258 H224 M184 -236 H216" stroke={INK} strokeWidth={5} />
+            <path d="M240 -168 L250 -232 H296 L290 -168 Z" fill="#4a535c" stroke={INK} strokeWidth={4} />
+            <rect x={248} y={-242} width={50} height={12} fill="#1b1b1b" />
+          </g>
+          {/* bow wave + wake */}
+          <path d={`M560 26 q${30 + Math.sin(t * 3) * 6} 10 ${50} 30 M548 40 q40 4 80 20`} stroke="#fff" strokeWidth={6} strokeLinecap="round" fill="none" opacity={0.8} />
+          <path d={`M-470 46 Q-560 ${50 + Math.sin(t * 2) * 4} -680 44`} stroke="#fff" strokeWidth={8} strokeLinecap="round" fill="none" opacity={0.6} />
+          {nationKey ? <g transform={jp ? 'translate(80 -280)' : 'translate(200 -280)'}><rect x={0} y={-30} width={46} height={30} fill={jp ? '#fff' : nation(nationKey).flag[0]} stroke={INK} strokeWidth={2} />{jp ? <circle cx={23} cy={-15} r={9} fill="#bc002d" /> : null}</g> : null}
         </g>
       );
     }

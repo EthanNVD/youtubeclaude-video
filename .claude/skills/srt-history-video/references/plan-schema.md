@@ -35,6 +35,24 @@ Scene `start`/`end` are absolute seconds on the voice clock.
 | `autoSfx` | `false` to disable automatic SFX for this scene |
 
 ### Set kinds (`set.kind`)
+Detailed acting sets. All of them animate (sea rolls, lamps sway, dust in light, smoke, windsock).
+- `garden`: brick house, hedge, bench, path.
+- `bridge`: ship's bridge with wheel, telegraph, sea rolling in the windows; `nation`, `convoy`.
+- `deck` / `flightdeck`: carrier flight deck with island, parked planes, crew; `nation`, `planes`, `escort`.
+- `hangar`: planes, bomb carts, open side to the sea; `nation`.
+- `radio`: radio racks with blinking dials, pinned messages; `desk`.
+- `tent`: field HQ with lantern, crates, map table; `outside: "snow"`.
+- `airfield`: hangars, tower, windsock, runway; `nation`, `planes`.
+- `corridor`: receding hallway; `doors: ["ROOM 40","NO ENTRY"]`.
+- `parliament`: benches of members.
+- `cell`: barred-window light; `bars`.
+- `train_interior`: landscape rushing past; `outside`.
+- `cockpit`: canopy view with banking horizon; `bank`, `below: "land"`.
+
+Lighting runs on every set (corner falloff, window shafts with dust, lamp dust); `light: "none"` disables it.
+
+Foreground (drawn over the actors, slight parallax): `fg`: `plant curtain rail grass sandbags officedesk desk doorframe branches barbed`; `fgSide: left|right|both`. Use `fg: "officedesk"` with `desk: false` to put people *behind* a desk.
+
 Interiors: `office`/`study` (options: `flag`, `portrait`(bool), `portraitFlag`, `map`(label text → wall map), `shelf`, `lamp`, `desk`(bool), `deskW`, `wall`, `clockTime` "10:20"), `cabinet`/`conference` (long table, `cloth`), `warroom`, `bunker` (`map`, `flag`), `codebreak`/`classroom` (blackboard room), `kitchen`/`home`, `factory`, `rally`/`podium` (`flag`), `studio`/`paper`/`void` (`color`) — plain backdrop for devices/inserts, `dark`/`memorial`.
 Exteriors: `sea`/`ocean` (`horizon`), `sky`/`air` (`below: "sea"`), `beach` (`cliffs`), `field`/`countryside`/`steppe`, `snow`, `desert`, `mud`, `jungle`, `city`/`street`/`ruins` (`ruined`), `harbor`/`dock`, `trench`, `railway`/`station`.
 Common: `time`: `day|dusk|dawn|night`; `weather`: `rain|snow`; `ground` (y of floor/road); field options `road`(bool), `poles`(bool), `houses`(bool), `trees`(`round|pine|bare|palm`), `horizon`.
@@ -44,7 +62,7 @@ Common: `time`: `day|dusk|dawn|night`; `weather`: `rain|snow`; `ground` (y of fl
 `colors`: `{ "<polity name in basemap>": "<nation key | css colour>" }`; prefix `~` matches by substring (`"~Japan": "JPN"`). Names in 1938: `Germany`, `USSR`, `United Kingdom`, `France`, `Italy`, `Poland`, `Empire of Japan`, `United States`, `Finland`, `Romania`, `Hungary`, `Czechoslovakia`, `Yugoslavia`, `Chinese warlords`… (check with `python -c "import json;print(sorted({f['properties']['name'] for f in json.load(open('public/maps/world_1938.json'))['features']}))"`).
 `center` + `span` (degrees of longitude across the frame: 6 = a city/island, 25 = a country, 60–90 = an ocean/continent). Antimeridian works (Pacific: center 175).
 `labels`: names to write at their centroid (or `true` = all coloured); `labelNames` rename them ("Empire of Japan" → "JAPAN").
-`style`: `paper` (default), `war`, `snow` (eastern front winter), `dark`, `sepia`.
+`style`: `paper` (default), `war`, `snow` (eastern front winter), `dark`, `sepia`, `poster` (saturated thumbnail look, white borders).
 Borders are the basemap's — for exact front lines draw `front`/`region` elements yourself.
 
 ## Element (all kinds)
@@ -63,9 +81,23 @@ Borders are the basemap's — for exact front lines draw `front`/`region` elemen
 
 ### Kinds
 
-**actor** — `who` (cast id or preset), `pose`, `expr`, `talk` (mouth flaps), `look` (−1…1 pupils), `view: "back"` (over-the-shoulder), `seated`, `holds` (prop item; with pose `hold`/`holdUp`/`write`/`phone`), `holdsText`, `tag` (nameplate under feet). Moving `x`/`at` in keys makes them walk automatically. Height ≈ 305 px × scale (scale 1.2–1.4 for medium shots, 2–2.6 for close-ups/thumbnails).
-Poses: `idle hips point pointL pointUp raise cheer chin head face cross hold holdUp talk talk2 shrug salute phone binoculars wave write fist slam present cower wipe`.
-Expressions: `neutral happy smile laugh angry rage determined smug worried sad cry panic nervous sweat shocked shout tired`.
+**actor** fields:
+- `who`: cast id or preset (`host` = the narrator).
+- `pose`, `expr`.
+- `talk`: mouth + head nods + beat gestures.
+- `look`: −1…1 pupils. `headMove`: `nod shake tilt`.
+- `view: "back"` (over-the-shoulder), `seated`, `kneel`.
+- `holds`: prop item, placed in the hand(s) automatically; `holdsScale`, `holdsRotate`, `holdsText`.
+- `tag`: nameplate under the feet.
+
+Motion:
+- Keyframing `x`/`at` makes the actor **walk**: direction comes from the movement, with stride, knee bend, counter-swinging arms and lean.
+- Faster than ~330 px/s at scale 1 becomes a **run**. Use `walk: true` / `run: true` + `dir` to walk on the spot.
+- **Pose keys blend** (0.42 s with overshoot; `poseDur` changes it), e.g. `"keys":[{"t":1.1,"pose":"head","expr":"panic"}]`.
+- Height ≈ 280 px × scale: 1.3–1.7 for medium shots, 3.2–3.8 for thumbnail busts.
+
+Poses: `idle hips point pointL pointUp pointDown pointSelf raise cheer chin think head face facepalm cross hold holdUp carry show talk talk2 explain shrug present offer salute phone binoculars wave write typing fist slam cower wipe drink smoke behind pockets reach stop beg rub scratch count`.
+Expressions: `neutral happy smile laugh angry rage determined smug worried sad cry panic nervous sweat shocked shout tired grin`.
 
 **crowd** — `who` (id or list), `count`, `spacing`, `pose`, `expr`, `walk`.
 
@@ -85,6 +117,11 @@ Expressions: `neutral happy smile laugh angry rage determined smug worried sad c
 **namecard** — `name`, `role` (first appearance of a person; bottom-left). **date** — extra badge (`text`, `right`).
 **panel** — coloured rectangle (`w`,`h`,`color`|`nation`) for split screens; **shape** — `shape: circle|rect|ring|cross|check`.
 **flag** — `nation`, `w`, `h`, `still`.
+Thumbnail/emphasis helpers:
+- **drop**: big sweat/tear drop (`size`, `falling`).
+- **hand**: giant pointing hand with a sleeve, points +x (`sleeve`, `skin`).
+- **torn**: torn-paper colour band (`w`, `h`, `color`).
+- **glow**: radial light (`r`, `color`, `strength`).
 
 Map-oriented (work on stage too with `screen: true` + px coordinates):
 **arrow** — `path` (≥2 points), `color` (nation key or css), `width` (24), `dashed` (plans/intentions), `head`, `label`, `dur`, `progress` (0–1 keyable; otherwise it draws itself from `in`).

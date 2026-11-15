@@ -1,0 +1,97 @@
+{
+  "thumbs": [
+    {
+      "angle": "myth vs truth",
+      "title": "Why The Battle of Midway Was NOT Bad Luck",
+      "layout": "hero",
+      "heroSide": "right",
+      "background": "a bright Pacific ocean seen from slightly above, three Japanese aircraft carriers (wooden flight decks with a big red circle painted on them) burning with orange flames and thick black smoke columns, three dark-blue American dive bombers with white stars diving out of white clouds toward them",
+      "characters": [
+        {
+          "who": "nagumo",
+          "name": "Vice-Admiral Chuichi Nagumo",
+          "position": "right 40% of the frame, big bust, head top at about 18% from the top, turned toward the burning ships on the left",
+          "expr": "panic",
+          "pose": "head",
+          "extra": "Two big blue cartoon sweat drops fly off his head."
+        }
+      ],
+      "symbols": [
+        "a thick red curved arrow from the American planes down to the burning carriers"
+      ],
+      "text": {
+        "position": "top-left",
+        "font": "condensed",
+        "lines": [{ "text": "THEY KNEW.", "accent": ["KNEW."], "accentColor": "yellow" }]
+      },
+      "light": "warm orange firelight on the admiral's face from the left, bright midday sky, glow behind the admiral's head",
+      "palette": "deep ocean blue and sky blue against orange fire and black smoke, white sailor whites, one yellow accent in the headline",
+      "fix_tips": ["If the face is too small, ask for 'bigger head, closer crop'.", "If the model adds more text, repeat 'only the words THEY KNEW.'."]
+    },
+    {
+      "angle": "the codebreaker",
+      "title": "The Fake Message That REALLY Won Midway",
+      "layout": "versus",
+      "background": "a saturated poster-style political map of the Pacific Ocean: bright blue sea, Japan and its empire in red at the far left, Hawaii in blue at the right, thick white borders",
+      "middle": "the tiny Midway atoll circled by a thick glowing red ring with a white label box 'MIDWAY', a dashed red arrow from Japan to it, and a crumpled telegram paper floating above with a red stamp",
+      "characters": [
+        {
+          "who": "yamamoto",
+          "name": "Admiral Isoroku Yamamoto",
+          "position": "far left, large bust cropped by the left and bottom edges, facing right",
+          "expr": "worried",
+          "pose": "chin",
+          "extra": "One big blue sweat drop on his temple."
+        },
+        {
+          "who": "rochefort",
+          "name": "Commander Joseph Rochefort, US Navy codebreaker",
+          "look": "elderly, balding with grey tufts at the sides, wearing a dark red smoking jacket over khaki trousers, kind wrinkled face",
+          "position": "far right, large bust cropped by the right and bottom edges, facing left",
+          "expr": "smug",
+          "pose": "point",
+          "target": "the Midway ring in the centre"
+        }
+      ],
+      "labels": [
+        { "text": "MIDWAY", "where": "next to the red ring" },
+        { "text": "AF = ?", "style": "a black box with bold white chalk-style text", "where": "above the ring" }
+      ],
+      "text": {
+        "position": "top",
+        "font": "rounded",
+        "lines": [{ "text": "SHORT OF WATER?", "accent": ["WATER?"], "accentColor": "yellow" }]
+      },
+      "light": "even bright light, soft rim light on both characters to separate them from the map",
+      "palette": "electric blue sea, red Japan, white borders, khaki and dark red on the characters"
+    },
+    {
+      "angle": "numbers",
+      "title": "4 Carriers vs 3: How Did Japan Lose Midway?",
+      "layout": "split_diagonal",
+      "panels": [
+        {
+          "scene": "calm blue sea under a clear sky, four intact Japanese aircraft carriers sailing in formation with planes lined up on their decks",
+          "tag": "10:20 AM",
+          "characters": [
+            { "who": "nagumo", "name": "Vice-Admiral Nagumo", "position": "bottom centre of the panel, large bust", "expr": "smug", "pose": "cross" }
+          ]
+        },
+        {
+          "scene": "the same sea at dusk-orange light, three of the carriers burning with huge flames and black smoke, one still intact on the horizon",
+          "tag": "10:26 AM",
+          "characters": [
+            { "who": "nagumo", "name": "the same Vice-Admiral Nagumo", "position": "bottom centre of the panel, large bust", "expr": "panic", "pose": "head", "extra": "Big sweat drops." }
+          ]
+        }
+      ],
+      "text": {
+        "position": "bottom",
+        "font": "condensed",
+        "lines": [{ "text": "6 MINUTES.", "accent": ["6"], "accentColor": "yellow" }]
+      },
+      "light": "left panel cool and calm, right panel hot orange firelight",
+      "palette": "blue calm vs orange-red disaster, white divider"
+    }
+  ]
+}

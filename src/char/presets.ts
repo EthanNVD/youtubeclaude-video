@@ -81,6 +81,11 @@ export const PRESETS: Record<string, CharSpec> = {
   caesar: { nation: 'SPQR', outfit: 'robe', color: '#f1ece0', hair: 'short', age: 0.6 },
   vn_soldier: { nation: 'VN', outfit: 'tunic', hat: 'pith_vn', age: 0.2 },
   vn_peasant: { nation: 'VN', outfit: 'civil', color: '#3a3a3a', hat: 'conical', age: 0.3 },
+  // ---- THE HOST: the channel's recurring narrator (one identity for every video; edit here to restyle) ----
+  // Young field historian: brown tousled mop with a cowlick, round glasses, tweed jacket over a mustard vest, red scarf.
+  host: { outfit: 'tweed', color: '#7b5a3c', vest: '#d0a13c', pants: '#3f3a36', hair: 'tousled', hairColor: '#5a3b26', glasses: 'round', extra: ['scarf', 'blush'], scarf: '#b8322a', age: 0.3, eyes: 'dot' },
+  host_field: { outfit: 'coat', color: '#8a7a5a', hair: 'tousled', hairColor: '#5a3b26', glasses: 'round', extra: ['scarf'], scarf: '#b8322a', age: 0.3 },
+  host_winter: { outfit: 'coat', color: '#5b4a3a', hat: 'ushanka', hair: 'tousled', hairColor: '#5a3b26', glasses: 'round', extra: ['scarf'], scarf: '#b8322a', age: 0.3 },
   // ---- civilians / presenters ----
   civilian_man: { outfit: 'civil', hair: 'short', age: 0.4 },
   civilian_woman: { outfit: 'dress', color: '#7a8fb0', hair: 'bun', female: true, age: 0.35, extra: ['blush'] },

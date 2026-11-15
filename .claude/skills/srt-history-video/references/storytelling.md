@@ -27,6 +27,39 @@ One recurring, scored visual that turns the argument into something physical. It
 | biography / family | timeline or tree on a board | `timeline` |
 A presenter character (archivist, accountant…) may own the device; keep them optional and consistent.
 
+## Acting first (the reference channel animates *scenes*, not slides)
+
+Frame studies of the reference videos (Midway, Turning Point) show that most screen time is **people doing things in a real place**:
+- Rochefort shuffling through the basement in slippers.
+- Two politicians walking down a garden path while arguing.
+- An admiral at his desk lifting a telegram.
+- A pilot looking down from the cockpit.
+- Crews loading bombs in the hangar.
+
+Maps and devices bridge these scenes. Target per chapter: **world/acting ≥ 60 %**, maps 15–25 %, device/charts/documents ≤ 20 %, host 5–10 %.
+
+**Every world shot** = place + action + reaction:
+- **Place**: use a detailed set and add life.
+  - Sets: `garden`, `bridge`, `deck`, `hangar`, `radio`, `tent`, `corridor`, `parliament`, `cell`, `train_interior`, `cockpit`, `airfield`, plus `office`, `cabinet`, `warroom`, `codebreak`, `trench`, `harbor`, `city`…
+  - Foreground `fg` for depth: `plant`, `curtain`, `rail`, `grass`, `sandbags`, `officedesk`, `doorframe`, `branches`, `barbed`.
+  - `time`/`weather` for mood.
+- **Entrance**: characters walk or run in (keyframe `x`: walking is automatic, with stride, knee bend and arm swing; fast moves become a run). Do not start every shot with people already standing still.
+- **Business**: what the hands do on the key words: `hold`/`show` a document (`holds`), `typing`, `write`, `binoculars`, `phone`, `carry` a crate or bomb, `pointUp` at the sky, `pointL`/`point` at a map, `drink`, `smoke`, `salute`.
+- **Reaction**: switch `pose` + `expr` on the word that hurts or helps (pose keys blend in 0.4 s with overshoot), e.g. binoculars → hands on head + panic; hold paper → cheer. Use `headMove: nod|shake|tilt` for listening, denial and doubt.
+- **Talking**: `talk: true` gives mouth, head nods and beat gestures, so the speaker gestures every few seconds.
+- **Cut rhythm**: 2–4 s shots inside action sequences (wide → reaction close-up → detail), 5–8 s for explanations. Push in on the reaction (zoom 1.2–1.4 over 0.2–0.3 s).
+
+### The host (recurring narrator — `who: "host"`)
+A young field historian: tousled brown hair with a cowlick, round glasses, tweed jacket, mustard vest, red scarf. Variants: `host_field` (coat), `host_winter` (ushanka). He is the same in every video.
+
+Use him for:
+- the cold-open *myth* line: `study` set, holding the symbol prop, `headMove: shake` → `stop`;
+- presenting the device (`present`, `explain`, `point` at the scale or bars);
+- chapter transitions (walking along a `corridor`, sitting in a `train_interior`);
+- the verdict and the outro question.
+
+Keep him out of the historical scenes themselves.
+
 ## Clause → picture (choose the visual language)
 
 | the narration says… | show… |

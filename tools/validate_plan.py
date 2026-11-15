@@ -24,7 +24,8 @@ def cases(path, fn=None):
 
 def vocab():
     v = {
-        "sets": cases("sets/Sets.tsx", "export const SetBackground"),
+        "sets": cases("sets/Sets.tsx", "const BaseSet") | cases("sets/Rich.tsx", "export const RichSet"),
+        "fg": cases("sets/Rich.tsx", "export const Foreground"),
         "props": cases("props/Props.tsx", "export const Prop:"),
         "vehicles": cases("props/Vehicles.tsx", "export const Vehicle:"),
         "fx": cases("fx/Fx.tsx"),
@@ -37,7 +38,7 @@ def vocab():
     return v
 
 
-EXPRS = {"neutral", "happy", "smile", "laugh", "angry", "rage", "determined", "smug", "worried", "sad", "cry", "panic", "nervous",
+EXPRS = {"grin", "neutral", "happy", "smile", "laugh", "angry", "rage", "determined", "smug", "worried", "sad", "cry", "panic", "nervous",
          "sweat", "shocked", "shout", "tired"}
 
 
@@ -94,6 +95,9 @@ def main(proj):
             k = (s.get("set") or {}).get("kind")
             if k and k not in V["sets"]:
                 err.append(f"{sid}: unknown set '{k}' (have: {', '.join(sorted(V['sets']))})")
+            fg = (s.get("set") or {}).get("fg")
+            if fg and fg not in V["fg"]:
+                err.append(f"{sid}: unknown foreground '{fg}' (have: {', '.join(sorted(V['fg']))})")
         if t == "map":
             m = s.get("map") or {}
             if "center" not in m or "span" not in m:

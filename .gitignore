@@ -12,3 +12,4 @@ projects/*/input/*.m4a
 projects/*/input/*.aac
 projects/*/input/*.flac
 projects/*/input/*.ogg
+projects/*/input/thumb_*

@@ -1,6 +1,6 @@
 ---
 name: srt-history-video
-description: Turn an SRT + the user's narration audio into a finished military-history animated explainer (chibi characters, historical maps, a scored storytelling device, date badges, stamps, action SFX — the "Two Sides of War" grammar) rendered with this repo's Remotion engine, plus the YouTube package (3 titles, 3 thumbnails, description with chapters, tags, hashtags). Use whenever the user drops an .srt (with or without a voice file) into projects/ or asks to make/re-make/fix a history video, its thumbnails or its metadata.
+description: Turn an SRT + the user's narration audio into a finished military-history animated explainer (chibi characters acting in detailed places, a recurring host, historical maps, a scored storytelling device, date badges, stamps, action SFX — the "Two Sides of War" grammar) rendered with this repo's Remotion engine, plus the YouTube package (3 titles, 3 detailed thumbnail prompts for image models + drafts, description with chapters, tags, hashtags). Use whenever the user drops an .srt (with or without a voice file) into projects/ or asks to make/re-make/fix a history video, its thumbnails or its metadata.
 ---
 
 # SRT → military-history animated video
@@ -10,7 +10,11 @@ Read the whole pipeline once, then work through it without stopping for approval
 Talk to the user in their language (Vietnamese by default); on-screen text, titles and metadata follow the **SRT language**.
 
 Fixed decisions (do not re-ask): topic = military history · the user supplies the voice file with the SRT ·
-**no music** — only ambience + action SFX · visuals drawn in code in the channel style · output 1920×1080 24 fps MP4.
+**no music** — only ambience + action SFX · visuals drawn in code in the channel style · output 1920×1080 24 fps MP4 ·
+**acting first**: most shots are characters *doing things in real places* (decks, bridges, offices, corridors, trenches),
+not charts — like an animated film; maps and devices are the minority ([storytelling.md](references/storytelling.md) §Acting first) ·
+**the host** (`who: "host"`, the channel's recurring narrator) opens the video, presents the device and closes it ·
+**thumbnails = detailed prompts** for an image model + engine drafts ([thumbnails.md](references/thumbnails.md)).
 
 ## 0. Set up the project
 
@@ -29,14 +33,15 @@ Read **all** of `work/reading.md` (in chunks if long). Never plan from the first
 2. **The device** — one recurring, scored visual that carries the argument for the whole video
    (see [storytelling.md](references/storytelling.md) §Device). Pick it from the script's logic, not from habit.
 3. **Chapters** (normally 8–14, each 1.5–4.5 min): start time (a sentence boundary), short evocative title, what changes in the device at its end.
-4. **Cast**: every person who appears → preset or custom spec ([cast.md](references/cast.md)). Recurring people keep one look.
+4. **Cast**: every person who appears → preset or custom spec ([cast.md](references/cast.md)). Recurring people keep one look. Always include `"host": {"preset": "host"}`.
 5. **Fact flags**: ASR errors in names/numbers/dates (fix them on screen, never in timing), claims shown as "debated".
 
 ## 2. Turn narration into shots — [storytelling.md](references/storytelling.md)
 
 Work chapter by chapter. Group cues into **beats** (one idea, usually 8–20 s), then each beat into **shots** (one camera set-up, typically 3–8 s; the plan's `scenes`). For every beat decide, before writing JSON:
 
-- **Which visual language**: *world* (people, places, objects — who did what, who suffered), *map* (where, how far, encirclement, routes), *device/chart/document* (comparison, verdict, numbers, evidence).
+- **Which visual language**: *world* (people acting in places — who did what, who suffered: the default, ≥ 60 % of screen time), *map* (where, how far, encirclement, routes), *device/chart/document* (comparison, verdict, numbers, evidence), *host* (the narrator in his study / at the device for hooks, transitions, verdicts).
+- **The acting beat**: for every *world* shot write the physical action in one line — entrance (walk/run in), business (reads, types, looks through binoculars, carries, points at the map), reaction (pose + expression change on the key word), exit. Characters change pose every 1.5–3 s (pose keys blend smoothly); nobody stands frozen.
 - **Before → action → after → reaction**: the visible change that proves the sentence. A label is not an action.
 - **What is revealed when**: an element appears on the word that names it (use cue times from `work/cues.json`).
 - **Text on screen**: date badge on place/time jumps, name card on first appearance of a person, 1–5-word labels/stamps. Never subtitles.
@@ -54,7 +59,7 @@ Coverage is mandatory: scenes are contiguous from 0 to the end of the voice (val
 
 ## 4. Look at it — `python tools/make.py projects/<slug> review`
 
-Open every `review/sheet_*.jpg` and judge as a viewer: does each frame show what the narration says at that moment? Check overlaps, text cut off, characters floating, empty frames, repeated compositions, wrong flags/colours/dates. Use `--scenes s012,s013 --at all` to inspect start/middle/end of a shot. Fix and re-review the changed scenes. Do this for the whole film, not a sample.
+Open every `review/sheet_*.jpg` and judge as a viewer: does each frame show what the narration says at that moment? Check overlaps, text cut off, characters floating, empty frames, repeated compositions, wrong flags/colours/dates. Count the shots: if world/acting shots are under ~60 %, replace charts/inserts with scenes of people doing the thing. Use `--scenes s012,s013 --at all` to inspect start/middle/end of a shot. Fix and re-review the changed scenes. Do this for the whole film, not a sample.
 
 ## 5. Sound — [sound.md](references/sound.md)
 
@@ -68,8 +73,9 @@ Full render ≈ 1–2× real time on this PC (check the first progress lines; pa
 ## 7. YouTube package — [thumbnails.md](references/thumbnails.md) + [metadata.md](references/metadata.md)
 
 1. Three **angles** from the same script (each a different curiosity: myth vs truth, decision/person, numbers/stakes…). Each angle = 1 title + 1 thumbnail + 1 hook line.
-2. `thumbs.json` (3 thumbnails, engine-drawn) → `python tools/make.py projects/<slug> thumbs` → look at `out/thumbs/*.jpg` at 25 % size: readable? one idea? emotion visible?
-3. `youtube/package.json` (titles, description with `{{CHAPTERS}}`, 20–29 tags, 3–4 hashtags) → `python tools/make.py projects/<slug> package` → `out/youtube/`.
+2. **Thumbnail prompts (main deliverable)**: write `youtube/thumb_prompts.json` (layout, characters with expression/pose/placement, the one-moment background, symbol, labels, exact headline 1–5 words with accent, light, palette) → `python tools/make.py projects/<slug> prompts` → `out/youtube/thumb_prompts.md` (Full prompt · Clean plate · Midjourney for each thumbnail) + `out/thumbs/ref_characters.png` (to attach to the image model). Read the generated prompts once as the image model would.
+3. **Engine drafts**: `thumbs.json` with the same headlines → `python tools/make.py projects/<slug> thumbs` → layout preview, check at 25 % size. When the user brings AI images back as `input/thumb_N.png`, the same command composites the exact headline on them.
+4. `youtube/package.json` (titles, description with `{{CHAPTERS}}`, 20–29 tags, 3–4 hashtags) → `python tools/make.py projects/<slug> package` → `out/youtube/`.
 
 ## 8. Extending the engine
 
@@ -77,4 +83,4 @@ Missing set/prop/vehicle/pose/preset? Add it in `src/` (follow the neighbours' s
 
 ## Deliver
 
-Report to the user: the MP4 path, duration, the 3 titles (★ recommended) with their thumbnails, paths to description/tags/hashtags, and anything you could not verify (facts flagged, scenes you consider weak). Never upload or publish.
+Report to the user: the MP4 path, duration, the 3 titles (★ recommended) with their thumbnail prompts (`out/youtube/thumb_prompts.md` — which variant for which model, the reference sheet to attach) and drafts, paths to description/tags/hashtags, and anything you could not verify (facts flagged, scenes you consider weak). Never upload or publish.

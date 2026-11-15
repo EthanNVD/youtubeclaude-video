@@ -94,6 +94,8 @@ const STYLES: Record<string, { ocean: string; land: string; border: string; coas
   dark: { ocean: '#1d2a38', land: '#3a3f44', border: '#59606a', coast: '#0f1820', label: '#d8d2c4' },
   sepia: { ocean: '#c9b48e', land: '#ecdcb8', border: '#a88e66', coast: '#7a6446', label: '#4a3a28' },
   war: { ocean: '#8fb6c9', land: '#e8dcc0', border: '#9a8a6a', coast: '#4f7486', label: '#3a3028' },
+  // thumbnail look: saturated poster map, bright sea, white borders
+  poster: { ocean: '#2f7fc1', land: '#f2cf5b', border: '#ffffff', coast: '#1d4f80', label: '#1b1b1b' },
 };
 
 export const MapLayer: React.FC<{ spec: MapSpec; proj: GeoProjection; t: number }> = ({ spec, proj }) => {
@@ -127,7 +129,7 @@ export const MapLayer: React.FC<{ spec: MapSpec; proj: GeoProjection; t: number 
           {data.fc.features.map((f, i) => {
             const d = path(f as unknown as GeoJSON.Feature);
             if (!d) return null;
-            return <path key={i} d={d} fill={fillFor(f.properties.name)} stroke={st.border} strokeWidth={1.6} strokeLinejoin="round" />;
+            return <path key={i} d={d} fill={fillFor(f.properties.name)} stroke={st.border} strokeWidth={spec.style === 'poster' ? 3.2 : 1.6} strokeLinejoin="round" />;
           })}
           {labels.map((n) => {
             const c = data.centroids.get(n);

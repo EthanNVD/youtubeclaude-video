@@ -232,3 +232,54 @@ SRT (+ giọng) ─► 1. Phân tích: gộp cue → câu, sửa lỗi ASR, th�
 **Thư viện loại cảnh (component):** MapScene (lãnh thổ, mũi tên mọc, bao vây, tuyến đường), WorldScene (bối cảnh + puppet), DeviceScene (cân, đường EXIT, van/ống, sổ kế toán, bàn thợ, bảng xếp hạng, meter), StatScene (thanh so sánh gắn vật), DocumentScene (telegram, lệnh, sách, bảng đen), InsertScene (cận đạo cụ), TitleCard/Chapter, HoldScene (nến, nghiêm trang), Counterfactual (sepia).
 
 **Giới hạn thật:** tự động hoá hoàn toàn đến mức diễn xuất nhân vật ngang Two Sides of War (bước chân bám đất, tay cầm giấy có tiếp xúc) là khó; mục tiêu thực tế là bản đồ/thiết bị/insert ngang mẫu, cảnh nhân vật ở mức puppet tốt. Nên tạo **bản sắc riêng** (thiết bị, người dẫn, bảng màu) thay vì sao chép nguyên nhân vật/thiết bị của kênh — vừa tránh trùng lặp, vừa an toàn với chính sách nội dung tái sử dụng của YouTube.
+
+## Bổ sung (15/11/2026) — 32 thumbnail của kênh + nghiên cứu chuyển động
+
+**Thumbnail (đủ 32 video của kênh)** — chi tiết trong `.claude/skills/srt-history-video/references/thumbnails.md`.
+
+Bố cục:
+
+| dạng | số thumbnail |
+|---|---|
+| đối đầu: 2 nhân vật ở hai mép, vật xung đột ở giữa | 12 |
+| một nhân vật rất lớn + cảnh câu chuyện phía sau | 9 |
+| chia đôi trước/sau có nhãn ngày | 7 |
+| nhân vật ở giữa + khung hai bên | 2 |
+| 3 ô số liệu | 1 |
+| chỉ có vật thể | 1 |
+
+Chữ:
+- 1–5 từ, trung vị 3 từ; 14/32 là câu hỏi.
+- Nằm trên cùng ở 24/32 thumbnail.
+- Trắng + một màu nhấn: vàng 21/32, đỏ 5/32.
+- Viền đen dày + bóng đổ.
+- Font đặc hẹp kiểu Anton (~19) hoặc tròn dày kiểu Luckiest Guy (~13).
+- Chữ thêm "cú twist" mà tiêu đề không nói.
+
+Nhân vật:
+- Cùng thiết kế chibi như video, cắt bán thân, đầu chiếm 40–55% chiều cao.
+- Cảm xúc là móc câu: giọt mồ hôi (14), ôm đầu hoảng (6), chỉ tay (7), khoanh tay đắc ý (5), khóc (3).
+- 1/3 thumbnail có một vật biểu tượng: đồng hồ bấm giờ, đồng hồ cát, đồng hồ xăng, cúp, tài liệu có tên…
+
+Nền và đồ họa:
+- Bản đồ chính trị bão hòa màu (19/32), cờ (14/32).
+- Mũi tên cong đỏ viền trắng, vòng tròn đỏ, nhãn hộp trắng chữ đen, nhãn ngày nền đen.
+
+Kết luận: thumbnail của kênh là **ảnh AI vẽ kỹ** nhưng giữ đúng thiết kế nhân vật. Vì vậy repo sinh **prompt chi tiết**: phong cách cố định rút từ 32 mẫu + bố cục + nhân vật lấy từ preset + biểu cảm + chữ chính xác + danh sách tránh. Kèm ảnh tham chiếu nhân vật và bước ghép chữ chuẩn lên ảnh.
+
+**Chuyển động nhân vật (xem khung hình liên tiếp video Midway & Turning Point):**
+- Đầu tròn to đặt thẳng lên thân nhỏ hình thang, cằm chồng lên cổ áo, không có cổ.
+- Tay là ống mảnh cong liền (không gập khuỷu cứng), bàn tay găng nhỏ.
+- Khi nói, một tay vung theo nhịp; khi khoanh tay, hai cẳng tay xếp ngang ngực.
+- Đi bộ: gối gập rõ, bàn chân nhấc lên, tay vung ngược chân, thân nhấp nhô.
+
+Engine đã được làm lại theo các quan sát này:
+- pose blending có overshoot, beat gesture khi nói, gật/lắc đầu;
+- dáng đi/chạy;
+- cầm đạo cụ đúng tay.
+
+**Cách kênh dựng cảnh:**
+- Phần lớn thời lượng là nhân vật hành động trong bối cảnh thật: Rochefort đi dép lê trong tầng hầm, hai chính khách đi dạo vườn, phi công trong buồng lái, phòng làm việc có điện thoại/đồng hồ.
+- Bản đồ và "thiết bị kể chuyện" chỉ là cầu nối.
+
+Skill đặt chỉ tiêu ≥60% cảnh diễn, và engine có thêm 12 bối cảnh chi tiết có chuyển động nền, lớp ánh sáng và tiền cảnh.

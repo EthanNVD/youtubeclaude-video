@@ -2,6 +2,7 @@ import React from 'react';
 import { C, INK, nation, FONT } from '../theme';
 import { rnd } from '../lib/anim';
 import { Flag } from '../props/Props';
+import { RICH_SETS, RichSet, Lighting } from './Rich';
 
 /**
  * Parametric backgrounds. Drawn on a 2400x1400 canvas centered on the 1920x1080 frame
@@ -269,7 +270,14 @@ const Building: React.FC<{ x: number; y: number; w: number; h: number; c: string
   );
 };
 
-export const SetBackground: React.FC<SetProps> = (p) => {
+export const SetBackground: React.FC<SetProps> = (p) => (
+  <g>
+    {RICH_SETS.has(p.kind) ? <RichSet {...p} /> : <BaseSet {...p} />}
+    <Lighting {...p} />
+  </g>
+);
+
+const BaseSet: React.FC<SetProps> = (p) => {
   const { kind, t } = p;
   const time = (p.time as string) ?? 'day';
   const night = time === 'night';

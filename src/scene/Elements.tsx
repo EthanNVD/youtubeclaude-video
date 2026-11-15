@@ -1,7 +1,7 @@
 import React from 'react';
 import type { GeoProjection } from 'd3-geo';
 import type { CastMember, ElementBase, LonLat } from '../types';
-import { envelope, resolveKeys, smoothPath, partialPolyline, toD, clamp, easeFn } from '../lib/anim';
+import { envelope, resolveKeys, smoothPath, partialPolyline, toD, clamp, easeFn, rnd } from '../lib/anim';
 import { Character } from '../char/Character';
 import { resolveCast } from '../char/presets';
 import { Prop, Flag } from '../props/Props';
@@ -123,22 +123,48 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
     case 'actor': {
       const who = (e.who as string) ?? 'civilian_man';
       const spec = resolveCast(ctx.cast as never, who, (e.look_ as Record<string, unknown>) ?? undefined);
-      // auto-walk when x/at changes over time
-      let walk = 0;
+      // auto-walk when x/at changes over time; direction + run from the speed
+      let walk = 0, dir = 1, run = false;
       if (el.keys?.some((kk) => 'x' in kk || 'at' in kk)) {
         const e2 = resolveKeys(el, el.keys, t + 0.08) as ElementBase;
-        const x2 = (e2.x as number) ?? x;
-        if (Math.abs(x2 - ((e.x as number) ?? x)) > 0.4 || (e2.at && e.at && Math.abs((e2.at as number[])[0] - (e.at as number[])[0]) > 1e-4)) walk = 1;
+        let dx = ((e2.x as number) ?? x) - ((e.x as number) ?? x);
+        if (e2.at && e.at && ctx.proj) {
+          const p1 = ctx.proj(e.at as LonLat), p2 = ctx.proj(e2.at as LonLat);
+          if (p1 && p2) dx = p2[0] - p1[0];
+        }
+        if (Math.abs(dx) > 0.4) {
+          walk = 1;
+          dir = Math.sign(dx) * flip;
+          run = Math.abs(dx) / 0.08 / Math.max(0.2, (e.scale as number) ?? 1) > 330;
+        }
       }
-      if (e.walk === true) walk = 1;
+      if (e.walk === true) { walk = 1; dir = ((e.dir as number) ?? 1); }
+      if (e.run === true) { walk = 1; run = true; dir = ((e.dir as number) ?? dir); }
+      // pose blending: find the last pose change at or before t
+      let pose = (el.pose as string) ?? 'idle', prevPose = pose, tChange = -99;
+      for (const kk of [...(el.keys ?? [])].sort((a, b) => a.t - b.t)) {
+        if (kk.t > t) break;
+        if (typeof kk.pose === 'string' && kk.pose !== pose) { prevPose = pose; pose = kk.pose; tChange = kk.t; }
+      }
+      const poseK = clamp((t - tChange) / ((e.poseDur as number) ?? 0.42), 0, 1);
+      const holdScale: Record<string, number> = { holdUp: 0.75, hold: 0.6, carry: 0.7, write: 0.5, phone: 0.45, show: 0.6, drink: 0.4, smoke: 0.35 };
+      const held = e.holds
+        ? {
+            node: <Prop item={e.holds as string} t={t} text={e.holdsText as string} nationKey={spec.nation} />,
+            scale: (e.holdsScale as number) ?? holdScale[pose] ?? 0.5,
+            rotate: pose === 'phone' ? -30 : (e.holdsRotate as number) ?? 0,
+            dy: pose === 'holdUp' ? -95 : pose === 'hold' || pose === 'carry' ? 4 : 0,
+          }
+        : undefined;
       body = (
         <g>
-          <Character spec={spec} state={{ pose: e.pose as string, expr: e.expr as string, talk: !!e.talk, look: e.look as number, view: e.view as 'front' | 'back', seated: !!e.seated, walk }} t={t} seed={seed} />
-          {e.holds ? (
-            <g transform={e.pose === 'holdUp' ? 'translate(0 -205) scale(0.75)' : e.pose === 'phone' ? 'translate(62 -222) scale(0.45) rotate(-30)' : e.pose === 'hold' || e.pose === 'write' ? 'translate(0 -122) scale(0.6)' : 'translate(52 -80) scale(0.5)'}>
-              <Prop item={e.holds as string} t={t} text={e.holdsText as string} nationKey={spec.nation} />
-            </g>
-          ) : null}
+          <Character
+            spec={spec}
+            state={{ pose, prevPose, poseK, expr: e.expr as string, talk: !!e.talk, look: e.look as number, view: e.view as 'front' | 'back', seated: !!e.seated, kneel: !!e.kneel, walk, run, dir, headMove: e.headMove as string }}
+            t={t}
+            seed={seed}
+            held={held}
+          />
           {e.tag ? (
             <g transform="translate(0 30)">
               <rect x={-((e.tag as string).length * 11 + 20)} y={0} width={(e.tag as string).length * 22 + 40} height={40} fill="#fbf6e8" stroke={INK} strokeWidth={3} />
@@ -161,7 +187,7 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
             const row = i % 2;
             return (
               <g key={i} transform={`translate(${cx} ${row * 26}) scale(${row ? 0.92 : 1})`}>
-                <Character spec={spec} state={{ pose: (e.pose as string) ?? 'idle', expr: (e.expr as string) ?? 'neutral', walk: e.walk ? 1 : 0 }} t={t + i * 0.37} seed={seed + i} />
+                <Character spec={spec} state={{ pose: (e.pose as string) ?? 'idle', expr: (e.expr as string) ?? 'neutral', walk: e.walk ? 1 : 0, dir: (e.dir as number) ?? 1, talk: !!e.talk }} t={t + i * 0.37} seed={seed + i} />
               </g>
             );
           })}
@@ -310,6 +336,68 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
     case 'ship':
       body = <MapIcon type={(e.type as string) ?? 'ship'} nationKey={e.nation as string} color={e.color as string} label={e.label as string} t={t} burning={!!e.burning} />;
       break;
+    case 'torn': {
+      // torn-paper band (thumbnail text background): coloured sheet with a white ragged border
+      const tw = (e.w as number) ?? 900, th = (e.h as number) ?? 300;
+      const rag = (w2: number, h2: number, k: string, amp: number) => {
+        const pts: string[] = [];
+        const nx = 28, ny = 10;
+        for (let i = 0; i <= nx; i++) pts.push(`${-w2 / 2 + (i * w2) / nx} ${-h2 / 2 + (rnd(k, 't', i) - 0.5) * amp}`);
+        for (let i = 0; i <= ny; i++) pts.push(`${w2 / 2 + (rnd(k, 'r', i) - 0.5) * amp} ${-h2 / 2 + (i * h2) / ny}`);
+        for (let i = nx; i >= 0; i--) pts.push(`${-w2 / 2 + (i * w2) / nx} ${h2 / 2 + (rnd(k, 'b', i) - 0.5) * amp}`);
+        for (let i = ny; i >= 0; i--) pts.push(`${-w2 / 2 + (rnd(k, 'l', i) - 0.5) * amp} ${-h2 / 2 + (i * h2) / ny}`);
+        return 'M' + pts.join(' L') + ' Z';
+      };
+      body = (
+        <g>
+          <path d={rag(tw + 10, th + 10, seed + 'o', 40)} fill="#000" opacity={0.3} transform="translate(10 14)" />
+          <path d={rag(tw + 36, th + 36, seed + 'w', 34)} fill="#fbf8f0" />
+          <path d={rag(tw, th, seed + 'c', 26)} fill={col(e.color, C.red)} />
+        </g>
+      );
+      break;
+    }
+    case 'drop': {
+      // big cartoon sweat / tear drop
+      const sz = (e.size as number) ?? 1;
+      const fall = e.falling ? ((t * 0.8) % 1) * 60 : 0;
+      body = (
+        <g transform={`translate(0 ${fall}) scale(${sz})`} opacity={e.falling ? 1 - ((t * 0.8) % 1) * 0.6 : 1}>
+          <path d="M0 -60 Q-34 -6 -34 16 A34 34 0 0 0 34 16 Q34 -6 0 -60 Z" fill={col(e.color, '#6fc3f2')} stroke={INK} strokeWidth={6} strokeLinejoin="round" />
+          <path d="M-14 4 Q-16 20 -4 28" stroke="#fff" strokeWidth={7} fill="none" strokeLinecap="round" opacity={0.85} />
+        </g>
+      );
+      break;
+    }
+    case 'hand': {
+      // giant pointing hand with a sleeve: points to +x (use rotate / flip)
+      const sl = col(e.sleeve, '#2f3036'), sk = col(e.skin, '#f6dcc4');
+      body = (
+        <g>
+          <path d="M-900 -46 L-60 -46 L-60 46 L-900 46 Z" fill={sl} stroke={INK} strokeWidth={7} />
+          <path d="M-80 -54 H-40 V54 H-80 Z" fill="#f2efe6" stroke={INK} strokeWidth={6} />
+          <path d="M-42 -40 Q20 -52 60 -36 L190 -38 Q214 -36 214 -18 Q214 0 190 0 L96 2 Q104 22 92 40 Q60 62 -10 54 Q-46 48 -42 20 Z" fill={sk} stroke={INK} strokeWidth={7} strokeLinejoin="round" />
+          <path d="M30 2 Q60 6 92 4 M24 26 Q56 30 86 24" stroke={INK} strokeWidth={5} fill="none" strokeLinecap="round" />
+          <path d="M-10 -40 Q10 -70 46 -60 Q60 -50 50 -36" fill={sk} stroke={INK} strokeWidth={6} />
+        </g>
+      );
+      break;
+    }
+    case 'glow': {
+      const gid = 'glow_' + seed.replace(/[^a-z0-9]/gi, '');
+      body = (
+        <g>
+          <defs>
+            <radialGradient id={gid}>
+              <stop offset="0" stopColor={col(e.color, '#fff3c0')} stopOpacity={(e.strength as number) ?? 0.85} />
+              <stop offset="1" stopColor={col(e.color, '#fff3c0')} stopOpacity={0} />
+            </radialGradient>
+          </defs>
+          <circle r={(e.r as number) ?? 500} fill={`url(#${gid})`} />
+        </g>
+      );
+      break;
+    }
     case 'burst':
       body = <Fx kind="explosion" a={a} t={t} seed={seed} size={(e.size as number) ?? 0.5} />;
       break;

@@ -1,16 +1,23 @@
 // Render helper around @remotion/renderer.
 //   node tools/render.mjs stills <plan.json> <outDir> [--at scene|mid|all] [--scenes s1,s2] [--scale 0.5]
 //   node tools/render.mjs video  <plan.json> <out.mp4> [--from 0 --to 60] [--concurrency 6]
-//   node tools/render.mjs thumb  <thumbs.json> <outDir>     (thumbs.json = {cast, thumbs:[ThumbSpec...]})
+//   node tools/render.mjs thumb  <thumbs.json> <outDir>     (thumbs.json = {cast, thumbs:[ThumbSpec...]}; thumb.image = AI art to put the headline on)
+//   node tools/render.mjs refs   <refs.json> <out.png>      (character reference sheet: {names, cast})
 import { bundle } from '@remotion/bundler';
 import { renderStill, renderMedia, selectComposition } from '@remotion/renderer';
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
-import { existsSync } from 'node:fs';
+import { existsSync, rmSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import os from 'node:os';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+// keep Remotion's temp files (bundle, frames) on the project drive and clean them up afterwards
+const cacheDir = path.join(root, '.cache', 'tmp');
+await mkdir(cacheDir, { recursive: true });
+process.env.TEMP = cacheDir;
+process.env.TMP = cacheDir;
+process.env.TMPDIR = cacheDir;
 const args = process.argv.slice(2);
 const [op, input, out] = args;
 const opt = (k, d) => {
@@ -23,7 +30,11 @@ if (!op || !input || !out) {
 }
 
 const log = (...a) => console.log('[render]', ...a);
-const serveUrl = await bundle({ entryPoint: path.join(root, 'src/index.ts'), publicDir: path.join(root, 'public'), onProgress: () => {} });
+const bundleDir = path.join(root, '.cache', 'bundle-' + process.pid);
+const serveUrl = await bundle({ entryPoint: path.join(root, 'src/index.ts'), publicDir: path.join(root, 'public'), outDir: bundleDir, onProgress: () => {} });
+process.on('exit', () => {
+  try { rmSync(bundleDir, { recursive: true, force: true }); } catch {}
+});
 log('bundled');
 const json = JSON.parse(await readFile(input, 'utf8'));
 const browserOpts = { chromiumOptions: { gl: 'angle' } };
@@ -92,11 +103,30 @@ if (op === 'stills') {
   await mkdir(out, { recursive: true });
   for (let i = 0; i < json.thumbs.length; i++) {
     const file = path.join(out, `thumb_${i + 1}.png`);
-    const inputProps = { thumb: json.thumbs[i], cast: json.cast };
+    const thumb = { ...json.thumbs[i] };
+    if (thumb.image && !String(thumb.image).startsWith('data:')) {
+      // AI-generated art from the user: embed it so the headline can be composited on top
+      const imgPath = path.isAbsolute(thumb.image) ? thumb.image : path.join(opt('base', path.dirname(input)), thumb.image);
+      if (!existsSync(imgPath)) {
+        log(`thumb ${i + 1}: image ${imgPath} not found — drawing the engine draft instead`);
+        delete thumb.image;
+      } else {
+        const ext = path.extname(imgPath).slice(1).toLowerCase().replace('jpg', 'jpeg');
+        thumb.image = `data:image/${ext};base64,` + (await readFile(imgPath)).toString('base64');
+      }
+    }
+    const inputProps = { thumb, cast: json.cast };
     const comp = await selectComposition({ serveUrl, id: 'Thumb', inputProps, ...browserOpts });
     await renderStill({ composition: comp, serveUrl, inputProps, output: file, imageFormat: 'png', ...browserOpts });
     log(file);
   }
+} else if (op === 'refs') {
+  // character reference sheet for image models: each character in 3 expressions
+  const names = json.names.flatMap((n) => [n, n, n]);
+  const inputProps = { names, cast: json.cast, exprs: ['neutral', 'smug', 'panic'], poses: ['idle', 'cross', 'head'], scale: 1.05, cols: 6, labels: true };
+  const comp = await selectComposition({ serveUrl, id: 'Gallery', inputProps, ...browserOpts });
+  await renderStill({ composition: comp, serveUrl, inputProps, output: out, imageFormat: 'png', ...browserOpts });
+  log(out);
 } else {
   console.error('unknown op', op);
   process.exit(1);

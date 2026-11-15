@@ -1,0 +1,350 @@
+{
+ "meta": {
+  "title": "showcase",
+  "lang": "en",
+  "fps": 24,
+  "duration": 48
+ },
+ "cast": {
+  "us_sailor_radio": {
+   "preset": "american_sailor"
+  }
+ },
+ "scenes": [
+  {
+   "id": "c01",
+   "start": 0.0,
+   "end": 4.0,
+   "type": "stage",
+   "set": {
+    "kind": "study",
+    "fg": "plant",
+    "shelf": true,
+    "lamp": true,
+    "desk": false
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "host",
+     "x": 900,
+     "y": 900,
+     "scale": 1.6,
+     "pose": "idle",
+     "talk": true,
+     "expr": "smile",
+     "keys": [
+      {
+       "t": 1.5,
+       "pose": "explain"
+      },
+      {
+       "t": 3,
+       "pose": "point"
+      }
+     ]
+    }
+   ],
+   "date": "THE HOST"
+  },
+  {
+   "id": "c02",
+   "start": 4.0,
+   "end": 8.0,
+   "type": "stage",
+   "set": {
+    "kind": "garden"
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "churchill",
+     "x": 300,
+     "y": 900,
+     "scale": 1.2,
+     "keys": [
+      {
+       "t": 4,
+       "x": 900
+      }
+     ],
+     "expr": "neutral"
+    },
+    {
+     "kind": "actor",
+     "who": "halifax",
+     "x": 150,
+     "y": 900,
+     "scale": 1.25,
+     "keys": [
+      {
+       "t": 4,
+       "x": 740
+      }
+     ],
+     "talk": true
+    }
+   ],
+   "date": "27 MAY 1940"
+  },
+  {
+   "id": "c03",
+   "start": 8.0,
+   "end": 12.0,
+   "type": "stage",
+   "set": {
+    "kind": "bridge",
+    "nation": "JPN",
+    "convoy": true
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "nagumo",
+     "x": 1100,
+     "y": 900,
+     "scale": 1.5,
+     "pose": "binoculars",
+     "expr": "worried"
+    },
+    {
+     "kind": "actor",
+     "who": "japanese_officer",
+     "x": 600,
+     "y": 900,
+     "scale": 1.4,
+     "pose": "salute",
+     "talk": true
+    }
+   ],
+   "date": "4 JUNE 1942",
+   "clock": "07:15"
+  },
+  {
+   "id": "c04",
+   "start": 12.0,
+   "end": 16.0,
+   "type": "stage",
+   "set": {
+    "kind": "deck",
+    "nation": "USA"
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "american_pilot",
+     "x": 500,
+     "y": 930,
+     "scale": 1.4,
+     "keys": [
+      {
+       "t": 4,
+       "x": 1300
+      }
+     ],
+     "expr": "determined"
+    }
+   ],
+   "date": "4 JUNE 1942"
+  },
+  {
+   "id": "c05",
+   "start": 16.0,
+   "end": 20.0,
+   "type": "stage",
+   "set": {
+    "kind": "hangar",
+    "nation": "JPN"
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "japanese_sailor",
+     "x": 600,
+     "y": 930,
+     "scale": 1.3,
+     "pose": "carry",
+     "holds": "bomb",
+     "expr": "sweat"
+    },
+    {
+     "kind": "actor",
+     "who": "japanese_officer",
+     "x": 1200,
+     "y": 930,
+     "scale": 1.4,
+     "pose": "point",
+     "expr": "angry",
+     "talk": true
+    }
+   ],
+   "clock": "09:55"
+  },
+  {
+   "id": "c06",
+   "start": 20.0,
+   "end": 24.0,
+   "type": "stage",
+   "set": {
+    "kind": "radio",
+    "desk": false,
+    "fg": "officedesk"
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "us_sailor_radio",
+     "look_": {},
+     "x": 960,
+     "y": 900,
+     "scale": 1.4,
+     "pose": "typing",
+     "seated": false,
+     "expr": "neutral"
+    }
+   ],
+   "date": "MAY 1942"
+  },
+  {
+   "id": "c07",
+   "start": 24.0,
+   "end": 28.0,
+   "type": "stage",
+   "set": {
+    "kind": "tent",
+    "outside": "snow"
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "zhukov",
+     "x": 800,
+     "y": 900,
+     "scale": 1.5,
+     "pose": "pointDown",
+     "expr": "determined",
+     "talk": true
+    },
+    {
+     "kind": "actor",
+     "who": "soviet_officer",
+     "x": 1200,
+     "y": 900,
+     "scale": 1.4,
+     "pose": "chin",
+     "expr": "worried"
+    }
+   ],
+   "date": "NOV 1942"
+  },
+  {
+   "id": "c08",
+   "start": 28.0,
+   "end": 32.0,
+   "type": "stage",
+   "set": {
+    "kind": "airfield",
+    "nation": "USA"
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "american_pilot",
+     "x": 200,
+     "y": 900,
+     "scale": 1.3,
+     "keys": [
+      {
+       "t": 4,
+       "x": 1500
+      }
+     ],
+     "expr": "panic"
+    }
+   ]
+  },
+  {
+   "id": "c09",
+   "start": 32.0,
+   "end": 36.0,
+   "type": "stage",
+   "set": {
+    "kind": "corridor"
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "host",
+     "x": 960,
+     "y": 900,
+     "scale": 1.5,
+     "pose": "behind",
+     "expr": "neutral",
+     "talk": true,
+     "keys": [
+      {
+       "t": 2,
+       "pose": "shrug"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c10",
+   "start": 36.0,
+   "end": 40.0,
+   "type": "stage",
+   "set": {
+    "kind": "parliament"
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "chamberlain",
+     "x": 960,
+     "y": 900,
+     "scale": 1.4,
+     "pose": "holdUp",
+     "holds": "paper",
+     "expr": "smile",
+     "talk": true
+    }
+   ],
+   "date": "SEPT 1938"
+  },
+  {
+   "id": "c11",
+   "start": 40.0,
+   "end": 44.0,
+   "type": "stage",
+   "set": {
+    "kind": "train_interior"
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "host",
+     "x": 900,
+     "y": 900,
+     "scale": 1.5,
+     "pose": "idle",
+     "seated": true,
+     "expr": "smile",
+     "talk": true
+    }
+   ]
+  },
+  {
+   "id": "c12",
+   "start": 44.0,
+   "end": 48.0,
+   "type": "stage",
+   "set": {
+    "kind": "cockpit"
+   },
+   "elements": [],
+   "clock": "10:22"
+  }
+ ]
+}
