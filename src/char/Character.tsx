@@ -30,6 +30,8 @@ export type CharSpec = {
   female?: boolean;
   scarf?: string; // scarf colour (with extra 'scarf')
   vest?: string; // vest colour (tweed / suit with extra 'vest')
+  shadeFace?: boolean; // pale face with cool grey shading on the lower half (narrator style)
+  tie?: string; // tie colour for trench / suit
 };
 
 export type CharState = {
@@ -114,13 +116,13 @@ export const POSES: Record<string, Pose> = {
   hold: { r: [18, -122], l: [-18, -122], rb: 1, lb: -1, rh: 'grip', lh: 'grip' },
   holdUp: { r: [40, -250], l: [-40, -250], rb: -1, lb: -1, rh: 'grip', lh: 'grip', tilt: -3 },
   carry: { r: [40, -128], l: [-40, -128], rb: 1, lb: -1, rh: 'grip', lh: 'grip' },
-  show: { r: [96, -160], l: [-44, -92], rh: 'grip' },
-  talk: { r: [70, -146], l: [-44, -92], rh: 'open' },
-  talk2: { r: [70, -146], l: [-70, -146], rh: 'open', lh: 'open' },
-  explain: { r: [76, -150], l: [-30, -124], rb: 1, lb: -1, rh: 'open', lh: 'mitten' },
-  shrug: { r: [88, -136], l: [-88, -136], rb: 1, lb: -1, rh: 'open', lh: 'open', tilt: 8 },
-  present: { r: [114, -136], l: [-44, -92], rh: 'open' },
-  offer: { r: [96, -122], l: [-44, -92], rh: 'open', tilt: 5 },
+  show: { r: [100, -150], l: [-44, -92], rb: -1, rh: 'grip' },
+  talk: { r: [72, -144], l: [-44, -92], rb: -1, rh: 'open' },
+  talk2: { r: [72, -144], l: [-72, -144], rb: -1, lb: -1, rh: 'open', lh: 'open' },
+  explain: { r: [80, -148], l: [-30, -124], rb: -1, lb: -1, rh: 'open', lh: 'mitten' },
+  shrug: { r: [88, -136], l: [-88, -136], rb: -1, lb: -1, rh: 'open', lh: 'open', tilt: 8 },
+  present: { r: [114, -136], l: [-44, -92], rb: -1, rh: 'open' },
+  offer: { r: [96, -122], l: [-44, -92], rb: -1, rh: 'open', tilt: 5 },
   salute: { r: [44, -236], l: [-44, -92], rb: 1, rh: 'open' },
   phone: { r: [58, -200], l: [-44, -92], rb: 1, rh: 'grip', tilt: 6 },
   binoculars: { r: [22, -212], l: [-22, -212], rb: 1, lb: -1, rh: 'grip', lh: 'grip' },
@@ -135,12 +137,12 @@ export const POSES: Record<string, Pose> = {
   smoke: { r: [26, -168], l: [-30, -124], rb: 1, lb: -1, rh: 'grip' },
   behind: { r: [16, -112], l: [-16, -112], rb: -1, lb: 1, rh: 'none', lh: 'none', behind: true },
   pockets: { r: [36, -104], l: [-36, -104], rb: -1, lb: 1, rh: 'none', lh: 'none' },
-  reach: { r: [128, -128], l: [-44, -92], rh: 'open' },
-  stop: { r: [104, -170], l: [-44, -92], rh: 'open' },
+  reach: { r: [128, -128], l: [-44, -92], rb: -1, rh: 'open' },
+  stop: { r: [104, -168], l: [-44, -92], rb: -1, rh: 'open' },
   beg: { r: [22, -150], l: [-22, -150], rb: 1, lb: -1, rh: 'fist', lh: 'fist', tilt: -5 },
   rub: { r: [10, -132], l: [-10, -132], rb: 1, lb: -1, rh: 'mitten', lh: 'mitten' },
   scratch: { r: [50, -258], l: [-44, -92], rb: -1, rh: 'mitten', tilt: 6 },
-  count: { r: [70, -150], l: [-44, -92], rh: 'point' },
+  count: { r: [72, -148], l: [-44, -92], rb: -1, rh: 'point' },
 };
 
 const shade = (hex: string, k: number) => {
@@ -187,8 +189,8 @@ const Hand: React.FC<{ x: number; y: number; ang: number; shape: HandShape; skin
 export const Character: React.FC<{ spec: CharSpec; state: CharState; t: number; seed?: string; held?: Held }> = ({ spec, state, t, seed = 'c', held }) => {
   const nat = nation(spec.nation);
   const outfit = spec.outfit ?? 'tunic';
-  const jacket = spec.color ?? (outfit === 'navy' ? nat.navy : outfit === 'navywhite' || outfit === 'sailor' ? '#f3f1ea' : outfit === 'suit' ? '#3b3a3f' : outfit === 'civil' ? '#c9b48a' : outfit === 'party' ? '#8a6a3e' : outfit === 'tweed' ? '#7b5a3c' : nat.uniform);
-  const pants = spec.pants ?? (outfit === 'navywhite' || outfit === 'sailor' ? '#f3f1ea' : outfit === 'suit' || outfit === 'navy' ? shade(jacket, -0.15) : outfit === 'civil' ? '#5a5048' : outfit === 'tweed' ? '#3f3a36' : shade(jacket, -0.22));
+  const jacket = spec.color ?? (outfit === 'navy' ? nat.navy : outfit === 'navywhite' || outfit === 'sailor' ? '#f3f1ea' : outfit === 'suit' ? '#3b3a3f' : outfit === 'civil' ? '#c9b48a' : outfit === 'party' ? '#8a6a3e' : outfit === 'tweed' ? '#7b5a3c' : outfit === 'trench' ? '#c49a5e' : nat.uniform);
+  const pants = spec.pants ?? (outfit === 'navywhite' || outfit === 'sailor' ? '#f3f1ea' : outfit === 'suit' || outfit === 'navy' ? shade(jacket, -0.15) : outfit === 'civil' ? '#5a5048' : outfit === 'tweed' ? '#3f3a36' : outfit === 'trench' ? '#3b4252' : shade(jacket, -0.22));
   const skin = spec.skin ?? SKIN;
   const hairC = spec.hairColor ?? ((spec.age ?? 0) > 0.7 ? '#c9c4bc' : '#3a2e26');
   const build = spec.build ?? 1;
@@ -380,11 +382,12 @@ export const Character: React.FC<{ spec: CharSpec; state: CharState; t: number; 
 
   const body = (
     <g>
+      {outfit === 'trench' ? <path d={`M${-tw - 4} ${shY - 2} C${-tw - 8} ${shY + 20} ${-bw - 14} ${-46} ${-bw - 16} ${-38} Q${-bw} ${-30} -6 ${-34} L6 ${-34} Q${bw} ${-30} ${bw + 16} ${-38} C${bw + 14} ${-46} ${tw + 8} ${shY + 20} ${tw + 4} ${shY - 2} Z`} fill={jacket} stroke={INK} strokeWidth={Lw} strokeLinejoin="round" /> : null}
       {outfit === 'coat' ? <path d={`M${-tw - 4} ${shY - 2} C${-tw - 8} ${shY + 20} ${-bw - 16} ${-40} ${-bw - 14} ${-30} Q0 ${-22} ${bw + 14} ${-30} C${bw + 16} ${-40} ${tw + 8} ${shY + 20} ${tw + 4} ${shY - 2} Z`} fill={jacket} stroke={INK} strokeWidth={Lw} /> : null}
       {outfit === 'dress' ? <path d={`M${-tw} ${shY} L${tw} ${shY} L${bw + 22} ${-30} Q0 ${-22} ${-bw - 22} ${-30} Z`} fill={jacket} stroke={INK} strokeWidth={Lw} /> : null}
       <path d={torso} fill={jacket} stroke={INK} strokeWidth={Lw} strokeLinejoin="round" transform={`scale(${breathe} 1)`} />
       <path d={`M${tw - 6} ${shY + 6} C${tw} ${shY + 20} ${bw - 6} ${hipY - 26} ${bw - 3} ${hipY + 3} L${bw} ${hipY + 4} C${bw - 2} ${hipY - 30} ${tw + 3} ${shY + 10} ${tw} ${shY}`} fill={sleeveDark} opacity={0.4} />
-      {back ? null : <Outfit outfit={outfit} jacket={jacket} shY={shY} hipY={hipY} w={bw} nat={spec.nation} extra={extra} vest={spec.vest} />}
+      {back ? null : <Outfit outfit={outfit} jacket={jacket} shY={shY} hipY={hipY} w={bw} nat={spec.nation} extra={extra} vest={spec.vest} tie={spec.tie} />}
       {extra.has('armband') ? (
         <g>
           <path d={`M${tw - 6} ${shY + 26} l14 3 l-2 14 l-14 -3 z`} fill="#c8352b" stroke={INK} strokeWidth={2.5} />
@@ -446,10 +449,23 @@ export const Character: React.FC<{ spec: CharSpec; state: CharState; t: number; 
   );
 };
 
-const Outfit: React.FC<{ outfit: string; jacket: string; shY: number; hipY: number; w: number; nat?: string; extra: Set<string>; vest?: string }> = ({ outfit, jacket, shY, hipY, w, extra, vest }) => {
+const Outfit: React.FC<{ outfit: string; jacket: string; shY: number; hipY: number; w: number; nat?: string; extra: Set<string>; vest?: string; tie?: string }> = ({ outfit, jacket, shY, hipY, w, extra, vest, tie }) => {
   const dark = shade(jacket, -0.3);
   const btn = outfit === 'navy' ? '#e3b94a' : outfit === 'navywhite' ? '#d9b44a' : shade(jacket, -0.45);
   switch (outfit) {
+    case 'trench':
+      return (
+        <g>
+          {/* open trench coat: wide lapels, white shirt, tie, belt with buckle, double-breasted buttons */}
+          <path d={`M-14 ${shY - 4} L0 ${shY + 30} L14 ${shY - 4} Z`} fill="#f4f1ea" stroke={INK} strokeWidth={2.5} />
+          <path d={`M-4 ${shY + 4} L4 ${shY + 4} L6 ${shY + 30} L0 ${shY + 38} L-6 ${shY + 30} Z`} fill={tie ?? '#24365a'} stroke={INK} strokeWidth={2} />
+          <path d={`M-14 ${shY - 6} L-30 ${shY + 8} L-12 ${shY + 40} L-2 ${shY + 34} Z M14 ${shY - 6} L30 ${shY + 8} L12 ${shY + 40} L2 ${shY + 34} Z`} fill={shade(jacket, -0.12)} stroke={INK} strokeWidth={3} strokeLinejoin="round" />
+          {[0, 1].map((i) => <g key={i}><circle cx={-16} cy={shY + 48 + i * 14} r={3} fill={shade(jacket, -0.45)} /><circle cx={16} cy={shY + 48 + i * 14} r={3} fill={shade(jacket, -0.45)} /></g>)}
+          <path d={`M${-w - 1} ${hipY - 16} L${w + 1} ${hipY - 16}`} stroke={shade(jacket, -0.3)} strokeWidth={10} />
+          <rect x={-9} y={hipY - 23} width={18} height={14} rx={2} fill="none" stroke="#5a4a2a" strokeWidth={3} />
+          <path d={`M${-w + 4} ${shY + 14} q8 10 0 22 M${w - 4} ${shY + 14} q-8 10 0 22`} stroke={shade(jacket, -0.25)} strokeWidth={3} fill="none" />
+        </g>
+      );
     case 'tweed':
       return (
         <g>
@@ -554,7 +570,7 @@ const Outfit: React.FC<{ outfit: string; jacket: string; shY: number; hipY: numb
 
 const Head: React.FC<{
   spec: CharSpec; expr: string; blink: boolean; talk: number; look: number; hy: number; hairC: string; skin: string; back: boolean; extra: Set<string>; t: number; seed: string;
-}> = ({ spec, expr, blink, talk, look, hy, hairC, skin, back, extra, t }) => {
+}> = ({ spec, expr, blink, talk, look, hy, hairC, skin, back, extra, t, seed }) => {
   const rx = 68, ry = 63;
   const jowl = extra.has('jowls') || (spec.build ?? 1) > 1.15;
   const age = spec.age ?? 0.3;
@@ -576,6 +592,7 @@ const Head: React.FC<{
   }
 
   const eyeY = hy - 4;
+  const skinLid = skin;
   const ex = 24;
   const eyesKind = spec.eyes ?? 'dot';
   const sweat = expr === 'worried' || expr === 'sweat' || expr === 'panic' || expr === 'nervous' || expr === 'grin';
@@ -590,6 +607,31 @@ const Head: React.FC<{
   };
   const eye = (s: number) => {
     const x = s * ex + look;
+    if (eyesKind === 'heavy' && !(expr === 'happy' || expr === 'laugh' || expr === 'cry')) {
+      // sardonic heavy-lidded eye: white oval, small pupil, upper lid covers a share of it
+      const wide = expr === 'shocked' || expr === 'panic';
+      const rxE = 15, ryE = wide ? 17 : 13;
+      let lid = expr === 'smug' || expr === 'tired' ? 0.6 : expr === 'angry' || expr === 'determined' ? 0.5 : expr === 'worried' || expr === 'sad' || expr === 'nervous' ? 0.32 : wide ? 0 : 0.44;
+      if (blink) lid = 1;
+      const tilt = expr === 'angry' || expr === 'determined' ? s * -5 : expr === 'worried' || expr === 'sad' || expr === 'nervous' ? s * 5 : 0;
+      const lidY = eyeY - ryE + 2 * ryE * lid;
+      const cid = `ec${s}_${seed.replace(/[^a-zA-Z0-9]/g, "")}_${Math.round(look)}`;
+      return (
+        <g key={s}>
+          <defs>
+            <clipPath id={cid}><ellipse cx={x} cy={eyeY} rx={rxE} ry={ryE} /></clipPath>
+          </defs>
+          <ellipse cx={x} cy={eyeY} rx={rxE} ry={ryE} fill="#fff" />
+          <g clipPath={`url(#${cid})`}>
+            <circle cx={x + look * 0.9 + s * -1.5} cy={eyeY + (wide ? 0 : 3)} r={wide ? 3.6 : 5.2} fill={INK} />
+            <path d={`M${x - rxE - 2} ${eyeY - ryE - 4} H${x + rxE + 2} V${lidY - tilt} L${x - rxE - 2} ${lidY + tilt} Z`} fill={skinLid} />
+          </g>
+          <ellipse cx={x} cy={eyeY} rx={rxE} ry={ryE} fill="none" stroke={INK} strokeWidth={3} />
+          {lid > 0.05 ? <path d={`M${x - rxE - 3} ${lidY + tilt} L${x + rxE + 3} ${lidY - tilt}`} stroke={INK} strokeWidth={4.5} strokeLinecap="round" /> : null}
+          <path d={`M${x - 10} ${eyeY + ryE + 6} Q${x} ${eyeY + ryE + 10} ${x + 10} ${eyeY + ryE + 5}`} stroke="#9a9aa6" strokeWidth={2.5} fill="none" strokeLinecap="round" opacity={0.7} />
+        </g>
+      );
+    }
     if (blink || expr === 'happy' || expr === 'laugh') return <path key={s} d={`M${x - 9} ${eyeY + (expr === 'happy' || expr === 'laugh' ? 3 : 0)} Q${x} ${eyeY - (expr === 'happy' || expr === 'laugh' ? 9 : -3)} ${x + 9} ${eyeY + (expr === 'happy' || expr === 'laugh' ? 3 : 0)}`} stroke={INK} strokeWidth={4} fill="none" strokeLinecap="round" />;
     if (expr === 'cry' || expr === 'sad') return <path key={s} d={`M${x - 9} ${eyeY} Q${x} ${eyeY + 6} ${x + 9} ${eyeY}`} stroke={INK} strokeWidth={4} fill="none" strokeLinecap="round" />;
     if (expr === 'shocked' || expr === 'panic' || eyesKind === 'big')
@@ -655,7 +697,16 @@ const Head: React.FC<{
       <path d={face} fill={skin} stroke={INK} strokeWidth={Lw} />
       {redFace ? <path d={face} fill="#e0504a" opacity={0.28} /> : null}
       {/* chin shade */}
-      <path d={`M${-rx + 16} ${hy + 34} Q0 ${hy + 66} ${rx - 16} ${hy + 34} Q0 ${hy + 56} ${-rx + 16} ${hy + 34}`} fill="#e6bfa2" opacity={0.55} />
+      {spec.shadeFace ? (
+        <path d={`M${-rx + 2} ${hy + 6} Q${-rx + 10} ${hy + 46} 0 ${hy + 50} Q${rx - 10} ${hy + 46} ${rx - 2} ${hy + 6} Q${rx - 18} ${hy + 30} 0 ${hy + 34} Q${-rx + 18} ${hy + 30} ${-rx + 2} ${hy + 6} Z`} fill="#b9bfcf" opacity={0.42} />
+      ) : (
+        <path d={`M${-rx + 16} ${hy + 34} Q0 ${hy + 66} ${rx - 16} ${hy + 34} Q0 ${hy + 56} ${-rx + 16} ${hy + 34}`} fill="#e6bfa2" opacity={0.55} />
+      )}
+      {extra.has('freckles') ? (
+        <g fill="#c9946e" opacity={0.75}>
+          {[[-44, 14], [-36, 20], [-50, 22], [-40, 28], [44, 14], [36, 20], [50, 22], [40, 28]].map(([fx, fy], i) => <circle key={i} cx={fx} cy={hy + fy} r={2.2} />)}
+        </g>
+      ) : null}
       {extra.has('stubble') || spec.facial === 'stubble' ? <path d={`M${-rx + 12} ${hy + 24} Q0 ${hy + 66} ${rx - 12} ${hy + 24} Q0 ${hy + 46} ${-rx + 12} ${hy + 24}`} fill="#8c7f72" opacity={0.35} /> : null}
       {extra.has('blush') || expr === 'happy' || expr === 'smile' ? (
         <>
@@ -698,6 +749,13 @@ const Head: React.FC<{
         </g>
       ) : null}
       <Hat kind={hat} color={hatC} hy={hy} badge={spec.badge} nationKey={spec.nation} />
+      {extra.has('pencil') ? (
+        <g transform={`translate(${rx + 14} ${hy - 2}) rotate(-24)`}>
+          <rect x={-4} y={-34} width={9} height={46} fill="#f2c230" stroke={INK} strokeWidth={2.5} />
+          <path d="M-4 12 L0.5 24 L5 12 Z" fill="#e9cfa8" stroke={INK} strokeWidth={2.5} strokeLinejoin="round" />
+          <rect x={-4} y={-42} width={9} height={9} fill="#e88a8a" stroke={INK} strokeWidth={2.5} />
+        </g>
+      ) : null}
       {expr === 'angry' || expr === 'rage' ? <path d={`M${rx - 18} ${hy - 62} l10 -6 m-4 14 l12 -2 m-20 -16 l2 -12`} stroke="#c8352b" strokeWidth={4} strokeLinecap="round" /> : null}
     </g>
   );
@@ -775,7 +833,7 @@ const Hair: React.FC<{ kind: string; color: string; hy: number; rx: number; hat:
     case 'messy':
       return <path d={`M${-rx} ${hy - 6} l4 -40 l10 8 l6 -30 l12 16 l10 -24 l12 18 l12 -20 l8 20 l14 -12 l2 30 l12 -4 l-6 36 Q0 ${hy - 46} ${-rx} ${hy - 6} Z`} fill={color} stroke={INK} strokeWidth={Lw} strokeLinejoin="round" />;
     default: // short
-      if (covered) return <path d={`M${-rx + 2} ${hy - 6} q4 -24 16 -30 L${-rx + 16} ${hy - 4} Z M${rx - 2} ${hy - 6} q-4 -24 -16 -30 L${rx - 16} ${hy - 4} Z`} fill={color} stroke={INK} strokeWidth={3} />;
+      if (covered) return <path d={`M${-rx + 1} ${hy - 14} q2 -22 12 -30 L${-rx + 11} ${hy - 12} Z M${rx - 1} ${hy - 14} q-2 -22 -12 -30 L${rx - 11} ${hy - 12} Z`} fill={color} stroke={INK} strokeWidth={3} strokeLinejoin="round" />;
       return <path d={`M${-rx} ${hy - 6} C${-rx - 4} ${hy - 106} ${rx + 4} ${hy - 106} ${rx} ${hy - 6} C${rx - 8} ${hy - 38} ${rx - 20} ${hy - 44} 0 ${hy - 44} C${-rx + 20} ${hy - 44} ${-rx + 8} ${hy - 38} ${-rx} ${hy - 6} Z`} fill={color} stroke={INK} strokeWidth={Lw} />;
   }
 };
@@ -969,10 +1027,15 @@ export const Hat: React.FC<{ kind: string; color: string; hy: number; badge?: st
     case 'crown':
       return <path d={`M-56 ${top + 8} L-60 ${top - 36} L-30 ${top - 14} L0 ${top - 44} L30 ${top - 14} L60 ${top - 36} L56 ${top + 8} Z`} fill="#e3b94a" stroke={INK} strokeWidth={Lw} strokeLinejoin="round" />;
     case 'flatcap':
+    case 'newsboy':
+      // puffy eight-panel newsboy cap tipped forward, button on top, short brim
       return (
         <g>
-          <path d={`M-70 ${top + 14} Q-76 ${top - 30} 0 ${top - 32} Q74 ${top - 30} 72 ${top + 10} Q0 ${top + 20} -70 ${top + 14} Z`} fill={color} stroke={INK} strokeWidth={Lw} />
-          <path d={`M-30 ${top + 14} Q40 ${top + 4} 96 ${top + 22} Q40 ${top + 34} -30 ${top + 24} Z`} fill={shade(color, -0.2)} stroke={INK} strokeWidth={3} />
+          <path d={`M-78 ${top + 22} Q-92 ${top - 34} -10 ${top - 40} Q86 ${top - 44} 84 ${top + 14} Q0 ${top + 30} -78 ${top + 22} Z`} fill={color} stroke={INK} strokeWidth={Lw} strokeLinejoin="round" />
+          <path d={`M-6 ${top - 40} Q-24 ${top - 8} -40 ${top + 22} M-6 ${top - 40} Q22 ${top - 8} 30 ${top + 24} M-6 ${top - 40} Q-60 ${top - 22} -76 ${top + 6} M-6 ${top - 40} Q56 ${top - 26} 80 ${top + 2}`} stroke={shade(color, -0.3)} strokeWidth={2.5} fill="none" />
+          <path d={`M-62 ${top + 20} Q0 ${top + 6} 70 ${top + 16} Q90 ${top + 26} 72 ${top + 36} Q0 ${top + 30} -60 ${top + 34} Z`} fill={shade(color, -0.25)} stroke={INK} strokeWidth={3.5} strokeLinejoin="round" />
+          <ellipse cx={-6} cy={top - 40} rx={9} ry={5} fill={shade(color, -0.2)} stroke={INK} strokeWidth={2.5} />
+          <path d={`M-50 ${top - 20} Q-20 ${top - 32} 20 ${top - 30}`} stroke="#fff" strokeOpacity={0.18} strokeWidth={6} fill="none" strokeLinecap="round" />
         </g>
       );
     case 'conical':

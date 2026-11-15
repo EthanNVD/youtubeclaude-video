@@ -28,7 +28,7 @@ STYLE = (
     "Polished digital comic art: thick clean black outlines, smooth cel shading with soft painted gradients and "
     "subtle texture, rich saturated colours, crisp detail, slight dark vignette at the corners. "
     "Characters are stylized chibi caricatures: very large round heads (about half of the body height) sitting "
-    "directly on small bodies with no visible neck, simple dot or almond eyes, big readable expressions, "
+    "directly on small bodies with no visible neck, simple dot eyes or white eyes with heavy half-closed lids and small pupils, faces pale with soft grey shading on the lower half, big readable expressions, "
     "recognisable by their hair, moustache, hat, glasses and uniform. Hands are cartoon hands with clear fingers. "
     "Everything must read in one second at phone size: one idea, few big shapes, strong silhouettes, "
     "faces large and unobstructed."
@@ -63,6 +63,7 @@ OUTFIT = {
     "pilot": "leather flight jacket{col}",
     "robe": "dressing gown / smoking jacket{col}",
     "tweed": "brown tweed jacket over a mustard knitted vest, white shirt and blue tie",
+    "trench": "camel belted trench coat with wide lapels over a white shirt and navy tie",
     "armor": "ancient bronze armour",
     "dress": "1940s dress{col}",
 }
@@ -73,7 +74,7 @@ HAT = {
     "helmet_su": "Soviet steel helmet with a small red star", "helmet_jp": "Japanese army helmet with a small star",
     "beret": "beret", "bicorne": "black bicorne hat", "kepi": "French kepi", "ushanka": "fur ushanka hat", "fedora": "fedora",
     "tophat": "top hat", "pith": "pith helmet", "sailor": "white sailor cap", "pilot": "leather flying helmet with goggles",
-    "roman": "Roman helmet with a red crest", "crown": "golden crown", "conical": "conical straw hat", "flatcap": "flat cap",
+    "roman": "Roman helmet with a red crest", "crown": "golden crown", "conical": "conical straw hat", "flatcap": "olive eight-panel newsboy cap", "newsboy": "olive eight-panel newsboy cap",
     "pith_vn": "olive pith helmet with a star",
 }
 HAIR = {
@@ -91,6 +92,7 @@ EXTRA = {
     "cigar": "a fat cigar in the mouth", "pipe": "a pipe", "medals": "a row of medals", "bowtie": "a bow tie",
     "scarf": "a long red scarf", "epaulettes": "gold epaulettes", "thickbrows": "thick bushy eyebrows", "jowls": "heavy jowls",
     "armband": "a plain red armband with no symbol", "monocle": "a monocle", "cigarette": "a cigarette",
+    "freckles": "freckles on the cheeks", "pencil": "a yellow pencil tucked behind the right ear",
 }
 EXPR = {
     "panic": "panicking — eyes wide open with tiny pupils, mouth open in a scream, big blue sweat drops flying off the head",
@@ -214,7 +216,12 @@ def describe(spec: dict) -> str:
     agew = "young" if age < 0.3 else "middle-aged" if age < 0.62 else "elderly, grey-haired"
     b = spec.get("build", 1)
     build = " stout," if b > 1.12 else " thin," if b < 0.9 else ""
-    return f"{agew},{build} wearing " + ", ".join(parts)
+    face = ""
+    if spec.get("eyes") == "heavy":
+        face += " heavy-lidded sardonic eyes (white eyeballs, small pupils, thick upper lids),"
+    if spec.get("shadeFace"):
+        face += " very pale face with soft cool-grey shading on the lower half,"
+    return f"{agew},{build}{face} wearing " + ", ".join(parts)
 
 
 def char_block(c: dict, presets: dict, cast: dict) -> str:

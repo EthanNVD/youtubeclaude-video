@@ -50,7 +50,7 @@ Maps and devices bridge these scenes. Target per chapter: **world/acting ≥ 60 
 - **Cut rhythm**: 2–4 s shots inside action sequences (wide → reaction close-up → detail), 5–8 s for explanations. Push in on the reaction (zoom 1.2–1.4 over 0.2–0.3 s).
 
 ### The host (recurring narrator — `who: "host"`)
-A young field historian: tousled brown hair with a cowlick, round glasses, tweed jacket, mustard vest, red scarf. Variants: `host_field` (coat), `host_winter` (ushanka). He is the same in every video.
+Drawn in the style of the reference channel's narrator (pale face with cool grey shading on the lower half, heavy-lidded sardonic eyes with small pupils, thick brows) but a different, younger man: about 30, clean-shaven with freckles, dark-brown hair under an olive eight-panel newsboy cap, camel belted trench coat over a white shirt and navy tie, a pencil tucked behind the right ear; carries a reporter's notebook. Variants: `host_field` (trench + Brodie helmet), `host_winter` (greatcoat + ushanka + navy scarf). He is the same in every video.
 
 Use him for:
 - the cold-open *myth* line: `study` set, holding the symbol prop, `headMove: shake` → `stop`;

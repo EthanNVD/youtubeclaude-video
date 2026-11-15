@@ -82,10 +82,13 @@ export const PRESETS: Record<string, CharSpec> = {
   vn_soldier: { nation: 'VN', outfit: 'tunic', hat: 'pith_vn', age: 0.2 },
   vn_peasant: { nation: 'VN', outfit: 'civil', color: '#3a3a3a', hat: 'conical', age: 0.3 },
   // ---- THE HOST: the channel's recurring narrator (one identity for every video; edit here to restyle) ----
-  // Young field historian: brown tousled mop with a cowlick, round glasses, tweed jacket over a mustard vest, red scarf.
-  host: { outfit: 'tweed', color: '#7b5a3c', vest: '#d0a13c', pants: '#3f3a36', hair: 'tousled', hairColor: '#5a3b26', glasses: 'round', extra: ['scarf', 'blush'], scarf: '#b8322a', age: 0.3, eyes: 'dot' },
-  host_field: { outfit: 'coat', color: '#8a7a5a', hair: 'tousled', hairColor: '#5a3b26', glasses: 'round', extra: ['scarf'], scarf: '#b8322a', age: 0.3 },
-  host_winter: { outfit: 'coat', color: '#5b4a3a', hat: 'ushanka', hair: 'tousled', hairColor: '#5a3b26', glasses: 'round', extra: ['scarf'], scarf: '#b8322a', age: 0.3 },
+  // Drawn in the reference narrator's style (pale face with cool lower shading, heavy-lidded sardonic eyes, thick brows)
+  // but a different, younger man: ~30, clean-shaven with freckles, dark-brown hair under an olive newsboy cap,
+  // camel trench coat over a white shirt and navy tie, pencil behind the ear (carries a reporter's notebook).
+  host: { outfit: 'trench', color: '#c49a5e', tie: '#24365a', pants: '#3b4252', hat: 'newsboy', hatColor: '#6b6a3e', hair: 'short', hairColor: '#4a3022', skin: '#f3efe8', shadeFace: true, eyes: 'heavy', extra: ['thickbrows', 'freckles', 'pencil'], age: 0.22 },
+  host_field: { outfit: 'trench', color: '#a88a5a', tie: '#24365a', pants: '#3b4252', hat: 'helmet_uk', hatColor: '#6b6a3e', hair: 'short', hairColor: '#4a3022', skin: '#f3efe8', shadeFace: true, eyes: 'heavy', extra: ['thickbrows', 'freckles'], age: 0.22 },
+  host_winter: { outfit: 'coat', color: '#5b4a3a', hat: 'ushanka', hair: 'short', hairColor: '#4a3022', skin: '#f3efe8', shadeFace: true, eyes: 'heavy', extra: ['thickbrows', 'freckles', 'scarf'], scarf: '#24365a', age: 0.22 },
+  host_old_style: { outfit: 'tweed', color: '#7b5a3c', vest: '#d0a13c', pants: '#3f3a36', hair: 'tousled', hairColor: '#5a3b26', glasses: 'round', extra: ['scarf', 'blush'], scarf: '#b8322a', age: 0.3 },
   // ---- civilians / presenters ----
   civilian_man: { outfit: 'civil', hair: 'short', age: 0.4 },
   civilian_woman: { outfit: 'dress', color: '#7a8fb0', hair: 'bun', female: true, age: 0.35, extra: ['blush'] },
