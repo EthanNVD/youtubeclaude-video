@@ -23,13 +23,20 @@ SET_AMB = {
     "codebreak": "amb_basement", "classroom": "amb_room", "kitchen": "amb_room", "home": "amb_room",
     "factory": "amb_factory", "rally": "amb_crowd", "podium": "amb_crowd", "city": "amb_wind", "street": "amb_wind",
     "ruins": "amb_fire", "trench": "amb_battle", "jungle": "amb_jungle", "railway": "amb_wind", "station": "amb_wind",
+    # detailed acting sets
+    "deck": "amb_sea", "flightdeck": "amb_sea", "bridge": "amb_sea", "hangar": "amb_factory", "radio": "amb_basement",
+    "tent": "amb_wind", "airfield": "amb_wind", "corridor": "amb_room", "garden": "amb_wind", "parliament": "amb_crowd",
+    "cell": "amb_basement", "train_interior": "amb_engine", "cockpit": "amb_engine",
 }
+# extra loop layered on top of the bed for some sets (id, gain dB)
+SET_LAYER = {"radio": ("radio_static", -30), "train_interior": ("train", -22), "hangar": ("metal_clank", -26)}
 # gain (dB) per id family
 GAIN = {"amb": -24, "explosion": -6, "explosion_big": -4, "artillery": -6, "stamp": -8, "pop": -16, "whoosh": -16,
         "whoosh_soft": -20, "whoosh_fast": -16, "paper": -14, "typewriter": -14, "chalk": -16, "pen": -18,
         "map_draw": -20, "clock_tick": -18, "tick": -18, "impact": -8, "riser": -16, "plane_flyby": -10,
-        "plane_dive": -10, "machinegun": -10, "gunshot": -10, "cannon": -8, "boom_distant": -14, "heartbeat": -12}
-LOOP_IDS = {"clock_tick", "typewriter", "chalk", "pen", "map_draw", "machinegun", "plane_engine", "tank_engine", "truck", "train", "morse", "radio_static"}
+        "plane_dive": -10, "machinegun": -10, "gunshot": -10, "cannon": -8, "boom_distant": -14, "heartbeat": -12,
+        "footsteps": -17, "footsteps_snow": -17, "thud": -12, "tank_engine": -16, "truck": -16, "train": -16}
+LOOP_IDS = {"footsteps", "footsteps_snow", "clock_tick", "typewriter", "chalk", "pen", "map_draw", "machinegun", "plane_engine", "tank_engine", "truck", "train", "morse", "radio_static"}
 
 _cache = {}
 
@@ -75,11 +82,49 @@ def write(path, x):
         w.writeframes((x * 32767).astype(np.int16).tobytes())
 
 
+def _actor_cues(scene, el, tin):
+    """Acting sounds: footsteps while an actor moves, typing/writing hands, a slam, paper on pose changes."""
+    cues = []
+    dur_scene = float(scene["end"]) - float(scene["start"])
+    snowy = (scene.get("set") or {}).get("kind") in ("snow",) or (scene.get("set") or {}).get("weather") == "snow"
+    step = "footsteps_snow" if snowy else "footsteps"
+    keys = sorted(el.get("keys") or [], key=lambda k: k.get("t", 0))
+    prev_t, prev_pos = tin, (el.get("x"), el.get("at"))
+    for k in keys:
+        pos = (k.get("x", prev_pos[0]), k.get("at", prev_pos[1]))
+        if ("x" in k or "at" in k) and pos != prev_pos and k["t"] - prev_t > 0.2:
+            cues.append((prev_t, step, round(k["t"] - prev_t, 2), 0))
+        if "x" in k or "at" in k:
+            prev_t, prev_pos = k["t"], pos
+    if el.get("walk") is True or el.get("run") is True:
+        cues.append((tin, step, round(dur_scene - tin, 2), 0))
+    poses = [(tin, el.get("pose", "idle"))] + [(k["t"], k["pose"]) for k in keys if isinstance(k.get("pose"), str)]
+    for i, (t, pose) in enumerate(poses):
+        end = poses[i + 1][0] if i + 1 < len(poses) else dur_scene
+        if pose == "typing":
+            cues.append((t, "typewriter", round(min(6.0, end - t), 2), -5))
+        elif pose == "write":
+            cues.append((t, "pen", round(min(4.0, end - t), 2), -2))
+        elif pose == "slam" and i > 0:
+            cues.append((t + 0.15, "thud", 0, 0))
+        elif i > 0 and el.get("holds") in ("paper", "telegram", "folder", "book", "letter", "ledger"):
+            cues.append((t, "paper", 0, -2))
+    return cues
+
+
 def auto_cues(scene):
     """SFX implied by elements (only where the picture shows a contact/event)."""
     cues = []
     for el in scene.get("elements", []):
         k, tin = el.get("kind"), float(el.get("in", 0) or 0)
+        if k == "actor":
+            cues.extend(_actor_cues(scene, el, tin))
+            continue
+        if k == "vehicle" and el.get("keys") and el.get("type") in ("tank", "truck", "car", "jeep", "train", "locomotive"):
+            sid = "tank_engine" if el.get("type") == "tank" else "train" if el.get("type") in ("train", "locomotive") else "truck"
+            last = max(kk.get("t", 0) for kk in el["keys"])
+            cues.append((tin, sid, round(max(0.5, last - tin), 2), 0))
+            continue
         if k == "stamp":
             cues.append((tin + 0.15, "stamp", 0))
         elif k == "burst":
@@ -104,7 +149,7 @@ def auto_cues(scene):
             cues.append((tin, "plane_flyby", 0))
     if scene.get("transition") == "flash":
         cues.append((0.0, "impact", 0))
-    return cues
+    return [c if len(c) == 4 else (c[0], c[1], c[2], 0) for c in cues]
 
 
 def main(proj, plan_path=None):
@@ -150,12 +195,28 @@ def main(proj, plan_path=None):
         w[:f] = np.linspace(0, 1, f)
         w[-f:] = np.linspace(1, 0, f)
         amb[a:b] += seg * w
+    for s in scenes:
+        if s.get("type") != "stage" or s.get("ambience", "__default__") is None:
+            continue
+        lay = SET_LAYER.get((s.get("set") or {}).get("kind", ""))
+        if not lay:
+            continue
+        x = load(lay[0])
+        if x is None:
+            continue
+        a, b = int(s["start"] * SR), int(s["end"] * SR)
+        seg = x[np.arange(a, b) % len(x)] * db(lay[1])
+        f = min(fade, (b - a) // 2)
+        w = np.ones(b - a, dtype=np.float32)
+        w[:f] = np.linspace(0, 1, f)
+        w[-f:] = np.linspace(1, 0, f)
+        amb[a:b] += seg * w
     amb *= 1 - 0.45 * speaking  # duck beds ~5 dB under narration
 
     # ---- SFX cues ----
     for s in scenes:
         explicit = [(float(c["t"]), c["id"], float(c.get("dur", 0) or 0), float(c.get("vol", 0) or 0), "plan") for c in s.get("sfx", [])]
-        autos = [(t, i, d, 0.0, "auto") for (t, i, d) in auto_cues(s) if not any(abs(t - e[0]) < 0.25 and (e[1] == i or e[1].split("_")[0] == i.split("_")[0]) for e in explicit)]
+        autos = [(t, i, d, float(v), "auto") for (t, i, d, v) in auto_cues(s) if not any((abs(t - e[0]) < 0.25 and (e[1] == i or e[1].split("_")[0] == i.split("_")[0])) or (e[1] == i and d > 0 and e[0] < t + d and t < e[0] + max(e[2], 0.5)) for e in explicit)]
         if s.get("autoSfx") is False:
             autos = []
         dedup = []
@@ -208,7 +269,19 @@ def main(proj, plan_path=None):
     raw.unlink()
     (proj / "work").mkdir(exist_ok=True)
     (proj / "work" / "sfx_cues.json").write_text(json.dumps(log, indent=0), encoding="utf-8")
-    print(json.dumps({"mix": str(final), "seconds": round(N / SR, 2), "sfx_cues": len(log), "auto": sum(1 for l in log if l["source"] == "auto")}))
+    # ---- coverage report: scenes that ended up silent (no bed and no cue) or whose set has no default bed ----
+    QUIET_OK = {"studio", "paper", "void", "dark", "memorial"}
+    report = []
+    cue_scenes = {l["scene"] for l in log}
+    for s in scenes:
+        kind = (s.get("set") or {}).get("kind", "")
+        amb_id = s.get("ambience", "__default__")
+        has_bed = (amb_id not in (None, "__default__")) or (amb_id == "__default__" and s.get("type") == "stage" and kind in SET_AMB)
+        if s.get("type") == "stage" and amb_id == "__default__" and kind and kind not in SET_AMB and kind not in QUIET_OK:
+            report.append(f"{s['id']}: set '{kind}' has no default ambience - add scene.ambience or map it in SET_AMB")
+        if not has_bed and s["id"] not in cue_scenes and s.get("type") == "stage" and kind not in QUIET_OK and amb_id is not None:
+            report.append(f"{s['id']}: silent scene ({kind or s.get('type')}) - add ambience or sfx for what is visible")
+    print(json.dumps({"mix": str(final), "seconds": round(N / SR, 2), "sfx_cues": len(log), "auto": sum(1 for l in log if l["source"] == "auto"), "sound_warnings": report}, ensure_ascii=False))
 
 
 if __name__ == "__main__":
