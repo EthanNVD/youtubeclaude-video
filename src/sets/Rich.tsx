@@ -3,6 +3,7 @@ import { C, INK, FONT } from '../theme';
 import { rnd } from '../lib/anim';
 import { Vehicle } from '../props/Vehicles';
 import { Flag } from '../props/Props';
+import { Tree } from './Sets';
 
 /**
  * Detailed "lived-in" locations + a lighting pass and foreground layer used by every set.
@@ -12,7 +13,7 @@ import { Flag } from '../props/Props';
 const X0 = -240, Y0 = -160, W = 2400, H = 1400;
 type P = { kind: string; t: number; time?: string; [k: string]: unknown };
 
-export const RICH_SETS = new Set(['garden', 'bridge', 'deck', 'flightdeck', 'hangar', 'radio', 'tent', 'airfield', 'corridor', 'parliament', 'cell', 'train_interior', 'cockpit']);
+export const RICH_SETS = new Set(['archbridge', 'river', 'polder', 'cabin', 'heath', 'hotel', 'garden', 'bridge', 'deck', 'flightdeck', 'hangar', 'radio', 'tent', 'airfield', 'corridor', 'parliament', 'cell', 'train_interior', 'cockpit']);
 
 const SKY: Record<string, [string, string]> = {
   day: ['#6fb3dc', '#d7ecf4'],
@@ -619,8 +620,228 @@ const Cockpit: React.FC<P> = (p) => {
   );
 };
 
+
+const Poplar: React.FC<{ x: number; y: number; s?: number; t: number }> = ({ x, y, s = 1, t }) => (
+  <g transform={`translate(${x} ${y}) scale(${s}) rotate(${Math.sin(t * 0.9 + x) * 1.5})`}>
+    <rect x={-5} y={-30} width={10} height={30} fill="#5a4030" />
+    <ellipse cx={0} cy={-110} rx={26} ry={90} fill="#4f7a3a" stroke={INK} strokeWidth={3} />
+    <ellipse cx={-6} cy={-130} rx={10} ry={40} fill="#6a9a50" />
+  </g>
+);
+const HouseRow: React.FC<{ x: number; y: number; n: number; t: number; burning?: boolean; seed: string; dir?: number }> = ({ x, y, n, t, burning, seed, dir = 1 }) => (
+  <g>
+    {Array.from({ length: n }, (_, i) => {
+      const w = 150 + rnd(seed, i) * 60, h = 190 + rnd(seed, i, 'h') * 90;
+      const hx = x + dir * i * 170;
+      const wall = ['#b4644a', '#c98f62', '#a9553e', '#d6c9a8'][i % 4];
+      const fire = burning && rnd(seed, i, 'f') > 0.4;
+      return (
+        <g key={i}>
+          <rect x={hx - w / 2} y={y - h} width={w} height={h} fill={wall} stroke={INK} strokeWidth={3} />
+          <path d={`M${hx - w / 2 - 10} ${y - h} L${hx} ${y - h - 70} L${hx + w / 2 + 10} ${y - h} Z`} fill={burning ? '#3a3431' : '#6a4a3a'} stroke={INK} strokeWidth={3} />
+          {[0, 1].map((r) => [0, 1].map((c) => <rect key={`${r}${c}`} x={hx - w / 2 + 22 + c * (w / 2 - 6)} y={y - h + 30 + r * 80} width={w / 2 - 40} height={50} fill={fire ? '#f08a3a' : burning ? '#2a2422' : '#9fc4d8'} stroke={INK} strokeWidth={2.5} />))}
+          {fire ? (
+            <g>
+              <path d={`M${hx - 30} ${y - h - 10} q${10 + Math.sin(t * 9 + i) * 6} -60 30 -90 q10 40 30 50 q10 -30 20 -50 q10 50 -10 90 Z`} fill="#f08a3a" opacity={0.95} />
+              {[0, 1, 2].map((k) => {
+                const q = (t * 0.5 + k / 3 + rnd(seed, i, 'k')) % 1;
+                return <circle key={k} cx={hx + q * 120} cy={y - h - 60 - q * 300} r={30 + q * 60} fill="#3a3632" opacity={0.55 * (1 - q)} />;
+              })}
+            </g>
+          ) : null}
+        </g>
+      );
+    })}
+  </g>
+);
+
+const ArchBridge: React.FC<P> = (p) => {
+  const t = p.t, g = (p.ground as number) ?? 900;
+  const time = (p.time as string) ?? 'dusk';
+  const deckY = 540, x1 = -200, x2 = 2100, a1 = 260, a2 = 1660, apex = 120;
+  const archY = (x: number) => deckY - (deckY - apex) * (1 - ((x - (a1 + a2) / 2) / ((a2 - a1) / 2)) ** 2);
+  const water = time === 'night' ? '#14263d' : time === 'dusk' ? '#5a6f8a' : '#4f7fa3';
+  return (
+    <g>
+      <SkyG id="sky_ab" time={time} y2={deckY + 40} />
+      {time !== 'night' ? <Drift t={t} n={5} y={-60} h={200} seed="abc" c={time === 'dusk' ? '#f3c9a8' : undefined} /> : null}
+      <rect x={X0} y={deckY + 20} width={W} height={300} fill={water} />
+      <Waves y={deckY + 30} y2={deckY + 290} t={t} seed="abw" n={22} op={0.22} />
+      {/* far bank */}
+      <rect x={X0} y={deckY + 6} width={W} height={26} fill="#6f8a4a" />
+      {/* arch + hangers */}
+      <path d={`M${a1} ${deckY} Q${(a1 + a2) / 2} ${2 * apex - deckY} ${a2} ${deckY}`} stroke="#5d6b70" strokeWidth={36} fill="none" />
+      <path d={`M${a1} ${deckY} Q${(a1 + a2) / 2} ${2 * apex - deckY} ${a2} ${deckY}`} stroke={INK} strokeWidth={42} fill="none" opacity={0.25} />
+      <path d={`M${a1 + 60} ${deckY} Q${(a1 + a2) / 2} ${2 * apex - deckY + 90} ${a2 - 60} ${deckY}`} stroke="#6f7d82" strokeWidth={16} fill="none" />
+      {Array.from({ length: 17 }, (_, i) => {
+        const x = a1 + 60 + (i * (a2 - a1 - 120)) / 16;
+        return <line key={i} x1={x} y1={archY(x) + 14} x2={x} y2={deckY} stroke="#4f5b60" strokeWidth={6} />;
+      })}
+      {/* deck + piers */}
+      <rect x={x1} y={deckY - 14} width={x2 - x1} height={30} fill="#7a868a" stroke={INK} strokeWidth={4} />
+      <path d={`M${x1} ${deckY - 22} H${x2}`} stroke={INK} strokeWidth={3} />
+      {Array.from({ length: 46 }, (_, i) => <line key={i} x1={x1 + i * 50} y1={deckY - 22} x2={x1 + i * 50} y2={deckY - 14} stroke={INK} strokeWidth={2} />)}
+      {[a1, a2].map((x) => <rect key={x} x={x - 40} y={deckY + 14} width={80} height={140} fill="#9a9488" stroke={INK} strokeWidth={4} />)}
+      {/* near bank: embankment, houses, ramp road */}
+      <path d={`M${X0} ${deckY + 260} Q960 ${deckY + 220} ${X0 + W} ${deckY + 260} V${Y0 + H} H${X0} Z`} fill={time === 'night' ? '#3a3f3a' : '#7a8a5a'} />
+      <HouseRow x={-120} y={g - 120} n={4} t={t} burning={!!p.burning} seed="hrL" />
+      <HouseRow x={2060} y={g - 120} n={4} t={t} burning={!!p.burning} seed="hrR" dir={-1} />
+      <path d={`M560 ${Y0 + H} L860 ${deckY + 30} H1060 L1360 ${Y0 + H} Z`} fill="#8a8478" />
+      <path d={`M960 ${deckY + 40} V${Y0 + H}`} stroke="#fff" strokeWidth={6} strokeDasharray="40 40" opacity={0.5} />
+      <rect x={X0} y={g - 120} width={W} height={Y0 + H - g + 120} fill={time === 'night' ? '#3d3a36' : '#8a8478'} opacity={0.92} />
+      <path d={`M${X0} ${g - 120} H${X0 + W}`} stroke={INK} strokeWidth={4} opacity={0.4} />
+      {p.label ? <g transform="translate(960 70)"><rect x={-260} y={-34} width={520} height={60} rx={6} fill="#fbf8f0" stroke={INK} strokeWidth={4} /><text y={10} textAnchor="middle" fontFamily={FONT.cond} fontWeight={700} fontSize={36} fill={INK}>{(p.label as string).toUpperCase()}</text></g> : null}
+    </g>
+  );
+};
+
+const River: React.FC<P> = (p) => {
+  const t = p.t, g = (p.ground as number) ?? 900;
+  const time = (p.time as string) ?? 'day';
+  const fb = 470;
+  return (
+    <g>
+      <SkyG id="sky_rv" time={time} y2={fb + 20} />
+      <Drift t={t} n={5} y={-80} h={220} seed="rvc" />
+      {/* far bank: dyke, trees, distant bridge */}
+      <rect x={X0} y={fb - 40} width={W} height={60} fill="#7f9a52" />
+      <path d={`M${X0} ${fb - 30} H${X0 + W}`} stroke="#5f7a3a" strokeWidth={14} />
+      {Array.from({ length: 16 }, (_, i) => <Poplar key={i} x={X0 + 80 + i * 160 + rnd('rp', i) * 60} y={fb - 34} s={0.55} t={t} />)}
+      {p.bridges !== false ? (
+        <g opacity={0.85}>
+          <path d={`M1500 ${fb - 50} Q1760 ${fb - 190} 2020 ${fb - 50}`} stroke="#5d6b70" strokeWidth={12} fill="none" />
+          <rect x={1400} y={fb - 56} width={760} height={12} fill="#7a868a" stroke={INK} strokeWidth={3} />
+        </g>
+      ) : null}
+      <rect x={X0} y={fb + 10} width={W} height={g - fb - 70} fill={time === 'night' ? '#14263d' : '#4a7a9c'} />
+      <Waves y={fb + 14} y2={g - 70} t={t * 2.2} seed="rvw" n={46} op={0.3} />
+      {/* current streaks */}
+      {Array.from({ length: 10 }, (_, i) => {
+        const x = ((X0 + rnd('cs', i) * W + t * 140) % W + W) % W + X0;
+        const y = fb + 40 + rnd('csy', i) * (g - fb - 150);
+        return <path key={i} d={`M${x} ${y} h120`} stroke="#fff" strokeOpacity={0.18} strokeWidth={4} strokeLinecap="round" />;
+      })}
+      {/* near bank */}
+      <path d={`M${X0} ${g - 70} Q960 ${g - 110} ${X0 + W} ${g - 70} V${Y0 + H} H${X0} Z`} fill="#c9b48a" />
+      <path d={`M${X0} ${g - 70} Q960 ${g - 110} ${X0 + W} ${g - 70}`} stroke={INK} strokeWidth={4} fill="none" opacity={0.4} />
+      {Array.from({ length: 30 }, (_, i) => <ellipse key={i} cx={X0 + rnd('rb', i) * W} cy={g - 40 + rnd('rby', i) * 250} rx={14} ry={5} fill="#000" opacity={0.08} />)}
+    </g>
+  );
+};
+
+const Polder: React.FC<P> = (p) => {
+  const t = p.t, g = (p.ground as number) ?? 900;
+  const time = (p.time as string) ?? 'day';
+  const dykeY = (p.dyke as number) ?? 620;
+  return (
+    <g>
+      <SkyG id="sky_pd" time={time} y2={dykeY + 40} />
+      <Drift t={t} n={7} y={-80} h={260} seed="pdc" />
+      <rect x={X0} y={dykeY - 10} width={W} height={H} fill="#8fae5a" />
+      {/* windmill */}
+      <g transform={`translate(1820 ${dykeY - 10})`}>
+        <path d="M-40 0 L-26 -170 H26 L40 0 Z" fill="#7a5a3a" stroke={INK} strokeWidth={4} />
+        <path d="M-30 -170 Q0 -210 30 -170 Z" fill="#5a3e28" stroke={INK} strokeWidth={4} />
+        <g transform={`translate(0 -176) rotate(${t * 20})`}>
+          {[0, 90, 180, 270].map((a) => <g key={a} transform={`rotate(${a})`}><rect x={-6} y={-150} width={12} height={150} fill="#e9e1cf" stroke={INK} strokeWidth={3} /><rect x={6} y={-140} width={30} height={110} fill="none" stroke={INK} strokeWidth={2} /></g>)}
+        </g>
+      </g>
+      {[200, 340, 480, 1150, 1290].map((x, i) => <Poplar key={i} x={x} y={dykeY - 6} s={0.8} t={t} />)}
+      {/* the raised road on its dyke */}
+      <path d={`M${X0} ${dykeY + 40} L${X0} ${dykeY - 14} H${X0 + W} V${dykeY + 40} Z`} fill="#6f8a4a" />
+      <rect x={X0} y={dykeY - 30} width={W} height={18} fill="#9a9488" stroke={INK} strokeWidth={3} />
+      {/* ditches + fields toward the viewer */}
+      {Array.from({ length: 9 }, (_, i) => <path key={i} d={`M${X0} ${dykeY + 80 + i * i * 8} H${X0 + W}`} stroke="#5b86a8" strokeWidth={4 + i} opacity={0.55} />)}
+      {Array.from({ length: 12 }, (_, i) => <line key={i} x1={960 + (i - 6) * 60} y1={dykeY + 50} x2={960 + (i - 6) * 420} y2={Y0 + H} stroke="#5b86a8" strokeWidth={6} opacity={0.35} />)}
+      <rect x={X0} y={g - 120} width={W} height={H} fill="#7fa04e" />
+      {Array.from({ length: 60 }, (_, i) => <path key={i} d={`M${X0 + rnd('pg', i) * W} ${g - 110 + rnd('pgy', i) * 300} l4 -12 l4 12`} stroke="#5f8a3a" strokeWidth={3} fill="none" />)}
+    </g>
+  );
+};
+
+const Cabin: React.FC<P> = (p) => {
+  const t = p.t, g = (p.ground as number) ?? 900;
+  const light = p.jumplight as string | undefined;
+  const sway = Math.sin(t * 1.4) * 2;
+  return (
+    <g transform={`rotate(${sway * 0.4} 960 540)`}>
+      <rect x={X0} y={Y0} width={W} height={H} fill="#5f6650" />
+      {/* ribs */}
+      {Array.from({ length: 12 }, (_, i) => <path key={i} d={`M${X0 + i * 220} ${g - 120} Q${X0 + i * 220} ${-40} ${X0 + i * 220 + 40} ${-160}`} stroke="#4c5240" strokeWidth={22} fill="none" />)}
+      {/* round windows with passing clouds */}
+      {Array.from({ length: 6 }, (_, i) => {
+        const cx = 120 + i * 340;
+        return (
+          <g key={i}>
+            <circle cx={cx} cy={300} r={58} fill="#9fd0ea" stroke={INK} strokeWidth={6} />
+            <circle cx={cx + ((t * 120 + i * 50) % 160) - 80} cy={310} r={26} fill="#fff" opacity={0.85} />
+            <circle cx={cx} cy={300} r={58} fill="none" stroke="#8a8f7a" strokeWidth={12} />
+          </g>
+        );
+      })}
+      {/* benches */}
+      <rect x={X0} y={g - 260} width={W} height={36} fill="#7a6a4a" stroke={INK} strokeWidth={4} />
+      <rect x={X0} y={g - 120} width={W} height={H} fill="#4c5240" />
+      {Array.from({ length: 20 }, (_, i) => <line key={i} x1={X0 + i * 130} y1={g - 120} x2={X0 + i * 130 - 100} y2={Y0 + H} stroke="#000" strokeOpacity={0.15} strokeWidth={4} />)}
+      <path d={`M${X0} ${-60} H${X0 + W}`} stroke="#c9c2a8" strokeWidth={6} />
+      {light ? (
+        <g transform="translate(1900 120)">
+          <rect x={-40} y={-30} width={80} height={60} rx={10} fill="#2a2a2a" stroke={INK} strokeWidth={4} />
+          <circle r={20} fill={light === 'green' ? '#5ae07a' : '#e8463a'} />
+          <circle r={70} fill={light === 'green' ? '#5ae07a' : '#e8463a'} opacity={0.15 + 0.1 * Math.sin(t * 6)} />
+        </g>
+      ) : null}
+      {light === 'red' ? <rect x={X0} y={Y0} width={W} height={H} fill="#c8352b" opacity={0.08} /> : null}
+    </g>
+  );
+};
+
+const Heath: React.FC<P> = (p) => {
+  const t = p.t, g = (p.ground as number) ?? 900;
+  const hz = 600;
+  return (
+    <g>
+      <SkyG id="sky_ht" time={p.time} y2={hz + 20} />
+      <Drift t={t} n={6} y={-60} h={240} seed="htc" />
+      {Array.from({ length: 30 }, (_, i) => <Tree key={i} x={X0 + i * 90 + rnd('ht', i) * 40} y={hz + 10} s={0.55 + rnd('hs', i) * 0.25} kind="pine" />)}
+      <rect x={X0} y={hz} width={W} height={H} fill="#9a8a5a" />
+      {Array.from({ length: 90 }, (_, i) => <ellipse key={i} cx={X0 + rnd('hh', i) * W} cy={hz + 20 + rnd('hy', i) * (Y0 + H - hz)} rx={30 + rnd('hr', i) * 40} ry={10} fill={i % 3 ? '#8a6a7a' : '#7a8a4a'} opacity={0.5} />)}
+      {p.panels !== false ? [[600, hz + 140], [1300, hz + 200]].map(([x, y], i) => <rect key={i} x={x} y={y} width={120} height={30} fill={i ? '#e8463a' : '#f2c230'} stroke={INK} strokeWidth={3} transform={`skewX(-20)`} />) : null}
+      <rect x={X0} y={g - 120} width={W} height={H} fill="#8f7f52" opacity={0.6} />
+    </g>
+  );
+};
+
+const Hotel: React.FC<P> = (p) => {
+  const t = p.t, g = (p.ground as number) ?? 900;
+  return (
+    <g>
+      <SkyG id="sky_hl" time={p.time} y2={g} />
+      <Drift t={t} n={5} y={-80} h={200} seed="hlc" />
+      {Array.from({ length: 10 }, (_, i) => <Tree key={i} x={X0 + i * 260 + 60} y={g - 230} s={1.2 + rnd('hlt', i) * 0.4} kind="round" />)}
+      <g transform={`translate(960 ${g - 120})`}>
+        <rect x={-560} y={-520} width={1120} height={520} fill="#f2ecdf" stroke={INK} strokeWidth={5} />
+        <path d="M-600 -520 L0 -660 L600 -520 Z" fill="#7a4a3a" stroke={INK} strokeWidth={5} />
+        {[0, 1].map((r) => Array.from({ length: 7 }, (_, c) => <rect key={`${r}${c}`} x={-500 + c * 150} y={-470 + r * 190} width={90} height={120} fill="#9fc4d8" stroke={INK} strokeWidth={3} />))}
+        <rect x={-600} y={-150} width={1200} height={22} fill="#e9e1cf" stroke={INK} strokeWidth={4} />
+        {Array.from({ length: 9 }, (_, i) => <rect key={i} x={-580 + i * 145} y={-128} width={14} height={128} fill="#e9e1cf" stroke={INK} strokeWidth={3} />)}
+        <rect x={-260} y={-610} width={520} height={60} rx={6} fill="#24473a" stroke={INK} strokeWidth={4} />
+        <text y={-568} textAnchor="middle" fontFamily={FONT.serif} fontWeight={900} fontSize={40} fill="#e9d9a8" letterSpacing={4}>{((p.name as string) ?? 'HOTEL').toUpperCase()}</text>
+      </g>
+      <rect x={X0} y={g - 120} width={W} height={H} fill="#8fbe5a" />
+      <path d={`M${X0} ${g - 50} H${X0 + W} V${g + 60} H${X0} Z`} fill="#d8c8a2" />
+    </g>
+  );
+};
+
 export const RichSet: React.FC<P> = (p) => {
   switch (p.kind) {
+    case 'archbridge': return <ArchBridge {...p} />;
+    case 'river': return <River {...p} />;
+    case 'polder': return <Polder {...p} />;
+    case 'cabin': return <Cabin {...p} />;
+    case 'heath': return <Heath {...p} />;
+    case 'hotel': return <Hotel {...p} />;
     case 'garden': return <Garden {...p} />;
     case 'bridge': return <Bridge {...p} />;
     case 'deck':

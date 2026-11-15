@@ -336,6 +336,34 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
     case 'ship':
       body = <MapIcon type={(e.type as string) ?? 'ship'} nationKey={e.nation as string} color={e.color as string} label={e.label as string} t={t} burning={!!e.burning} />;
       break;
+    case 'paras': {
+      // parachutists drifting down under round canopies (count, spread px, fall px, dur s, color)
+      const n = (e.count as number) ?? 12, spread = (e.spread as number) ?? 1400, fall = (e.fall as number) ?? 700, pd = (e.pdur as number) ?? 6;
+      const canopy = col(e.color, '#e9e4cf');
+      body = (
+        <g>
+          {Array.from({ length: n }, (_, i) => {
+            const delay = rnd(seed, i, 'd') * pd * 0.6;
+            if (a < delay) return null;
+            const k = clamp((a - delay) / pd);
+            const px = (rnd(seed, i) - 0.5) * spread + Math.sin(t * 0.8 + i) * 20 + k * 80;
+            const py = -fall / 2 + k * fall + rnd(seed, i, 'y') * 120;
+            const sc = 0.6 + rnd(seed, i, 's') * 0.5;
+            const sway = Math.sin(t * 1.6 + i) * 6;
+            return (
+              <g key={i} transform={`translate(${px} ${py}) scale(${sc}) rotate(${sway})`}>
+                <path d="M-60 -60 Q0 -130 60 -60 Q30 -70 0 -66 Q-30 -70 -60 -60 Z" fill={i % 5 === 0 ? '#c9a24a' : canopy} stroke={INK} strokeWidth={4} />
+                <path d="M-58 -60 L-6 0 M58 -60 L6 0 M0 -66 L0 0" stroke={INK} strokeWidth={2} />
+                <circle cx={0} cy={6} r={9} fill="#6b7a4a" stroke={INK} strokeWidth={3} />
+                <rect x={-8} y={14} width={16} height={22} rx={5} fill="#7a7254" stroke={INK} strokeWidth={3} />
+                <path d="M-4 36 L-6 52 M4 36 L6 52" stroke={INK} strokeWidth={5} strokeLinecap="round" />
+              </g>
+            );
+          })}
+        </g>
+      );
+      break;
+    }
     case 'torn': {
       // torn-paper band (thumbnail text background): coloured sheet with a white ragged border
       const tw = (e.w as number) ?? 900, th = (e.h as number) ?? 300;
@@ -428,7 +456,7 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
       body = <ScoreDevice t={t} sides={e.sides as never} title={e.title as string} scores={e.scores as number[]} />;
       break;
     case 'road':
-      body = <RoadDevice t={t} progress={e.progress as number} exits={e.exits as never} vehicle={e.vehicle as string} nation={e.nation as string} length={e.length as number} color={e.color as string} sea={!!e.sea} />;
+      body = <RoadDevice t={t} progress={e.progress as number} exits={e.exits as never} towns={e.towns as never} vehicle={e.vehicle as string} nation={e.nation as string} length={e.length as number} color={e.color as string} sea={!!e.sea} polder={!!e.polder} vehicles={e.vehicles as number} />;
       break;
     case 'ranking':
       body = <RankingDevice t={t} items={e.items as never} highlight={e.highlight as number} title={e.title as string} />;

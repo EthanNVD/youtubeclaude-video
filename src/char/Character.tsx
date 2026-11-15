@@ -143,6 +143,8 @@ export const POSES: Record<string, Pose> = {
   rub: { r: [10, -132], l: [-10, -132], rb: 1, lb: -1, rh: 'mitten', lh: 'mitten' },
   scratch: { r: [50, -258], l: [-44, -92], rb: -1, rh: 'mitten', tilt: 6 },
   count: { r: [72, -148], l: [-44, -92], rb: -1, rh: 'point' },
+  surrender: { r: [70, -250], l: [-70, -250], rb: -1, lb: -1, rh: 'open', lh: 'open', tilt: -4 },
+  thumbsup: { r: [66, -150], l: [-44, -92], rb: -1, rh: 'fist' },
 };
 
 const shade = (hex: string, k: number) => {

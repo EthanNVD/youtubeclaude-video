@@ -150,41 +150,79 @@ export const ScoreDevice: React.FC<{ t: number; sides?: { nation?: string; label
 };
 
 // ---------- Road with EXITs ----------
-export const RoadDevice: React.FC<{ t: number; progress?: number; exits?: Item[]; vehicle?: string; nation?: string; length?: number; color?: string; sea?: boolean }> = ({ t, progress = 0, exits = [], vehicle = 'truck', nation: nat, length = 6000, color, sea }) => {
-  // road runs left->right in world space 0..length; camera follows vehicle at screen x=-300
+// exits: {at 0..1, label, sub, side 'up'|'down', taken, painted: 'allied'|'german'|'blank'|'none', num, paintIn}
+// towns: {at, label} roadside place-name boards. The camera follows the vehicle (progress 0..1).
+type RoadExit = Item & { painted?: string; num?: string; paintIn?: number };
+export const RoadDevice: React.FC<{ t: number; progress?: number; exits?: RoadExit[]; towns?: Item[]; vehicle?: string; nation?: string; length?: number; color?: string; sea?: boolean; polder?: boolean; vehicles?: number }> = ({ t, progress = 0, exits = [], towns = [], vehicle = 'truck', nation: nat, length = 6000, color, sea, polder, vehicles = 1 }) => {
   const vx = progress * length;
   const off = -vx - 300;
   const roadC = col(color, sea ? '#c8352b' : '#b9925f');
+  const PAINT: Record<string, [string, string]> = { allied: ['#2f5d9a', '#fff'], german: ['#5a6066', '#fff'], blank: ['#fbf8f0', INK] };
   return (
     <g>
       <g transform={`translate(${off} 0)`}>
+        {polder ? (
+          <g>
+            <path d={`M-1200 30 L${length + 1800} 30 L${length + 1800} 120 L-1200 120 Z`} fill="#7f9a52" />
+            {Array.from({ length: Math.ceil((length + 3000) / 420) }, (_, i) => <line key={i} x1={-1200 + i * 420} y1={40} x2={-1260 + i * 420} y2={400} stroke="#5b86a8" strokeWidth={8} opacity={0.6} />)}
+          </g>
+        ) : null}
         <rect x={-1200} y={-30} width={length + 3000} height={60} fill={roadC} stroke={INK} strokeWidth={4} />
         {!sea ? Array.from({ length: Math.ceil((length + 3000) / 160) }, (_, i) => <rect key={i} x={-1200 + i * 160} y={-4} width={80} height={8} fill="#fff" opacity={0.7} />) : null}
+        {towns.map((tw, i) => {
+          const x = (tw.at ?? 0) * length;
+          return (
+            <g key={'t' + i} transform={`translate(${x} 40)`}>
+              <line x1={0} y1={0} x2={0} y2={120} stroke="#6a5a4a" strokeWidth={8} />
+              <rect x={-130} y={100} width={260} height={64} rx={6} fill="#fbf8f0" stroke={INK} strokeWidth={4} />
+              <rect x={-120} y={108} width={240} height={48} rx={4} fill="none" stroke={C.red} strokeWidth={4} />
+              <text y={142} textAnchor="middle" fontFamily={FONT.cond} fontWeight={700} fontSize={Math.min(34, 420 / Math.max(6, (tw.label ?? '').length))} fill={INK}>{(tw.label ?? '').toUpperCase()}</text>
+            </g>
+          );
+        })}
         {exits.map((e, i) => {
           const x = (e.at ?? (i + 1) / (exits.length + 1)) * length;
           const up = e.side !== 'down';
           const dy = up ? -1 : 1;
-          const passed = vx > x + 200;
+          const painted = e.painted && e.painted !== 'none' && t >= (e.paintIn ?? 0) ? e.painted : undefined;
+          const pk = painted ? clamp((t - (e.paintIn ?? 0)) / 0.5) : 0;
+          const [pc, tc] = painted ? PAINT[painted] ?? PAINT.allied : ['#2f7a3a', '#fff'];
+          const lit = painted && pk > 0.5;
           return (
             <g key={i}>
               <path d={`M${x - 120} ${dy * 30} Q${x} ${dy * 40} ${x + 120} ${dy * 260}`} stroke={e.taken ? roadC : '#5f9446'} strokeWidth={50} fill="none" strokeLinecap="round" />
               <path d={`M${x - 120} ${dy * 30} Q${x} ${dy * 40} ${x + 120} ${dy * 260}`} stroke={INK} strokeWidth={56} fill="none" strokeLinecap="round" opacity={0.15} />
               <g transform={`translate(${x - 40} ${up ? -70 : 360})`}>
                 <line x1={0} y1={0} x2={0} y2={up ? -10 : -110} stroke="#6a5a4a" strokeWidth={10} />
-                <g transform={`translate(0 ${up ? -110 : -230})`}>
-                  <rect x={-170} y={-50} width={340} height={100} rx={8} fill={passed && !e.taken ? '#7a8a7a' : '#2f7a3a'} stroke={INK} strokeWidth={4} />
-                  <text y={-12} textAnchor="middle" fontFamily={FONT.cond} fontWeight={700} fontSize={26} fill="#fff" letterSpacing={2}>EXIT</text>
-                  <text y={26} textAnchor="middle" fontFamily={FONT.cond} fontWeight={700} fontSize={Math.min(30, 560 / Math.max(8, (e.label ?? '').length))} fill="#fff">{(e.label ?? '').toUpperCase()}</text>
-                  {passed && !e.taken ? <path d="M-150 -40 L150 40 M150 -40 L-150 40" stroke={C.red} strokeWidth={8} opacity={clamp((vx - x - 200) / 300)} /> : null}
+                <g transform={`translate(0 ${up ? -120 : -240})`}>
+                  <rect x={-190} y={-62} width={380} height={124} rx={10} fill="#2f7a3a" stroke={INK} strokeWidth={4} />
+                  {painted ? <rect x={-190} y={-62} width={380 * pk} height={124} rx={10} fill={pc} stroke={INK} strokeWidth={4} /> : null}
+                  {painted === 'blank' && pk >= 1 ? (
+                    <text y={18} textAnchor="middle" fontFamily={FONT.heavy} fontSize={56} fill="#c9c2b0">?</text>
+                  ) : (
+                    <g>
+                      <text y={-22} textAnchor="middle" fontFamily={FONT.cond} fontWeight={700} fontSize={24} fill={lit ? tc : '#fff'} letterSpacing={3}>{painted ? (painted === 'german' ? 'GERMAN EXIT' : painted === 'blank' ? 'EXIT' : 'ALLIED EXIT') : 'EXIT'}</text>
+                      <text y={14} textAnchor="middle" fontFamily={FONT.cond} fontWeight={700} fontSize={Math.min(34, 620 / Math.max(8, (e.label ?? '').length))} fill={lit ? tc : '#fff'}>{(e.label ?? '').toUpperCase()}</text>
+                      {e.sub ? <text y={46} textAnchor="middle" fontFamily={FONT.hand} fontSize={24} fill={lit ? tc : '#e9f2e4'}>{e.sub}</text> : null}
+                    </g>
+                  )}
+                  {painted && painted !== 'blank' && e.num && pk >= 1 ? (
+                    <g transform="translate(176 -58)">
+                      <circle r={30} fill={C.yellow} stroke={INK} strokeWidth={4} />
+                      <text y={11} textAnchor="middle" fontFamily={FONT.heavy} fontSize={30} fill={INK}>{e.num}</text>
+                    </g>
+                  ) : null}
                 </g>
               </g>
             </g>
           );
         })}
       </g>
-      <g transform={`translate(-300 ${sea ? 10 : 0}) scale(${sea ? 0.32 : 0.7})`}>
-        <Vehicle type={vehicle} nationKey={nat} t={t} moving />
-      </g>
+      {Array.from({ length: Math.max(1, vehicles) }, (_, i) => (
+        <g key={'v' + i} transform={`translate(${-300 - i * 300} ${sea ? 10 : 0}) scale(${sea ? 0.32 : 0.7})`}>
+          <Vehicle type={vehicle} nationKey={nat} t={t + i * 0.3} moving={progress > 0} />
+        </g>
+      ))}
     </g>
   );
 };
