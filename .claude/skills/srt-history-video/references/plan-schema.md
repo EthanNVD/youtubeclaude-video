@@ -1,0 +1,118 @@
+# Plan schema (what the engine understands)
+
+Coordinates: stage scenes use a **1920×1080 frame at camera zoom 1**, origin top-left; sets are drawn on a larger
+canvas (x −240…2160, y −160…1240) so the camera can move. Default ground line (feet) ≈ **y 900**.
+Times inside a scene (`in`, `out`, `keys[].t`, `camera[].t`, `sfx[].t`) are **seconds from the scene start**.
+Scene `start`/`end` are absolute seconds on the voice clock.
+
+```jsonc
+{
+  "meta": { "title": "…", "lang": "en", "fps": 24, "duration": 2133.5, "voice": "input/voice.mp3", "voiceOffset": 0, "grain": 0.5 },
+  "cast": { "rochefort": { "nation": "USA", "outfit": "robe", "color": "#8e2c2a", "hair": "baldtop", "age": 0.75 },
+            "yama": { "preset": "yamamoto" } },
+  "scenes": [ { "id": "s001", "start": 0, "end": 4.2, "type": "stage", "chapter": "Why Midway Was Avoidable", "…": "…" } ]
+}
+```
+
+## Scene
+
+| field | meaning |
+|---|---|
+| `id` | unique, e.g. `c03s014` |
+| `start`, `end` | absolute seconds; scenes must tile the timeline with no gaps |
+| `type` | `stage` (set + elements) · `map` (historical map + elements) · `chapter`/`title` (title card: `title`, `subtitle`) |
+| `beat` | the narration this shot shows (review only, keep it) |
+| `chapter` | on the first shot of a chapter → YouTube chapter title |
+| `set` | `{kind, time?, weather?, …options}` (stage) |
+| `map` | `{era, center:[lon,lat], span, colors, labels, labelNames, style, land, ocean, grid}` |
+| `camera` | keys `{t, x, y, zoom, rotate, shake, ease}` (stage; x,y = point at screen centre) or `{t, center:[lon,lat], zoom, span}` (map). A big zoom change over ≤0.25 s reads as a cut-in. |
+| `date` | paper badge top-left ("27 MAY 1940"); `clock` badge top-right ("10:22 AM"); `place` second badge |
+| `transition` | `cut` (default) · `fade` · `dip` (through black: time/place jump) · `wipe` · `flash` (impact) |
+| `tint` | `sepia` (counterfactual / memory / myth) · `grey` (grief) · `cold` · `warm` · `night` · `red` |
+| `elements` | list, drawn in order (later = in front) |
+| `sfx` | `[{t, id, vol?(dB), dur?}]` explicit cues — see sound.md |
+| `ambience` | bed id (`sea`, `wind`, `wind_cold`, `rain`, `room`, `office`, `basement`, `factory`, `battle`, `crowd`, `fire`, `engine`, `jungle`, `city_night`) or `null` for silence; default comes from the set |
+| `autoSfx` | `false` to disable automatic SFX for this scene |
+
+### Set kinds (`set.kind`)
+Interiors: `office`/`study` (options: `flag`, `portrait`(bool), `portraitFlag`, `map`(label text → wall map), `shelf`, `lamp`, `desk`(bool), `deskW`, `wall`, `clockTime` "10:20"), `cabinet`/`conference` (long table, `cloth`), `warroom`, `bunker` (`map`, `flag`), `codebreak`/`classroom` (blackboard room), `kitchen`/`home`, `factory`, `rally`/`podium` (`flag`), `studio`/`paper`/`void` (`color`) — plain backdrop for devices/inserts, `dark`/`memorial`.
+Exteriors: `sea`/`ocean` (`horizon`), `sky`/`air` (`below: "sea"`), `beach` (`cliffs`), `field`/`countryside`/`steppe`, `snow`, `desert`, `mud`, `jungle`, `city`/`street`/`ruins` (`ruined`), `harbor`/`dock`, `trench`, `railway`/`station`.
+Common: `time`: `day|dusk|dawn|night`; `weather`: `rain|snow`; `ground` (y of floor/road); field options `road`(bool), `poles`(bool), `houses`(bool), `trees`(`round|pine|bare|palm`), `horizon`.
+
+### Map
+`era` (basemap year): `bc323 bc200 bc1 100 400 800 1100 1200 1279 1400 1492 1600 1700 1715 1783 1800 1815 1880 1914 1920 1938 1945 1960 1994 2010`.
+`colors`: `{ "<polity name in basemap>": "<nation key | css colour>" }`; prefix `~` matches by substring (`"~Japan": "JPN"`). Names in 1938: `Germany`, `USSR`, `United Kingdom`, `France`, `Italy`, `Poland`, `Empire of Japan`, `United States`, `Finland`, `Romania`, `Hungary`, `Czechoslovakia`, `Yugoslavia`, `Chinese warlords`… (check with `python -c "import json;print(sorted({f['properties']['name'] for f in json.load(open('public/maps/world_1938.json'))['features']}))"`).
+`center` + `span` (degrees of longitude across the frame: 6 = a city/island, 25 = a country, 60–90 = an ocean/continent). Antimeridian works (Pacific: center 175).
+`labels`: names to write at their centroid (or `true` = all coloured); `labelNames` rename them ("Empire of Japan" → "JAPAN").
+`style`: `paper` (default), `war`, `snow` (eastern front winter), `dark`, `sepia`.
+Borders are the basemap's — for exact front lines draw `front`/`region` elements yourself.
+
+## Element (all kinds)
+
+| field | |
+|---|---|
+| `kind` | see below |
+| `x`, `y` | stage px (map scenes: use `at: [lon, lat]` instead) |
+| `scale`, `rotate`, `flip`, `opacity` | transform |
+| `in`, `out` | appear / disappear time (s from scene start) |
+| `enter` | `pop` (default) · `fade` · `drop` · `rise` · `slideL` · `slideR` · `grow` · `stamp` · `draw` (arrows/lines/rings) · `none` |
+| `exit` | `fade` (default) · `pop` · `drop` · `rise` · `slideL` · `slideR` · `none` |
+| `keys` | `[{t, …any prop…, ease?, dur?}]` — numbers and `[lon,lat]` arrays tween **into** `t` from the previous key (or from the scene start); strings (pose, expr, text) switch at `t`. `ease`: `inOut` (default) `in` `out` `linear` `back` `step` |
+| `hud` | `true` = fixed on screen (ignores camera) |
+| `dur` | duration of a `draw` reveal (default 1.2–1.4 s) |
+
+### Kinds
+
+**actor** — `who` (cast id or preset), `pose`, `expr`, `talk` (mouth flaps), `look` (−1…1 pupils), `view: "back"` (over-the-shoulder), `seated`, `holds` (prop item; with pose `hold`/`holdUp`/`write`/`phone`), `holdsText`, `tag` (nameplate under feet). Moving `x`/`at` in keys makes them walk automatically. Height ≈ 305 px × scale (scale 1.2–1.4 for medium shots, 2–2.6 for close-ups/thumbnails).
+Poses: `idle hips point pointL pointUp raise cheer chin head face cross hold holdUp talk talk2 shrug salute phone binoculars wave write fist slam present cower wipe`.
+Expressions: `neutral happy smile laugh angry rage determined smug worried sad cry panic nervous sweat shocked shout tired`.
+
+**crowd** — `who` (id or list), `count`, `spacing`, `pose`, `expr`, `walk`.
+
+**prop** — `item`: `paper telegram folder book phone radio stopwatch clock candle helmet crate barrel bomb shell binoculars globe hourglass medal cigar typewriter microphone sign exit flag ledger coins oil factory chair table pen skull cross grave rifle`; `text` (telegram/folder/book/crate/barrel/sign), `value` (stopwatch seconds, clock hour, hourglass 0–1, coins count), `nation`, `on` (phone ringing / radio playing), `color`.
+
+**vehicle** — `type`: `tank truck car jeep artillery gun train locomotive wagon traincar horse cart fighter plane bomber divebomber carrier battleship cruiser destroyer cargo freighter submarine uboat boat`; `nation`, `color`, `moving`, `damaged`, `burning`. Side view facing right (`flip` for left). Ships: scale 0.3–0.6.
+
+**fx** — `type`: `smoke fire explosion impact muzzle flash tracer searchlight rain snow sparks dust splash wake fireworks speedlines question exclaim`; `dir` (deg), `count`, `color`. Explosions play once from `in`.
+**burst** — explosion at `x,y` / `at` (`size` 0.4–1).
+
+**label** — `text` (use `\n` for 2 lines), `style`: `tag` (paper) · `red` · `dark` · `green` · `yellow` · `plain` (hand-written, no box) · `map` (spaced caps); `size`, `tx`,`ty` (leader line to a point, same coordinates), `tilt`.
+**stamp** — `text` (MYTH, VERDICT, FAKE, CANCELLED, 1–2 words), `color`, `size`, `tilt`; use `enter: "stamp"`.
+**bubble** — speech `text` at the speaker's mouth (`x`,`y` = tail tip), `thought`, `side` (1 right / −1 left). Only for short quoted words.
+**headline** / **text** — big outlined words (`size`, `color`, `accent` word in yellow, `font: "hand"`).
+**counter** — `from`, `to`, `dur`, `prefix`, `suffix`, `decimals`, `size`, `color`.
+**document** — `style`: `telegram letter order newspaper book blackboard note`; `title`, `lines[]` (typed progressively at `speed` chars/s), `w`, `h`, `size`, `stamp` (applied after the text finishes).
+**namecard** — `name`, `role` (first appearance of a person; bottom-left). **date** — extra badge (`text`, `right`).
+**panel** — coloured rectangle (`w`,`h`,`color`|`nation`) for split screens; **shape** — `shape: circle|rect|ring|cross|check`.
+**flag** — `nation`, `w`, `h`, `still`.
+
+Map-oriented (work on stage too with `screen: true` + px coordinates):
+**arrow** — `path` (≥2 points), `color` (nation key or css), `width` (24), `dashed` (plans/intentions), `head`, `label`, `dur`, `progress` (0–1 keyable; otherwise it draws itself from `in`).
+**front** / **line** / **route** — polyline `path`; `route` is dashed and can carry an `icon` (`ship carrier plane sub`) at its tip with `nation`.
+**region** / **pocket** — `polygon` filled area (`color`, `fillOpacity`, `dashed`); `pocket` pulses (encirclement).
+**city** — `name`, `capital`, `side` (`right left top bottom`), `size`.
+**unit** — NATO counter: `type` (`inf armor art cav hq`), `nation`, `label`. Move it with keys on `at`.
+**ship** / **icon** — top-down `type` (`ship carrier plane sub`), `nation`, `label`, `burning`.
+**ring** — `at`, `km` (radius) or `r` px; `color`, `dashed`.
+
+### Storytelling devices (one element each)
+**scale** — `left`, `right`, `leftNation`, `rightNation`, `title`, `items: [{side:"L"|"R", label, value, in, color}]` (tilts with a spring as weights drop in).
+**meter** — `value` −1…1 (keyable), `left`, `right`, `title`, `leftColor`, `rightColor`.
+**bars** — `items: [{label, value, nation|color, in}]`, `max`, `unit`, `title`, `width`.
+**scoreboard** — `sides: [{nation, label, score}]`, `scores` (keyable array), `title`.
+**road** — `progress` 0…1 (keyable), `exits: [{at, label, side:"up"|"down", taken}]`, `vehicle`, `nation`, `sea` (red sea-lane + ship), `length`.
+**ranking** — `items: [{label, sub, in}]` (listed top = No.N … bottom = No.1), `highlight` index, `title`.
+**timeline** — `items: [{label, sub(date), at 0…1, in, color}]`, `cursor` 0…1, `start`, `end`, `width`.
+**ledger** — `columns: [{title, nation, entries: [{label, value, in, taken:false → struck}]}]` (running totals).
+
+## Nation keys
+`GER GERI USSR RUS USA UK JPN FRA ITA POL CHN FIN ROM HUN NED BEL AUS OTT VN SPQR CARTH NEUTRAL` — used for map fills, uniforms, flags, markings, bar colours.
+
+## Cast spec (custom people)
+`{nation, outfit, color, pants, skin, hair, hairColor, facial, hat, hatColor, badge, glasses, extra[], eyes, build, age}`
+- outfit `tunic suit navy navywhite coat sailor civil dress party armor robe pilot`
+- hair `side back bald baldtop short part curly bun long messy none`; facial `toothbrush walrus pencil handlebar beard goatee stubble`
+- hat `peaked garrison helmet_de helmet_us helmet_uk helmet_su helmet_jp navy navy_white beret kepi bicorne ushanka fedora tophat pith sailor pilot roman crown conical pith_vn`
+- glasses `round pince sun`; extra `cigar pipe cigarette medals armband epaulettes tie redtie bowtie monocle wrinkles jowls blush thickbrows star ironcross`
+- eyes `dot lid big`; build 0.85–1.35; age 0–1 (≥0.55 wrinkles, ≥0.7 grey hair)
+Presets (src/char/presets.ts): hitler, hitler_uniform, goering, himmler, rommel, guderian, manstein, paulus, halder, goebbels, german_officer/soldier/tanker/pilot, uboat_captain, stalin, zhukov, molotov, beria, khrushchev, soviet_officer/soldier/winter, churchill, chamberlain, halifax, montgomery, british_soldier, raf_pilot, roosevelt, truman, eisenhower, macarthur, patton, nimitz, american_soldier/sailor/pilot, us_navy_officer, hirohito, tojo, yamamoto, nagumo, japanese_officer/soldier/pilot/sailor, de_gaulle, petain, gamelin, french_soldier, mussolini, italian_soldier, mannerheim, finnish_soldier, chiang, polish_soldier, kaiser, ww1_german/british/french, napoleon, wellington, kutuzov, hannibal, roman_legionary, caesar, vn_soldier, vn_peasant, civilian_man/woman, worker, diplomat, reporter, narrator_archivist, narrator_accountant.

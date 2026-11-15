@@ -1,0 +1,1022 @@
+{
+ "meta": {
+  "title": "Midway test",
+  "lang": "en",
+  "fps": 24,
+  "duration": 62,
+  "voice": "input/voice.wav",
+  "grain": 0.5
+ },
+ "cast": {
+  "yamamoto": {
+   "preset": "yamamoto"
+  },
+  "rochefort": {
+   "nation": "USA",
+   "outfit": "robe",
+   "color": "#8e2c2a",
+   "pants": "#c9b48a",
+   "hair": "baldtop",
+   "hairColor": "#cfc8bd",
+   "age": 0.75,
+   "build": 1.05
+  },
+  "jp_officer": {
+   "preset": "japanese_officer"
+  },
+  "us_pilot": {
+   "preset": "american_pilot"
+  }
+ },
+ "scenes": [
+  {
+   "id": "s01",
+   "start": 0,
+   "end": 4.2,
+   "type": "stage",
+   "beat": "10:22, June 4 1942 — dive bombers above Kaga",
+   "set": {
+    "kind": "sky",
+    "below": "sea"
+   },
+   "date": "4 JUNE 1942",
+   "clock": "10:22 AM",
+   "camera": [
+    {
+     "t": 0,
+     "zoom": 1.05
+    },
+    {
+     "t": 4.2,
+     "zoom": 1.15,
+     "x": 900,
+     "y": 600
+    }
+   ],
+   "elements": [
+    {
+     "kind": "vehicle",
+     "type": "divebomber",
+     "nation": "USA",
+     "x": 1500,
+     "y": 80,
+     "scale": 1.6,
+     "rotate": 32,
+     "keys": [
+      {
+       "t": 4.2,
+       "x": 560,
+       "y": 820,
+       "ease": "in"
+      }
+     ]
+    },
+    {
+     "kind": "vehicle",
+     "type": "divebomber",
+     "nation": "USA",
+     "x": 1900,
+     "y": 0,
+     "scale": 1.2,
+     "rotate": 34,
+     "in": 0.4,
+     "enter": "none",
+     "keys": [
+      {
+       "t": 4.2,
+       "x": 1000,
+       "y": 700,
+       "ease": "in"
+      }
+     ]
+    },
+    {
+     "kind": "vehicle",
+     "type": "divebomber",
+     "nation": "USA",
+     "x": 2200,
+     "y": -120,
+     "scale": 0.9,
+     "rotate": 36,
+     "in": 0.8,
+     "enter": "none",
+     "keys": [
+      {
+       "t": 4.2,
+       "x": 1350,
+       "y": 520,
+       "ease": "in"
+      }
+     ]
+    }
+   ],
+   "sfx": [
+    {
+     "t": 0.0,
+     "id": "plane_dive"
+    }
+   ],
+   "chapter": "Six Minutes at Midway"
+  },
+  {
+   "id": "s02",
+   "start": 4.2,
+   "end": 8.6,
+   "type": "stage",
+   "beat": "fell on the carrier Kaga",
+   "set": {
+    "kind": "sea",
+    "horizon": 380
+   },
+   "clock": "10:23 AM",
+   "camera": [
+    {
+     "t": 0,
+     "zoom": 1
+    },
+    {
+     "t": 2.4,
+     "zoom": 1.0
+    },
+    {
+     "t": 2.6,
+     "zoom": 1.25,
+     "x": 900,
+     "y": 640,
+     "ease": "out"
+    }
+   ],
+   "elements": [
+    {
+     "kind": "fx",
+     "type": "wake",
+     "x": 560,
+     "y": 700
+    },
+    {
+     "kind": "vehicle",
+     "type": "carrier",
+     "nation": "JPN",
+     "x": 960,
+     "y": 700,
+     "scale": 1.0,
+     "keys": [
+      {
+       "t": 4.4,
+       "x": 1000
+      }
+     ]
+    },
+    {
+     "kind": "label",
+     "text": "KAGA",
+     "style": "tag",
+     "x": 1180,
+     "y": 420,
+     "in": 0.6,
+     "size": 44
+    },
+    {
+     "kind": "burst",
+     "x": 820,
+     "y": 640,
+     "in": 2.4,
+     "size": 0.9
+    },
+    {
+     "kind": "burst",
+     "x": 1060,
+     "y": 650,
+     "in": 2.9,
+     "size": 0.7
+    },
+    {
+     "kind": "fx",
+     "type": "fire",
+     "x": 830,
+     "y": 650,
+     "in": 2.6,
+     "enter": "fade"
+    },
+    {
+     "kind": "fx",
+     "type": "smoke",
+     "x": 850,
+     "y": 610,
+     "in": 2.8,
+     "enter": "fade"
+    },
+    {
+     "kind": "vehicle",
+     "type": "divebomber",
+     "nation": "USA",
+     "x": 300,
+     "y": 120,
+     "scale": 0.5,
+     "rotate": -15,
+     "in": 2.6,
+     "enter": "none",
+     "keys": [
+      {
+       "t": 4.4,
+       "x": 1900,
+       "y": -100
+      }
+     ]
+    }
+   ],
+   "sfx": [
+    {
+     "t": 2.4,
+     "id": "explosion_big"
+    },
+    {
+     "t": 2.9,
+     "id": "explosion"
+    }
+   ]
+  },
+  {
+   "id": "s03",
+   "start": 8.6,
+   "end": 13.0,
+   "type": "stage",
+   "beat": "within six minutes three carriers burning",
+   "set": {
+    "kind": "sea",
+    "horizon": 520
+   },
+   "clock": "10:28 AM",
+   "camera": [
+    {
+     "t": 0,
+     "zoom": 1.0
+    },
+    {
+     "t": 4.4,
+     "zoom": 1.08
+    }
+   ],
+   "elements": [
+    {
+     "kind": "vehicle",
+     "type": "carrier",
+     "nation": "JPN",
+     "x": 300,
+     "y": 640,
+     "scale": 0.42,
+     "burning": true
+    },
+    {
+     "kind": "vehicle",
+     "type": "carrier",
+     "nation": "JPN",
+     "x": 860,
+     "y": 700,
+     "scale": 0.5,
+     "burning": true
+    },
+    {
+     "kind": "vehicle",
+     "type": "carrier",
+     "nation": "JPN",
+     "x": 1480,
+     "y": 660,
+     "scale": 0.46,
+     "burning": true,
+     "in": 1.0,
+     "enter": "fade"
+    },
+    {
+     "kind": "vehicle",
+     "type": "carrier",
+     "nation": "JPN",
+     "x": 1820,
+     "y": 590,
+     "scale": 0.3
+    },
+    {
+     "kind": "label",
+     "text": "AKAGI",
+     "x": 300,
+     "y": 720,
+     "style": "plain",
+     "size": 36
+    },
+    {
+     "kind": "label",
+     "text": "KAGA",
+     "x": 860,
+     "y": 790,
+     "style": "plain",
+     "size": 36
+    },
+    {
+     "kind": "label",
+     "text": "SORYU",
+     "x": 1480,
+     "y": 750,
+     "style": "plain",
+     "size": 36,
+     "in": 1.0
+    },
+    {
+     "kind": "counter",
+     "from": 0,
+     "to": 6,
+     "suffix": " MINUTES",
+     "x": 960,
+     "y": 220,
+     "size": 110,
+     "in": 1.4,
+     "hud": true
+    }
+   ],
+   "ambience": "sea",
+   "sfx": [
+    {
+     "t": 1.0,
+     "id": "explosion"
+    }
+   ]
+  },
+  {
+   "id": "s04",
+   "start": 13.0,
+   "end": 18.0,
+   "type": "stage",
+   "beat": "told as five minutes of bad luck — it wasn't",
+   "set": {
+    "kind": "studio",
+    "color": "#2c2a28"
+   },
+   "transition": "flash",
+   "camera": [
+    {
+     "t": 0,
+     "zoom": 1.0
+    },
+    {
+     "t": 5,
+     "zoom": 1.1
+    }
+   ],
+   "elements": [
+    {
+     "kind": "prop",
+     "item": "stopwatch",
+     "x": 960,
+     "y": 560,
+     "scale": 2.6,
+     "value": 0,
+     "keys": [
+      {
+       "t": 3.0,
+       "value": 300
+      }
+     ]
+    },
+    {
+     "kind": "label",
+     "text": "\"FIVE MINUTES OF BAD LUCK\"",
+     "style": "plain",
+     "x": 960,
+     "y": 850,
+     "size": 54,
+     "in": 0.6
+    },
+    {
+     "kind": "stamp",
+     "text": "MYTH",
+     "x": 1260,
+     "y": 360,
+     "in": 3.4,
+     "enter": "stamp",
+     "size": 110
+    }
+   ],
+   "ambience": "room",
+   "sfx": [
+    {
+     "t": 0.2,
+     "id": "clock_tick",
+     "dur": 3
+    },
+    {
+     "t": 3.4,
+     "id": "stamp"
+    }
+   ]
+  },
+  {
+   "id": "s05",
+   "start": 18.0,
+   "end": 23.5,
+   "type": "stage",
+   "beat": "Six months earlier, Yamamoto had a problem",
+   "set": {
+    "kind": "office",
+    "flag": "JPN",
+    "portrait": false,
+    "map": "PACIFIC",
+    "shelf": true,
+    "time": "day"
+   },
+   "date": "DECEMBER 1941",
+   "transition": "dip",
+   "camera": [
+    {
+     "t": 0,
+     "zoom": 1.0
+    },
+    {
+     "t": 3.0,
+     "zoom": 1.0
+    },
+    {
+     "t": 3.2,
+     "zoom": 1.45,
+     "x": 980,
+     "y": 560,
+     "ease": "out"
+    }
+   ],
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "yamamoto",
+     "x": 980,
+     "y": 900,
+     "scale": 1.35,
+     "pose": "chin",
+     "expr": "worried"
+    },
+    {
+     "kind": "prop",
+     "item": "telegram",
+     "x": 760,
+     "y": 860,
+     "scale": 0.9,
+     "text": "PEARL HARBOR"
+    },
+    {
+     "kind": "namecard",
+     "name": "Adm. Isoroku Yamamoto",
+     "role": "Combined Fleet",
+     "in": 0.8,
+     "out": 4.5
+    }
+   ],
+   "ambience": "office",
+   "sfx": [
+    {
+     "t": 0.6,
+     "id": "paper"
+    }
+   ],
+   "chapter": "Yamamoto's Trap"
+  },
+  {
+   "id": "s06",
+   "start": 23.5,
+   "end": 28.0,
+   "type": "map",
+   "beat": "battleships sunk, carriers not in port",
+   "map": {
+    "era": "1938",
+    "center": [
+     -157.9,
+     21.4
+    ],
+    "span": 6,
+    "colors": {
+     "United States": "USA"
+    }
+   },
+   "camera": [
+    {
+     "t": 0,
+     "zoom": 1
+    },
+    {
+     "t": 4.5,
+     "zoom": 1.15
+    }
+   ],
+   "elements": [
+    {
+     "kind": "city",
+     "name": "Pearl Harbor",
+     "at": [
+      -157.97,
+      21.36
+     ],
+     "side": "left"
+    },
+    {
+     "kind": "ship",
+     "type": "ship",
+     "nation": "USA",
+     "at": [
+      -157.9,
+      21.0
+     ],
+     "label": "Battleships",
+     "burning": true,
+     "scale": 1.2
+    },
+    {
+     "kind": "ship",
+     "type": "ship",
+     "nation": "USA",
+     "at": [
+      -157.7,
+      21.1
+     ],
+     "burning": true,
+     "scale": 1.2
+    },
+    {
+     "kind": "label",
+     "text": "CARRIERS: NOT IN PORT",
+     "style": "red",
+     "x": 1400,
+     "y": 240,
+     "in": 2.0,
+     "size": 46,
+     "hud": true
+    },
+    {
+     "kind": "ship",
+     "type": "carrier",
+     "nation": "USA",
+     "at": [
+      -155.2,
+      20.2
+     ],
+     "label": "at sea",
+     "in": 2.4,
+     "scale": 1.3
+    }
+   ],
+   "ambience": null
+  },
+  {
+   "id": "s07",
+   "start": 28.0,
+   "end": 33.5,
+   "type": "map",
+   "beat": "trap: attack Midway, US carriers must come out",
+   "map": {
+    "era": "1938",
+    "center": [
+     175,
+     30
+    ],
+    "span": 85,
+    "colors": {
+     "Empire of Japan": "JPN",
+     "United States": "USA"
+    },
+    "labels": [
+     "Empire of Japan"
+    ],
+    "labelNames": {
+     "Empire of Japan": "JAPAN"
+    }
+   },
+   "camera": [
+    {
+     "t": 0,
+     "zoom": 0.95
+    },
+    {
+     "t": 5.5,
+     "zoom": 1.1,
+     "center": [
+      178,
+      28
+     ]
+    }
+   ],
+   "elements": [
+    {
+     "kind": "city",
+     "name": "Midway",
+     "at": [
+      -177.37,
+      28.21
+     ],
+     "side": "top"
+    },
+    {
+     "kind": "city",
+     "name": "Pearl Harbor",
+     "at": [
+      -157.97,
+      21.36
+     ],
+     "side": "bottom"
+    },
+    {
+     "kind": "arrow",
+     "path": [
+      [
+       136,
+       33
+      ],
+      [
+       160,
+       38
+      ],
+      [
+       -178.5,
+       29
+      ]
+     ],
+     "color": "red",
+     "in": 0.4,
+     "dur": 1.8
+    },
+    {
+     "kind": "label",
+     "text": "BAIT",
+     "style": "red",
+     "at": [
+      -178,
+      34
+     ],
+     "in": 2.0,
+     "size": 48
+    },
+    {
+     "kind": "arrow",
+     "path": [
+      [
+       -158.5,
+       22
+      ],
+      [
+       -168,
+       27
+      ],
+      [
+       -175.6,
+       28.3
+      ]
+     ],
+     "color": "USA",
+     "dashed": true,
+     "width": 18,
+     "in": 3.0,
+     "dur": 1.4
+    },
+    {
+     "kind": "ring",
+     "at": [
+      -177.37,
+      28.21
+     ],
+     "km": 700,
+     "in": 4.2,
+     "color": "red",
+     "enter": "grow"
+    },
+    {
+     "kind": "label",
+     "text": "TRAP",
+     "style": "plain",
+     "at": [
+      -172,
+      23
+     ],
+     "in": 4.4,
+     "size": 64
+    }
+   ],
+   "sfx": [
+    {
+     "t": 0.4,
+     "id": "map_draw",
+     "dur": 1.8
+    },
+    {
+     "t": 3.0,
+     "id": "map_draw",
+     "dur": 1.4
+    },
+    {
+     "t": 4.2,
+     "id": "pop"
+    }
+   ]
+  },
+  {
+   "id": "s08",
+   "start": 33.5,
+   "end": 38.5,
+   "type": "stage",
+   "beat": "Hawaii basement, Rochefort reading his mail",
+   "set": {
+    "kind": "codebreak"
+   },
+   "date": "MAY 1942 — PEARL HARBOR",
+   "transition": "dip",
+   "camera": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "x": 900
+    },
+    {
+     "t": 5,
+     "zoom": 1.12,
+     "x": 880
+    }
+   ],
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "rochefort",
+     "x": 760,
+     "y": 900,
+     "scale": 1.3,
+     "pose": "hold",
+     "holds": "paper",
+     "expr": "tired"
+    },
+    {
+     "kind": "label",
+     "text": "NO WINDOWS",
+     "style": "plain",
+     "x": 1650,
+     "y": 120,
+     "size": 34,
+     "in": 1.2
+    },
+    {
+     "kind": "namecard",
+     "name": "Cmdr. Joseph Rochefort",
+     "role": "chief of Station Hypo",
+     "in": 1.0
+    }
+   ],
+   "ambience": "basement",
+   "sfx": [
+    {
+     "t": 0.4,
+     "id": "paper"
+    }
+   ],
+   "chapter": "AF Is Short of Water"
+  },
+  {
+   "id": "s09",
+   "start": 38.5,
+   "end": 44.0,
+   "type": "stage",
+   "beat": "the target was called AF",
+   "set": {
+    "kind": "studio",
+    "color": "#3a3530"
+   },
+   "elements": [
+    {
+     "kind": "document",
+     "style": "blackboard",
+     "title": "TARGET",
+     "lines": [
+      "AF = ?"
+     ],
+     "x": 820,
+     "y": 520,
+     "w": 1000,
+     "h": 600,
+     "speed": 10,
+     "in": 0.3,
+     "size": 150
+    },
+    {
+     "kind": "actor",
+     "who": "rochefort",
+     "x": 1560,
+     "y": 1040,
+     "scale": 1.25,
+     "pose": "pointL",
+     "expr": "determined",
+     "in": 1.8
+    },
+    {
+     "kind": "fx",
+     "type": "question",
+     "x": 1100,
+     "y": 560,
+     "in": 2.6
+    }
+   ],
+   "sfx": [
+    {
+     "t": 0.4,
+     "id": "chalk",
+     "dur": 1.2
+    }
+   ]
+  },
+  {
+   "id": "s10",
+   "start": 44.0,
+   "end": 49.0,
+   "type": "stage",
+   "beat": "fake message: Midway is short of water",
+   "set": {
+    "kind": "studio",
+    "color": "#d9cdb0"
+   },
+   "camera": [
+    {
+     "t": 0,
+     "zoom": 1.0
+    },
+    {
+     "t": 5,
+     "zoom": 1.08
+    }
+   ],
+   "elements": [
+    {
+     "kind": "document",
+     "style": "telegram",
+     "title": "MIDWAY  >  PEARL HARBOR",
+     "lines": [
+      "WATER DISTILLATION PLANT",
+      "HAS BROKEN DOWN.",
+      "FRESH WATER NEEDED",
+      "IMMEDIATELY."
+     ],
+     "x": 960,
+     "y": 540,
+     "w": 900,
+     "h": 560,
+     "speed": 26,
+     "stamp": "FAKE",
+     "in": 0.2
+    }
+   ],
+   "sfx": [
+    {
+     "t": 0.3,
+     "id": "typewriter",
+     "dur": 3.0
+    },
+    {
+     "t": 3.6,
+     "id": "stamp"
+    }
+   ]
+  },
+  {
+   "id": "s11",
+   "start": 49.0,
+   "end": 54.0,
+   "type": "stage",
+   "beat": "Tokyo reports AF short of water — trap reversed",
+   "set": {
+    "kind": "codebreak"
+   },
+   "camera": [
+    {
+     "t": 0,
+     "zoom": 1.0
+    }
+   ],
+   "elements": [
+    {
+     "kind": "document",
+     "style": "telegram",
+     "title": "TOKYO",
+     "lines": [
+      "AF IS SHORT OF WATER."
+     ],
+     "x": 520,
+     "y": 380,
+     "w": 640,
+     "h": 300,
+     "scale": 0.9,
+     "speed": 30
+    },
+    {
+     "kind": "actor",
+     "who": "rochefort",
+     "x": 1300,
+     "y": 900,
+     "scale": 1.3,
+     "pose": "cheer",
+     "expr": "happy",
+     "in": 1.6,
+     "enter": "none"
+    },
+    {
+     "kind": "actor",
+     "who": "rochefort",
+     "x": 1300,
+     "y": 900,
+     "scale": 1.3,
+     "pose": "hold",
+     "holds": "paper",
+     "expr": "neutral",
+     "out": 1.6,
+     "exit": "none"
+    },
+    {
+     "kind": "label",
+     "text": "AF = MIDWAY",
+     "style": "red",
+     "x": 1300,
+     "y": 260,
+     "in": 1.8,
+     "size": 64
+    },
+    {
+     "kind": "stamp",
+     "text": "TRAP REVERSED",
+     "x": 640,
+     "y": 760,
+     "in": 3.0,
+     "enter": "stamp",
+     "size": 70,
+     "color": "green"
+    }
+   ],
+   "ambience": "basement",
+   "sfx": [
+    {
+     "t": 1.8,
+     "id": "pop"
+    },
+    {
+     "t": 3.0,
+     "id": "stamp"
+    }
+   ]
+  },
+  {
+   "id": "s12",
+   "start": 54.0,
+   "end": 62.0,
+   "type": "stage",
+   "beat": "Japan 4 carriers, America 3 — on paper not close",
+   "set": {
+    "kind": "paper"
+   },
+   "transition": "fade",
+   "elements": [
+    {
+     "kind": "bars",
+     "title": "CARRIERS AT MIDWAY",
+     "x": 1060,
+     "y": 360,
+     "max": 5,
+     "width": 900,
+     "items": [
+      {
+       "label": "JAPAN",
+       "nation": "JPN",
+       "value": 4,
+       "in": 0.3
+      },
+      {
+       "label": "USA",
+       "nation": "USA",
+       "value": 3,
+       "in": 1.6
+      }
+     ]
+    },
+    {
+     "kind": "stamp",
+     "text": "ON PAPER",
+     "x": 1450,
+     "y": 820,
+     "in": 3.6,
+     "enter": "stamp",
+     "size": 70,
+     "color": "#5a5048"
+    }
+   ],
+   "sfx": [
+    {
+     "t": 0.3,
+     "id": "whoosh_soft"
+    },
+    {
+     "t": 1.6,
+     "id": "whoosh_soft"
+    },
+    {
+     "t": 3.6,
+     "id": "stamp"
+    }
+   ]
+  }
+ ]
+}

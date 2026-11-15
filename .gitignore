@@ -1,0 +1,14 @@
+node_modules/
+.cache/
+out/
+*.log
+assets/sfx/*.wav
+projects/*/out/
+projects/*/review/
+projects/*/work/
+projects/*/input/*.wav
+projects/*/input/*.mp3
+projects/*/input/*.m4a
+projects/*/input/*.aac
+projects/*/input/*.flac
+projects/*/input/*.ogg

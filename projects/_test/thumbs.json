@@ -1,0 +1,254 @@
+{
+ "thumbs": [
+  {
+   "panels": [
+    {
+     "id": "a",
+     "start": 0,
+     "end": 5,
+     "type": "map",
+     "at": 2.5,
+     "map": {
+      "era": "1938",
+      "center": [
+       150,
+       33
+      ],
+      "span": 55,
+      "colors": {
+       "Empire of Japan": "JPN",
+       "United States": "USA"
+      }
+     },
+     "date": "3 JUNE 1942",
+     "elements": [
+      {
+       "kind": "arrow",
+       "path": [
+        [
+         136,
+         34
+        ],
+        [
+         150,
+         36
+        ],
+        [
+         164,
+         33
+        ]
+       ],
+       "progress": 1,
+       "width": 30
+      },
+      {
+       "kind": "actor",
+       "who": "nagumo",
+       "x": 1000,
+       "y": 1290,
+       "scale": 2.1,
+       "pose": "cross",
+       "expr": "smug"
+      }
+     ]
+    },
+    {
+     "id": "b",
+     "start": 0,
+     "end": 5,
+     "type": "stage",
+     "at": 2.5,
+     "set": {
+      "kind": "sea",
+      "horizon": 330
+     },
+     "date": "4 JUNE 1942",
+     "elements": [
+      {
+       "kind": "vehicle",
+       "type": "carrier",
+       "nation": "JPN",
+       "x": 760,
+       "y": 520,
+       "scale": 0.55,
+       "burning": true
+      },
+      {
+       "kind": "vehicle",
+       "type": "carrier",
+       "nation": "JPN",
+       "x": 1250,
+       "y": 600,
+       "scale": 0.6,
+       "burning": true
+      },
+      {
+       "kind": "actor",
+       "who": "nagumo",
+       "x": 980,
+       "y": 1290,
+       "scale": 2.1,
+       "pose": "head",
+       "expr": "panic"
+      }
+     ]
+    }
+   ],
+   "texts": [
+    {
+     "text": "NOT BAD LUCK.",
+     "accent": "NOT",
+     "x": 960,
+     "y": 330,
+     "size": 210
+    }
+   ]
+  },
+  {
+   "panels": [
+    {
+     "id": "c",
+     "start": 0,
+     "end": 5,
+     "type": "stage",
+     "at": 2.5,
+     "set": {
+      "kind": "codebreak"
+     },
+     "elements": [
+      {
+       "kind": "document",
+       "style": "blackboard",
+       "lines": [
+        "AF = ?"
+       ],
+       "x": 760,
+       "y": 400,
+       "w": 1150,
+       "h": 560,
+       "size": 210,
+       "in": -10
+      },
+      {
+       "kind": "actor",
+       "who": "rochefort",
+       "x": 1560,
+       "y": 1260,
+       "scale": 2.3,
+       "pose": "pointL",
+       "expr": "smug"
+      }
+     ]
+    }
+   ],
+   "texts": [
+    {
+     "text": "ONE FAKE MESSAGE",
+     "accent": "FAKE",
+     "accentColor": "red",
+     "x": 900,
+     "y": 1010,
+     "size": 165
+    }
+   ]
+  },
+  {
+   "panels": [
+    {
+     "id": "d",
+     "start": 0,
+     "end": 5,
+     "type": "stage",
+     "at": 2.5,
+     "set": {
+      "kind": "sea",
+      "horizon": 420
+     },
+     "elements": [
+      {
+       "kind": "flag",
+       "nation": "JPN",
+       "x": 560,
+       "y": 110,
+       "w": 260,
+       "h": 172,
+       "still": true
+      },
+      {
+       "kind": "vehicle",
+       "type": "carrier",
+       "nation": "JPN",
+       "x": 960,
+       "y": 560,
+       "scale": 0.42
+      },
+      {
+       "kind": "actor",
+       "who": "yamamoto",
+       "x": 900,
+       "y": 1290,
+       "scale": 2.1,
+       "pose": "cross",
+       "expr": "smug"
+      }
+     ]
+    },
+    {
+     "id": "e",
+     "start": 0,
+     "end": 5,
+     "type": "stage",
+     "at": 2.5,
+     "set": {
+      "kind": "sea",
+      "horizon": 420
+     },
+     "elements": [
+      {
+       "kind": "flag",
+       "nation": "USA",
+       "x": 1100,
+       "y": 110,
+       "w": 260,
+       "h": 172,
+       "still": true
+      },
+      {
+       "kind": "vehicle",
+       "type": "carrier",
+       "nation": "USA",
+       "x": 960,
+       "y": 560,
+       "scale": 0.42
+      },
+      {
+       "kind": "actor",
+       "who": "nimitz",
+       "x": 1020,
+       "y": 1290,
+       "scale": 2.1,
+       "pose": "hips",
+       "expr": "determined"
+      }
+     ]
+    }
+   ],
+   "texts": [
+    {
+     "text": "4 VS 3",
+     "accent": "3",
+     "x": 960,
+     "y": 560,
+     "size": 300
+    },
+    {
+     "text": "WHO WON?",
+     "x": 960,
+     "y": 1010,
+     "size": 140,
+     "color": "yellow"
+    }
+   ]
+  }
+ ]
+}

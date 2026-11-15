@@ -1,0 +1,30 @@
+{
+  "name": "srt-history-animator",
+  "version": "0.1.0",
+  "private": true,
+  "description": "SRT + voice -> military-history animated explainer (Remotion) + YouTube package",
+  "type": "module",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "setup": "python tools/sfx_synth.py",
+    "render:test": "python tools/make.py projects/_test all"
+  },
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@remotion/bundler": "^4.0.543",
+    "@remotion/cli": "^4.0.543",
+    "@remotion/google-fonts": "^4.0.543",
+    "@remotion/renderer": "^4.0.543",
+    "d3-geo": "^3.1.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "remotion": "^4.0.543"
+  },
+  "devDependencies": {
+    "@types/d3-geo": "^3.1.1",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "typescript": "^7.0.2"
+  }
+}
