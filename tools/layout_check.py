@@ -141,7 +141,7 @@ def overlaps(scene):
 
 # plausible top speeds in the vehicle's own drawing units per second (drawing ≈ 300–600 units long)
 VMAX = {
-    "tank": 420, "sherman": 420, "panzer4": 400, "tiger": 320, "t34": 450, "panther": 420, "stug": 400,
+    "markiv": 160, "renault": 220, "tank": 420, "sherman": 420, "panzer4": 400, "tiger": 320, "t34": 450, "panther": 420, "stug": 400,
     "halftrack": 520, "truck": 650, "car": 800, "jeep": 800, "artillery": 300, "horse": 300, "cart": 260,
     "train": 700, "locomotive": 700, "wagon": 700, "traincar": 700,
     "boat": 260, "assaultboat": 220, "cargo": 180, "freighter": 180, "carrier": 160, "battleship": 160,
@@ -208,6 +208,7 @@ def fix_speeds(plan, margin=0.85):
 PERSON_H = 300
 VEH = {  # type: (native height, native length, match by, target size in person heights)
     "sherman": (203, 481, "h", 1.15), "tank": (193, 501, "h", 1.12), "tank_flat": (193, 501, "h", 1.12), "tiger": (213, 585, "h", 1.22),
+    "markiv": (222, 568, "h", 1.3), "renault": (196, 290, "h", 1.1),
     "panther": (197, 585, "h", 1.18), "panzer4": (187, 525, "h", 1.08), "t34": (185, 511, "h", 1.05), "stug": (156, 485, "h", 0.9),
     "halftrack": (158, 397, "h", 0.98), "truck": (211, 425, "h", 1.32), "jeep": (155, 287, "h", 0.82), "car": (155, 287, "h", 0.85),
     "artillery": (140, 414, "h", 0.78), "gun": (140, 414, "h", 0.78), "train": (209, 395, "h", 1.8), "locomotive": (209, 395, "h", 1.8),

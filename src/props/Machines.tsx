@@ -569,7 +569,78 @@ const Rowboat: React.FC<MP> = ({ color, t }) => {
   );
 };
 
-export const MACHINE_TYPES = new Set(['truck', 'jeep', 'car', 'halftrack', 'artillery', 'gun', 'fighter', 'plane', 'divebomber', 'bomber', 'dakota', 'transport', 'glider', 'battleship', 'cruiser', 'destroyer', 'cargo', 'freighter', 'submarine', 'uboat', 'boat']);
+
+/** British Mark IV (1916-18): the rhomboid "landship" — tracks run right round the hull, guns in side sponsons. */
+const MarkIV: React.FC<MP> = ({ color, t, travel, moving, damaged, crew }) => {
+  const body = color ?? '#7d6c4c';
+  const link = -(travel % 16);
+  const bob = moving ? Math.sin(travel / 16) * 1.4 : 0;
+  const hull = 'M-250 -40 Q-262 -120 -214 -168 L-150 -196 H170 Q236 -190 262 -120 Q252 -46 214 -6 H-196 Q-240 -6 -250 -40 Z';
+  return (
+    <g>
+      <defs><VGrad c={body} /><VGrad c={shade(body, -0.18)} /></defs>
+      <ellipse cx={0} cy={4} rx={250} ry={10} fill="#000" opacity={0.22} />
+      <Dust x={-210} t={t} on={moving} />
+      <Exhaust x={-120} y={-206} t={t} on={moving} />
+      <g transform={`translate(0 ${bob})`}>
+        {/* track belt round the rhomboid */}
+        <path d={hull} fill="#3a352d" stroke={INK} strokeWidth={4} strokeLinejoin="round" />
+        <path d={hull} fill="none" stroke="#5e574b" strokeWidth={9} strokeDasharray="9 7" strokeDashoffset={link} />
+        {/* side plate inside the belt */}
+        <path d="M-226 -44 Q-234 -112 -196 -152 L-146 -174 H160 Q214 -168 236 -116 Q226 -58 196 -26 H-186 Q-218 -26 -226 -44 Z" fill={fillOf(body)} stroke={INK} strokeWidth={4} strokeLinejoin="round" />
+        <path d="M-196 -150 L-146 -170 H160" stroke="#fff" strokeOpacity={0.25} strokeWidth={5} fill="none" />
+        {[-170, -110, -50, 10, 70, 130].map((x) => <circle key={x} cx={x} cy={-160} r={3.5} fill={INK} opacity={0.5} />)}
+        {[-150, -60, 30, 120].map((x) => <circle key={x} cx={x} cy={-40} r={3.5} fill={INK} opacity={0.5} />)}
+        {/* sponson with a 6-pounder */}
+        <path d="M-60 -136 H40 L58 -96 L40 -60 H-60 L-74 -96 Z" fill={fillOf(shade(body, -0.18))} stroke={INK} strokeWidth={4} strokeLinejoin="round" />
+        <rect x={40} y={-104} width={70} height={12} rx={3} fill="#2f2c27" stroke={INK} strokeWidth={3} />
+        <rect x={-34} y={-112} width={22} height={14} rx={2} fill="#1f1d1a" />
+        {/* cab on top, unditching beam */}
+        <rect x={60} y={-222} width={90} height={30} rx={4} fill={fillOf(body)} stroke={INK} strokeWidth={3.5} />
+        <rect x={84} y={-214} width={30} height={8} fill="#1f1d1a" />
+        <rect x={-140} y={-216} width={170} height={16} rx={6} fill="#6b4a2c" stroke={INK} strokeWidth={3} />
+        {/* tail wheels */}
+        <path d="M-250 -40 L-300 -20" stroke={INK} strokeWidth={5} />
+        <circle cx={-306} cy={-16} r={16} fill="#3a352d" stroke={INK} strokeWidth={3} />
+        {crew ? <Head x={100} y={-236} helmet="#6b6446" t={t} /> : null}
+        {damaged ? <path d="M-20 -150 l18 26 l-12 10 l26 22" stroke={INK} strokeWidth={4} fill="none" /> : null}
+      </g>
+    </g>
+  );
+};
+
+/** French Renault FT (1917-18): the small two-man tank with a revolving turret and a tail skid. */
+const RenaultFT: React.FC<MP> = ({ color, t, travel, moving, damaged }) => {
+  const body = color ?? '#7f8a5e';
+  const rot = (travel / 16) * (180 / Math.PI);
+  const link = -(travel % 12);
+  const bob = moving ? Math.sin(travel / 11) * 1.2 : 0;
+  return (
+    <g>
+      <defs><VGrad c={body} /><VGrad c={shade(body, -0.15)} /></defs>
+      <ellipse cx={0} cy={4} rx={150} ry={8} fill="#000" opacity={0.2} />
+      <Dust x={-120} t={t} on={moving} />
+      <Exhaust x={-120} y={-70} t={t} on={moving} />
+      <path d="M-120 -4 Q-140 -4 -140 -30 L-112 -70 H96 Q140 -66 140 -30 Q140 -4 112 -4 Z" fill="#33302a" stroke={INK} strokeWidth={4} strokeLinejoin="round" />
+      <path d="M-120 -4 Q-140 -4 -140 -30 L-112 -70 H96 Q140 -66 140 -30 Q140 -4 112 -4 Z" fill="none" stroke="#5a5448" strokeWidth={6} strokeDasharray="7 6" strokeDashoffset={link} />
+      {[-90, -50, -10, 30, 70].map((x) => <Wheel key={x} x={x} y={-22} r={13} rot={rot} hub={shade(body, -0.2)} />)}
+      <circle cx={112} cy={-36} r={24} fill="#4a463e" stroke={INK} strokeWidth={3.5} />
+      <g transform={`translate(0 ${bob})`}>
+        <path d="M-150 -40 L-110 -60 H-96" stroke={INK} strokeWidth={6} fill="none" />
+        <path d="M-104 -60 L-86 -118 H40 L120 -62 L110 -48 H-100 Z" fill={fillOf(body)} stroke={INK} strokeWidth={4} strokeLinejoin="round" />
+        <path d="M-84 -114 H38" stroke="#fff" strokeOpacity={0.28} strokeWidth={5} />
+        {/* turret */}
+        <path d="M-44 -116 L-38 -172 Q-10 -184 18 -172 L26 -116 Z" fill={fillOf(shade(body, -0.15))} stroke={INK} strokeWidth={4} strokeLinejoin="round" />
+        <path d="M-30 -186 Q-10 -196 10 -186 L8 -174 H-28 Z" fill={fillOf(body)} stroke={INK} strokeWidth={3} />
+        <rect x={20} y={-152} width={56} height={10} rx={3} fill="#2f2c27" stroke={INK} strokeWidth={3} />
+        <rect x={50} y={-100} width={30} height={12} rx={2} fill="#1f1d1a" opacity={0.7} />
+        {damaged ? <path d="M-60 -100 l14 20 l-8 8 l20 16" stroke={INK} strokeWidth={4} fill="none" /> : null}
+      </g>
+    </g>
+  );
+};
+
+export const MACHINE_TYPES = new Set(['markiv', 'renault', 'truck', 'jeep', 'car', 'halftrack', 'artillery', 'gun', 'fighter', 'plane', 'divebomber', 'bomber', 'dakota', 'transport', 'glider', 'battleship', 'cruiser', 'destroyer', 'cargo', 'freighter', 'submarine', 'uboat', 'boat']);
 
 /** landing gear for aircraft standing on the ground: main wheels + tail wheel; the drawing is lifted so the wheels sit on y = 0 */
 const GEAR: Record<string, { main: [number, number, number, number]; tail: [number, number, number, number] }> = {
@@ -605,6 +676,8 @@ export const Machine: React.FC<MP> = (p) => (p.parked && GEAR[p.type] ? <Parked 
 
 const MachineBody: React.FC<MP> = (p) => {
   switch (p.type) {
+    case 'markiv': return <MarkIV {...p} />;
+    case 'renault': return <RenaultFT {...p} />;
     case 'truck': return <Truck {...p} />;
     case 'jeep':
     case 'car': return <Jeep {...p} />;

@@ -32,7 +32,7 @@ def vocab():
         "sets": cases("sets/Sets.tsx", "const BaseSet") | cases("sets/Rich.tsx", "export const RichSet"),
         "fg": cases("sets/Rich.tsx", "export const Foreground"),
         "props": cases("props/Props.tsx", "export const Prop:"),
-        "vehicles": cases("props/Vehicles.tsx", "export const Vehicle:"),
+        "vehicles": cases("props/Vehicles.tsx", "export const Vehicle:") | set(re.findall(r"'(\w+)'", re.search(r"MACHINE_TYPES = new Set\(\[([^\]]*)\]", (SRC / "props/Machines.tsx").read_text(encoding="utf-8")).group(1))),
         "fx": cases("fx/Fx.tsx"),
         "kinds": cases("scene/Elements.tsx", "export const ElementView") | {"date", "namecard"},
         "presets": set(re.findall(r"^\s{2}(\w+): \{", (SRC / "char/presets.ts").read_text(encoding="utf-8"), re.M)),

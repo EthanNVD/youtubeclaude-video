@@ -2,6 +2,19 @@
 
 Newest first. One entry per change that matters to the look, the pipeline or the docs.
 
+## 2026-11-17 — WW1 Turning Point film + voice-only input
+Why: the user supplied only a narration WAV for "What Was The REAL Turning Point of WW1".
+- `tools/transcribe.py`: voice → SRT with faster-whisper (CPU, int8, word timestamps). With `--script`, the recognised words are aligned to the written script, so names and numbers are spelled as written (95.5 % matched on this film).
+- WW1 vocabulary:
+  - `pickelhaube` hat;
+  - presets for the Kaiser, Hindenburg, Ludendorff, Moltke, Schlieffen, Kluck, Falkenhayn, Scheer, Holtzendorff, Zimmermann, Bauer, Joffre, Lanrezac, Gallieni, Foch, Jellicoe, Brusilov, Wilson, Lenin, Monash, Currie, plus 1914/1918 soldiers of each army and sailors;
+  - `markiv` and `renault` tanks;
+  - `turnip` prop;
+  - a brass-framed hourglass with a falling sand stream.
+- The validator accepts every machine vehicle type.
+- `projects/ww1-turning-point/plan_src/timing.py` resolves scene starts from phrases of the aligned words; `lib.py` adds a cut to any people-shot held longer than 6 s (skipping people who have walked out of frame). This is a candidate for shotlib.
+- Film: 259 scenes, 487 set-ups (avg 4.0 s), 12 chapters.
+
 ## 2026-11-17 — Acting, coverage and natural motion
 Why: the user found Market Garden v2 static and its motion jerky.
 - Static: one frozen set-up per 8 s scene, no close-ups, actions told by labels.

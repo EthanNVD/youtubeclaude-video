@@ -28,6 +28,8 @@ export const VEH: Record<string, { h: number; L: number; by: 'h' | 'L'; target: 
   panzer4: { h: 187, L: 525, by: 'h', target: 1.08 },
   t34: { h: 185, L: 511, by: 'h', target: 1.05 },
   stug: { h: 156, L: 485, by: 'h', target: 0.9 },
+  markiv: { h: 222, L: 568, by: 'h', target: 1.3 },
+  renault: { h: 196, L: 290, by: 'h', target: 1.1 },
   halftrack: { h: 158, L: 397, by: 'h', target: 0.98 },
   truck: { h: 211, L: 425, by: 'h', target: 1.32 },
   jeep: { h: 155, L: 287, by: 'h', target: 0.82 },

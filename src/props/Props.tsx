@@ -141,6 +141,15 @@ export const Prop: React.FC<{ item: string; t: number; color?: string; text?: st
         </g>
       );
     }
+    case 'turnip':
+      return (
+        <g>
+          <path d="M-6 -46 Q-20 -76 -36 -84 M2 -46 Q4 -80 -4 -96 M8 -46 Q24 -74 40 -80" stroke="#4f7a3a" strokeWidth={9} fill="none" strokeLinecap="round" />
+          <path d="M0 -50 C-46 -50 -54 -6 -30 18 C-18 30 -6 34 0 52 C6 34 18 30 30 18 C54 -6 46 -50 0 -50 Z" fill="#efe6d6" stroke={INK} strokeWidth={4} />
+          <path d="M-40 -24 C-30 -46 30 -46 40 -24 C24 -34 -24 -34 -40 -24 Z" fill="#9a5a9a" opacity={0.85} />
+          <path d="M-22 4 q6 6 10 0 M10 14 q6 4 10 -2" stroke="#b9a98a" strokeWidth={2.5} fill="none" />
+        </g>
+      );
     case 'magnifier':
       return (
         <g>
@@ -282,14 +291,24 @@ export const Prop: React.FC<{ item: string; t: number; color?: string; text?: st
         </g>
       );
     case 'hourglass': {
+      // brass-framed glass: `value` = share of the sand already fallen (0 = full top, 1 = all at the bottom)
       const k = clamp(value ?? (t % 10) / 10);
+      const flowing = k > 0.002 && k < 0.998;
+      const topH = 96 * Math.sqrt(1 - k), botH = 92 * Math.sqrt(k);
       return (
         <g>
-          <rect x={-70} y={-130} width={140} height={16} fill={C.wood} stroke={INK} strokeWidth={3} />
-          <rect x={-70} y={114} width={140} height={16} fill={C.wood} stroke={INK} strokeWidth={3} />
-          <path d="M-50 -114 H50 Q50 -40 6 0 Q50 40 50 114 H-50 Q-50 40 -6 0 Q-50 -40 -50 -114 Z" fill="#e8f4fa" fillOpacity={0.5} stroke={INK} strokeWidth={4} />
-          <path d={`M${-44 * (1 - k)} ${-100 + 90 * k} H${44 * (1 - k)} L6 -4 H-6 Z`} fill="#e3c070" />
-          <path d={`M-46 110 H46 Q${40 - 30 * (1 - k)} ${110 - 90 * k} 0 ${110 - 100 * k} Q${-40 + 30 * (1 - k)} ${110 - 90 * k} -46 110 Z`} fill="#e3c070" />
+          <ellipse cx={0} cy={134} rx={96} ry={10} fill="#000" opacity={0.18} />
+          {[-62, 62].map((x) => <rect key={x} x={x - 6} y={-122} width={12} height={244} rx={4} fill="#b8893c" stroke={INK} strokeWidth={3} />)}
+          <path d="M-50 -112 H50 Q52 -40 7 -2 Q52 40 50 112 H-50 Q-52 40 -7 -2 Q-52 -40 -50 -112 Z" fill="#dcecf2" fillOpacity={0.45} stroke={INK} strokeWidth={4} />
+          {topH > 1 ? <path d={`M${-46 + (96 - topH) * 0.42} ${-6 - topH} H${46 - (96 - topH) * 0.42} Q${30 - (96 - topH) * 0.25} ${-18} 5 -4 H-5 Q${-30 + (96 - topH) * 0.25} ${-18} ${-46 + (96 - topH) * 0.42} ${-6 - topH} Z`} fill="#dcae5a" stroke="#a87c34" strokeWidth={1.5} /> : null}
+          {flowing ? <rect x={-2} y={-4} width={4} height={112 - botH * 0.9} fill="#dcae5a" opacity={0.9} /> : null}
+          {botH > 1 ? <path d={`M-48 110 Q${-30} ${110 - botH * 0.55} 0 ${110 - botH} Q30 ${110 - botH * 0.55} 48 110 Z`} fill="#dcae5a" stroke="#a87c34" strokeWidth={1.5} /> : null}
+          <path d="M-38 -100 Q-30 -60 -14 -30" stroke="#fff" strokeOpacity={0.55} strokeWidth={5} fill="none" strokeLinecap="round" />
+          <path d="M-36 98 Q-30 66 -16 40" stroke="#fff" strokeOpacity={0.35} strokeWidth={4} fill="none" strokeLinecap="round" />
+          <rect x={-80} y={-134} width={160} height={18} rx={5} fill="#8a5a33" stroke={INK} strokeWidth={3.5} />
+          <rect x={-80} y={116} width={160} height={18} rx={5} fill="#8a5a33" stroke={INK} strokeWidth={3.5} />
+          {[-80, 80].map((x) => <circle key={x} cx={x} cy={-125} r={6} fill="#c9a24a" stroke={INK} strokeWidth={2} />)}
+          {text ? <g><rect x={-54} y={138} width={108} height={30} rx={3} fill="#c9a24a" stroke={INK} strokeWidth={3} /><text y={160} textAnchor="middle" fontFamily={FONT.cond} fontWeight={700} fontSize={20} fill={INK}>{text}</text></g> : null}
         </g>
       );
     }

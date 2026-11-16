@@ -1,0 +1,87 @@
+{
+  "thumbs": [
+    {
+      "angle": "the REAL turning point — lost in 1917, not 1918",
+      "title": "What Was The REAL Turning Point of WW1?",
+      "layout": "hero",
+      "heroSide": "left",
+      "background": "a saturated poster-style map of Western Europe in 1917 (grey-red German Empire on the right, green France, blue Britain), with a big brass hourglass standing in the centre-right, its top glass almost empty and the last grains of golden sand falling; behind it a castle silhouette at dusk",
+      "middle": "a red rubber stamp mark 'PLESS · 9 JAN 1917' on a torn timetable page lying at the foot of the hourglass",
+      "characters": [
+        {
+          "who": "kaiser_wilhelm",
+          "name": "Kaiser Wilhelm II",
+          "look": "German emperor with a big upturned handlebar moustache, field-grey peaked cap with a gold badge, field-grey tunic with medals",
+          "position": "left 45% of the frame, big bust cropped by the left and bottom edges, head top about 12% from the top, turned toward the hourglass",
+          "expr": "panic",
+          "pose": "head",
+          "extra": "Both hands on his cap, two big blue sweat drops, eyes wide at the falling sand."
+        }
+      ],
+      "labels": [{"text": "6 MONTHS", "where": "small paper tag hanging from the hourglass frame"}],
+      "text": {"position": "top", "font": "condensed", "lines": [{"text": "LOST IN 1917?", "accent": ["1917?"], "accentColor": "yellow"}]},
+      "light": "warm golden light on the sand and the Kaiser's face, cool dusk sky behind the castle",
+      "palette": "gold sand and brass, grey-red Germany, green France, one yellow accent in the headline"
+    },
+    {
+      "angle": "one decision — the castle at Pless",
+      "title": "Did Germany REALLY Lose WW1 in a Castle in 1917?",
+      "layout": "split",
+      "background": "split diagonally: left half a candle-lit castle conference room in January 1917, a long table with a signed order and a pen; right half a grey Atlantic port in summer 1918 crowded with troopships and lines of American soldiers in brodie helmets coming down the gangplanks",
+      "characters": [
+        {
+          "who": "kaiser_wilhelm",
+          "name": "Kaiser Wilhelm II",
+          "look": "German emperor with a big upturned handlebar moustache, field-grey peaked cap, field-grey tunic with medals",
+          "position": "left half, bust, signing the order, smug confident smile",
+          "expr": "smug",
+          "pose": "write",
+          "prop": "a fountain pen over an order titled 'U-BOATS: NO LIMITS'"
+        },
+        {
+          "who": "kaiser_wilhelm",
+          "name": "Kaiser Wilhelm II (later)",
+          "position": "right half, same man in the same uniform, bust, staring at the troopships",
+          "expr": "panic",
+          "pose": "head",
+          "extra": "Hands on his cap, sweat drops — the same face calm on the left, panicking on the right."
+        }
+      ],
+      "labels": [{"text": "JAN 1917", "where": "date tag top-left"}, {"text": "JUNE 1918", "where": "date tag top-right"}],
+      "text": {"position": "bottom", "font": "condensed", "lines": [{"text": "6 MONTHS. WAR LOST.", "accent": ["WAR LOST."], "accentColor": "yellow"}]},
+      "light": "warm candlelight on the left, cold grey daylight on the right",
+      "palette": "warm amber vs cold steel blue, khaki and field grey, one yellow accent"
+    },
+    {
+      "angle": "myth vs truth — the stab in the back",
+      "title": "Was Germany's Army REALLY Stabbed in the Back in 1918?",
+      "layout": "versus",
+      "background": "a saturated map of the Western Front in autumn 1918 with a long red front line being pushed back eastward by big blue curved arrows with white edges; a railway carriage in a forest drawn small in the centre",
+      "middle": "a large railway timetable board between them showing '29 SEPT — ARMY ASKS FOR ARMISTICE' above '3 NOV — REVOLT', the first line circled in thick glowing red",
+      "characters": [
+        {
+          "who": "ludendorff",
+          "name": "General Erich Ludendorff",
+          "look": "stout bald German general with a pince-nez, small moustache, field-grey peaked cap and tunic with medals",
+          "position": "far left, large bust cropped by the left and bottom edges, facing right",
+          "expr": "nervous",
+          "pose": "stop",
+          "extra": "Holding up a hand as if to say 'not me', a sweat drop on his temple."
+        },
+        {
+          "who": "foch",
+          "name": "Marshal Ferdinand Foch",
+          "look": "elderly French general with a white walrus moustache, light-blue kepi with gold braid, horizon-blue coat",
+          "position": "far right, large bust cropped by the right and bottom edges, facing left",
+          "expr": "smug",
+          "pose": "point",
+          "extra": "Pointing at the circled line on the board."
+        }
+      ],
+      "labels": [{"text": "COMPIÈGNE", "where": "under the small railway carriage"}],
+      "text": {"position": "top", "font": "condensed", "lines": [{"text": "WHO ASKED FIRST?", "accent": ["FIRST?"], "accentColor": "yellow"}]},
+      "light": "cool autumn daylight, rim light on both characters, red glow around the circled line",
+      "palette": "red front line vs blue arrows, field grey vs horizon blue, one yellow accent"
+    }
+  ]
+}

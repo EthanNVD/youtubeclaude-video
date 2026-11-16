@@ -27,6 +27,11 @@ A video is finished only when every box in `docs/QUALITY.md` is ticked.
 projects/<slug>/input/<name>.srt     # required
 projects/<slug>/input/voice.(mp3|wav|m4a)   # the user's narration — the master clock
 ```
+If only the voice is given, make the SRT from it:
+```
+python tools/transcribe.py <voice.wav> projects/<slug>/work/transcript.srt [--script <the text that was read>]
+```
+Copy the result to `input/script.srt`. With `--script`, names and numbers come from the script. `work/transcript.words.json` then gives word times; resolve scene starts from phrases instead of guessing them.
 If the voice is missing, ask for it; only for a timing preview may you run `python tools/guide_voice.py projects/<slug>` (robotic dev voice, never deliver it).
 First run on a machine: `npm ci` and `python tools/sfx_synth.py` (see README).
 

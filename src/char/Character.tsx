@@ -1014,6 +1014,21 @@ export const Hat: React.FC<{ kind: string; color: string; hy: number; badge?: st
           {emblem(-24, top - 2, 0.8)}
         </g>
       );
+    case 'pickelhaube': {
+      // 1914 German leather helmet: dome, brass spike, eagle plate, front and back peaks
+      const lc = color === '#77796a' || color === '#55574a' ? '#2c2723' : color;
+      return (
+        <g>
+          <path d={`M-78 ${top + 40} Q-60 ${top + 50} -40 ${top + 46} L-64 ${top + 34} Z`} fill={lc} stroke={INK} strokeWidth={Lw} strokeLinejoin="round" />
+          <path d={`M-66 ${top + 38} L-66 ${top + 6} C-66 ${top - 48} 66 ${top - 48} 66 ${top + 6} L66 ${top + 38} Q0 ${top + 48} -66 ${top + 38} Z`} fill={lc} stroke={INK} strokeWidth={Lw} strokeLinejoin="round" />
+          <path d={`M40 ${top + 44} Q72 ${top + 52} 96 ${top + 44} L88 ${top + 36} Q64 ${top + 40} 46 ${top + 36} Z`} fill={lc} stroke={INK} strokeWidth={3.5} strokeLinejoin="round" />
+          <path d={`M-14 ${top - 34} L-8 ${top - 74} L0 ${top - 92} L8 ${top - 74} L14 ${top - 34} Z`} fill="#c9a24a" stroke={INK} strokeWidth={3} strokeLinejoin="round" />
+          <rect x={-16} y={top - 40} width={32} height={9} rx={3} fill="#c9a24a" stroke={INK} strokeWidth={3} />
+          <path d={`M-20 ${top - 6} Q0 ${top - 22} 20 ${top - 6} L14 ${top + 22} Q0 ${top + 30} -14 ${top + 22} Z`} fill="#c9a24a" stroke={INK} strokeWidth={3} />
+          <path d={`M-40 ${top - 22} Q-14 ${top - 36} 14 ${top - 32}`} stroke="#fff" strokeOpacity={0.22} strokeWidth={6} fill="none" strokeLinecap="round" />
+        </g>
+      );
+    }
     case 'helmet_de':
       return (
         <g>

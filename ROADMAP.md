@@ -83,6 +83,8 @@ Goal: a frame from our video can sit next to a frame from the reference channel 
 - [x] H4 Validator: shot references, single set-ups > 6.5 s, people sprinting, `coverage` summary; coverage templates in shotlib
 - [ ] H5 Side (profile) view for walking across the frame; true hand-over of a prop between two actors (grip → release)
 - [ ] H6 Periodic `hall`/street sets that scroll for long tracking shots
+- [ ] H8 Promote phrase timing (`timing.py`) and the auto-coverage pass (`lib._auto_coverage`) from the WW1 project into tools/shotlib
+- [x] H9 Voice-only input: `tools/transcribe.py` (faster-whisper + alignment to the script)
 - [ ] H7 Back-port coverage to Market Garden (validate reports 254 set-ups at 8 s, 0 close-ups) — only if it is re-rendered
 
 ### M3 — Faster, safer production
