@@ -43,10 +43,24 @@ Read **all** of `work/reading.md` (in chunks if long). Never plan from the first
 
 ## 2. Turn narration into shots — [storytelling.md](references/storytelling.md)
 
-Work chapter by chapter. Group cues into **beats** (one idea, usually 8–20 s), then each beat into **shots** (one camera set-up, typically 3–8 s; the plan's `scenes`). For every beat decide, before writing JSON:
+Work chapter by chapter. Group cues into **beats** (one idea, usually 8–20 s). Then split each beat into **scenes** (one place, usually 3–10 s), and each scene into **set-ups** inside the place (`scene.shots`: wide → medium → close/insert, 2–4 s each in action). Read [acting-camera.md](references/acting-camera.md) first: it covers reads, coverage, acting and motion. For every beat decide, before writing JSON:
 
 - **Which visual language**: *world* (people acting in places — who did what, who suffered: the default, ≥ 60 % of screen time), *map* (where, how far, encirclement, routes), *device/chart/document* (comparison, verdict, numbers, evidence), *host* (the narrator in his study / at the device for hooks, transitions, verdicts).
-- **The acting beat**: for every *world* shot write the physical action in one line — entrance (walk/run in), business (reads, types, looks through binoculars, carries, points at the map), reaction (pose + expression change on the key word), exit. Characters change pose every 1.5–3 s (pose keys blend smoothly); nobody stands frozen.
+- **The reads**: the ordered list of what a first-time viewer must understand. Show one read at a time; actions can be fast, meanings are held. The reads set the length of every set-up.
+- **The acting beat**: for every *world* shot write the physical action in one line:
+  - entrance (walk/run in);
+  - business (reads, types, looks through binoculars, carries, points at the map);
+  - reaction (pose + expression change on the key word);
+  - exit.
+  Characters change pose every 1.5–3 s; nobody stands frozen.
+- **The coverage**: which set-ups show those reads.
+  - A wide to place people.
+  - A medium for the hands.
+  - A close-up cut in **before** the reaction and held.
+  - An insert for the evidence.
+  - Over-the-shoulder for dialogue.
+  - Tracking or depth walks for arrivals.
+  One static set-up per scene is the main thing that makes a film feel dead.
 - **Before → action → after → reaction**: the visible change that proves the sentence. A label is not an action.
 - **What is revealed when**: an element appears on the word that names it (use cue times from `work/cues.json`).
 - **Text on screen**: date badge on place/time jumps, name card on first appearance of a person, 1–5-word labels/stamps. Never subtitles.
@@ -59,6 +73,11 @@ Coverage is mandatory: scenes are contiguous from 0 to the end of the voice (val
 - Long videos (> 5 min): `plan/_meta.json` (`meta`, `cast`) + `plan/ch01.json`, `plan/ch02.json`… each `{ "scenes": [...] }`. Write one chapter, validate, continue.
 - Put `"chapter": "Title"` on the first scene of each chapter (drives YouTube chapters).
 - Start from the shot templates in `tools/shotlib.py` ([shots.md](references/shots.md)) and the `Plan` helper (tiles the timeline, fixes vehicle speeds); then tune every timing to the cue words.
+- Coverage templates: `desk_read`, `ots_dialogue`, `desk_insert`, `walk_to_camera`, `walk_away`, `vehicle_arrives`, plus `SHOT()` / `AID()`. Give every actor a set-up frames an `id`.
+- Motion: let the engine's defaults work.
+  - Walking and driving profiles, distance-driven strides, slow pose changes.
+  - Nothing pops on a cut.
+  - Give walks time (≈ 2.5 s to cross half a room); don't use `ease: "out"` to rush someone in.
 - Letterbox (`letterbox`) only the dramatised acting moments — about one per chapter, never on maps or devices.
 - People and vehicles in one shot: use `world` (depth model) and leave their `scale` out — a man standing by a tank is about half its height; a man close to the camera may be as big as a truck further back. Stage the shot in depth (foreground / middle / background) like the depth templates in shots.md; the validator flags vehicles out of proportion.
 - Devices are physical objects: put bars/timeline/scale scenes in the `workshop` set, not on blank paper.
@@ -66,12 +85,21 @@ Coverage is mandatory: scenes are contiguous from 0 to the end of the voice (val
 - Use only vocabulary the engine has (sets, props, vehicles, fx, poses, presets — listed in plan-schema.md; the validator reads them from `src/`). If something is truly missing, add it to the engine (see §8) rather than faking it with a label.
 
 `python tools/make.py projects/<slug> validate` → fix every error; read every warning.
-**Zero tolerance** for layout/motion warnings: text overlapping text, a badge zone (date/place top-left, clock top-right, name card bottom-left) or a face, and vehicles faster than their type (`moves … u/s`).
+**Zero tolerance** for layout/motion warnings:
+- text overlapping text, a badge zone (date/place top-left, clock top-right, name card bottom-left) or a face;
+- vehicles faster than their type (`moves … u/s`);
+- people sprinting (`crosses … px`);
+- single set-ups held too long (`one set-up for …`).
+
+The `coverage` block of the validate output must show:
+- an average set-up of ≤ 4 s;
+- close-ups in every chapter.
 If you generate the plan from Python, call `tools/layout_check.fix_speeds(plan)` before writing it (keeps each vehicle's destination, starts it closer).
 
 ## 4. Look at it — `python tools/make.py projects/<slug> review`
 
 Open every `review/sheet_*.jpg` and judge as a viewer: does each frame show what the narration says at that moment? Check overlaps, text cut off, characters floating, empty frames, vehicles barely in frame, scenery that should scroll but stands still, repeated compositions, wrong flags/colours/dates. Count the shots: if world/acting shots are under ~60 %, replace charts/inserts with scenes of people doing the thing. Use `--scenes s012,s013 --at all` to inspect start/middle/end of a shot. Fix and re-review the changed scenes. Do this for the whole film, not a sample.
+Stills cannot show motion. After the render, check **frame strips** of the key motions (a walk-in, a vehicle arriving and braking, a pose change, a prop put down). Look for jumps, stops with no slowing, sliding feet, and things appearing from nothing ([acting-camera.md](references/acting-camera.md) §5).
 
 ## 5. Sound — [sound.md](references/sound.md)
 

@@ -43,9 +43,30 @@ P.finish(META, CAST, "projects/<slug>/plan.json", letterbox={"s001": "DRAMATISED
 | `foreground_walk(start, who, vtype)` | soldiers walk past close to camera (waist-up), a truck drives in the middle distance | marches, retreats, "dramatised" moments |
 | `airfield_line(start, nation, pilot)` | pilots walk past a parked fighter; a Dakota further back | airborne / air force chapters |
 
-The last five use `world` (depth model): no scales are written; sizes come from the ground y.
+The depth templates (`crew_with_vehicle` … `airfield_line`) use `world` (depth model): no scales are written; sizes come from the ground y.
+
+### Coverage templates (several set-ups inside one place — `scene.shots`)
+Use these for every acting beat; see [acting-camera.md](acting-camera.md).
+
+| template | set-ups | use for |
+|---|---|---|
+| `desk_read(start, who, item, name, role)` | wide: a messenger walks in and hands it over → medium: he reads → close: the reaction | reports, warnings, bad news arriving |
+| `ots_dialogue(start, speaker, listener, side, holds)` | over the listener's shoulder onto the speaker in 3/4; flip `side` for the reverse line | dialogue, a commander receiving a report |
+| `desk_insert(start, items, magnifier, rings, crosses)` | top-down wood desk: prints/forms, a magnifier pass, red-pencil rings and crosses on the words | evidence: photos, forms, maps, counts |
+| `walk_to_camera(start, who, set_, holds)` | someone walks down a corridor toward the lens and grows | "he took them to his commander" |
+| `walk_away(start, who, set_, holds)` | back view, walking away and getting smaller | leaving, dismissal, defeat |
+| `vehicle_arrives(start, vtype, nation, who, parked)` | wide: a vehicle drives in and brakes, a soldier strolls over → full shot of the group | armour arriving, units in position |
+
+Helpers:
+- `SHOT(t, on, size, **kw)`: one set-up.
+- `AID(id, who, x, y, s, …)`: an actor with an id; `s=None` = depth-sized.
+- `WOOD_DESK`: insert background.
+- `OFFICE`: an office with a foreground desk.
+
+Worked example of a full minute: `projects/acting-test/build.py`.
 
 Rules when adapting a template:
+- Two to four set-ups per acting scene, cut on the reads. Never the same recipe for every scene.
 - Keep vehicles inside the frame for most of the shot.
 - Cap text at about 2 labels at a time, never in the badge corners.
 - Have every actor change pose or expression every 1.5–3 s.

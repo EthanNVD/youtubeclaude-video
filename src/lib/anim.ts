@@ -3,9 +3,32 @@ import type { Ease, ElementBase, Key } from '../types';
 export const clamp = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 export const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
+/**
+ * Trapezoid speed profile: accelerate over the first `a1` of the move, cruise, brake over the last `a2`.
+ * Peak speed is only 1/(1-(a1+a2)/2) of the average — no lunge in the middle, no slam at the end.
+ */
+export const trapezoid = (x: number, a1: number, a2: number) => {
+  x = clamp(x);
+  const v = 1 / (1 - (a1 + a2) / 2);
+  if (a1 > 0 && x < a1) return (0.5 * v * x * x) / a1;
+  if (a2 > 0 && x > 1 - a2) return 1 - (0.5 * v * (1 - x) * (1 - x)) / a2;
+  return v * (x - a1 / 2);
+};
+
 export const easeFn = (e: Ease | undefined, x: number): number => {
   x = clamp(x);
   switch (e) {
+    case 'walk':
+      // people: short acceleration and braking around a steady pace
+      return trapezoid(x, 0.2, 0.2);
+    case 'arrive':
+      // already moving (e.g. walking into frame): steady pace, then slow to a stop
+      return trapezoid(x, 0, 0.3);
+    case 'leave':
+      // start from rest, then keep going (e.g. walking out of frame)
+      return trapezoid(x, 0.3, 0);
+    case 'smooth':
+      return x * x * (3 - 2 * x);
     case 'linear':
       return x;
     case 'in':
@@ -25,10 +48,29 @@ export const easeFn = (e: Ease | undefined, x: number): number => {
       if (x > 1 - A) return 1 - 0.5 * vmax * ((1 - x) * (1 - x)) / A;
       return vmax * (x - A / 2);
     }
+    case 'inOut':
     default:
-      return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+      // smoothstep: peak speed 1.5x the average (the old cubic peaked at 3x and read as a lunge then a hard stop)
+      return x * x * (3 - 2 * x);
   }
 };
+
+/** Positional keys of things that travel (people, vehicles) use physical speed profiles instead of UI easing. */
+export const TRAVEL_EASE: Record<string, Record<string, Ease>> = {
+  actor: { default: 'walk', inOut: 'walk', out: 'arrive', in: 'leave', smooth: 'walk' },
+  crowd: { default: 'walk', inOut: 'walk', out: 'arrive', in: 'leave', smooth: 'walk' },
+  vehicle: { default: 'drive', inOut: 'drive', out: 'arrive', in: 'leave', smooth: 'drive' },
+};
+export const travelKeys = (kind: string, keys: Key[] | undefined): Key[] | undefined => {
+  const m = TRAVEL_EASE[kind];
+  if (!m || !keys) return keys;
+  return keys.map((k) => ('x' in k || 'y' in k || 'at' in k) && k.ease !== 'linear' && k.ease !== 'step' && k.ease !== 'drive' && k.ease !== 'walk' && k.ease !== 'arrive' && k.ease !== 'leave'
+    ? { ...k, ease: m[k.ease ?? 'default'] ?? m.default } : k);
+};
+
+/** Smooth, deterministic camera/hand shake: a sum of incommensurate sines instead of per-frame random jumps. */
+export const smoothNoise = (t: number, seed = 0) =>
+  (Math.sin(t * 11.3 + seed) * 0.5 + Math.sin(t * 17.9 + seed * 2.1) * 0.3 + Math.sin(t * 29.1 + seed * 3.7) * 0.2);
 
 /** Damped spring 0->1 over `dur` seconds (closed form, small overshoot). */
 export const spring01 = (t: number, dur = 0.5, bounce = 0.25) => {
@@ -101,20 +143,31 @@ export function resolveKeys<T extends Record<string, unknown>>(base: T, keys: Ke
 export function envelope(el: ElementBase, t: number, sceneDur: number) {
   const tin = el.in ?? 0;
   const tout = el.out ?? sceneDur + 10;
-  const res = { o: 1, s: 1, dx: 0, dy: 0, r: 1, visible: true };
+  const res = { o: 1, s: 1, dx: 0, dy: 0, r: 1, rot: 0, visible: true };
   if (t < tin || t > tout + 0.6) return { ...res, visible: false, o: 0 };
   const a = t - tin;
-  const enter = el.enter ?? 'pop';
+  // Things that are in the shot when it starts are simply there (a cut never makes people "pop" into place).
+  // Things that arrive later come in the way they would: people fade/walk, objects are put down, text pops softly.
+  const enter = el.enter ?? (tin <= 0.05 ? 'none' : el.kind === 'actor' || el.kind === 'vehicle' || el.kind === 'crowd' ? 'fade' : el.kind === 'prop' ? 'place' : 'pop');
   const D = 0.45;
   switch (enter) {
     case 'none':
       break;
+    case 'place': {
+      // set down on a surface: a short drop that eases in, a hint of squash, no bounce
+      const k = clamp(a / 0.4);
+      res.dy = -36 * (1 - easeFn('smooth', k));
+      res.s = 1 + 0.035 * (1 - k);
+      res.o = clamp(a / 0.15);
+      break;
+    }
     case 'fade':
       res.o = clamp(a / D);
       break;
     case 'pop':
-      res.s = spring01(a, 0.45, 0.3);
-      res.o = clamp(a / 0.12);
+      // soft pop: grows from 60 % with a small settle, not from nothing with a big bounce
+      res.s = 0.6 + 0.4 * spring01(a, 0.42, 0.12);
+      res.o = clamp(a / 0.14);
       break;
     case 'stamp': {
       const k = clamp(a / 0.18);
@@ -122,10 +175,15 @@ export function envelope(el: ElementBase, t: number, sceneDur: number) {
       res.o = clamp(a / 0.08);
       break;
     }
-    case 'drop':
-      res.dy = -260 * (1 - easeFn('out', clamp(a / 0.5)));
-      res.o = clamp(a / 0.15);
+    case 'drop': {
+      // a sheet or object tossed onto a surface: falls on a slight arc, sways, settles
+      const k = clamp(a / 0.55);
+      res.dy = -170 * (1 - easeFn('smooth', k)) ** 1.6;
+      res.dx = 40 * (1 - easeFn('smooth', k));
+      res.rot = 7 * Math.sin(k * Math.PI * 1.5) * (1 - k);
+      res.o = clamp(a / 0.12);
       break;
+    }
     case 'rise':
       res.dy = 80 * (1 - easeFn('out', clamp(a / D)));
       res.o = clamp(a / D);

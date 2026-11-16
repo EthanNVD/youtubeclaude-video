@@ -1,8 +1,8 @@
 import React from 'react';
 import type { GeoProjection } from 'd3-geo';
 import type { CastMember, ElementBase, LonLat } from '../types';
-import { envelope, resolveKeys, smoothPath, partialPolyline, toD, clamp, easeFn, rnd } from '../lib/anim';
-import { Character } from '../char/Character';
+import { envelope, resolveKeys, smoothPath, partialPolyline, toD, clamp, easeFn, rnd, travelKeys } from '../lib/anim';
+import { Character, POSES } from '../char/Character';
 import { resolveCast } from '../char/presets';
 import { Prop, Flag } from '../props/Props';
 import { Vehicle } from '../props/Vehicles';
@@ -186,7 +186,8 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
   const env = envelope(el, t, dur);
   if (!env.visible) return null;
   // vehicles move with a physical speed profile unless a key says otherwise
-  const keysUsed = el.kind === 'vehicle' && el.keys ? el.keys.map((kk) => (('x' in kk || 'y' in kk || 'at' in kk) && !kk.ease ? { ...kk, ease: 'drive' as const } : kk)) : el.keys;
+  // people and vehicles travel with physical speed profiles (accelerate, cruise, brake) unless a key says 'linear'
+  const keysUsed = travelKeys(el.kind, el.keys);
   const e = resolveKeys(el, keysUsed, t) as ElementBase;
   const a = t - (el.in ?? 0);
   const seed = ctx.sceneId + ':' + (el.id ?? index);
@@ -203,7 +204,14 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
   const s = ((e.scale as number) ?? 1) * env.s;
   const rot = (e.rotate as number) ?? 0;
   const flip = e.flip ? -1 : 1;
-  const tr = `translate(${x + env.dx} ${y + env.dy}) rotate(${rot}) scale(${s * flip} ${s})`;
+  const tr = `translate(${x + env.dx} ${y + env.dy}) rotate(${rot + env.rot}) scale(${s * flip} ${s})`;
+  // screen position of this element at any time (for speeds, distances, accelerations)
+  const posAt = (tt: number): [number, number] => {
+    const q = resolveKeys(el, keysUsed, tt) as ElementBase;
+    const pq = P(ctx, q.at as LonLat | undefined);
+    return pq ? [pq[0], pq[1]] : [(q.x as number) ?? 960, (q.y as number) ?? 540];
+  };
+  const moves = !!el.keys?.some((kk) => 'x' in kk || 'y' in kk || 'at' in kk);
   const op = env.o * ((e.opacity as number) ?? 1);
 
   const k = e.kind;
@@ -212,30 +220,49 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
     case 'actor': {
       const who = (e.who as string) ?? 'civilian_man';
       const spec = resolveCast(ctx.cast as never, who, (e.look_ as Record<string, unknown>) ?? undefined);
-      // auto-walk when x/at changes over time; direction + run from the speed
-      let walk = 0, dir = 1, run = false;
-      if (el.keys?.some((kk) => 'x' in kk || 'at' in kk)) {
-        const e2 = resolveKeys(el, el.keys, t + 0.08) as ElementBase;
-        let dx = ((e2.x as number) ?? x) - ((e.x as number) ?? x);
-        if (e2.at && e.at && ctx.proj) {
-          const p1 = ctx.proj(e.at as LonLat), p2 = ctx.proj(e2.at as LonLat);
-          if (p1 && p2) dx = p2[0] - p1[0];
+      // Locomotion from the actual path: the stride phase advances with the distance covered (feet never slide),
+      // the stride opens and closes with the speed (no snap from standing to full stride), and runs come from speed.
+      let walk = 0, dir = (e.dir as number) ?? 1, run = false, gait: number | undefined;
+      if (moves) {
+        const sAt = (yy: number) => ((el.scale as number | undefined) ?? (ctx.world ? personScaleAt(ctx.world, yy) * ((e.depthScale as number) ?? 1) : 1));
+        const h = 0.05;
+        const p0 = posAt(t - h), p1 = posAt(t + h);
+        const sc = Math.max(0.05, sAt((p0[1] + p1[1]) / 2));
+        const vx = (p1[0] - p0[0]) / (2 * h), vy = (p1[1] - p0[1]) / (2 * h);
+        const vLocal = Math.hypot(vx, vy * 0.6) / sc; // depth moves count a little less (foreshortened)
+        run = vLocal > 300;
+        walk = clamp(vLocal / (run ? 160 : 55));
+        walk = walk * walk * (3 - 2 * walk);
+        if (Math.abs(vx) / sc > 6) dir = Math.sign(vx) * flip;
+        // distance walked so far, in the character's own units
+        let d = 0, prev = posAt(0);
+        const n = Math.min(400, Math.ceil(t * 24));
+        for (let i = 1; i <= n; i++) {
+          const q = posAt((t * i) / n);
+          d += Math.hypot(q[0] - prev[0], (q[1] - prev[1]) * 0.6) / Math.max(0.05, sAt(q[1]));
+          prev = q;
         }
-        if (Math.abs(dx) > 0.4) {
-          walk = 1;
-          dir = Math.sign(dx) * flip;
-          run = Math.abs(dx) / 0.08 / Math.max(0.2, (e.scale as number) ?? 1) > 330;
-        }
+        gait = (d / (run ? 150 : 84)) * Math.PI * 2;
       }
-      if (e.walk === true) { walk = 1; dir = ((e.dir as number) ?? 1); }
-      if (e.run === true) { walk = 1; run = true; dir = ((e.dir as number) ?? dir); }
+      if (e.walk === true) { walk = 1; dir = ((e.dir as number) ?? 1); gait = undefined; }
+      if (e.run === true) { walk = 1; run = true; dir = ((e.dir as number) ?? dir); gait = undefined; }
       // pose blending: find the last pose change at or before t
       let pose = (el.pose as string) ?? 'idle', prevPose = pose, tChange = -99;
       for (const kk of [...(el.keys ?? [])].sort((a, b) => a.t - b.t)) {
         if (kk.t > t) break;
         if (typeof kk.pose === 'string' && kk.pose !== pose) { prevPose = pose; pose = kk.pose; tChange = kk.t; }
       }
-      const poseK = clamp((t - tChange) / ((e.poseDur as number) ?? 0.42), 0, 1);
+      // a pose change takes as long as the hands need to travel (0.45-0.95 s), never a 0.4 s snap
+      const pa = POSES[prevPose] ?? POSES.idle, pb = POSES[pose] ?? POSES.idle;
+      const handTravel = Math.max(Math.hypot(pa.r[0] - pb.r[0], pa.r[1] - pb.r[1]), Math.hypot(pa.l[0] - pb.l[0], pa.l[1] - pb.l[1]));
+      const poseDur = (e.poseDur as number) ?? clamp(0.4 + handTravel / 300, 0.45, 0.95);
+      const poseK = clamp((t - tChange) / poseDur, 0, 1);
+      // expression changes get a take (see Character): time since the last change
+      let exprNow = (el.expr as string) ?? 'neutral', tExpr = -99;
+      for (const kk of [...(el.keys ?? [])].sort((a, b) => a.t - b.t)) {
+        if (kk.t > t) break;
+        if (typeof kk.expr === 'string' && kk.expr !== exprNow) { exprNow = kk.expr; tExpr = kk.t; }
+      }
       const holdScale: Record<string, number> = { holdUp: 0.75, hold: 0.6, carry: 0.7, write: 0.5, phone: 0.45, show: 0.6, drink: 0.4, smoke: 0.35, port: 0.5, aim: 0.52, shoulder: 0.5, charge: 0.52, ease: 0.5 };
       const held = e.holds
         ? {
@@ -251,7 +278,7 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
         <g>
           <Character
             spec={spec}
-            state={{ pose, prevPose, poseK, expr: e.expr as string, talk: !!e.talk, look: e.look as number, view: e.view as 'front' | 'back', seated: !!e.seated, kneel: !!e.kneel, walk, run, dir, headMove: e.headMove as string }}
+            state={{ pose, prevPose, poseK, expr: e.expr as string, talk: !!e.talk, look: e.look as number, view: e.view as 'front' | 'back', seated: !!e.seated, kneel: !!e.kneel, walk, run, dir, headMove: e.headMove as string, turn: e.turn as number, exprAge: t - tExpr, take: e.take as number, gait, poseDur, bigMove: handTravel > 90 }}
             t={t}
             seed={seed}
             held={held}
@@ -301,8 +328,22 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
         // distance travelled in the vehicle's own drawing units (drives wheel and track animation)
         travel = Math.hypot(((e.x as number) ?? 0) - ((el.x as number) ?? 0), ((e.y as number) ?? 0) - ((el.y as number) ?? 0)) / Math.max(0.05, (e.scale as number) ?? 1);
       } else if (moving) travel = t * 140;
+      // weight: the body squats when it pulls away and dips its nose when it brakes; aircraft bank along their path
+      let pitch = 0, vdy = 0;
+      const AIRT = ['fighter', 'plane', 'divebomber', 'bomber', 'dakota', 'transport', 'glider'];
+      const air = AIRT.includes((e.type as string) ?? '');
+      if (moves) {
+        const h = 0.12, sc = Math.max(0.05, s);
+        const pm = posAt(t - h), p0 = posAt(t), pp = posAt(t + h);
+        const ax = (pp[0] - 2 * p0[0] + pm[0]) / (h * h) / sc;
+        const vx = (pp[0] - pm[0]) / (2 * h), vy = (pp[1] - pm[1]) / (2 * h);
+        const facing = flip;
+        if (air) pitch = Math.abs(vx) > 1 ? (Math.atan2(vy, Math.abs(vx)) * 180) / Math.PI * 0.8 : 0;
+        else pitch = clamp(-ax * facing * 0.012, -2.6, 2.6) * (Math.sign(vx) || 1) * facing;
+      }
+      if (air && !e.parked) { pitch += Math.sin(t * 1.3 + rnd(seed) * 6) * 1.2; vdy = Math.sin(t * 1.7 + rnd(seed, 2) * 6) * 5; }
       body = (
-        <g>
+        <g transform={`translate(0 ${vdy}) rotate(${pitch} 0 -20)`}>
           <Vehicle type={(e.type as string) ?? 'tank'} nationKey={e.nation as string} t={t} color={e.color as string} moving={moving} damaged={!!e.damaged} travel={travel} crew={!!e.crew} parked={!!e.parked} />
           {e.burning ? <g transform="translate(0 -80)"><Fx kind="fire" a={a} t={t} seed={seed} size={0.8} /><g transform="translate(20 -60)"><Fx kind="smoke" a={a} t={t} seed={seed} size={1} /></g></g> : null}
         </g>
@@ -576,6 +617,24 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
         </g>
       );
       break;
+    }
+    case 'viewfinder': {
+      // reconnaissance-camera view: corner brackets, crosshair, frame counter; `shots`: times of the shutter (flash + counter++)
+      const ts = ((e.shots as number[]) ?? []).filter((q) => q <= t);
+      const last = ts.length ? t - ts[ts.length - 1] : 9;
+      const fl = last < 0.12 ? 1 - last / 0.12 : 0;
+      const n = ((e.start as number) ?? 1) + ts.length;
+      const L = 90, X0 = 220, Y0 = 150, X1 = 1700, Y1 = 930;
+      return (
+        <g opacity={op}>
+          <g stroke="#f4f0e2" strokeWidth={6} fill="none" opacity={0.92}>
+            <path d={`M${X0} ${Y0 + L} V${Y0} H${X0 + L} M${X1 - L} ${Y0} H${X1} V${Y0 + L} M${X1} ${Y1 - L} V${Y1} H${X1 - L} M${X0 + L} ${Y1} H${X0} V${Y1 - L}`} />
+            <path d="M960 500 V580 M920 540 H1000" strokeWidth={3} />
+          </g>
+          <text x={X0 + 6} y={Y1 + 52} fontFamily={FONT.mono} fontWeight={700} fontSize={34} fill="#f4f0e2" letterSpacing={4}>{`F24  ${(e.label as string) ?? 'ARNHEM'}  ${String(n).padStart(3, '0')}`}</text>
+          <rect x={-200} y={-200} width={2400} height={1500} fill="#fff" opacity={fl * 0.6} />
+        </g>
+      );
     }
     case 'hand': {
       // giant pointing hand with a sleeve: points to +x (use rotate / flip)

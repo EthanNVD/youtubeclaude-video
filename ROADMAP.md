@@ -72,6 +72,19 @@ Goal: a frame from our video can sit next to a frame from the reference channel 
 - [x] E2 Safe zones: date badge top-left, clock top-right, name card bottom-left; labels are kept out of them
 - [ ] E3 Engine-side auto-nudge for labels that still collide at render time
 
+**Acting, coverage & motion** (approved test `projects/acting-test`, 2026-11-17)
+- [x] H1 Coverage inside a scene (`scene.shots`): framing by subject and size, push/pan, tracking with lag, hard cuts
+- [x] H2 Acting tools: 3/4 face `turn`, expression take, `front` layer (desk props, shoulders), props change hands (`holds` keys), photo/magnifier/suitcase props, viewfinder
+- [x] H3 Natural motion:
+  - walking/arrive/leave speed profiles, distance-driven gait that opens and closes, pose blends 0.45–0.95 s with overlap and anticipation;
+  - no pop on cuts, place/drop enters;
+  - vehicle pitch on accelerating and braking, aircraft banking;
+  - smooth shake.
+- [x] H4 Validator: shot references, single set-ups > 6.5 s, people sprinting, `coverage` summary; coverage templates in shotlib
+- [ ] H5 Side (profile) view for walking across the frame; true hand-over of a prop between two actors (grip → release)
+- [ ] H6 Periodic `hall`/street sets that scroll for long tracking shots
+- [ ] H7 Back-port coverage to Market Garden (validate reports 254 set-ups at 8 s, 0 close-ups) — only if it is re-rendered
+
 ### M3 — Faster, safer production
 - [x] F1 Scene library: reusable shot templates (office decision, map advance, convoy, river crossing, cockpit…) so a 30-min plan is assembled from proven pieces
 - [ ] F2 Partial re-render: re-render only changed scenes and splice them into the film

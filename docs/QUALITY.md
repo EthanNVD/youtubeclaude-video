@@ -13,6 +13,8 @@ A video is **done** only when every box below is ticked. Copy this list into `pr
   - [ ] vehicles move at believable speeds and ease in and out;
   - [ ] a shot is never fully static: there is camera drift or an actor gesture;
   - [ ] ≥ 60 % acting shots, ≤ 20 % charts and documents, maps 15–25 %;
+  - [ ] validate `coverage`: average set-up ≤ 4 s, close-ups in every chapter, no `one set-up for …` or `crosses … px` (sprint) warnings;
+  - [ ] every acting scene has a reaction close-up or an over-the-shoulder shot; evidence is shown as an insert, not a label;
   - [ ] each idea on screen appears on the word that names it.
 - [ ] No hate symbols: armbands plain, no swastika banners; rally/podium banners show national flags.
 - [ ] Fact flags from the outline are fixed on screen (spelling of names and places; numbers as narrated).
@@ -25,7 +27,13 @@ A video is **done** only when every box below is ticked. Copy this list into `pr
 ## C. Render
 - [ ] Only one render process at a time.
 - [ ] The final MP4 lasts as long as the voice (±0.5 s): 1920×1080, H.264 + AAC.
-- [ ] Spot-check 12 frames spread over the film plus 3 motion strips (a vehicle, a map move, a character reaction).
+- [ ] Spot-check 12 frames spread over the film plus motion strips (8 fps) of:
+  - a walk-in;
+  - a vehicle arriving and braking;
+  - a pose change;
+  - a prop put down;
+  - a map move.
+  Check for no jumps, no stops without slowing, no sliding feet, nothing popping in from nothing.
 
 ## D. Package
 - [ ] 3 titles on three different angles; recommended one marked; 40–65 characters.

@@ -1,0 +1,1873 @@
+{
+ "meta": {
+  "title": "Acting test — the photographs",
+  "lang": "en",
+  "fps": 24,
+  "width": 1920,
+  "height": 1080,
+  "duration": 59.4,
+  "voice": "input/voice.wav",
+  "grain": 0.5
+ },
+ "cast": {
+  "host": {
+   "preset": "host"
+  },
+  "aide": {
+   "preset": "aide"
+  },
+  "brian_urquhart": {
+   "preset": "brian_urquhart"
+  },
+  "browning": {
+   "preset": "browning"
+  },
+  "dutch_civilian": {
+   "preset": "dutch_civilian"
+  },
+  "ss_soldier": {
+   "preset": "ss_soldier"
+  },
+  "british_soldier": {
+   "preset": "british_soldier"
+  },
+  "medic": {
+   "preset": "browning",
+   "facial": "none",
+   "glasses": "round",
+   "hairColor": "#7a6a58",
+   "age": 0.6,
+   "extra": [
+    "armband"
+   ]
+  }
+ },
+ "scenes": [
+  {
+   "start": 0.0,
+   "type": "stage",
+   "set": {
+    "kind": "paper",
+    "dof": 0
+   },
+   "elements": [
+    {
+     "kind": "panel",
+     "x": 960,
+     "y": 540,
+     "w": 2600,
+     "h": 1600,
+     "color": "#8a5a33",
+     "border": false,
+     "enter": "none"
+    },
+    {
+     "kind": "shape",
+     "shape": "rect",
+     "x": 960,
+     "y": 120,
+     "w": 2600,
+     "h": 3,
+     "fill": "#6f4626",
+     "stroke": "#6f4626",
+     "strokeWidth": 0,
+     "enter": "none",
+     "opacity": 0.5
+    },
+    {
+     "kind": "shape",
+     "shape": "rect",
+     "x": 960,
+     "y": 330,
+     "w": 2600,
+     "h": 3,
+     "fill": "#6f4626",
+     "stroke": "#6f4626",
+     "strokeWidth": 0,
+     "enter": "none",
+     "opacity": 0.5
+    },
+    {
+     "kind": "shape",
+     "shape": "rect",
+     "x": 960,
+     "y": 540,
+     "w": 2600,
+     "h": 3,
+     "fill": "#6f4626",
+     "stroke": "#6f4626",
+     "strokeWidth": 0,
+     "enter": "none",
+     "opacity": 0.5
+    },
+    {
+     "kind": "shape",
+     "shape": "rect",
+     "x": 960,
+     "y": 750,
+     "w": 2600,
+     "h": 3,
+     "fill": "#6f4626",
+     "stroke": "#6f4626",
+     "strokeWidth": 0,
+     "enter": "none",
+     "opacity": 0.5
+    },
+    {
+     "kind": "shape",
+     "shape": "rect",
+     "x": 960,
+     "y": 960,
+     "w": 2600,
+     "h": 3,
+     "fill": "#6f4626",
+     "stroke": "#6f4626",
+     "strokeWidth": 0,
+     "enter": "none",
+     "opacity": 0.5
+    },
+    {
+     "kind": "prop",
+     "item": "photo",
+     "x": 760,
+     "y": 560,
+     "scale": 2.2,
+     "rotate": -8,
+     "in": 0.05,
+     "enter": "drop"
+    },
+    {
+     "kind": "prop",
+     "item": "photo",
+     "x": 1180,
+     "y": 520,
+     "scale": 2.2,
+     "rotate": 6,
+     "in": 0.35,
+     "enter": "drop"
+    },
+    {
+     "kind": "prop",
+     "item": "photo",
+     "x": 960,
+     "y": 640,
+     "scale": 2.3,
+     "rotate": -2,
+     "in": 0.7,
+     "enter": "drop"
+    },
+    {
+     "kind": "hand",
+     "x": 2250,
+     "y": 700,
+     "flip": true,
+     "scale": 1.4,
+     "sleeve": "#6b6446",
+     "in": 0.9,
+     "enter": "none",
+     "keys": [
+      {
+       "t": 0.9,
+       "x": 2250
+      },
+      {
+       "t": 1.5,
+       "x": 1700,
+       "ease": "out"
+      }
+     ]
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.06
+    }
+   ],
+   "sfx": [
+    {
+     "t": 0.1,
+     "id": "paper"
+    },
+    {
+     "t": 0.4,
+     "id": "paper"
+    },
+    {
+     "t": 0.75,
+     "id": "paper"
+    }
+   ],
+   "id": "s001",
+   "end": 1.82
+  },
+  {
+   "start": 1.82,
+   "type": "stage",
+   "set": {
+    "kind": "office",
+    "flag": "UK",
+    "portrait": false,
+    "desk": false,
+    "fg": "officedesk"
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "british_soldier",
+     "x": -160,
+     "y": 905,
+     "scale": 1.5,
+     "pose": "carry",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 0.0,
+       "x": -160
+      },
+      {
+       "t": 2.0,
+       "x": 560,
+       "ease": "inOut"
+      },
+      {
+       "t": 2.2,
+       "pose": "offer"
+      },
+      {
+       "t": 3.2,
+       "pose": "idle"
+      },
+      {
+       "t": 4.2,
+       "x": -200,
+       "ease": "in"
+      }
+     ],
+     "holds": "paper",
+     "out": 6.5,
+     "id": "clerk"
+    },
+    {
+     "kind": "actor",
+     "who": "brian_urquhart",
+     "x": 1040,
+     "y": 990,
+     "scale": 1.55,
+     "pose": "write",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 2.1,
+       "pose": "reach",
+       "turn": -0.6,
+       "holds": ""
+      },
+      {
+       "t": 2.6,
+       "pose": "hold",
+       "holds": "telegram",
+       "turn": 0,
+       "expr": "worried"
+      },
+      {
+       "t": 5.6,
+       "pose": "shrug",
+       "expr": "nervous"
+      },
+      {
+       "t": 6.4,
+       "pose": "hold",
+       "expr": "worried"
+      }
+     ],
+     "holds": "pen",
+     "turn": -0.35,
+     "id": "urq"
+    },
+    {
+     "kind": "prop",
+     "item": "paper",
+     "x": 760,
+     "y": 845,
+     "scale": 0.7,
+     "in": 0.0,
+     "front": true,
+     "rotate": -10
+    },
+    {
+     "kind": "prop",
+     "item": "phone",
+     "x": 1380,
+     "y": 830,
+     "scale": 0.9,
+     "in": 0.0,
+     "front": true
+    },
+    {
+     "kind": "namecard",
+     "name": "Maj Brian Urquhart",
+     "role": "I Airborne Corps intelligence — no relation to the general",
+     "in": 4.2
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "on": [
+      "clerk",
+      "urq"
+     ],
+     "size": "full",
+     "zoom": 1.0,
+     "x": 900,
+     "push": 0.03
+    },
+    {
+     "t": 2.4,
+     "on": "urq",
+     "size": "medium",
+     "frameX": 0.12,
+     "push": 0.05
+    },
+    {
+     "t": 4.3,
+     "on": "urq",
+     "size": "close",
+     "frameX": 0.16,
+     "push": 0.05
+    }
+   ],
+   "sfx": [
+    {
+     "t": 0.3,
+     "id": "footsteps"
+    },
+    {
+     "t": 2.2,
+     "id": "paper"
+    }
+   ],
+   "id": "s002",
+   "end": 8.6
+  },
+  {
+   "start": 8.6,
+   "type": "stage",
+   "set": {
+    "kind": "home",
+    "time": "night",
+    "fg": "officedesk"
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "dutch_civilian",
+     "x": 960,
+     "y": 1010,
+     "scale": 1.6,
+     "pose": "typing",
+     "expr": "worried",
+     "keys": [
+      {
+       "t": 1.6,
+       "expr": "nervous",
+       "look": 0.8
+      }
+     ],
+     "turn": 0.35,
+     "id": "dutch"
+    },
+    {
+     "kind": "prop",
+     "item": "radio",
+     "x": 1010,
+     "y": 880,
+     "scale": 1.05,
+     "in": 0.0,
+     "front": true
+    },
+    {
+     "kind": "prop",
+     "item": "candle",
+     "x": 600,
+     "y": 830,
+     "scale": 1.4,
+     "in": 0.0,
+     "front": true
+    },
+    {
+     "kind": "glow",
+     "x": 600,
+     "y": 760,
+     "r": 420,
+     "color": "#ffd28a",
+     "strength": 0.5,
+     "enter": "none",
+     "front": true
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "on": "dutch",
+     "size": "medium",
+     "frameX": -0.08,
+     "push": 0.04
+    },
+    {
+     "t": 1.7,
+     "on": "dutch",
+     "size": "close",
+     "frameX": 0.15,
+     "push": 0.05
+    }
+   ],
+   "sfx": [
+    {
+     "t": 0.2,
+     "id": "morse"
+    }
+   ],
+   "tint": "night",
+   "id": "s003",
+   "end": 11.9
+  },
+  {
+   "start": 11.9,
+   "type": "stage",
+   "set": {
+    "kind": "field",
+    "drift": 0
+   },
+   "elements": [
+    {
+     "id": "tank1",
+     "kind": "vehicle",
+     "type": "panzer4",
+     "nation": "GER",
+     "x": 1220,
+     "y": 840,
+     "parked": true
+    },
+    {
+     "id": "tank2",
+     "kind": "vehicle",
+     "type": "panther",
+     "nation": "GER",
+     "x": -87.2,
+     "y": 730,
+     "keys": [
+      {
+       "t": 2.35,
+       "x": 430
+      }
+     ]
+    },
+    {
+     "kind": "actor",
+     "who": "ss_soldier",
+     "x": 1580,
+     "y": 860,
+     "pose": "smoke",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 1.5,
+       "pose": "chin"
+      }
+     ],
+     "id": "ss1"
+    },
+    {
+     "kind": "actor",
+     "who": "ss_soldier",
+     "x": 760,
+     "y": 870,
+     "pose": "idle",
+     "expr": "smile",
+     "keys": [
+      {
+       "t": 0.6,
+       "x": 760
+      },
+      {
+       "t": 2.2,
+       "x": 930
+      },
+      {
+       "t": 2.4,
+       "pose": "pockets"
+      }
+     ],
+     "look": -0.6,
+     "id": "ss2"
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "size": "wide",
+     "zoom": 1.05,
+     "x": 900,
+     "y": 600,
+     "panX": -60
+    },
+    {
+     "t": 2.45,
+     "on": [
+      "ss2",
+      "tank1"
+     ],
+     "size": "full",
+     "push": 0.03
+    }
+   ],
+   "world": {
+    "scale": 0.95,
+    "y": 870
+   },
+   "date": "SEPTEMBER 1944",
+   "place": "ARNHEM",
+   "ambience": "wind",
+   "id": "s004",
+   "end": 14.91
+  },
+  {
+   "start": 14.91,
+   "type": "stage",
+   "set": {
+    "kind": "office",
+    "flag": "UK",
+    "portrait": false,
+    "desk": false,
+    "fg": "officedesk"
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "brian_urquhart",
+     "x": 1040,
+     "y": 990,
+     "scale": 1.55,
+     "pose": "phone",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 1.4,
+       "expr": "angry",
+       "turn": -0.3,
+       "headMove": "nod"
+      }
+     ],
+     "holds": "phone",
+     "talk": true,
+     "turn": 0.4,
+     "id": "urq"
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "on": "urq",
+     "size": "mediumclose",
+     "frameX": 0.1,
+     "push": 0.06
+    }
+   ],
+   "sfx": [
+    {
+     "t": 0.0,
+     "id": "phone_ring"
+    }
+   ],
+   "id": "s005",
+   "end": 17.79
+  },
+  {
+   "start": 17.79,
+   "type": "stage",
+   "set": {
+    "kind": "polder",
+    "drift": 0
+   },
+   "elements": [
+    {
+     "id": "spit",
+     "kind": "vehicle",
+     "type": "fighter",
+     "nation": "UK",
+     "x": -700,
+     "y": 470,
+     "scale": 3.3,
+     "rotate": -3,
+     "keys": [
+      {
+       "t": 2.3,
+       "x": 2700,
+       "y": 400,
+       "ease": "linear"
+      }
+     ]
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "size": "wide",
+     "x": 820,
+     "zoom": 1.12,
+     "panX": 300,
+     "shake": 2
+    }
+   ],
+   "date": "12 SEPTEMBER 1944",
+   "sfx": [
+    {
+     "t": 0.0,
+     "id": "plane_flyby"
+    }
+   ],
+   "id": "s006",
+   "end": 20.1
+  },
+  {
+   "start": 20.1,
+   "type": "stage",
+   "set": {
+    "kind": "paper",
+    "dof": 0
+   },
+   "elements": [
+    {
+     "kind": "prop",
+     "item": "photo",
+     "x": 960,
+     "y": 560,
+     "scale": 8.6,
+     "rotate": 0,
+     "in": 0,
+     "enter": "none"
+    },
+    {
+     "kind": "viewfinder",
+     "hud": true,
+     "label": "ARNHEM",
+     "shots": [
+      0.25,
+      0.7,
+      1.15
+     ],
+     "start": 41,
+     "enter": "none"
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "x": 900,
+     "y": 560,
+     "zoom": 1.0,
+     "panX": 160,
+     "push": 0.05
+    }
+   ],
+   "sfx": [
+    {
+     "t": 0.25,
+     "id": "tick"
+    },
+    {
+     "t": 0.7,
+     "id": "tick"
+    },
+    {
+     "t": 1.15,
+     "id": "tick"
+    }
+   ],
+   "id": "s007",
+   "end": 21.6
+  },
+  {
+   "start": 21.6,
+   "type": "stage",
+   "set": {
+    "kind": "paper",
+    "dof": 0
+   },
+   "elements": [
+    {
+     "kind": "panel",
+     "x": 960,
+     "y": 540,
+     "w": 2600,
+     "h": 1600,
+     "color": "#8a5a33",
+     "border": false,
+     "enter": "none"
+    },
+    {
+     "kind": "shape",
+     "shape": "rect",
+     "x": 960,
+     "y": 120,
+     "w": 2600,
+     "h": 3,
+     "fill": "#6f4626",
+     "stroke": "#6f4626",
+     "strokeWidth": 0,
+     "enter": "none",
+     "opacity": 0.5
+    },
+    {
+     "kind": "shape",
+     "shape": "rect",
+     "x": 960,
+     "y": 330,
+     "w": 2600,
+     "h": 3,
+     "fill": "#6f4626",
+     "stroke": "#6f4626",
+     "strokeWidth": 0,
+     "enter": "none",
+     "opacity": 0.5
+    },
+    {
+     "kind": "shape",
+     "shape": "rect",
+     "x": 960,
+     "y": 540,
+     "w": 2600,
+     "h": 3,
+     "fill": "#6f4626",
+     "stroke": "#6f4626",
+     "strokeWidth": 0,
+     "enter": "none",
+     "opacity": 0.5
+    },
+    {
+     "kind": "shape",
+     "shape": "rect",
+     "x": 960,
+     "y": 750,
+     "w": 2600,
+     "h": 3,
+     "fill": "#6f4626",
+     "stroke": "#6f4626",
+     "strokeWidth": 0,
+     "enter": "none",
+     "opacity": 0.5
+    },
+    {
+     "kind": "shape",
+     "shape": "rect",
+     "x": 960,
+     "y": 960,
+     "w": 2600,
+     "h": 3,
+     "fill": "#6f4626",
+     "stroke": "#6f4626",
+     "strokeWidth": 0,
+     "enter": "none",
+     "opacity": 0.5
+    },
+    {
+     "kind": "prop",
+     "item": "photo",
+     "x": 960,
+     "y": 540,
+     "scale": 4.2,
+     "rotate": -3,
+     "in": 0,
+     "enter": "none"
+    },
+    {
+     "kind": "prop",
+     "item": "magnifier",
+     "x": 1500,
+     "y": 760,
+     "scale": 1.6,
+     "enter": "none",
+     "keys": [
+      {
+       "t": 1.0,
+       "x": 770,
+       "y": 380,
+       "ease": "inOut"
+      },
+      {
+       "t": 2.2,
+       "x": 790,
+       "y": 360
+      },
+      {
+       "t": 2.8,
+       "x": 1600,
+       "y": 800,
+       "ease": "in"
+      }
+     ]
+    },
+    {
+     "kind": "shape",
+     "shape": "ring",
+     "x": 712,
+     "y": 345,
+     "r": 90,
+     "in": 1.6,
+     "enter": "draw",
+     "strokeWidth": 9
+    },
+    {
+     "kind": "shape",
+     "shape": "ring",
+     "x": 1180,
+     "y": 520,
+     "r": 80,
+     "in": 2.4,
+     "enter": "draw",
+     "strokeWidth": 9
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.08
+    }
+   ],
+   "id": "s008",
+   "end": 25.17
+  },
+  {
+   "start": 25.17,
+   "type": "stage",
+   "set": {
+    "kind": "corridor"
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "brian_urquhart",
+     "x": 960,
+     "y": 600,
+     "pose": "carry",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 2.85,
+       "y": 1180,
+       "ease": "linear"
+      }
+     ],
+     "holds": "folder",
+     "id": "urq"
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.05
+    }
+   ],
+   "world": {
+    "horizon": 500,
+    "y": 900,
+    "scale": 1.3
+   },
+   "sfx": [
+    {
+     "t": 0.1,
+     "id": "footsteps"
+    }
+   ],
+   "id": "s009",
+   "end": 28.05
+  },
+  {
+   "start": 28.05,
+   "type": "stage",
+   "set": {
+    "kind": "cabinet",
+    "fg": "officedesk",
+    "flag": "UK"
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "browning",
+     "x": 1080,
+     "y": 995,
+     "scale": 1.6,
+     "pose": "write",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 1.4,
+       "pose": "idle",
+       "expr": "smug",
+       "turn": -0.55
+      }
+     ],
+     "holds": "pen",
+     "turn": -0.2,
+     "id": "brow"
+    },
+    {
+     "kind": "actor",
+     "who": "brian_urquhart",
+     "x": -150,
+     "y": 1000,
+     "scale": 1.62,
+     "pose": "idle",
+     "expr": "worried",
+     "keys": [
+      {
+       "t": 1.2,
+       "x": 330,
+       "ease": "out"
+      }
+     ],
+     "holds": "folder",
+     "holdsScale": 0.45,
+     "id": "urq"
+    },
+    {
+     "kind": "prop",
+     "item": "paper",
+     "x": 1180,
+     "y": 845,
+     "scale": 0.8,
+     "in": 0.0,
+     "front": true,
+     "rotate": 6
+    },
+    {
+     "kind": "namecard",
+     "name": "Lt Gen Frederick Browning",
+     "role": "commander, I Airborne Corps",
+     "in": 0.5
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "on": [
+      "brow"
+     ],
+     "size": "full",
+     "zoom": 1.0,
+     "x": 860,
+     "push": 0.03
+    },
+    {
+     "t": 1.25,
+     "on": "brow",
+     "size": "mediumclose",
+     "frameX": 0.1,
+     "push": 0.05
+    }
+   ],
+   "sfx": [
+    {
+     "t": 0.2,
+     "id": "thud",
+     "vol": 0.5
+    }
+   ],
+   "id": "s010",
+   "end": 30.39
+  },
+  {
+   "start": 30.39,
+   "type": "stage",
+   "set": {
+    "kind": "cabinet",
+    "fg": "officedesk",
+    "flag": "UK"
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "browning",
+     "x": 1180,
+     "y": 995,
+     "scale": 1.6,
+     "pose": "idle",
+     "expr": "smug",
+     "keys": [
+      {
+       "t": 0.5,
+       "pose": "wave",
+       "headMove": "shake"
+      },
+      {
+       "t": 1.4,
+       "pose": "cross"
+      }
+     ],
+     "turn": -0.45,
+     "id": "brow"
+    },
+    {
+     "kind": "prop",
+     "item": "photo",
+     "x": 1010,
+     "y": 862,
+     "scale": 0.75,
+     "rotate": -4,
+     "in": 0.0,
+     "enter": "slideL",
+     "front": true
+    },
+    {
+     "kind": "prop",
+     "item": "photo",
+     "x": 1150,
+     "y": 868,
+     "scale": 0.75,
+     "rotate": 7,
+     "in": 0.15,
+     "enter": "slideL",
+     "front": true
+    },
+    {
+     "kind": "actor",
+     "who": "brian_urquhart",
+     "x": 430,
+     "y": 1330,
+     "scale": 3.0,
+     "pose": "idle",
+     "expr": "worried",
+     "view": "back",
+     "fixedLayer": true,
+     "front": true,
+     "id": "urq"
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "x": 960,
+     "y": 540,
+     "push": 0.04
+    },
+    {
+     "t": 1.1,
+     "on": "brow",
+     "size": "close",
+     "frameX": 0.08,
+     "push": 0.05
+    }
+   ],
+   "id": "s011",
+   "end": 32.41
+  },
+  {
+   "start": 32.41,
+   "type": "stage",
+   "set": {
+    "kind": "office",
+    "flag": "UK",
+    "portrait": false,
+    "desk": false,
+    "fg": "officedesk"
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "brian_urquhart",
+     "x": 860,
+     "y": 990,
+     "scale": 1.55,
+     "pose": "write",
+     "expr": "worried",
+     "keys": [
+      {
+       "t": 1.3,
+       "pose": "idle",
+       "holds": "",
+       "turn": 0.7,
+       "look": 1
+      },
+      {
+       "t": 2.5,
+       "expr": "shocked",
+       "pose": "pointSelf"
+      }
+     ],
+     "holds": "pen",
+     "turn": 0.3,
+     "id": "urq"
+    },
+    {
+     "kind": "actor",
+     "who": "medic",
+     "x": 2150,
+     "y": 960,
+     "scale": 1.6,
+     "pose": "idle",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 1.6,
+       "x": 1480,
+       "ease": "out"
+      },
+      {
+       "t": 1.9,
+       "pose": "offer",
+       "expr": "smile",
+       "turn": -0.5
+      }
+     ],
+     "id": "doc"
+    },
+    {
+     "kind": "namecard",
+     "name": "Corps medical officer",
+     "role": "",
+     "in": 1.4
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "on": [
+      "urq"
+     ],
+     "size": "full",
+     "zoom": 1.0,
+     "x": 1100,
+     "push": 0.03
+    },
+    {
+     "t": 2.45,
+     "on": "urq",
+     "size": "close",
+     "frameX": -0.1,
+     "push": 0.06
+    }
+   ],
+   "sfx": [
+    {
+     "t": 0.3,
+     "id": "thud",
+     "vol": 0.5
+    }
+   ],
+   "id": "s012",
+   "end": 36.2
+  },
+  {
+   "start": 36.2,
+   "type": "stage",
+   "set": {
+    "kind": "paper",
+    "dof": 0
+   },
+   "elements": [
+    {
+     "kind": "panel",
+     "x": 960,
+     "y": 540,
+     "w": 2600,
+     "h": 1600,
+     "color": "#8a5a33",
+     "border": false,
+     "enter": "none"
+    },
+    {
+     "kind": "shape",
+     "shape": "rect",
+     "x": 960,
+     "y": 120,
+     "w": 2600,
+     "h": 3,
+     "fill": "#6f4626",
+     "stroke": "#6f4626",
+     "strokeWidth": 0,
+     "enter": "none",
+     "opacity": 0.5
+    },
+    {
+     "kind": "shape",
+     "shape": "rect",
+     "x": 960,
+     "y": 330,
+     "w": 2600,
+     "h": 3,
+     "fill": "#6f4626",
+     "stroke": "#6f4626",
+     "strokeWidth": 0,
+     "enter": "none",
+     "opacity": 0.5
+    },
+    {
+     "kind": "shape",
+     "shape": "rect",
+     "x": 960,
+     "y": 540,
+     "w": 2600,
+     "h": 3,
+     "fill": "#6f4626",
+     "stroke": "#6f4626",
+     "strokeWidth": 0,
+     "enter": "none",
+     "opacity": 0.5
+    },
+    {
+     "kind": "shape",
+     "shape": "rect",
+     "x": 960,
+     "y": 750,
+     "w": 2600,
+     "h": 3,
+     "fill": "#6f4626",
+     "stroke": "#6f4626",
+     "strokeWidth": 0,
+     "enter": "none",
+     "opacity": 0.5
+    },
+    {
+     "kind": "shape",
+     "shape": "rect",
+     "x": 960,
+     "y": 960,
+     "w": 2600,
+     "h": 3,
+     "fill": "#6f4626",
+     "stroke": "#6f4626",
+     "strokeWidth": 0,
+     "enter": "none",
+     "opacity": 0.5
+    },
+    {
+     "kind": "document",
+     "style": "form",
+     "title": "MEDICAL BOARD",
+     "lines": [
+      "MAJ. B. URQUHART",
+      "EXHAUSTION",
+      "LEAVE: IMMEDIATE"
+     ],
+     "x": 960,
+     "y": 540,
+     "w": 900,
+     "h": 640,
+     "in": 0.0,
+     "speed": 60,
+     "size": null,
+     "stamp": "SICK LEAVE"
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.05
+    }
+   ],
+   "sfx": [
+    {
+     "t": 0.7,
+     "id": "stamp"
+    }
+   ],
+   "id": "s013",
+   "end": 37.9
+  },
+  {
+   "start": 37.9,
+   "type": "stage",
+   "set": {
+    "kind": "railway",
+    "weather": "rain"
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "brian_urquhart",
+     "x": 1060,
+     "y": 1120,
+     "pose": "idle",
+     "expr": "sad",
+     "keys": [
+      {
+       "t": 1.7,
+       "y": 880,
+       "ease": "linear"
+      }
+     ],
+     "view": "back",
+     "holds": "suitcase",
+     "holdsScale": 0.5,
+     "id": "urq"
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.03
+    }
+   ],
+   "world": {
+    "scale": 1.45,
+    "y": 900
+   },
+   "tint": "cold",
+   "ambience": "rain",
+   "id": "s014",
+   "end": 39.63
+  },
+  {
+   "start": 39.63,
+   "type": "stage",
+   "set": {
+    "kind": "study",
+    "desk": false
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "host",
+     "x": 900,
+     "y": 905,
+     "scale": 1.55,
+     "pose": "show",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 1.6,
+       "pose": "idle",
+       "expr": "smug",
+       "turn": -0.2
+      },
+      {
+       "t": 2.8,
+       "pose": "shrug",
+       "holds": ""
+      }
+     ],
+     "holds": "photo",
+     "holdsScale": 0.5,
+     "talk": true,
+     "turn": 0.3,
+     "id": "host"
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "on": "host",
+     "size": "medium",
+     "frameX": -0.12,
+     "push": 0.05
+    },
+    {
+     "t": 2.2,
+     "on": "host",
+     "size": "close",
+     "frameX": 0.1,
+     "push": 0.05
+    }
+   ],
+   "id": "s015",
+   "end": 44.06
+  },
+  {
+   "start": 44.06,
+   "type": "stage",
+   "set": {
+    "kind": "study",
+    "desk": false
+   },
+   "elements": [
+    {
+     "kind": "prop",
+     "item": "photo",
+     "x": 1560,
+     "y": 560,
+     "scale": 0.7,
+     "in": 2.0,
+     "rotate": 3,
+     "enter": "pop",
+     "id": "pin"
+    },
+    {
+     "kind": "label",
+     "text": "MYTH 2",
+     "x": 1560,
+     "y": 430,
+     "style": "tag",
+     "size": 40,
+     "in": 2.2
+    },
+    {
+     "kind": "actor",
+     "who": "host",
+     "x": 520,
+     "y": 905,
+     "scale": 1.55,
+     "pose": "idle",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 1.8,
+       "x": 1330,
+       "ease": "inOut"
+      },
+      {
+       "t": 1.9,
+       "pose": "reach",
+       "turn": 0.6,
+       "holds": ""
+      },
+      {
+       "t": 2.4,
+       "pose": "point",
+       "turn": -0.3,
+       "expr": "smug"
+      }
+     ],
+     "holds": "photo",
+     "holdsScale": 0.45,
+     "talk": true,
+     "id": "host"
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "on": "host",
+     "size": "full",
+     "track": true,
+     "zoom": 1.45,
+     "dy": 40
+    },
+    {
+     "t": 2.0,
+     "on": [
+      "host",
+      "pin"
+     ],
+     "size": "full",
+     "zoom": 1.3,
+     "push": 0.04
+    }
+   ],
+   "id": "s016",
+   "end": 47.06
+  },
+  {
+   "start": 47.06,
+   "type": "stage",
+   "set": {
+    "kind": "study",
+    "desk": false
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "host",
+     "x": 1220,
+     "y": 905,
+     "scale": 1.6,
+     "pose": "explain",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 1.2,
+       "pose": "chin",
+       "expr": "neutral"
+      }
+     ],
+     "talk": true,
+     "turn": -0.5,
+     "id": "host"
+    },
+    {
+     "kind": "actor",
+     "who": "aide",
+     "x": 420,
+     "y": 1300,
+     "scale": 2.9,
+     "pose": "idle",
+     "expr": "neutral",
+     "view": "back",
+     "fixedLayer": true,
+     "id": "aide"
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "x": 960,
+     "push": 0.05
+    }
+   ],
+   "id": "s017",
+   "end": 49.58
+  },
+  {
+   "start": 49.58,
+   "type": "stage",
+   "set": {
+    "kind": "study",
+    "desk": false
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "aide",
+     "x": 700,
+     "y": 905,
+     "scale": 1.6,
+     "pose": "holdUp",
+     "expr": "worried",
+     "holds": "photo",
+     "holdsScale": 0.75,
+     "talk": true,
+     "turn": 0.5,
+     "id": "aide"
+    },
+    {
+     "kind": "actor",
+     "who": "host",
+     "x": 1520,
+     "y": 1300,
+     "scale": 2.9,
+     "pose": "idle",
+     "expr": "neutral",
+     "view": "back",
+     "fixedLayer": true,
+     "id": "host"
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "x": 960,
+     "push": 0.05
+    }
+   ],
+   "id": "s018",
+   "end": 52.18
+  },
+  {
+   "start": 52.18,
+   "type": "stage",
+   "set": {
+    "kind": "study",
+    "desk": false
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "host",
+     "x": 1180,
+     "y": 905,
+     "scale": 1.6,
+     "pose": "idle",
+     "expr": "smug",
+     "talk": true,
+     "turn": -0.4,
+     "headMove": "nod",
+     "id": "host"
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "on": "host",
+     "size": "close",
+     "frameX": 0.1,
+     "push": 0.03
+    }
+   ],
+   "id": "s019",
+   "end": 53.1
+  },
+  {
+   "start": 53.1,
+   "type": "stage",
+   "set": {
+    "kind": "study",
+    "desk": false
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "aide",
+     "x": 760,
+     "y": 905,
+     "scale": 1.55,
+     "pose": "show",
+     "expr": "worried",
+     "keys": [
+      {
+       "t": 0.6,
+       "pose": "idle",
+       "expr": "neutral"
+      }
+     ],
+     "holds": "photo",
+     "holdsScale": 0.6,
+     "turn": 0.45,
+     "id": "aide"
+    },
+    {
+     "kind": "actor",
+     "who": "host",
+     "x": 1180,
+     "y": 905,
+     "scale": 1.6,
+     "pose": "reach",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 0.5,
+       "pose": "pointL",
+       "expr": "determined"
+      }
+     ],
+     "turn": -0.5,
+     "talk": true,
+     "id": "host"
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "on": [
+      "aide",
+      "host"
+     ],
+     "size": "medium",
+     "push": 0.04
+    }
+   ],
+   "id": "s020",
+   "end": 55.1
+  },
+  {
+   "start": 55.1,
+   "type": "stage",
+   "set": {
+    "kind": "paper",
+    "dof": 0
+   },
+   "elements": [
+    {
+     "kind": "panel",
+     "x": 960,
+     "y": 540,
+     "w": 2600,
+     "h": 1600,
+     "color": "#8a5a33",
+     "border": false,
+     "enter": "none"
+    },
+    {
+     "kind": "shape",
+     "shape": "rect",
+     "x": 960,
+     "y": 120,
+     "w": 2600,
+     "h": 3,
+     "fill": "#6f4626",
+     "stroke": "#6f4626",
+     "strokeWidth": 0,
+     "enter": "none",
+     "opacity": 0.5
+    },
+    {
+     "kind": "shape",
+     "shape": "rect",
+     "x": 960,
+     "y": 330,
+     "w": 2600,
+     "h": 3,
+     "fill": "#6f4626",
+     "stroke": "#6f4626",
+     "strokeWidth": 0,
+     "enter": "none",
+     "opacity": 0.5
+    },
+    {
+     "kind": "shape",
+     "shape": "rect",
+     "x": 960,
+     "y": 540,
+     "w": 2600,
+     "h": 3,
+     "fill": "#6f4626",
+     "stroke": "#6f4626",
+     "strokeWidth": 0,
+     "enter": "none",
+     "opacity": 0.5
+    },
+    {
+     "kind": "shape",
+     "shape": "rect",
+     "x": 960,
+     "y": 750,
+     "w": 2600,
+     "h": 3,
+     "fill": "#6f4626",
+     "stroke": "#6f4626",
+     "strokeWidth": 0,
+     "enter": "none",
+     "opacity": 0.5
+    },
+    {
+     "kind": "shape",
+     "shape": "rect",
+     "x": 960,
+     "y": 960,
+     "w": 2600,
+     "h": 3,
+     "fill": "#6f4626",
+     "stroke": "#6f4626",
+     "strokeWidth": 0,
+     "enter": "none",
+     "opacity": 0.5
+    },
+    {
+     "kind": "prop",
+     "item": "photo",
+     "x": 960,
+     "y": 540,
+     "scale": 4.2,
+     "rotate": -3,
+     "in": 0,
+     "enter": "none"
+    },
+    {
+     "kind": "shape",
+     "shape": "cross",
+     "x": 712,
+     "y": 345,
+     "scale": 0.62,
+     "in": 0.15,
+     "enter": "pop"
+    },
+    {
+     "kind": "shape",
+     "shape": "cross",
+     "x": 1180,
+     "y": 520,
+     "scale": 0.62,
+     "in": 0.45,
+     "enter": "pop"
+    },
+    {
+     "kind": "shape",
+     "shape": "cross",
+     "x": 607,
+     "y": 632,
+     "scale": 0.62,
+     "in": 0.75,
+     "enter": "pop"
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.05
+    }
+   ],
+   "sfx": [
+    {
+     "t": 0.15,
+     "id": "pen"
+    },
+    {
+     "t": 0.45,
+     "id": "pen"
+    },
+    {
+     "t": 0.75,
+     "id": "pen"
+    }
+   ],
+   "id": "s021",
+   "end": 56.74
+  },
+  {
+   "start": 56.74,
+   "type": "stage",
+   "set": {
+    "kind": "field",
+    "drift": 0
+   },
+   "elements": [
+    {
+     "kind": "vehicle",
+     "type": "panther",
+     "nation": "GER",
+     "x": 820,
+     "y": 705,
+     "burning": true,
+     "rotate": -3
+    },
+    {
+     "kind": "vehicle",
+     "type": "tiger",
+     "nation": "GER",
+     "x": 1420,
+     "y": 790,
+     "damaged": true,
+     "rotate": 4
+    },
+    {
+     "kind": "vehicle",
+     "type": "panzer4",
+     "nation": "GER",
+     "x": 60,
+     "y": 1080,
+     "damaged": true
+    },
+    {
+     "kind": "fx",
+     "type": "smoke",
+     "x": 820,
+     "y": 600
+    },
+    {
+     "kind": "fx",
+     "type": "smoke",
+     "x": 1430,
+     "y": 650
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.1,
+     "x": 900,
+     "y": 560,
+     "panX": 140,
+     "push": 0.03
+    }
+   ],
+   "world": {
+    "scale": 0.95,
+    "y": 870
+   },
+   "date": "AUGUST 1944",
+   "place": "NORMANDY",
+   "tint": "warm",
+   "id": "s022",
+   "end": 59.4
+  }
+ ]
+}

@@ -347,3 +347,112 @@ def airfield_line(start, nation="UK", pilot="raf_pilot", extra=(), **kw):
 
 TEMPLATES.update({"crew_with_vehicle": crew_with_vehicle, "column_depth": column_depth, "vehicle_pass": vehicle_pass,
                   "foreground_walk": foreground_walk, "airfield_line": airfield_line})
+
+
+# ------------------------------------------------------------------ coverage: several shots inside one place (scene.shots)
+# The reference grammar: a place is filmed as wide -> medium -> close on the reaction -> insert on the evidence, joined by
+# hard cuts, people moving with physical timing. A shot frames an element by `id` and a size; the engine computes the camera.
+# See .claude/skills/srt-history-video/references/acting-camera.md.
+WOOD_DESK = [{"kind": "panel", "x": 960, "y": 540, "w": 2600, "h": 1600, "color": "#8a5a33", "border": False, "enter": "none"}] + [
+    {"kind": "shape", "shape": "rect", "x": 960, "y": 120 + i * 210, "w": 2600, "h": 3, "fill": "#6f4626", "stroke": "#6f4626",
+     "strokeWidth": 0, "enter": "none", "opacity": 0.5} for i in range(5)]
+
+
+def SHOT(t, on=None, size="medium", **kw):
+    """One camera set-up inside a scene: SHOT(2.4, "urq", "close", frameX=0.15). size: wide full medium mediumclose close ecu.
+    frameX/frameY move the subject off-centre (fractions of the frame), push = zoom gain over the shot (default 0.04),
+    panX/panY = drift in px, track=True follows a walking subject, x/y/zoom = raw camera for wides and inserts."""
+    d = {"t": t}
+    if on is not None:
+        d["on"] = on
+    if size:
+        d["size"] = size
+    return _kw(d, kw)
+
+
+def AID(id_, who, x, y=900, s=1.55, pose="idle", expr="neutral", keys=None, **kw):
+    """An actor with an id (so shots can frame it). s=None -> sized by scene.world from its ground y."""
+    d = A(who, x, y, s, pose, expr, keys=keys, **kw)
+    if s is None:
+        d.pop("scale")
+    d["id"] = id_
+    return d
+
+
+OFFICE = {"kind": "office", "flag": "UK", "portrait": False, "desk": False, "fg": "officedesk"}
+
+
+def desk_read(start, who, item="telegram", set_=None, messenger="british_soldier", react="worried", name=None, role="", extra=(), **kw):
+    """A message arrives: wide (a messenger walks in, hands it over) -> medium (he reads) -> close (the reaction).
+    People stand BEHIND the foreground desk at y=990 so it covers them to the waist. About 6-8 s."""
+    els = [
+        AID("msgr", messenger, -160, 1000, 1.5, "carry", "neutral", holds="paper",
+            keys=K((0.0, {"x": -160}), (2.0, {"x": 560}), (2.2, {"pose": "offer"}), (3.0, {"pose": "idle", "holds": ""}), (4.4, {"x": -220}))),
+        AID("reader", who, 1040, 990, 1.55, "write", "neutral", holds="pen", turn=-0.35,
+            keys=K((2.1, {"pose": "reach", "turn": -0.6, "holds": ""}), (2.6, {"pose": "hold", "holds": item, "turn": 0, "expr": react}))),
+        {**PROP("phone", 1380, 830, 0.9), "front": True},
+    ]
+    if name:
+        els.append(NC(name, role, at=3.2))
+    shots = [SHOT(0, ["msgr", "reader"], "full", zoom=1.0, x=900, push=0.03), SHOT(2.4, "reader", "medium", frameX=0.12),
+             SHOT(4.3, "reader", "close", frameX=0.16)]
+    return _scene(start, set_ or OFFICE, els, extra=extra, shots=shots, **kw)
+
+
+def ots_dialogue(start, speaker, listener, set_=None, holds=None, pose="explain", expr="neutral", side="right", extra=(), **kw):
+    """Over the shoulder: the listener big in the foreground (back view, cut by the frame), the speaker facing us in 3/4.
+    Alternate side='right'/'left' for the reverse shot of the next line."""
+    right = side == "right"
+    sp = AID("speaker", speaker, 1220 if right else 700, 905, 1.6, pose, expr, talk=True, turn=-0.5 if right else 0.5,
+             keys=K((1.4, {"pose": "chin" if pose == "explain" else "explain"})))
+    if holds:
+        sp.update(holds=holds, pose="holdUp")
+    ls = AID("listener", listener, 420 if right else 1520, 1300, 2.9, "idle", "neutral", view="back", fixedLayer=True)
+    return _scene(start, set_ or {"kind": "study", "desk": False}, [sp, ls], extra=extra, shots=[SHOT(0, None, None, zoom=1.0, x=960, push=0.05)], **kw)
+
+
+def desk_insert(start, items=(("photo", 960, 540, 4.2, -3),), magnifier=None, rings=(), crosses=(), extra=(), **kw):
+    """Top-down insert on a wooden desk: the evidence itself. items: (prop, x, y, scale, rotate); magnifier: [(t, x, y), ...]
+    path of a lens over it; rings/crosses: (t, x, y) red-pencil marks drawn on the word."""
+    els = list(WOOD_DESK)
+    for it, x, y, sc, rot in items:
+        els.append({"kind": "prop", "item": it, "x": x, "y": y, "scale": sc, "rotate": rot, "enter": "none"})
+    if magnifier:
+        (t0, x0, y0), rest = magnifier[0], magnifier[1:]
+        els.append({"kind": "prop", "item": "magnifier", "x": x0, "y": y0, "scale": 1.6, "enter": "none",
+                    "keys": K(*[(t, {"x": x, "y": y, "ease": "smooth"}) for t, x, y in rest])})
+    for t, x, y in rings:
+        els.append({"kind": "shape", "shape": "ring", "x": x, "y": y, "r": 85, "in": t, "enter": "draw", "strokeWidth": 9})
+    for t, x, y in crosses:
+        els.append({"kind": "shape", "shape": "cross", "x": x, "y": y, "scale": 0.62, "in": t, "enter": "pop"})
+    return _scene(start, {"kind": "paper", "dof": 0}, els, extra=extra, shots=[SHOT(0, None, None, zoom=1.0, push=0.07)], **kw)
+
+
+def walk_to_camera(start, who, set_="corridor", holds="folder", dur=2.8, expr="determined", horizon=500, extra=(), **kw):
+    """Someone walks down a corridor/road toward the camera and grows (depth model); static camera, small push."""
+    a = AID("walker", who, 960, horizon + 100, None, "carry" if holds else "idle", expr, holds=holds, keys=K((dur, {"y": 1180, "ease": "linear"})))
+    return _scene(start, set_, [a], extra=extra, world=_world(1.3, 900, horizon=horizon), shots=[SHOT(0, None, None, zoom=1.0, push=0.05)],
+                  sfx=[{"t": 0.1, "id": "footsteps"}], **kw)
+
+
+def walk_away(start, who, set_="railway", holds="suitcase", dur=1.8, expr="sad", extra=(), **kw):
+    """Leaving: back view, walking away from the camera and getting smaller (depth model). Pair with tint/weather for mood."""
+    a = AID("walker", who, 1060, 1120, None, "idle", expr, view="back", holds=holds, holdsScale=0.5, keys=K((dur, {"y": 880, "ease": "linear"})))
+    return _scene(start, set_, [a], extra=extra, world=_world(1.45, 900), shots=[SHOT(0, None, None, zoom=1.0, push=0.03)], **kw)
+
+
+def vehicle_arrives(start, vtype="panther", nation="GER", who="ss_soldier", parked="panzer4", set_="field", dur=2.4, extra=(), **kw):
+    """A vehicle drives in and brakes next to a parked one while a soldier strolls over (depth model; the body squats on
+    pulling away and dips on braking); then a cut to a full shot of the group."""
+    els = [
+        {"id": "parked", "kind": "vehicle", "type": parked, "nation": nation, "x": 1220, "y": 840},
+        {"id": "arrive", "kind": "vehicle", "type": vtype, "nation": nation, "x": -420, "y": 730, "keys": K((dur, {"x": 430}))},
+        AID("s1", who, 1580, 860, None, "smoke", "neutral", keys=K((1.5, {"pose": "chin"}))),
+        AID("s2", who, 760, 870, None, "idle", "smile", look=-0.6, keys=K((0.6, {"x": 760}), (2.2, {"x": 930}), (2.4, {"pose": "pockets"}))),
+    ]
+    shots = [SHOT(0, None, "wide", zoom=1.05, x=900, y=600, panX=-60), SHOT(dur + 0.1, ["s2", "parked"], "full", push=0.03)]
+    return _scene(start, {"kind": set_, "drift": 0}, els, extra=extra, world=_world(0.95, 870), shots=shots, **kw)
+
+
+TEMPLATES.update({"desk_read": desk_read, "ots_dialogue": ots_dialogue, "desk_insert": desk_insert, "walk_to_camera": walk_to_camera,
+                  "walk_away": walk_away, "vehicle_arrives": vehicle_arrives})
