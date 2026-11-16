@@ -10,19 +10,19 @@ def build():
     ], chapter="Seven Days to Plan", date="10 SEPTEMBER 1944", place="BRUSSELS AIRPORT", transition="dip",
         sfx=[{"t": 0.2, "id": "footsteps", "dur": 4.6}], beat="10 Sept Montgomery meets Eisenhower inside the Supreme Commander's plane")
     scene(391.92, {"kind": "cabin"}, [
-        A("eisenhower", 1400, 900, 1.5, "idle", "worried", seated=True),
+        A("eisenhower", 1400, 900, 1.5, "cross", "worried"),
         A("montgomery", 600, 900, 1.5, "hold", "angry", holds="paper", talk=True,
           keys=K((2.4, {"pose": "slam", "expr": "rage"}), (5.0, {"pose": "point"}), (8.6, {"pose": "idle", "expr": "angry", "talk": False}))),
         FX("sparks", 700, 600, **{"in": 2.6, "color": "#fbf8f0"}),
         L("NOT A CALM MEETING", 960, 110, "tag", 44, at=0.4),
-    ], keys_camera=None, sfx=[{"t": 2.6, "id": "paper"}, {"t": 2.9, "id": "paper"}],
+    ], sfx=[{"t": 2.6, "id": "paper"}, {"t": 2.9, "id": "paper"}],
         beat="Montgomery tore up Eisenhower's messages and demanded priority")
     scene(400.0, {"kind": "cabin"}, [
         A("eisenhower", 1200, 900, 1.6, "stop", "angry", talk=True),
         A("montgomery", 600, 900, 1.5, "point", "angry", keys=K((1.8, {"pose": "cross", "expr": "smug"}))),
     ], camera=[{"t": 0, "zoom": 1.1, "x": 1100}, {"t": 4, "zoom": 1.15, "x": 1100}], beat="so fierce Eisenhower had to stop him")
     scene(404.16, {"kind": "cabin"}, [
-        A("eisenhower", 1200, 900, 1.5, "idle", "neutral", seated=True, headMove="nod"),
+        A("eisenhower", 1200, 900, 1.5, "idle", "neutral", headMove="nod"),
         A("montgomery", 600, 900, 1.5, "hips", "smug"),
         ST("APPROVED", 960, 350, 1.2, size=110, color="green"),
     ], beat="by the end Eisenhower had approved the plan")
@@ -32,7 +32,7 @@ def build():
         L("BIGGER · BOLDER · NEW NAME", 1300, 160, "tag", 44, at=5.6),
     ], date="10 SEPTEMBER 1944", beat="Comet cancelled the same day, reborn bigger with a new name")
     scene(416.46, {"kind": "polder"}, [
-        *[V("dakota", -500 - i * 450, 140 + i * 70, 0.42, US, keys=K((6.0, {"x": 2300 - i * 450}))) for i in range(3)],
+        *[V("dakota", -500 - i * 450, 140 + i * 70, 0.42, US, keys=K((6.0, {"x": 2300 - i * 450, "ease": "linear"}))) for i in range(3)],
         {"kind": "paras", "x": 900, "y": 320, "count": 14, "spread": 1300, "fall": 300, "pdur": 6, "in": 0.6},
         L("MARKET = AIRBORNE", 520, 380, "tag", 52, at=0.4),
         *tanks(-300, 1300, 588, 0.38, 6.0, n=3, gap=240),
@@ -86,14 +86,14 @@ def build():
     ], beat="that's a toll either way; no sign")
 
     # =============== CH6 CARPET OF PARATROOPERS ===============
-    MAP(477.32, [5.68, 51.7], 1.35, [
+    MAP(477.32, [5.68, 51.62], 2.8, [
         *rivers("maas", "waal", "rhine"),
         {"kind": "line", "path": ROUTE, "color": "#6a5a4a", "width": 8, "in": 0.2, "enter": "draw", "dur": 2.4},
         *towns("Neerpelt", "Eindhoven", "Grave", "Nijmegen", "Arnhem", at=0.6),
         L("ONE ROAD NORTH FROM THE BELGIAN BORDER", 960, 980, "tag", 42, at=3.0, hud=True),
         HEAD("3½ AIRBORNE DIVISIONS", 960, 130, 80, at=5.2, hud=True),
     ], chapter="Carpet of Paratroopers", beat="three and a half airborne divisions along a single road")
-    MAP(486.7, [5.68, 51.7], 1.35, [
+    MAP(486.7, [5.68, 51.62], 2.8, [
         *rivers("maas", "waal", "rhine"), {"kind": "line", "path": ROUTE, "color": "#6a5a4a", "width": 8, "enter": "none"},
         *towns("Eindhoven", "Son", "Veghel", "Grave", "Nijmegen", "Arnhem", at=0.0),
         {"kind": "ring", "at": [5.50, 51.52], "km": 9, "color": "USA", "in": 0.3, "enter": "grow"},
@@ -106,7 +106,7 @@ def build():
         ML("THE FARTHEST", [5.91, 52.06], style="red", at=17.6),
     ], camera=[{"t": 0, "zoom": 1.3, "center": [5.55, 51.55]}, {"t": 4, "zoom": 1.3, "center": [5.55, 51.55]}, {"t": 5, "zoom": 1.3, "center": [5.8, 51.8]}, {"t": 11, "zoom": 1.3, "center": [5.8, 51.8]}, {"t": 12, "zoom": 1.3, "center": [5.85, 51.95]}],
         beat="101st at Eindhoven, 82nd at Grave and Nijmegen, British 1st + Poles at Arnhem")
-    MAP(508.11, [5.68, 51.7], 1.35, [
+    MAP(508.11, [5.68, 51.62], 2.8, [
         *rivers("maas", "waal", "rhine"), *towns("Neerpelt", "Eindhoven", "Grave", "Nijmegen", "Arnhem", at=0.0),
         *[{"kind": "ring", "at": c, "km": 8, "color": "USA" if i < 2 else "UK", "enter": "none", "dashed": False} for i, c in enumerate([[5.50, 51.52], [5.84, 51.79], [5.84, 51.99]])],
         {"kind": "arrow", "path": ROUTE + [[5.95, 52.12]], "color": "UK", "width": 30, "in": 1.0, "dur": 8.0},
@@ -160,7 +160,7 @@ def build():
         ST("ONE LIFT A DAY", 1500, 330, 1.0, size=80),
         CNT(0, 4, 960, 230, 2.4, suffix=" DAYS TO DELIVER EVERYBODY", size=64, dur=1.2),
     ], beat="Brereton sided with the airmen: one lift a day, four days")
-    MAP(575.9, [5.86, 51.98], 0.32, [
+    MAP(575.9, [5.86, 51.98], 0.55, [
         *rivers("rhine"), *towns("Arnhem", "Oosterbeek", at=0.2),
         {"kind": "city", "name": "Road bridge", "at": [5.912, 51.976], "side": "bottom", "in": 1.0},
         L("FOR ARNHEM: MULTIPLIED BY GEOGRAPHY", 960, 110, "tag", 42, at=1.0, hud=True),
@@ -170,13 +170,13 @@ def build():
         NC("Maj Gen Roy Urquhart", "1st British Airborne Division", at=0.4),
         L("LAND CLOSE TO THE BRIDGE", 960, 130, "tag", 48, at=2.6),
     ], beat="Urquhart wanted landing zones close to the bridge")
-    MAP(586.1, [5.88, 51.975], 0.22, [
+    MAP(586.1, [5.88, 51.97], 0.4, [
         *rivers("rhine"), *towns("Arnhem", at=0.0),
         *[ML("FLAK", c, style="red", size=30, at=0.3 + i * 0.4) for i, c in enumerate([[5.90, 51.99], [5.93, 51.985], [5.92, 52.0], [5.88, 51.995]])],
         {"kind": "region", "polygon": [[5.84, 51.96], [5.96, 51.965], [5.96, 51.94], [5.84, 51.94]], "color": "#7f9a52", "in": 3.6},
         ML("SOUTH BANK: TOO SOFT,\nCUT UP BY DYKES", [5.90, 51.945], style="tag", at=4.0),
     ], beat="the city full of AA guns; south bank too soft and cut up by dykes")
-    MAP(593.92, [5.84, 51.985], 0.3, [
+    MAP(593.92, [5.83, 51.985], 0.5, [
         *rivers("rhine"), *towns("Arnhem", "Oosterbeek", at=0.0),
         *[{"kind": "ring", "at": c, "r": 50, "color": "UK", "in": 0.2 + i * 0.4, "enter": "grow", "dashed": False} for i, c in enumerate([[5.74, 52.0], [5.76, 51.99], [5.73, 51.995]])],
         ML("HEATHLAND DROP ZONES", [5.74, 52.02], style="tag", at=1.0),
@@ -199,7 +199,7 @@ def build():
         A("host", 1700, 1010, 1.25, "write", "neutral", holds="paper", keys=K((5.0, {"headMove": "nod"}))),
         L("\"MY SET REACHES ~5 KM.\nTHE BRIDGE IS 13 AWAY.\"", 1100, 130, "plain", 44, at=0.6),
     ], beat="AIDE: my set reaches about 5 km, the bridge is 13 away. HOST: noted")
-    MAP(620.43, [5.82, 51.985], 0.3, [
+    MAP(620.43, [5.83, 51.985], 0.5, [
         *rivers("rhine"), *towns("Arnhem", "Oosterbeek", at=0.0),
         {"kind": "ring", "at": [5.75, 51.995], "km": 5, "color": "#2f7a3a", "in": 0.6, "enter": "grow", "dashed": False},
         ML("TYPE 22 SET: ~5 KM", [5.75, 52.04], style="green", at=1.2),
@@ -267,7 +267,7 @@ def build():
         A("model", 1450, 900, 1.5, "cross", "neutral"),
         DOC("order", "INTELLIGENCE — DAILY", ["9–14 SEPT: BRITISH OFFENSIVE COMING", "→ NIJMEGEN · ARNHEM · WESEL", "PRIZE: THE RUHR"], x=1000, y=330, w=900, h=380, at=2.4, size=36, speed=26),
     ], beat="Model's intelligence officer warned every day of a British offensive")
-    MAP(724.71, [6.0, 51.8], 2.4, [
+    MAP(724.71, [6.1, 51.8], 3.2, [
         *rivers("waal", "rhine"), *towns("Nijmegen", "Arnhem", "Wesel", at=0.0),
         {"kind": "arrow", "path": [[5.4, 51.2], [5.8, 51.7], [6.5, 51.6], [7.1, 51.45]], "color": "UK", "dashed": True, "in": 0.2, "dur": 1.6},
         {"kind": "shape", "shape": "check", "x": 700, "y": 300, "in": 1.8, "scale": 0.8, "hud": True},
@@ -282,7 +282,7 @@ def build():
         L("A SEABORNE INVASION OF NORTHERN HOLLAND?", 960, 120, "tag", 40, at=7.0),
     ], beat="Model became convinced a seaborne invasion of northern Holland was coming")
     scene(745.3, {"kind": "sky", "below": "sea"}, [
-        *[V("dakota", -400 - i * 350, 300 + (i % 3) * 140, 0.4, US, keys=K((4.4, {"x": 2300 - i * 350}))) for i in range(6)],
+        *[V("dakota", -400 - i * 350, 300 + (i % 3) * 140, 0.4, US, keys=K((4.4, {"x": 2300 - i * 350, "ease": "linear"}))) for i in range(6)],
     ], date="17 SEPTEMBER 1944", sfx=[{"t": 0, "id": "plane_engine", "dur": 4.4}], beat="even as the transport planes were in the air on the 17th")
     scene(749.7, {"kind": "warroom"}, [
         A("german_officer", 960, 900, 1.6, "pointUp", "neutral", talk=True),
@@ -310,7 +310,7 @@ def build():
         L("THE BETRAYAL DOESN'T FIT THE TIMETABLE", 960, 200, "red", 40, at=4.0),
     ], beat="AIDE: a traitor? HOST: the traitor might be real; the betrayal doesn't fit the timetable")
     scene(783.51, {"kind": "cell"}, [
-        A("lindemans", 960, 900, 1.6, "idle", "sad", seated=True),
+        A("lindemans", 960, 900, 1.6, "behind", "sad"),
         L("ARRESTED OCTOBER 1944 · DIED IN HIS CELL 1946", 960, 120, "tag", 40, at=0.6),
         L("A FRENCH HISTORIAN:", 1400, 380, "plain", 38, at=6.2),
         ST("DOUBLE AGENT", 1400, 480, 7.6, size=70),
@@ -354,7 +354,7 @@ def build():
         DOC("telegram", "DUTCH RESISTANCE → LONDON", ["BATTERED PANZER FORMATIONS", "SENT INTO HOLLAND TO REFIT"], x=1350, y=380, w=780, h=380, at=1.6, size=36, speed=24),
         L("10 SEPTEMBER — THE DAY THE PLAN WAS APPROVED", 960, 110, "tag", 38, at=0.4),
     ], sfx=[{"t": 0.2, "id": "morse", "dur": 4}], beat="by the 10th British intelligence passed on Dutch resistance reports of panzers refitting")
-    MAP(856.04, [5.9, 51.9], 0.9, [
+    MAP(856.04, [5.98, 51.9], 1.4, [
         *rivers("waal", "rhine"), *towns("Arnhem", "Nijmegen", "Kleve", at=0.0),
         {"kind": "unit", "type": "armor", "nation": "GER", "label": "9TH SS PZ", "at": [5.95, 52.07], "in": 1.4},
         {"kind": "unit", "type": "armor", "nation": "GER", "label": "10TH SS PZ?", "at": [6.14, 51.84], "in": 4.4},
@@ -396,8 +396,8 @@ def build():
         L("DUTCH RESISTANCE: ARMOUR AROUND ARNHEM", 1300, 260, "tag", 38, at=3.4),
         L("REQUEST: RECONNAISSANCE FLIGHTS", 1300, 380, "green", 38, at=10.2),
     ], beat="Major Brian Urquhart kept hearing of German armour; asked for recon flights")
-    scene(943.91, {"kind": "sky", "below": "land"}, [
-        V("fighter", -300, 420, 0.9, UK, keys=K((6.0, {"x": 2300}))),
+    scene(943.91, {"kind": "polder"}, [
+        V("fighter", -300, 420, 0.9, UK, keys=K((6.0, {"x": 2300, "ease": "linear"}))),
         FX("flash", 900, 520, **{"in": 3.0}),
         L("PHOTO-RECONNAISSANCE SPITFIRE", 960, 120, "tag", 42, at=0.6),
     ], date="12 SEPTEMBER 1944", sfx=[{"t": 0.4, "id": "plane_flyby"}], beat="12 Sept a photo-recon Spitfire came back with pictures of tanks")

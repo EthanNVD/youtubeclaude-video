@@ -68,7 +68,7 @@ Ambience defaults from the set; SFX are placed automatically for stamps, explosi
 
 ## 6. Render — `python tools/make.py projects/<slug> video` then `mux`
 
-Full render ≈ 1–2× real time on this PC (check the first progress lines; partial: `--from 120 --to 180`). Result: `out/<slug>.mp4`. Spot-check the encoded file (a few frames + listen to a minute around a busy sequence) before calling it done.
+Never run two render commands at the same time (stills, thumbs, prompts' reference sheet and video each start a headless Chrome; in parallel they time out). Full render ≈ 1–2× real time on this PC (check the first progress lines; partial: `--from 120 --to 180`). Result: `out/<slug>.mp4`. Spot-check the encoded file (a few frames + listen to a minute around a busy sequence) before calling it done.
 
 ## 7. YouTube package — [thumbnails.md](references/thumbnails.md) + [metadata.md](references/metadata.md)
 

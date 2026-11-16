@@ -1,0 +1,365 @@
+{
+ "thumbs": [
+  {
+   "panels": [
+    {
+     "id": "a",
+     "start": 0,
+     "end": 5,
+     "type": "map",
+     "at": 3,
+     "map": {
+      "era": "1938",
+      "center": [
+       5.75,
+       51.85
+      ],
+      "span": 3.4,
+      "style": "poster",
+      "colors": {
+       "Germany": "#e8574a",
+       "Netherlands": "#f2cf5b",
+       "Belgium": "#f2cf5b"
+      }
+     },
+     "elements": [
+      {
+       "kind": "line",
+       "path": [
+        [
+         5.2,
+         51.84
+        ],
+        [
+         5.5,
+         51.855
+        ],
+        [
+         5.86,
+         51.85
+        ],
+        [
+         6.1,
+         51.85
+        ]
+       ],
+       "color": "#2f7fc1",
+       "width": 14,
+       "enter": "none"
+      },
+      {
+       "kind": "line",
+       "path": [
+        [
+         5.3,
+         51.965
+        ],
+        [
+         5.6,
+         51.975
+        ],
+        [
+         5.9,
+         51.976
+        ],
+        [
+         6.1,
+         51.9
+        ]
+       ],
+       "color": "#2f7fc1",
+       "width": 14,
+       "enter": "none"
+      },
+      {
+       "kind": "ring",
+       "at": [
+        5.91,
+        51.98
+       ],
+       "r": 120,
+       "color": "red",
+       "width": 16,
+       "dashed": false
+      },
+      {
+       "kind": "label",
+       "text": "ARNHEM",
+       "style": "tag",
+       "at": [
+        5.91,
+        51.98
+       ],
+       "dy": -200,
+       "size": 56
+      }
+     ]
+    }
+   ],
+   "overlay": [
+    {
+     "kind": "actor",
+     "who": "bedell_smith",
+     "x": 330,
+     "y": 1330,
+     "scale": 3.3,
+     "pose": "show",
+     "holds": "telegram",
+     "holdsText": "SS PANZER",
+     "holdsScale": 0.7,
+     "expr": "worried"
+    },
+    {
+     "kind": "drop",
+     "x": 560,
+     "y": 330,
+     "size": 1.2
+    },
+    {
+     "kind": "actor",
+     "who": "montgomery",
+     "x": 1600,
+     "y": 1340,
+     "scale": 3.3,
+     "pose": "stop",
+     "expr": "smug",
+     "flip": true
+    },
+    {
+     "kind": "glow",
+     "x": 960,
+     "y": 560,
+     "r": 360,
+     "color": "#fff1c0",
+     "strength": 0.35
+    }
+   ],
+   "texts": [
+    {
+     "text": "THEY WERE WARNED.",
+     "accent": "WARNED.",
+     "x": 960,
+     "y": 200,
+     "size": 180,
+     "maxWidth": 1700
+    }
+   ]
+  },
+  {
+   "panels": [
+    {
+     "id": "a",
+     "start": 0,
+     "end": 5,
+     "type": "stage",
+     "at": 2.5,
+     "set": {
+      "kind": "polder",
+      "time": "night",
+      "dyke": 600
+     },
+     "elements": [
+      {
+       "kind": "vehicle",
+       "type": "tank",
+       "nation": "UK",
+       "x": 200,
+       "y": 578,
+       "scale": 0.4
+      },
+      {
+       "kind": "vehicle",
+       "type": "tank",
+       "nation": "UK",
+       "x": 390,
+       "y": 578,
+       "scale": 0.4
+      },
+      {
+       "kind": "vehicle",
+       "type": "tank",
+       "nation": "UK",
+       "x": 580,
+       "y": 578,
+       "scale": 0.4
+      },
+      {
+       "kind": "vehicle",
+       "type": "tank",
+       "nation": "UK",
+       "x": 770,
+       "y": 578,
+       "scale": 0.4
+      },
+      {
+       "kind": "fx",
+       "type": "fire",
+       "x": 1500,
+       "y": 560,
+       "size": 1.2
+      },
+      {
+       "kind": "fx",
+       "type": "smoke",
+       "x": 1500,
+       "y": 480,
+       "size": 1.4
+      },
+      {
+       "kind": "label",
+       "text": "ARNHEM",
+       "style": "tag",
+       "x": 1500,
+       "y": 400,
+       "size": 44
+      },
+      {
+       "kind": "arrow",
+       "screen": true,
+       "path": [
+        [
+         980,
+         560
+        ],
+        [
+         1250,
+         560
+        ],
+        [
+         1420,
+         560
+        ]
+       ],
+       "color": "red",
+       "dashed": true,
+       "progress": 1,
+       "width": 20
+      }
+     ]
+    }
+   ],
+   "overlay": [
+    {
+     "kind": "glow",
+     "x": 1550,
+     "y": 560,
+     "r": 560,
+     "color": "#ffb060",
+     "strength": 0.35
+    },
+    {
+     "kind": "actor",
+     "who": "guards_tanker",
+     "x": 1550,
+     "y": 1340,
+     "scale": 3.4,
+     "pose": "binoculars",
+     "expr": "worried"
+    },
+    {
+     "kind": "drop",
+     "x": 1290,
+     "y": 330,
+     "size": 1.2
+    }
+   ],
+   "texts": [
+    {
+     "text": "11 KM SHORT",
+     "accent": "11 KM",
+     "x": 620,
+     "y": 260,
+     "size": 230,
+     "rotate": -2
+    }
+   ]
+  },
+  {
+   "split": "diagonal",
+   "panels": [
+    {
+     "id": "a",
+     "start": 0,
+     "end": 5,
+     "type": "stage",
+     "at": 4.0,
+     "date": "17 SEPT · 13:00",
+     "set": {
+      "kind": "heath"
+     },
+     "elements": [
+      {
+       "kind": "paras",
+       "x": 960,
+       "y": 300,
+       "count": 18,
+       "spread": 1500,
+       "fall": 300,
+       "pdur": 6,
+       "in": -3
+      },
+      {
+       "kind": "actor",
+       "who": "british_para",
+       "x": 960,
+       "y": 1330,
+       "scale": 3.2,
+       "pose": "cheer",
+       "expr": "happy"
+      }
+     ]
+    },
+    {
+     "id": "b",
+     "start": 0,
+     "end": 5,
+     "type": "stage",
+     "at": 2.5,
+     "date": "25 SEPT · NIGHT",
+     "set": {
+      "kind": "river",
+      "time": "night",
+      "bridges": false,
+      "weather": "rain"
+     },
+     "elements": [
+      {
+       "kind": "vehicle",
+       "type": "assaultboat",
+       "x": 700,
+       "y": 640,
+       "scale": 0.6
+      },
+      {
+       "kind": "fx",
+       "type": "fire",
+       "x": 1500,
+       "y": 470,
+       "size": 0.8
+      },
+      {
+       "kind": "actor",
+       "who": "british_para",
+       "x": 1000,
+       "y": 1330,
+       "scale": 3.2,
+       "pose": "idle",
+       "expr": "sad"
+      }
+     ]
+    }
+   ],
+   "texts": [
+    {
+     "text": "DAY 2? NEVER.",
+     "accent": "NEVER.",
+     "accentColor": "red",
+     "x": 960,
+     "y": 1010,
+     "size": 220,
+     "rotate": -2
+    }
+   ]
+  }
+ ]
+}

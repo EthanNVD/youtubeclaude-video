@@ -68,7 +68,7 @@ def build():
         A("host", 980, 900, 1.65, "chin", "smug", headMove="tilt"),
         NC("The Dispatcher", "your guide on this road", at=0.2),
     ], beat="HOST: that's an old man remembering")
-    MAP(57.8, [5.88, 51.92], 0.42, [
+    MAP(57.8, [5.88, 51.91], 0.8, [
         *rivers("waal", "rhine"), *towns("Nijmegen", "Lent", "Elst", "Arnhem", at=0.1),
         {"kind": "unit", "type": "inf", "nation": "GER", "at": [5.86, 51.895], "in": 2.8, "size": 0.7},
         {"kind": "unit", "type": "inf", "nation": "GER", "at": [5.885, 51.94], "in": 3.2, "size": 0.7},
@@ -105,7 +105,7 @@ def build():
         ST("FINISHED", 960, 300, 0.2, size=120),
         {"kind": "shape", "shape": "cross", "x": 960, "y": 300, "in": 2.6, "scale": 2.4},
     ], beat="a German army that was supposed to be finished and somehow wasn't")
-    scene(90.72, {"kind": "podium"}, [
+    scene(90.72, {"kind": "podium", "flag": "UK"}, [
         A("montgomery", 960, 900, 1.6, "show", "smug", holds="sign", holdsText="90%", holdsScale=0.9, talk=True),
         CNT(0, 90, 1550, 320, 1.4, suffix="% SUCCESSFUL", size=90, dur=2.2),
     ], beat="Montgomery called the operation 90% successful")
@@ -130,7 +130,7 @@ def build():
         A("host", 1700, 1010, 1.25, "idle", "neutral", keys=K((3.2, {"pose": "explain", "expr": "smug", "talk": True}))),
         NC("The Aide", "signaller, 1st Airborne", at=0.4, out=3.0),
     ], beat="AIDE: Sir, it's one road. How many ways can you get lost? HOST: on this road?")
-    ROAD(111.82, -0.08, 0.10, move=(0.2, 5.2), extra=[
+    ROAD(111.82, -0.08, 0.10, move=(0.2, 5.2), show_unknown=True, extra=[
         HEAD("5 BRIDGES · 2 ARMIES · 1 ROAD", 960, 170, 80, at=2.0, accent="1 ROAD"),
     ], beat="let's count: every turn-off gets assigned; five bridges, two armies, one road")
     scene(117.1, STUDY, [
@@ -189,7 +189,7 @@ def build():
         {"kind": "bars", "title": "GERMAN DIVISIONS IN THE WEST", "x": 1150, "y": 380, "max": 50, "width": 900,
          "items": [{"label": "ON PAPER", "nation": "GERI", "value": 48, "in": 0.6}, {"label": "WORTH ~20 INF + 4 ARMD", "nation": "GERI", "value": 24, "in": 4.0}]},
     ], beat="SHAEF counted 48 divisions worth about 20 infantry and 4 armoured")
-    MAP(200.96, [5.4, 52.1], 3.8, [
+    MAP(200.96, [5.4, 52.1], 5.0, [
         L("NETHERLANDS", 960, 520, "map", 50, at=0.2, hud=True),
         CNT(0, 100, 960, 300, 1.0, suffix=" TANKS", prefix="50–", size=110, dur=1.6, hud=True),
         L("BRITISH AIRBORNE STAFF ESTIMATE", 960, 140, "tag", 42, at=0.4, hud=True),
@@ -198,11 +198,11 @@ def build():
         DOC("book", "1ST AIRBORNE DIVISION — AFTER-ACTION REPORT", ["WE ASSUMED:", "AN ENEMY STILL DISORGANIZED", "AFTER A LONG, HASTY RETREAT,", "SCATTERED IN SMALL GROUPS,", "NOT CAPABLE OF MUCH", "ORGANIZED RESISTANCE."], x=960, y=540, w=1300, h=760, at=0.3, size=48, speed=20),
     ], beat="the British airborne division admitted what it had assumed")
     scene(222.12, STUDY, [
-        A("host", 960, 900, 1.7, "show", "worried", holds="oil", talk=True),
+        A("host", 960, 900, 1.7, "show", "worried", holds="barrel", holdsScale=0.5, talk=True),
         ST("FUEL", 1450, 360, 2.6, size=120),
     ], beat="one problem, the oldest one in war: fuel")
     scene(227.95, {"kind": "beach"}, [
-        *[PROP("barrel", 200 + (i % 6) * 110, 860 - (i // 6) * 90, 0.9) for i in range(18)],
+        *[PROP("barrel", 200 + (i % 6) * 100, 880 - (i // 6) * 70, 0.45) for i in range(18)],
         V("truck", 1200, 900, 0.75, US, moving=True, keys=K((7.2, {"x": 1900}))),
         L("NORMANDY", 400, 140, "map", 48, at=0.2),
         L("HUNDREDS OF KM FROM THE FRONT", 1250, 300, "tag", 44, at=2.0),
@@ -265,7 +265,7 @@ def build():
     scene(306.15, {"kind": "tent"}, [
         A("eisenhower", 600, 900, 1.5, "talk2", "neutral", talk=True),
         A("montgomery", 1350, 900, 1.5, "cross", "angry", keys=K((4.0, {"pose": "point", "talk": True}))),
-        PROP("oil", 960, 820, 0.9),
+        PROP("barrel", 960, 830, 0.5),
         L("THE LAST OF THE PETROL", 960, 110, "tag", 44, at=0.5),
     ], beat="the Allied argument: where to spend the last of the petrol")
     MAP(314.71, [5.6, 51.0], 6.5, [

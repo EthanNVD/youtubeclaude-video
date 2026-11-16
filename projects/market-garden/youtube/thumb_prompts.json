@@ -1,0 +1,147 @@
+{
+  "thumbs": [
+    {
+      "angle": "avoidable — the warnings",
+      "title": "Why Operation Market Garden Was COMPLETELY Avoidable",
+      "layout": "versus",
+      "background": "a saturated poster-style map of the Netherlands in 1944 (orange-yellow land, bright blue rivers, red Germany on the right), with the burning steel arch bridge of Arnhem drawn small in the centre under black smoke",
+      "middle": "a crumpled intelligence telegram floating in the centre with a red 'SS PANZER' stamp, and two grey German tank silhouettes hidden in trees near the bridge, circled by a thick glowing red ring",
+      "characters": [
+        {
+          "who": "bedell_smith",
+          "name": "General Walter Bedell Smith",
+          "position": "far left, large bust cropped by the left and bottom edges, facing right",
+          "expr": "worried",
+          "pose": "show",
+          "prop": "a telegram with a red 'WARNING' stamp",
+          "extra": "Two big blue sweat drops on his bald head."
+        },
+        {
+          "who": "montgomery",
+          "name": "Field Marshal Bernard Montgomery",
+          "look": "thin elderly British field marshal with a black beret with two badges, sharp nose, small pencil moustache, khaki battledress",
+          "position": "far right, large bust cropped by the right and bottom edges, facing left",
+          "expr": "smug",
+          "pose": "stop",
+          "extra": "Waving the warning away with a dismissive hand, chin up."
+        }
+      ],
+      "labels": [
+        {
+          "text": "ARNHEM",
+          "where": "under the burning bridge"
+        }
+      ],
+      "text": {
+        "position": "top",
+        "font": "condensed",
+        "lines": [
+          {
+            "text": "THEY WERE WARNED.",
+            "accent": [
+              "WARNED."
+            ],
+            "accentColor": "yellow"
+          }
+        ]
+      },
+      "light": "warm orange glow from the burning bridge in the centre, rim light on both characters",
+      "palette": "orange fire and red Germany against blue rivers, khaki uniforms, one yellow accent in the headline"
+    },
+    {
+      "angle": "the four tanks at Lent",
+      "title": "Did Four Tanks REALLY Lose the Bridge at Arnhem?",
+      "layout": "hero",
+      "heroSide": "right",
+      "background": "night over flat Dutch polder: a raised dyke road runs to the horizon, four British Sherman tanks stopped in a row on it, and far away on the horizon the steel arch bridge of Arnhem burns orange under black smoke",
+      "characters": [
+        {
+          "who": "guards_tanker",
+          "name": "a young British Guards tank commander",
+          "look": "young British tank commander in a black beret and khaki battledress, headset around the neck, standing in the turret hatch",
+          "position": "right 40% of the frame, big bust, head top about 15% from the top, turned toward the burning bridge on the left",
+          "expr": "worried",
+          "pose": "binoculars",
+          "extra": "One big blue sweat drop; a red question mark above his head."
+        }
+      ],
+      "symbols": [
+        "a thick red dashed arrow along the dyke road from the tanks to the burning bridge, ending in a big question mark"
+      ],
+      "labels": [
+        {
+          "text": "LENT",
+          "style": "a white village name board with a red border",
+          "where": "beside the stopped tanks"
+        }
+      ],
+      "text": {
+        "position": "top-left",
+        "font": "condensed",
+        "lines": [
+          {
+            "text": "11 KM SHORT",
+            "accent": [
+              "11",
+              "KM"
+            ],
+            "accentColor": "yellow"
+          }
+        ]
+      },
+      "light": "dark blue night, strong orange firelight on the horizon and on the commander's face",
+      "palette": "deep night blue against fire orange, olive tanks, one yellow accent"
+    },
+    {
+      "angle": "the timetable",
+      "title": "Arnhem in 2 Days? How Market Garden REALLY Fell Apart",
+      "layout": "split_diagonal",
+      "panels": [
+        {
+          "scene": "bright sunny sky over heathland full of round white parachutes and landing gliders, perfect weather",
+          "tag": "17 SEPT · 13:00",
+          "characters": [
+            {
+              "who": "british_para",
+              "name": "a British paratrooper",
+              "look": "young British paratrooper in a maroon beret and camouflage smock",
+              "position": "bottom centre of the panel, large bust",
+              "expr": "happy",
+              "pose": "cheer"
+            }
+          ]
+        },
+        {
+          "scene": "night, heavy rain over the dark river Rhine, small boats ferrying exhausted soldiers back across, a burning town behind",
+          "tag": "25 SEPT · NIGHT",
+          "characters": [
+            {
+              "who": "british_para",
+              "name": "the same British paratrooper",
+              "look": "the same young paratrooper, maroon beret soaked, mud on his face",
+              "position": "bottom centre of the panel, large bust",
+              "expr": "sad",
+              "pose": "idle",
+              "extra": "Rain streaming down; a single tear."
+            }
+          ]
+        }
+      ],
+      "text": {
+        "position": "bottom",
+        "font": "condensed",
+        "lines": [
+          {
+            "text": "DAY 2? NEVER.",
+            "accent": [
+              "NEVER."
+            ],
+            "accentColor": "red"
+          }
+        ]
+      },
+      "light": "left panel bright midday sun, right panel cold blue rain lit by orange fire",
+      "palette": "sky blue and white parachutes vs dark blue rain and orange fire, white divider"
+    }
+  ]
+}

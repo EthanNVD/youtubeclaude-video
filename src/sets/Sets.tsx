@@ -397,8 +397,11 @@ const BaseSet: React.FC<SetProps> = (p) => {
           <Wall color={wall ?? '#3a3330'} y={groundY - 80} />
           {[260, 960, 1660].map((x, i) => (
             <g key={i}>
-              <rect x={x - 90} y={-100} width={180} height={720} fill={nat.flag[nat.flag.length > 1 ? 1 : 0] === '#ffffff' ? nat.flag[0] : nat.map} stroke={INK} strokeWidth={4} />
-              <circle cx={x} cy={200} r={60} fill="#fff" opacity={0.9} />
+              {/* plain banners: the nation's own flag on top of a dark-blue drape with gold trim (no disc emblems) */}
+              <rect x={x - 90} y={-100} width={180} height={720} fill="#2f3f5f" stroke={INK} strokeWidth={4} />
+              <path d={`M${x - 78} -100 V608 M${x + 78} -100 V608`} stroke="#c9a24a" strokeWidth={6} />
+              {flagN ? <g transform={`translate(${x - 80} 120)`}><Flag nation={flagN} w={160} h={106} t={t} still /></g> : null}
+              <path d={`M${x - 90} 620 L${x} 680 L${x + 90} 620 Z`} fill="#2f3f5f" stroke={INK} strokeWidth={4} />
             </g>
           ))}
           <Floor y={groundY - 80} color="#4a3a32" />

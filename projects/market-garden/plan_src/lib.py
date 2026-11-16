@@ -124,7 +124,7 @@ def rivers(*names, at=0.0):
     return [{"kind": "line", "path": RIVERS[n], "color": "#5b8fb0", "width": 10, "in": at, "enter": "none"} for n in names]
 
 
-def towns(*names, at=0.2, side="right", size=1.0):
+def towns(*names, at=0.2, side="right", size=36):
     return [{"kind": "city", "name": n, "at": TOWNS[n], "side": side, "in": at, "size": size} for n in names]
 
 
@@ -154,11 +154,13 @@ def p_for(exit_id):
     return EXITS[exit_id]["at"] - 440 / ROAD_LEN
 
 
-def ROAD(start, p0, p1, move=(0.3, 4.0), y=600, extra=(), vehicles=1, set_=None, **kw):
+def ROAD(start, p0, p1, move=(0.3, 4.0), y=600, extra=(), vehicles=1, set_=None, show_unknown=False, **kw):
     exits = []
     for k, e in EXITS.items():
         d = {"at": e["at"], "side": e["side"]}
         if start + 8 < e["reveal"]:
+            if not show_unknown:
+                continue
             d["label"] = "? ? ?"
         else:
             d["label"] = e["label"]

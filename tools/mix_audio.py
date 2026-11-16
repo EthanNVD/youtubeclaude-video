@@ -73,14 +73,19 @@ def read_any(path):
     return np.frombuffer(r.stdout, dtype=np.float32).copy()
 
 
-def write(path, x):
+CHUNK = SR * 30
+
+
+def write(path, x, scale=1.0):
+    """write a mono (or stereo) float array as 16-bit stereo WAV in 30 s chunks (long films stay within RAM)"""
     path.parent.mkdir(parents=True, exist_ok=True)
-    x = np.clip(x, -1, 1)
-    if x.ndim == 1:
-        x = np.stack([x, x], 1)
     with wave.open(str(path), "wb") as w:
         w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR)
-        w.writeframes((x * 32767).astype(np.int16).tobytes())
+        for a in range(0, len(x), CHUNK):
+            c = np.clip(x[a:a + CHUNK] * scale, -1, 1)
+            if c.ndim == 1:
+                c = np.repeat(c[:, None], 2, axis=1)
+            w.writeframes((c * 32767).astype(np.int16).tobytes())
 
 
 def _actor_cues(scene, el, tin):
@@ -168,9 +173,16 @@ def main(proj, plan_path=None):
         place = int(off * SR)
         voice[place:place + len(v)] = v[: N - place]
     # voice envelope for ducking (smoothed RMS)
-    env = np.sqrt(signal.sosfiltfilt(signal.butter(2, 3 / (SR / 2), output="sos"), voice.astype(np.float64) ** 2).clip(0))
-    speaking = (env > 0.01).astype(np.float32)
-    speaking = signal.sosfiltfilt(signal.butter(1, 1.5 / (SR / 2), output="sos"), speaking).clip(0, 1).astype(np.float32)
+    BLK = SR // 100  # 10 ms blocks
+    nb = N // BLK
+    pw = (voice[: nb * BLK].reshape(nb, BLK).astype(np.float64) ** 2).mean(1)
+    env_b = np.sqrt(signal.sosfiltfilt(signal.butter(2, 3 / 50, output="sos"), pw).clip(0))
+    spk_b = signal.sosfiltfilt(signal.butter(1, 1.5 / 50, output="sos"), (env_b > 0.01).astype(np.float64)).clip(0, 1).astype(np.float32)
+
+    def speaking_at(a, b):
+        """speech-presence envelope (0..1) for samples a..b, expanded from the 10 ms blocks"""
+        ia = np.minimum(np.arange(a, b) // BLK, nb - 1)
+        return spk_b[ia]
 
     amb = np.zeros(N, dtype=np.float32)
     sfx = np.zeros(N, dtype=np.float32)
@@ -212,7 +224,9 @@ def main(proj, plan_path=None):
         w[:f] = np.linspace(0, 1, f)
         w[-f:] = np.linspace(1, 0, f)
         amb[a:b] += seg * w
-    amb *= 1 - 0.45 * speaking  # duck beds ~5 dB under narration
+    for a0 in range(0, N, CHUNK):  # duck beds ~5 dB under narration
+        b0 = min(N, a0 + CHUNK)
+        amb[a0:b0] *= 1 - 0.45 * speaking_at(a0, b0)
 
     # ---- SFX cues ----
     for s in scenes:
@@ -246,16 +260,23 @@ def main(proj, plan_path=None):
     out = proj / "out" / "audio"
     vg = voice
     # normalise voice to a consistent speech level before mixing (~ -16 LUFS approx via RMS of voiced parts)
-    voiced = vg[speaking > 0.5]
-    if len(voiced):
-        rms = np.sqrt(np.mean(voiced ** 2))
-        vg = vg * (0.1 / max(rms, 1e-5))
-    mix = vg + amb + sfx * 0.9
+    mask = spk_b > 0.5
+    if mask.any():
+        rms = float(np.sqrt(np.mean(env_b[mask] ** 2)))
+        vg *= np.float32(0.1 / max(rms, 1e-5))
     write(out / "stems" / "voice.wav", vg)
     write(out / "stems" / "ambience.wav", amb)
     write(out / "stems" / "sfx.wav", sfx)
+    sfx *= np.float32(0.9)
+    peak = 0.0
+    for a0 in range(0, N, CHUNK):
+        peak = max(peak, float(np.max(np.abs(vg[a0:a0 + CHUNK] + amb[a0:a0 + CHUNK] + sfx[a0:a0 + CHUNK]))))
+    vg += amb
+    del amb
+    vg += sfx
+    del sfx
     raw = out / "mix_raw.wav"
-    write(raw, mix / max(1.0, np.max(np.abs(mix)) * 1.05))
+    write(raw, vg, scale=1 / max(1.0, peak * 1.05))
     final = out / "mix.wav"
     # gain + true-peak limiter, iterated until integrated loudness is -14 LUFS (+-0.3), peaks <= -1.5 dBTP
     gain = 0.0
