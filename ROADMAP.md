@@ -40,9 +40,9 @@ Goal: a frame from our video can sit next to a frame from the reference channel 
 **Vehicles & motion**
 - [x] B1 Vehicles move with a physical speed profile: accelerate, cruise, brake. Wheels and tracks turn by distance travelled, not by time. Body bob, exhaust and dust.
 - [x] B2 Validator flags vehicles that move faster than their type allows
-- [~] B3 Redrawn armour with volume: Sherman, Panzer IV, Tiger, Panther, T-34, StuG, half-track. Track links, sprocket, hubcaps, top-light shading, mud. (tanks/StuG done in `src/props/Tanks.tsx`; half-track still flat)
-- [ ] B4 Redrawn soft-skins (Opel Blitz, GMC, Jeep, horse cart), aircraft and ships with the same finish
-- [ ] B5 Two-handed rifle hold ("port arms"), aiming, marching with rifle on shoulder
+- [x] B3 Redrawn armour with volume: Sherman, Panzer IV, Tiger, Panther, T-34, StuG, half-track. Track links, sprocket, hubcaps, top-light shading, mud. (tanks/StuG done in `src/props/Tanks.tsx`; half-track still flat)
+- [x] B4 Redrawn soft-skins (Opel Blitz, GMC, Jeep, horse cart), aircraft and ships with the same finish
+- [x] B5 Two-handed rifle hold ("port arms"), aiming, marching with rifle on shoulder
 
 **Devices**
 - [x] C1 Road device rebuilt:
@@ -50,15 +50,15 @@ Goal: a frame from our video can sit next to a frame from the reference channel 
   - exits only above the road, spaced so that they never overlap;
   - real slip roads instead of green blobs;
   - town markers at the verge.
-- [ ] C2 Devices as physical objects in a room (gauge tube on a wall, scoreboard, ledger on a desk), as the reference channel does
+- [x] C2 Devices as physical objects in a room (gauge tube on a wall, scoreboard, ledger on a desk), as the reference channel does
 
 **Maps** (reference: paper map with folds, ink coastlines, named rivers, unit blocks, legend, camera following routes)
 - [x] D1 Map finish: paper texture with fold creases, graticule, ripple hatching along coasts, muted palette
 - [x] D2 Physical layer: rivers and lakes from Natural Earth (public domain), river names in italic script
 - [x] D3 Legend box (flags + names) and date tag as standard map furniture
 - [x] D4 Quantity blocks: a grid of small division squares with a "≈160" tag
-- [ ] D5 Illustrated movers on maps: ship, convoy, tank column and horse carts follow a route, and the camera follows them
-- [ ] D6 Front lines that move over time (animate between two polylines), pockets that shrink
+- [x] D5 Illustrated movers on maps: ship, convoy, tank column and horse carts follow a route, and the camera follows them
+- [x] D6 Front lines that move over time (animate between two polylines), pockets that shrink
 
 **Layout**
 - [x] E1 Validator: overlap check for text and HUD (labels, stamps, headlines, counters, badges, name cards, documents). Zero overlaps required.
@@ -66,17 +66,21 @@ Goal: a frame from our video can sit next to a frame from the reference channel 
 - [ ] E3 Engine-side auto-nudge for labels that still collide at render time
 
 ### M3 — Faster, safer production
-- [ ] F1 Scene library: reusable shot templates (office decision, map advance, convoy, river crossing, cockpit…) so a 30-min plan is assembled from proven pieces
+- [x] F1 Scene library: reusable shot templates (office decision, map advance, convoy, river crossing, cockpit…) so a 30-min plan is assembled from proven pieces
 - [ ] F2 Partial re-render: re-render only changed scenes and splice them into the film
 - [ ] F3 Automatic "review pack": start/mid/end frames for every scene plus overlap report in one HTML page
 
 ---
 
 ## Known issues (fix in the engine, then tick)
+- [x] Hands: thumb drawn as a separate ball on top of the hand, hook on the open hand; flat props held with both hands in the middle (fixed 2026-11-16)
+- [ ] Horse and cart still flat
+- [ ] `field` set telegraph poles read as grave crosses at small size
+- [ ] Polder set: drainage ditches read as a blue grid
 - [x] Road device: trees stayed still while the road scrolled, exits overlapped each other and the town boards, slip roads looked like green worms (Market Garden s022–s252)
 - [x] Vehicles: fast move then hard stop (fixed: 'drive' easing by default + VMAX check + `fix_speeds` that keeps the destination and starts the vehicle closer)
-- [~] Map scenes too sparse: rivers, river names, paper finish, legend and unit blocks added; still missing illustrated movers (D5) and moving fronts (D6)
-- [~] Ships, tanks and planes flat next to the reference: tanks redrawn with volume (B3); soft-skins, aircraft and ships still to do (B4)
+- [x] Map scenes too sparse / then too busy (fixed 2026-11-16: clean coloured paper maps, named rivers only, movers): rivers, river names, paper finish, legend and unit blocks added; still missing illustrated movers (D5) and moving fronts (D6)
+- [x] Ships, tanks and planes flat next to the reference (2026-11-16: Machines.tsx): tanks redrawn with volume (B3); soft-skins, aircraft and ships still to do (B4)
 - [x] Rally/podium banners looked like Nazi banners (fixed 2026-11-16: national flags)
 - [x] Mixer ran out of memory on 34-min voice (fixed 2026-11-16: chunked)
 - [ ] `sky` set with `below: land` leaves a black band at the bottom (use `polder`/`field` until fixed)

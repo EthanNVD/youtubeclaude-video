@@ -31,26 +31,29 @@ Every plan and every engine change is judged against them.
 - **Planes in formation** drift slowly in wide shots. A dive or close pass is fast but short (≤ 1.5 s).
 
 ## 5. Maps
-- **Old paper.** Fold creases, a texture, ink coastlines, ripple hatching along coasts, faint graticule (55°…).
-- **Muted political colours:**
-  - Germany: grey;
-  - USSR: terracotta;
-  - Britain: muted blue;
-  - neutral land: beige;
-  - sea: pale teal.
-- **Physical detail.** Main rivers drawn and named in italic script (Dnieper, Don, Volga, Rhine, Waal, Maas).
-- **Map furniture.**
-  - Date tag top-left ("BLACK SEA · 1945").
-  - Legend box bottom-left with flags.
-  - Small pinned paper labels ("• THE ATLANTIC: U-BOATS").
-- **Quantities as objects.**
-  - Clusters of small division blocks with a "≈160" tag.
-  - Tiny ship silhouettes.
-  - Illustrated wagon/tank columns moving along a dashed route.
+- **Clean old paper.**
+  - Tan land with a faint stipple texture, flat slate-blue sea, thin dark borders.
+  - Soft fold creases.
+  - No graticule, no coastal hatching, no clutter.
+- **Colour only the sides that matter.**
+  - Clear but printed-looking fills, for example occupied ochre, liberated sage, Germany grey with diagonal hatching, Soviet terracotta, Britain blue.
+  - Everything else stays plain tan.
+- **Rivers only when the story needs them.**
+  - Name them, e.g. Rhine, Waal, Maas.
+  - On a city-scale map they are water bands of real width, never hairlines.
+- **Labels.**
+  - Town names are small spaced capitals next to a small ink dot.
+  - The one or two key places sit on a white paper tag.
+  - Map titles go on a pinned paper label.
+- **Map furniture.** A legend box bottom-left with flags; a date tag top-left.
+- **Movers.**
+  - Ships, crates, trucks and tank columns are small side-view icons travelling along a dashed route, several in a row.
+  - The camera follows them.
 - **Motion.**
-  - Routes draw behind a moving icon.
-  - Fronts and pockets change over time.
-  - The camera zooms from a close-up to the continent (or back) in one smooth move.
+  - Arrows grow.
+  - Fronts slide to their new line.
+  - Pockets shrink.
+  - The camera pushes in slowly.
 
 ## 6. Text and layout
 - **Very little text on screen.**

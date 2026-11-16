@@ -58,6 +58,10 @@ Coverage is mandatory: scenes are contiguous from 0 to the end of the voice (val
 - Short videos: `projects/<slug>/plan.json`.
 - Long videos (> 5 min): `plan/_meta.json` (`meta`, `cast`) + `plan/ch01.json`, `plan/ch02.json`… each `{ "scenes": [...] }`. Write one chapter, validate, continue.
 - Put `"chapter": "Title"` on the first scene of each chapter (drives YouTube chapters).
+- Start from the shot templates in `tools/shotlib.py` ([shots.md](references/shots.md)) and the `Plan` helper (tiles the timeline, fixes vehicle speeds); then tune every timing to the cue words.
+- Letterbox (`letterbox`) only the dramatised acting moments — about one per chapter, never on maps or devices.
+- Devices are physical objects: put bars/timeline/scale scenes in the `workshop` set, not on blank paper.
+- Maps: colour only the sides that matter, name only the rivers the story needs, key places as `tag` cities, a legend on every multi-side map, and movers (`route` + `icon` + `trail`, `map.follow`) whenever something travels.
 - Use only vocabulary the engine has (sets, props, vehicles, fx, poses, presets — listed in plan-schema.md; the validator reads them from `src/`). If something is truly missing, add it to the engine (see §8) rather than faking it with a label.
 
 `python tools/make.py projects/<slug> validate` → fix every error; read every warning.
