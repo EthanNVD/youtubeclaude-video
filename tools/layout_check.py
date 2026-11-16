@@ -4,6 +4,8 @@ overlaps(scene)  -> list of warnings: on-screen text boxes that collide with eac
                     reserved badge zones (date/place top-left, clock top-right, name card bottom-left)
                     or with an actor's face.
 speeds(scene)    -> list of warnings: vehicles moving faster than their type plausibly can.
+proportions(scene) -> list of warnings: a vehicle much smaller/larger than the people at the same depth
+                    (mirror of src/lib/depth.ts; keep the two tables in sync).
 
 Boxes are estimates from the same formulas the components use (Label, Stamp, Headline, Counter,
 Document, NameCard, DateBadge). Map-anchored items (`at`) are skipped (they need the projection).
@@ -155,7 +157,7 @@ def speeds(scene):
         if el.get("kind") != "vehicle" or not el.get("keys"):
             continue
         vmax = VMAX.get(el.get("type", "tank"), 600)
-        s = max(0.05, _scale(el))
+        s = max(0.05, effective_scale(scene, el))
         t0, x0 = 0.0, el.get("x")
         if x0 is None:
             continue
@@ -181,7 +183,7 @@ def fix_speeds(plan, margin=0.85):
             if el.get("kind") != "vehicle" or not el.get("keys") or el.get("x") is None:
                 continue
             vmax = VMAX.get(el.get("type", "tank"), 600) * margin
-            s = max(0.05, _scale(el))
+            s = max(0.05, effective_scale(sc, el))
             t0, x0 = 0.0, el["x"]
             first = True
             for k in sorted(el["keys"], key=lambda k: k.get("t", 0)):
@@ -200,3 +202,102 @@ def fix_speeds(plan, margin=0.85):
                 t0, x0 = k["t"], k["x"]
                 first = False
     return n
+
+
+# ------------------------------------------------------------------ depth / proportions (mirror of src/lib/depth.ts)
+PERSON_H = 300
+VEH = {  # type: (native height, native length, match by, target size in person heights)
+    "sherman": (203, 481, "h", 1.15), "tank": (193, 501, "h", 1.12), "tank_flat": (193, 501, "h", 1.12), "tiger": (213, 585, "h", 1.22),
+    "panther": (197, 585, "h", 1.18), "panzer4": (187, 525, "h", 1.08), "t34": (185, 511, "h", 1.05), "stug": (156, 485, "h", 0.9),
+    "halftrack": (158, 397, "h", 0.98), "truck": (211, 425, "h", 1.32), "jeep": (155, 287, "h", 0.82), "car": (155, 287, "h", 0.85),
+    "artillery": (140, 414, "h", 0.78), "gun": (140, 414, "h", 0.78), "train": (209, 395, "h", 1.8), "locomotive": (209, 395, "h", 1.8),
+    "wagon": (209, 395, "h", 1.7), "traincar": (209, 395, "h", 1.7), "horse": (217, 275, "h", 1.05), "cart": (217, 462, "h", 1.05),
+    "fighter": (120, 320, "L", 3.6), "plane": (120, 320, "L", 3.6), "divebomber": (120, 320, "L", 4.0), "bomber": (175, 509, "L", 7.0),
+    "dakota": (199, 656, "L", 7.0), "transport": (199, 656, "L", 7.0), "glider": (135, 576, "L", 7.0), "boat": (171, 259, "L", 2.4),
+    "assaultboat": (91, 302, "L", 2.6),
+}
+SET_HORIZON = {
+    "field": 600, "countryside": 600, "steppe": 600, "snow": 600, "desert": 600, "mud": 600, "polder": 620, "heath": 600,
+    "airfield": 620, "river": 470, "beach": 520, "sea": 560, "ocean": 560, "harbor": 560, "dock": 560, "railway": 640,
+    "station": 640, "trench": 420, "jungle": 500, "city": 760, "street": 760, "ruins": 760, "archbridge": 560, "garden": 600, "hotel": 640,
+}
+
+
+def horizon(scene):
+    w, st = scene.get("world") or {}, scene.get("set") or {}
+    if w.get("horizon") is not None:
+        return w["horizon"]
+    if isinstance(st.get("horizon"), (int, float)):
+        return st["horizon"]
+    if isinstance(st.get("dyke"), (int, float)):
+        return st["dyke"]
+    return SET_HORIZON.get(st.get("kind", ""), 560)
+
+
+def person_scale_at(scene, y):
+    w = scene.get("world") or {}
+    hz = horizon(scene)
+    return max(0.03, w.get("scale", 1.45) * (y - hz) / max(1, w.get("y", 900) - hz))
+
+
+def vehicle_scale_for(vtype, ps, mult=1.0):
+    v = VEH.get(vtype)
+    if not v:
+        return ps * 0.6 * mult
+    native = v[0] if v[2] == "h" else v[1]
+    return v[3] * PERSON_H * ps / native * mult
+
+
+def effective_scale(scene, el):
+    """the scale the engine will use (explicit, or from the depth model)"""
+    if el.get("scale") is not None:
+        return float(el["scale"])
+    if scene.get("world") and el.get("kind") in ("actor", "vehicle", "crowd") and el.get("at") is None:
+        ps = person_scale_at(scene, el.get("y", 900)) * el.get("depthScale", 1)
+        if el["kind"] == "vehicle":
+            return vehicle_scale_for(el.get("type", "tank"), ps, (scene.get("world") or {}).get("vehicles", 1))
+        return ps
+    return 1.0
+
+
+AIR = {"fighter", "plane", "divebomber", "bomber", "dakota", "transport", "glider"}
+
+
+def proportions(scene, tol=0.42):
+    """Vehicles on the ground next to people: compare each vehicle's size with the size it should have for the people
+    in the shot, carried to the vehicle's depth by the ground-plane perspective. Flying aircraft are skipped."""
+    if scene.get("type") != "stage":
+        return []
+    els = scene.get("elements", [])
+    actors = [e for e in els if e.get("kind") in ("actor", "crowd") and e.get("at") is None and not e.get("seated") and e.get("view") != "back"]
+    if not actors:
+        return []
+    hz = horizon(scene)
+    out = []
+    for j, v in enumerate(els):
+        if v.get("kind") != "vehicle" or v.get("at") is not None or v.get("type") not in VEH:
+            continue
+        vy = v.get("y", 900)
+        if v.get("type") in AIR and vy < hz + 40:
+            continue  # in the sky
+        if vy <= hz + 10:
+            continue
+        # people standing near the vehicle's depth say most about its size
+        near = sorted(actors, key=lambda a: abs(a.get("y", 900) - vy))[:3]
+        exp = []
+        for a in near:
+            ay = a.get("y", 900)
+            if ay <= hz + 10:
+                continue
+            ps = effective_scale(scene, a) * (vy - hz) / (ay - hz)
+            exp.append(vehicle_scale_for(v["type"], ps))
+        if not exp:
+            continue
+        want = sum(exp) / len(exp)
+        have = effective_scale(scene, v)
+        r = have / max(1e-6, want)
+        if r < 1 - tol or r > 1 + tol * 1.6:
+            what = "too small" if r < 1 else "too large"
+            out.append(f"{scene['id']}.e{j}(vehicle {v['type']}): {what} next to the people at that depth (scale {have:.2f}, ~{want:.2f} expected) — "
+                       f"use scene.world + no scale, or scale ≈ {want:.2f}")
+    return out

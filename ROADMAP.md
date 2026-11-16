@@ -60,6 +60,13 @@ Goal: a frame from our video can sit next to a frame from the reference channel 
 - [x] D5 Illustrated movers on maps: ship, convoy, tank column and horse carts follow a route, and the camera follows them
 - [x] D6 Front lines that move over time (animate between two polylines), pockets that shrink
 
+**Proportion & depth**
+- [x] G1 Depth model (`scene.world`): actors/vehicles sized from ground y, vehicle sizes relative to people, far→near draw order (2026-11-16)
+- [x] G2 Validator: vehicle out of proportion with the people at its depth
+- [x] G3 Depth-staged shot templates (crew_with_vehicle, column_depth, vehicle_pass, foreground_walk, airfield_line); parked aircraft with landing gear
+- [ ] G4 Back-port `world` to older plans (Market Garden has 41 out-of-proportion vehicles; only if it is re-rendered)
+- [ ] G5 Vehicles seen at 3/4 or head-on (driving toward the camera); today all vehicles are side views
+
 **Layout**
 - [x] E1 Validator: overlap check for text and HUD (labels, stamps, headlines, counters, badges, name cards, documents). Zero overlaps required.
 - [x] E2 Safe zones: date badge top-left, clock top-right, name card bottom-left; labels are kept out of them

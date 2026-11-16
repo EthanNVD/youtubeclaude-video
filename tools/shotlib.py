@@ -266,3 +266,84 @@ class Plan:
             json.dump(plan, f, indent=1, ensure_ascii=False)
         print(f"{len(self.scenes)} scenes, {n} speed fixes -> {path}")
         return plan
+
+
+# ------------------------------------------------------------------ depth-staged shots (scene.world: sizes follow the ground y)
+# In these shots actors/vehicles carry NO scale: the engine sizes them from their feet/track y with the ground-plane
+# perspective (src/lib/depth.ts), so a tank next to a man is tank-sized, and people near the camera may be as big as a
+# vehicle further back — like the reference channel. Draw order is far → near automatically.
+def _world(scale=0.75, y=880, **kw):
+    w = {"scale": scale, "y": y}
+    w.update(kw)
+    return w
+
+
+def crew_with_vehicle(start, vtype="sherman", nation="UK", who="british_soldier", set_="polder", extra=(), **kw):
+    """Medium-wide: a vehicle parked mid-frame, commander in the hatch, two of the crew standing by the front plate
+    talking, one leaning on the hull. People are a third of the vehicle's length — the proportion the eye expects."""
+    els = [
+        {"kind": "vehicle", "type": vtype, "x": 760, "y": 860, "nation": nation, "crew": True},
+        A(who, 1180, 870, None, "talk", "neutral", talk=True, keys=K((2.4, {"pose": "point"}), (4.2, {"pose": "chin"}))),
+        A(who, 1340, 880, None, "hips", "smile", look=-0.6, keys=K((2.8, {"pose": "cross"}))),
+    ]
+    for e in els:
+        e.pop("scale", None)
+    return _scene(start, {"kind": set_, "drift": 0.05}, els, extra=extra, world=_world(0.78, 870), **kw)
+
+
+def column_depth(start, vtype="sherman", nation="UK", n=3, who="british_soldier", set_="field", dur=7.0, extra=(), **kw):
+    """Three planes of depth: a column of vehicles on the far road (small), a file of infantry marching in the middle
+    ground, and one soldier close to the camera (big, cut by the frame) watching them go. The reference's favourite staging."""
+    els = []
+    for i in range(n):
+        x0 = 380 - i * 330
+        els.append({"kind": "vehicle", "type": vtype, "nation": nation, "x": x0, "y": 700, "keys": K((dur, {"x": x0 + 520})), "moving": True})
+    for i in range(4):
+        x0 = 1500 - i * 150
+        els.append({**A(who, x0, 800, None, "shoulder", "determined", holds="rifle", keys=K((dur, {"x": x0 - 260}))), "dir": -1})
+    els.append(A(who, 1640, 1110, None, "idle", "worried", look=-0.8, keys=K((3.0, {"pose": "chin"}))))
+    for e in els:
+        e.pop("scale", None)
+    return _scene(start, {"kind": set_, "road": False}, els, extra=extra, world=_world(0.62, 880), **kw)
+
+
+def vehicle_pass(start, vtype="tiger", nation="GER", set_="field", dur=6.0, people=True, extra=(), **kw):
+    """Low, close pass: the vehicle crosses the foreground big enough to fill half the frame (camera shakes a little as it
+    passes), infantry far behind for scale. Speed stays believable (validator checks with the effective scale)."""
+    els = [{"kind": "vehicle", "type": vtype, "nation": nation, "x": 260, "y": 1010, "keys": K((dur, {"x": 1350})), "moving": True}]
+    if people:
+        els += [A("german_soldier" if nation == "GER" else "british_soldier", 1250 + i * 140, 690, None, "shoulder", "neutral", holds="rifle") for i in range(3)]
+    for e in els:
+        e.pop("scale", None)
+    cam = [{"t": 0, "x": 960, "y": 560, "zoom": 1.0}, {"t": dur * 0.5, "x": 1000, "y": 560, "zoom": 1.04, "shake": 0.6}, {"t": dur, "x": 1040, "y": 560, "zoom": 1.06, "shake": 0}]
+    return _scene(start, set_, els, extra=extra, world=_world(0.62, 880), camera=cam, **kw)
+
+
+def foreground_walk(start, who="german_soldier", vtype="truck", nation="GER", set_="snow", dur=6.0, extra=(), **kw):
+    """Two soldiers walk past close to the camera (big, waist-up framing) while a truck drives behind them in the middle
+    distance: near people may be as large as a far vehicle — perspective, not a mistake."""
+    els = [
+        {"kind": "vehicle", "type": vtype, "nation": nation, "x": 1500, "y": 760, "flip": True, "keys": K((dur, {"x": 900})), "moving": True},
+        {**A(who, 300, 1090, None, "port", "determined", holds="rifle", keys=K((dur, {"x": 820}))), "dir": 1},
+        {**A(who, 120, 1130, None, "port", "tired", holds="rifle", keys=K((dur, {"x": 640}))), "dir": 1},
+    ]
+    for e in els:
+        e.pop("scale", None)
+    return _scene(start, {"kind": set_, "weather": "snow"} if set_ == "snow" else set_, els, extra=extra, world=_world(0.62, 880), **kw)
+
+
+def airfield_line(start, nation="UK", pilot="raf_pilot", extra=(), **kw):
+    """Pilots walk out past a fighter (wing tip taller than a man), a Dakota parked further back on the field."""
+    els = [
+        {"kind": "vehicle", "type": "dakota", "nation": nation, "x": 1480, "y": 720, "parked": True},
+        {"kind": "vehicle", "type": "fighter", "nation": nation, "x": 640, "y": 890, "parked": True},
+        {**A(pilot, 1180, 900, None, "idle", "determined", keys=K((5.0, {"x": 1420}))), "dir": 1},
+        A(pilot, 1060, 880, None, "point", "smile", talk=True, flip=True),
+    ]
+    for e in els:
+        e.pop("scale", None)
+    return _scene(start, {"kind": "airfield", "nation": nation, "planes": 0}, els, extra=extra, world=_world(0.62, 880), **kw)
+
+
+TEMPLATES.update({"crew_with_vehicle": crew_with_vehicle, "column_depth": column_depth, "vehicle_pass": vehicle_pass,
+                  "foreground_walk": foreground_walk, "airfield_line": airfield_line})

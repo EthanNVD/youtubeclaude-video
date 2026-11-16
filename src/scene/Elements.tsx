@@ -10,8 +10,9 @@ import { Fx } from '../fx/Fx';
 import { Label, Stamp, Bubble, Headline, Counter, Document, NameCard, DateBadge } from '../overlays/Overlays';
 import { ScaleDevice, MeterDevice, BarsDevice, ScoreDevice, RoadDevice, RankingDevice, TimelineDevice, LedgerDevice } from '../devices/Devices';
 import { C, INK, FONT, col, nation, uiColor } from '../theme';
+import { type WorldCtx, personScaleAt, vehicleScaleFor } from '../lib/depth';
 
-export type Ctx = { t: number; dur: number; cast?: Record<string, CastMember>; proj?: GeoProjection; sceneId: string };
+export type Ctx = { t: number; dur: number; cast?: Record<string, CastMember>; proj?: GeoProjection; sceneId: string; world?: WorldCtx };
 
 const P = (ctx: Ctx, at?: LonLat): [number, number] | null => {
   if (!at || !ctx.proj) return null;
@@ -185,7 +186,7 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
   const env = envelope(el, t, dur);
   if (!env.visible) return null;
   // vehicles move with a physical speed profile unless a key says otherwise
-  const keysUsed = el.kind === 'vehicle' && el.keys ? el.keys.map((kk) => (('x' in kk || 'at' in kk) && !kk.ease ? { ...kk, ease: 'drive' as const } : kk)) : el.keys;
+  const keysUsed = el.kind === 'vehicle' && el.keys ? el.keys.map((kk) => (('x' in kk || 'y' in kk || 'at' in kk) && !kk.ease ? { ...kk, ease: 'drive' as const } : kk)) : el.keys;
   const e = resolveKeys(el, keysUsed, t) as ElementBase;
   const a = t - (el.in ?? 0);
   const seed = ctx.sceneId + ':' + (el.id ?? index);
@@ -194,6 +195,11 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
   let x = (e.x as number) ?? 960, y = (e.y as number) ?? 540;
   const pp = P(ctx, e.at as LonLat | undefined);
   if (pp) [x, y] = pp;
+  // depth: in a scene with a `world`, actors / vehicles / crowds without an explicit scale are sized from their ground y
+  if (ctx.world && e.scale === undefined && (el.kind === 'actor' || el.kind === 'vehicle' || el.kind === 'crowd') && !e.at) {
+    const ps = personScaleAt(ctx.world, y) * ((e.depthScale as number) ?? 1);
+    (e as Record<string, unknown>).scale = el.kind === 'vehicle' ? vehicleScaleFor((e.type as string) ?? 'tank', ps, ctx.world.vehicles) : ps;
+  }
   const s = ((e.scale as number) ?? 1) * env.s;
   const rot = (e.rotate as number) ?? 0;
   const flip = e.flip ? -1 : 1;
@@ -291,13 +297,13 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
       let travel: number | undefined;
       if (el.keys?.some((kk) => 'x' in kk || 'at' in kk)) {
         const e2 = resolveKeys(el, keysUsed, t + 0.08) as ElementBase;
-        if (Math.abs(((e2.x as number) ?? 0) - ((e.x as number) ?? 0)) > 0.3) moving = true;
+        if (Math.hypot(((e2.x as number) ?? 0) - ((e.x as number) ?? 0), ((e2.y as number) ?? 0) - ((e.y as number) ?? 0)) > 0.3) moving = true;
         // distance travelled in the vehicle's own drawing units (drives wheel and track animation)
-        travel = Math.abs(((e.x as number) ?? 0) - ((el.x as number) ?? 0)) / Math.max(0.05, (e.scale as number) ?? 1);
+        travel = Math.hypot(((e.x as number) ?? 0) - ((el.x as number) ?? 0), ((e.y as number) ?? 0) - ((el.y as number) ?? 0)) / Math.max(0.05, (e.scale as number) ?? 1);
       } else if (moving) travel = t * 140;
       body = (
         <g>
-          <Vehicle type={(e.type as string) ?? 'tank'} nationKey={e.nation as string} t={t} color={e.color as string} moving={moving} damaged={!!e.damaged} travel={travel} crew={!!e.crew} />
+          <Vehicle type={(e.type as string) ?? 'tank'} nationKey={e.nation as string} t={t} color={e.color as string} moving={moving} damaged={!!e.damaged} travel={travel} crew={!!e.crew} parked={!!e.parked} />
           {e.burning ? <g transform="translate(0 -80)"><Fx kind="fire" a={a} t={t} seed={seed} size={0.8} /><g transform="translate(20 -60)"><Fx kind="smoke" a={a} t={t} seed={seed} size={1} /></g></g> : null}
         </g>
       );

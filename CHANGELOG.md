@@ -2,6 +2,18 @@
 
 Newest first. One entry per change that matters to the look, the pipeline or the docs.
 
+## 2026-11-16 — Proportion and depth
+Why: the user saw people as big as (or bigger than) the tank they stand next to.
+Reference study:
+- people next to vehicles are small (a man by a plane is fuselage-plus-gear high);
+- people close to the camera can outsize a truck behind them.
+Changes:
+- `src/lib/depth.ts` + `scene.world`: ground-plane perspective; vehicles sized relative to people at the same depth (measured drawing sizes); far→near draw order; keyed `y` grows toward the camera.
+- `layout_check.proportions` in validate: flags vehicles >40 % off.
+- `parked: true`: landing gear for aircraft on the ground.
+- Five depth-staged shot templates.
+- Test clip: `projects/_test/out/depth-test.mp4` (32 s, silent).
+
 ## 2026-11-16 — Film-quality look, part 2
 Why: the user found the maps cluttered and unlike the reference, spotted an extra blob on hands, and asked for roadmap items a–e in order, a stronger grade and occasional letterbox.
 - Maps: clean coloured paper look (stipple, slate sea, thin borders), opt-in named rivers drawn as smooth water bands, `hatch`, small-caps town labels with `tag` for key places.

@@ -150,6 +150,7 @@ def main(proj):
         if s.get("type") == "stage":
             layout += layout_check.overlaps(s)
             layout += layout_check.speeds(s)
+            layout += layout_check.proportions(s)
         elif s.get("type") == "map":
             layout += [w for w in layout_check.overlaps(s)]
     warn += layout

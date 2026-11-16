@@ -77,7 +77,7 @@ const Head: React.FC<{ x: number; y: number; helmet: string; t: number; i?: numb
   </g>
 );
 
-type MP = { type: string; nationKey?: string; color?: string; t: number; travel: number; moving: boolean; damaged?: boolean; crew?: boolean };
+type MP = { type: string; nationKey?: string; color?: string; t: number; travel: number; moving: boolean; damaged?: boolean; crew?: boolean; parked?: boolean };
 
 // ---------------------------------------------------------------- ground vehicles
 const Truck: React.FC<MP> = ({ nationKey, color, t, travel, moving, damaged }) => {
@@ -571,7 +571,39 @@ const Rowboat: React.FC<MP> = ({ color, t }) => {
 
 export const MACHINE_TYPES = new Set(['truck', 'jeep', 'car', 'halftrack', 'artillery', 'gun', 'fighter', 'plane', 'divebomber', 'bomber', 'dakota', 'transport', 'glider', 'battleship', 'cruiser', 'destroyer', 'cargo', 'freighter', 'submarine', 'uboat', 'boat']);
 
-export const Machine: React.FC<MP> = (p) => {
+/** landing gear for aircraft standing on the ground: main wheels + tail wheel; the drawing is lifted so the wheels sit on y = 0 */
+const GEAR: Record<string, { main: [number, number, number, number]; tail: [number, number, number, number] }> = {
+  // main: [x, strut top y, wheel centre y, r]   tail: [x, strut top y, wheel centre y, r]
+  fighter: { main: [22, 6, 50, 13], tail: [-136, 4, 56, 6] },
+  plane: { main: [22, 6, 50, 13], tail: [-136, 4, 56, 6] },
+  divebomber: { main: [52, 60, 72, 8], tail: [-140, 4, 74, 6] },
+  bomber: { main: [72, 20, 66, 18], tail: [-222, 6, 77, 7] },
+  dakota: { main: [62, 20, 74, 20], tail: [-272, 4, 87, 7] },
+  transport: { main: [62, 20, 74, 20], tail: [-272, 4, 87, 7] },
+  glider: { main: [40, 8, 34, 14], tail: [-240, 6, 44, 4] },
+};
+
+const Parked: React.FC<{ type: string; children: React.ReactNode }> = ({ type, children }) => {
+  const g = GEAR[type];
+  if (!g) return <>{children}</>;
+  const ground = g.main[2] + g.main[3];
+  const [mx, mt, my, mr] = g.main, [tx, tt, ty, tr] = g.tail;
+  return (
+    <g transform={`translate(0 ${-ground})`}>
+      <ellipse cx={(mx + tx) / 2} cy={ground + 2} rx={Math.abs(mx - tx) * 0.7} ry={8} fill="#000" opacity={0.2} />
+      <path d={`M${mx} ${mt} L${mx + 4} ${my}`} stroke="#3b3a35" strokeWidth={7} strokeLinecap="round" />
+      <path d={`M${tx} ${tt} L${tx} ${ty}`} stroke="#3b3a35" strokeWidth={4} strokeLinecap="round" />
+      {children}
+      <circle cx={mx + 4} cy={my} r={mr} fill="#24221f" stroke={INK} strokeWidth={3} />
+      <circle cx={mx + 4} cy={my} r={mr * 0.45} fill="#6a675e" />
+      <circle cx={tx} cy={ty} r={tr} fill="#24221f" stroke={INK} strokeWidth={2} />
+    </g>
+  );
+};
+
+export const Machine: React.FC<MP> = (p) => (p.parked && GEAR[p.type] ? <Parked type={p.type}><MachineBody {...p} /></Parked> : <MachineBody {...p} />);
+
+const MachineBody: React.FC<MP> = (p) => {
   switch (p.type) {
     case 'truck': return <Truck {...p} />;
     case 'jeep':

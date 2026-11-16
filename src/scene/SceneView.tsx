@@ -6,6 +6,7 @@ import { Foreground } from '../sets/Rich';
 import { MapLayer, makeProjection, PaperOverlay } from '../map/MapLayer';
 import { ElementView, type Ctx } from './Elements';
 import { DateBadge } from '../overlays/Overlays';
+import { resolveWorld } from '../lib/depth';
 import { FONT, INK, C } from '../theme';
 
 const HUD_KINDS = new Set(['date', 'namecard']);
@@ -77,8 +78,20 @@ export const SceneView: React.FC<{ scene: Scene; t: number; cast?: Record<string
     ) : null;
   }
 
-  const ctx: Ctx = { t, dur, cast, proj, sceneId: scene.id };
-  const worldEls = els.map((el, i) => ({ el, i })).filter(({ el }) => !el.hud && !HUD_KINDS.has(el.kind));
+  const ctx: Ctx = { t, dur, cast, proj, sceneId: scene.id, world: scene.type === 'stage' ? resolveWorld(scene.world, scene.set as never) : undefined };
+  const worldEls0 = els.map((el, i) => ({ el, i })).filter(({ el }) => !el.hud && !HUD_KINDS.has(el.kind));
+  // with a depth model, people and vehicles are drawn far → near (by their current ground y); other elements keep their slots
+  const DEPTH_KINDS = new Set(['actor', 'vehicle', 'crowd']);
+  const worldEls = ctx.world
+    ? (() => {
+        const slots = worldEls0.map((w, k) => (DEPTH_KINDS.has(w.el.kind) && !w.el.fixedLayer ? k : -1)).filter((k) => k >= 0);
+        const items = slots.map((k) => worldEls0[k]).map((w) => ({ w, y: ((resolveKeys(w.el, w.el.keys, t) as { y?: number }).y ?? 900) }));
+        items.sort((p, q) => p.y - q.y);
+        const out = [...worldEls0];
+        slots.forEach((k, j) => { out[k] = items[j].w; });
+        return out;
+      })()
+    : worldEls0;
   const hudEls = els.map((el, i) => ({ el, i })).filter(({ el }) => el.hud || HUD_KINDS.has(el.kind));
   const weather = scene.set?.weather as string | undefined;
 

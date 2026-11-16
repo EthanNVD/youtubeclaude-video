@@ -30,6 +30,19 @@ Every plan and every engine change is judged against them.
 - **Move at believable speeds.** A tank crosses a wide frame in 8–15 s, a truck in 5–10 s. Motion accelerates and brakes gently; wheels turn with the distance travelled. A close pass fills the frame and leaves motion blur and kicked-up snow or dust.
 - **Planes in formation** drift slowly in wide shots. A dive or close pass is fast but short (≤ 1.5 s).
 
+## 4b. Proportion and depth (people with vehicles)
+- **Same depth = believable proportion.**
+  - A man standing by a tank reaches about the top of the hull; the tank is ~2.5× his height long.
+  - A truck is a bit taller than a man; a jeep reaches his chest.
+  - A fighter's length is ~3.5 men; a Dakota ~7.
+- **Perspective is allowed to break it.** Soldiers walking close to the camera can be as big as a truck in the middle distance, as in the reference "wrong truck" scene. That reads as depth, not as a mistake.
+- **Stage shots in depth.** Use three planes:
+  - background: a column on the far road, small;
+  - middle ground: the action;
+  - foreground: a figure close to camera, cut by the frame edge.
+- **Close passes.** A heavy vehicle crossing the foreground fills half the frame, with a small camera pan or shake.
+- **Engine.** Use `scene.world`: sizes come from the ground y, and draw order runs far → near.
+
 ## 5. Maps
 - **Clean old paper.**
   - Tan land with a faint stipple texture, flat slate-blue sea, thin dark borders.

@@ -37,6 +37,13 @@ P.finish(META, CAST, "projects/<slug>/plan.json", letterbox={"s001": "DRAMATISED
 | `tubes(start, title, items)` | glass tubes on a wooden plaque in the workroom | comparisons (strength, losses) |
 | `corkboard(start, items, title)` | pinned cards on red yarn on a corkboard | dates, sequences, "a week before" |
 | `document_insert(start, style, title, lines, stamp)` | a typed telegram/order/newspaper, stamped | evidence, quotes |
+| `crew_with_vehicle(start, vtype, nation, who)` | vehicle parked mid-frame, commander in the hatch, crew talking by the front plate (people ≈ ⅓ of its length) | crews, briefings by a vehicle |
+| `column_depth(start, vtype, nation)` | 3 depth planes: column on the far road, infantry marching mid-ground, one soldier close to camera watching | advances, scale of an army |
+| `vehicle_pass(start, vtype, nation)` | a heavy vehicle crosses the foreground filling half the frame, camera pans/shakes, infantry tiny behind | menace, arrival of armour |
+| `foreground_walk(start, who, vtype)` | soldiers walk past close to camera (waist-up), a truck drives in the middle distance | marches, retreats, "dramatised" moments |
+| `airfield_line(start, nation, pilot)` | pilots walk past a parked fighter; a Dakota further back | airborne / air force chapters |
+
+The last five use `world` (depth model): no scales are written; sizes come from the ground y.
 
 Rules when adapting a template:
 - Keep vehicles inside the frame for most of the shot.

@@ -30,7 +30,7 @@ const shadeV = (hex: string) => {
 };
 
 /** Vehicles in side view, facing right. Origin = ground contact center. `burning`/`damaged` add states. */
-export const Vehicle: React.FC<{ type: string; nationKey?: string; t: number; color?: string; moving?: boolean; damaged?: boolean; prop?: boolean; travel?: number; crew?: boolean }> = ({ type, nationKey, t, color, moving, damaged, travel, crew }) => {
+export const Vehicle: React.FC<{ type: string; nationKey?: string; t: number; color?: string; moving?: boolean; damaged?: boolean; prop?: boolean; travel?: number; crew?: boolean; parked?: boolean }> = ({ type, nationKey, t, color, moving, damaged, travel, crew, parked }) => {
   const n = nation(nationKey);
   const body = color ?? n.uniform;
   const dark = n.uniformDark;
@@ -45,7 +45,7 @@ export const Vehicle: React.FC<{ type: string; nationKey?: string; t: number; co
   );
   const jig = moving ? Math.sin(t * 30) * 1.2 : 0;
   // volume redraws (Machines.tsx); the old flat drawings stay reachable as '<type>_flat'
-  if (MACHINE_TYPES.has(type)) return <Machine type={type} nationKey={nationKey} color={color} t={t} travel={travel ?? (moving ? t * 140 : 0)} moving={!!moving} damaged={damaged} crew={crew} />;
+  if (MACHINE_TYPES.has(type)) return <Machine type={type} nationKey={nationKey} color={color} t={t} travel={travel ?? (moving ? t * 140 : 0)} moving={!!moving} damaged={damaged} crew={crew} parked={parked} />;
   const ft = type.endsWith('_flat') && type !== 'tank_flat' ? type.slice(0, -5) : type;
   switch (ft) {
     case 'sherman':
