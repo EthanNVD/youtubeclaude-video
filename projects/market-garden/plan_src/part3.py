@@ -74,7 +74,7 @@ def build():
         *rivers("rhine"), *towns("Oosterbeek", "Arnhem", at=0.0),
         *[{"kind": "ring", "at": c, "r": 50, "color": "UK", "enter": "none", "dashed": False} for c in [[5.74, 52.0], [5.76, 51.99]]],
         ML("DROP ZONES", [5.745, 52.012], style="tag", at=0.2),
-        ML("MODEL'S HQ", [5.84, 51.996], style="red", at=1.0),
+        ML("MODEL'S HQ", [5.84, 52.022], style="red", at=1.0),
         L("LANDED NEXT TO THE ONE MAN BEST PLACED TO STOP THEM", 960, 980, "tag", 36, at=1.8, hud=True),
     ], beat="they had landed next to the one man best placed to stop them")
     scene(1130.92, {"kind": "heath", "panels": False, "fg": "sandbags"}, [

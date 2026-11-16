@@ -172,7 +172,7 @@ def build():
     ], beat="Urquhart wanted landing zones close to the bridge")
     MAP(586.1, [5.88, 51.97], 0.4, [
         *rivers("rhine"), *towns("Arnhem", at=0.0),
-        *[ML("FLAK", c, style="red", size=30, at=0.3 + i * 0.4) for i, c in enumerate([[5.90, 51.99], [5.93, 51.985], [5.92, 52.0], [5.88, 51.995]])],
+        *[ML("FLAK", c, style="red", size=30, at=0.3 + i * 0.4) for i, c in enumerate([[5.87, 52.012], [5.96, 52.005], [5.915, 52.03], [5.965, 51.965]])],
         {"kind": "region", "polygon": [[5.84, 51.96], [5.96, 51.965], [5.96, 51.94], [5.84, 51.94]], "color": "#7f9a52", "in": 3.6},
         ML("SOUTH BANK: TOO SOFT,\nCUT UP BY DYKES", [5.90, 51.945], style="tag", at=4.0),
     ], beat="the city full of AA guns; south bank too soft and cut up by dykes")
@@ -203,7 +203,7 @@ def build():
         *rivers("rhine"), *towns("Arnhem", "Oosterbeek", at=0.0),
         {"kind": "ring", "at": [5.75, 51.995], "km": 5, "color": "#2f7a3a", "in": 0.6, "enter": "grow", "dashed": False},
         ML("TYPE 22 SET: ~5 KM", [5.75, 52.04], style="green", at=1.2),
-        {"kind": "city", "name": "Bridge", "at": [5.912, 51.976], "side": "right", "in": 0.2},
+        {"kind": "city", "name": "Road bridge", "at": [5.912, 51.976], "side": "bottom", "in": 0.2},
         {"kind": "shape", "shape": "cross", "x": 1500, "y": 640, "in": 4.0, "scale": 0.8, "hud": True},
         L("OUT OF RANGE", 1500, 760, "red", 40, at=4.4, hud=True),
     ], beat="the Type 22 set: effective range about 5 km")

@@ -210,7 +210,7 @@ LETTERBOX = {
 }
 
 
-WORKSHOP = {"s113": 1000, "s233": 1000, "s135": 1000, "s203": 900}
+WORKSHOP = {"s113": 1000, "s233": 1000, "s135": 1000, "s203": 900, "s237": 640}
 
 
 def finish(meta, cast, path):
@@ -221,6 +221,10 @@ def finish(meta, cast, path):
     for s in SCENES:
         if s["id"] in LETTERBOX:
             s["letterbox"] = LETTERBOX[s["id"]]
+        for e in s.get("elements", []):
+            # soldiers holding rifles use the two-handed drill pose, not the generic carry
+            if e.get("kind") == "actor" and e.get("holds") == "rifle" and e.get("pose") in ("hold", "idle", None):
+                e["pose"] = "port"
         if s["id"] in WORKSHOP:
             # physical devices live in the workroom (corkboard timeline, glass tubes, brass scale on the desk)
             s["set"] = {"kind": "workshop", "ground": WORKSHOP[s["id"]]}

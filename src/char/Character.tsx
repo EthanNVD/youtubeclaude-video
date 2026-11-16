@@ -448,7 +448,8 @@ export const Character: React.FC<{ spec: CharSpec; state: CharState; t: number; 
     <g transform={`translate(${R.hx} ${R.hy}) rotate(${(rAng * 180) / Math.PI}) scale(${held.scale ?? 0.6}) translate(${-held.grips[0]} 0)`}>{held.node}</g>
   ) : held ? (() => {
     const two = held.both ?? (poseName === 'hold' || poseName === 'holdUp' || poseName === 'carry' || poseName === 'binoculars');
-    const hx = two ? (R.hx + Lf.hx) / 2 : R.hx;
+    // one hand on a flat prop: hold it by its inner edge so the hand never covers the writing
+    const hx = two ? (R.hx + Lf.hx) / 2 : R.hx - (held.grip ? held.grip * (held.scale ?? 0.55) * 0.85 : 0);
     const hyy = two ? (R.hy + Lf.hy) / 2 : R.hy;
     return <g transform={`translate(${hx + (held.dx ?? 0)} ${hyy + (held.dy ?? 0)}) rotate(${held.rotate ?? 0}) scale(${held.scale ?? 0.55})`}>{held.node}</g>;
   })() : null;
