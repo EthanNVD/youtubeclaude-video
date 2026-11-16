@@ -67,12 +67,21 @@ const Hills: React.FC<{ y: number; color: string; amp?: number; seed?: string; d
   return <path d={`M${X0} ${Y0 + H} L${X0} ${y} Q${pts.join(' T')} L${X0 + W} ${Y0 + H} Z`.replace('Q' + pts[0], 'L' + pts[0] + ' Q' + pts[1]).replace(' T' + pts[1], '')} fill={color} />;
 };
 
-const Pole: React.FC<{ x: number; y: number; h: number }> = ({ x, y, h }) => (
-  <g stroke="#5a4030" strokeWidth={Math.max(2, h / 40)} strokeLinecap="round">
-    <line x1={x} y1={y} x2={x} y2={y - h} />
-    <line x1={x - h * 0.18} y1={y - h * 0.9} x2={x + h * 0.18} y2={y - h * 0.9} />
-  </g>
-);
+const Pole: React.FC<{ x: number; y: number; h: number }> = ({ x, y, h }) => {
+  // telegraph pole: tall post, two short cross-arms with insulators at the very top (never reads as a grave cross)
+  const w = Math.max(2, h / 34);
+  return (
+    <g strokeLinecap="round">
+      <line x1={x} y1={y} x2={x} y2={y - h} stroke="#5a4030" strokeWidth={w} />
+      {[0.04, 0.12].map((k) => (
+        <g key={k}>
+          <line x1={x - h * 0.13} y1={y - h * (1 - k)} x2={x + h * 0.13} y2={y - h * (1 - k)} stroke="#5a4030" strokeWidth={w * 0.8} />
+          {[-0.11, -0.04, 0.04, 0.11].map((q) => <circle key={q} cx={x + h * q} cy={y - h * (1 - k) - w} r={w * 0.7} fill="#e9e4d4" />)}
+        </g>
+      ))}
+    </g>
+  );
+};
 
 export const Tree: React.FC<{ x: number; y: number; s?: number; kind?: string; snow?: boolean }> = ({ x, y, s = 1, kind = 'round', snow }) => (
   <g transform={`translate(${x} ${y}) scale(${s})`}>
@@ -490,7 +499,18 @@ const BaseSet: React.FC<SetProps> = (p) => {
           <rect x={X0} y={hz + 30} width={W} height={Y0 + H - hz - 30} fill={g2} />
           <path d={`M${X0} ${hz + 60} Q600 ${hz + 20} 1200 ${hz + 70} T${X0 + W} ${hz + 50} V${Y0 + H} H${X0} Z`} fill={g1} />
           {road ? <path d={`M900 ${hz + 50} L1020 ${hz + 50} L1500 ${Y0 + H} L420 ${Y0 + H} Z`} fill={snow ? '#cfd6dc' : desert ? '#c9a466' : '#b9925f'} opacity={0.9} /> : null}
-          {p.poles !== false && !desert ? Array.from({ length: 6 }, (_, i) => <Pole key={i} x={1080 + i * i * 34 + i * 30} y={hz + 60 + i * i * 22 + i * 12} h={50 + i * 34} />) : null}
+          {p.poles !== false && !desert ? (() => {
+            const ps = Array.from({ length: 6 }, (_, i) => ({ x: 1080 + i * i * 34 + i * 30, y: hz + 60 + i * i * 22 + i * 12, h: 50 + i * 34 }));
+            return (
+              <g>
+                {ps.slice(1).map((q, i) => {
+                  const a0 = ps[i];
+                  return [0.04, 0.12].map((k) => <path key={i + '_' + k} d={`M${a0.x} ${a0.y - a0.h * (1 - k)} Q${(a0.x + q.x) / 2} ${(a0.y - a0.h * (1 - k) + q.y - q.h * (1 - k)) / 2 + 6 + i * 3} ${q.x} ${q.y - q.h * (1 - k)}`} stroke="#3a3230" strokeWidth={1.2} fill="none" opacity={0.6} />);
+                })}
+                {ps.map((q, i) => <Pole key={i} x={q.x} y={q.y} h={q.h} />)}
+              </g>
+            );
+          })() : null}
           {(p.houses ?? !desert) ? [[-60, hz + 52, 0.55], [180, hz + 46, 0.45], [1700, hz + 48, 0.5]].map(([x, y, s], i) => <House key={i} x={x} y={y} s={s} snow={snow} />) : null}
           {!desert ? [[300, hz + 220, 1], [1650, hz + 260, 1.2], [60, hz + 340, 1.4]].map(([x, y, s], i) => <Tree key={i} x={x} y={y} s={s} kind={snow ? (i % 2 ? 'bare' : 'pine') : (p.trees as string) ?? 'round'} snow={snow} />) : null}
           {desert ? [[200, hz + 200], [1500, hz + 180]].map(([x, y], i) => <path key={i} d={`M${x} ${y} q20 -40 40 0 q20 -60 50 0`} stroke="#7a8a4a" strokeWidth={10} fill="none" />) : null}

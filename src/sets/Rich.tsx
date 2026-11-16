@@ -750,9 +750,19 @@ const Polder: React.FC<P> = (p) => {
       {/* the raised road on its dyke */}
       <path d={`M${X0} ${dykeY + 40} L${X0} ${dykeY - 14} H${X0 + W} V${dykeY + 40} Z`} fill="#6f8a4a" />
       <rect x={X0} y={dykeY - 30} width={W} height={18} fill="#9a9488" stroke={INK} strokeWidth={3} />
-      {/* ditches + fields toward the viewer */}
-      {Array.from({ length: 9 }, (_, i) => <path key={i} d={`M${X0} ${dykeY + 80 + i * i * 8} H${X0 + W}`} stroke="#5b86a8" strokeWidth={4 + i} opacity={0.55} />)}
-      {Array.from({ length: 12 }, (_, i) => <line key={i} x1={960 + (i - 6) * 60} y1={dykeY + 50} x2={960 + (i - 6) * 420} y2={Y0 + H} stroke="#5b86a8" strokeWidth={6} opacity={0.35} />)}
+      {/* patchwork polder fields toward the viewer: bands of slightly different greens, a few long ditches catching the sky */}
+      {Array.from({ length: 7 }, (_, i) => {
+        const y0 = dykeY + 40 + i * i * 9 + i * 14, y1 = dykeY + 40 + (i + 1) * (i + 1) * 9 + (i + 1) * 14;
+        return <rect key={'b' + i} x={X0} y={y0} width={W} height={y1 - y0 + 1} fill={['#93b25c', '#86a650', '#9cbb66', '#8aab55', '#97b45f', '#82a24c', '#90af58'][i]} />;
+      })}
+      {[2, 4, 6].map((i) => <path key={'d' + i} d={`M${X0} ${dykeY + 40 + i * i * 9 + i * 14} H${X0 + W}`} stroke="#a9c6d6" strokeWidth={2 + i * 0.7} opacity={0.75} />)}
+      {[[260, 0], [760, 1], [1420, 2]].map(([x, i]) => (
+        <g key={'cow' + i} transform={`translate(${x} ${dykeY + 96 + i * 18}) scale(${0.5 + i * 0.12})`}>
+          <ellipse cx={0} cy={-14} rx={26} ry={13} fill={i % 2 ? '#3a3430' : '#f1ece0'} stroke={INK} strokeWidth={3} />
+          <path d="M-18 -4 v14 M18 -4 v14" stroke={INK} strokeWidth={4} />
+          <circle cx={30} cy={-18} r={8} fill={i % 2 ? '#3a3430' : '#f1ece0'} stroke={INK} strokeWidth={3} />
+        </g>
+      ))}
       <rect x={X0} y={g - 120} width={W} height={H} fill="#7fa04e" />
       {Array.from({ length: 60 }, (_, i) => <path key={i} d={`M${X0 + rnd('pg', i) * W} ${g - 110 + rnd('pgy', i) * 300} l4 -12 l4 12`} stroke="#5f8a3a" strokeWidth={3} fill="none" />)}
     </g>
