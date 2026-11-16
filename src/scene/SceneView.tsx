@@ -1,6 +1,6 @@
 import React from 'react';
 import type { CameraKey, CastMember, LonLat, Scene } from '../types';
-import { resolveKeys, rnd, clamp } from '../lib/anim';
+import { resolveKeys, rnd, clamp, easeFn, partialPolyline } from '../lib/anim';
 import { SetBackground } from '../sets/Sets';
 import { Foreground } from '../sets/Rich';
 import { MapLayer, makeProjection, PaperOverlay } from '../map/MapLayer';
@@ -35,7 +35,18 @@ export const SceneView: React.FC<{ scene: Scene; t: number; cast?: Record<string
     const cam = scene.camera
       ? cameraAt(scene.camera, t, { center: scene.map.center, zoom: 1, span: scene.map.span })
       : { center: scene.map.center, zoom: 1 + 0.035 * (t / Math.max(1, dur)), span: scene.map.span };
-    const center = (cam.center ?? scene.map.center) as LonLat;
+    let center = (cam.center ?? scene.map.center) as LonLat;
+    // map.follow = index of a route/arrow element: the camera rides along with its tip (reference: "the camera follows the ship")
+    const fi = (scene.map as { follow?: number }).follow;
+    const fel = fi !== undefined ? els[fi] : undefined;
+    if (fel && Array.isArray(fel.path)) {
+      const keyed = resolveKeys(fel, fel.keys, t) as typeof fel;
+      const a = t - (fel.in ?? 0);
+      const r = fel.enter === 'draw' ? easeFn('inOut', clamp(a / ((fel.dur as number) ?? 1.2))) : (keyed.progress as number) ?? 1;
+      const tip = partialPolyline(fel.path as [number, number][], r).tip as [number, number];
+      const lead = clamp(t / 0.9);
+      center = [center[0] + (tip[0] - center[0]) * lead, center[1] + (tip[1] - center[1]) * lead];
+    }
     proj = makeProjection(center, (cam.span as number) ?? scene.map.span, cam.zoom ?? 1);
     world = <MapLayer spec={scene.map} proj={proj} t={t} />;
   } else if (scene.type === 'title' || scene.type === 'chapter') {

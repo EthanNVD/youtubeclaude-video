@@ -68,6 +68,87 @@ const Unit: React.FC<{ type?: string; nationKey?: string; label?: string; color?
 };
 
 /** Top-down ship / plane icons for maps. */
+/** small side-view movers for map routes: freighter, warship, crate, truck, tank, train (upright, face the travel direction) */
+const SIDE_ICONS = new Set(['freighter', 'warship', 'crate', 'truck', 'tank', 'train', 'column']);
+const SideIcon: React.FC<{ type: string; nationKey?: string; color?: string; t: number; i?: number }> = ({ type, nationKey, color, t, i = 0 }) => {
+  const c = col(color, uiColor(nationKey));
+  const bob = Math.sin(t * 2.2 + i * 1.7) * 1.5;
+  switch (type) {
+    case 'freighter':
+      return (
+        <g transform={`translate(0 ${bob})`}>
+          <path d="M-46 -6 H44 L52 -14 L44 8 H-40 Z" fill="#3f474f" stroke={INK} strokeWidth={3} strokeLinejoin="round" />
+          <path d="M-42 4 H46" stroke="#8a3a2a" strokeWidth={4} />
+          <rect x={-8} y={-22} width={22} height={16} fill="#e7e0cf" stroke={INK} strokeWidth={2.5} />
+          <rect x={0} y={-32} width={7} height={10} fill="#2b2926" />
+          <rect x={-36} y={-16} width={14} height={10} fill="#8a6a42" stroke={INK} strokeWidth={2} />
+          <rect x={24} y={-16} width={14} height={10} fill="#5a6a4a" stroke={INK} strokeWidth={2} />
+          <path d="M-56 8 q-18 2 -34 0" stroke="#fff" strokeWidth={3} opacity={0.6} fill="none" />
+        </g>
+      );
+    case 'warship':
+      return (
+        <g transform={`translate(0 ${bob})`}>
+          <path d="M-50 -6 H46 L58 -14 L46 8 H-44 Z" fill="#76808a" stroke={INK} strokeWidth={3} strokeLinejoin="round" />
+          <path d="M-20 -6 V-18 H16 V-6 Z M-6 -18 V-28 H6 V-18 Z" fill="#8a929c" stroke={INK} strokeWidth={2.5} />
+          <path d="M22 -10 L44 -14 M-28 -10 L-48 -14" stroke={INK} strokeWidth={3} />
+          <rect x={-4} y={-38} width={3} height={10} fill={INK} />
+          <rect x={-1} y={-40} width={12} height={7} fill={c} stroke={INK} strokeWidth={1.5} />
+        </g>
+      );
+    case 'crate':
+      return (
+        <g transform={`translate(0 ${bob * 0.5})`}>
+          <rect x={-18} y={-26} width={36} height={26} fill="#a07a48" stroke={INK} strokeWidth={3} />
+          <path d="M-18 -26 L18 0 M18 -26 L-18 0" stroke={INK} strokeWidth={2} opacity={0.5} />
+          <rect x={-14} y={-40} width={28} height={14} fill="#6b6a3e" stroke={INK} strokeWidth={2.5} />
+        </g>
+      );
+    case 'truck':
+    case 'column':
+      return (
+        <g>
+          <path d="M-30 -8 V-30 H8 V-8 Z" fill={shadeHex(c, -0.1)} stroke={INK} strokeWidth={2.5} />
+          <path d="M8 -8 V-24 H22 L30 -16 V-8 Z" fill={c} stroke={INK} strokeWidth={2.5} strokeLinejoin="round" />
+          <circle cx={-18} cy={-5} r={6} fill="#262422" stroke={INK} strokeWidth={2} />
+          <circle cx={20} cy={-5} r={6} fill="#262422" stroke={INK} strokeWidth={2} />
+        </g>
+      );
+    case 'tank':
+      return (
+        <g>
+          <path d="M-32 -4 Q-38 -4 -38 -11 Q-38 -18 -32 -18 H30 Q36 -18 36 -11 Q36 -4 30 -4 Z" fill="#2b2926" stroke={INK} strokeWidth={2.5} />
+          <path d="M-34 -18 L-30 -30 H26 L34 -18 Z" fill={c} stroke={INK} strokeWidth={2.5} strokeLinejoin="round" />
+          <path d="M-14 -30 L-10 -40 H12 L16 -30 Z" fill={c} stroke={INK} strokeWidth={2.5} />
+          <path d="M14 -36 H44" stroke={INK} strokeWidth={3.5} />
+        </g>
+      );
+    case 'train':
+    default:
+      return (
+        <g>
+          <rect x={-34} y={-30} width={68} height={24} rx={3} fill={c} stroke={INK} strokeWidth={2.5} />
+          <circle cx={-20} cy={-4} r={5} fill="#262422" />
+          <circle cx={20} cy={-4} r={5} fill="#262422" />
+        </g>
+      );
+  }
+};
+const shadeHex = (hex: string, k: number) => {
+  const m = /^#([0-9a-f]{6})$/i.exec(hex);
+  if (!m) return hex;
+  const n = parseInt(m[1], 16);
+  const f = (v: number) => Math.max(0, Math.min(255, Math.round(k < 0 ? v * (1 + k) : v + (255 - v) * k)));
+  return '#' + [f((n >> 16) & 255), f((n >> 8) & 255), f(n & 255)].map((v) => v.toString(16).padStart(2, '0')).join('');
+};
+
+/** resample a polyline to n points (for morphing between two front lines) */
+const resample = (pts: [number, number][], n: number): [number, number][] => {
+  const out: [number, number][] = [];
+  for (let i = 0; i < n; i++) out.push(partialPolyline(pts, i / (n - 1)).tip as [number, number]);
+  return out;
+};
+
 const MapIcon: React.FC<{ type: string; nationKey?: string; color?: string; size?: number; label?: string; t: number; burning?: boolean }> = ({ type, nationKey, color, size = 1, label, t, burning }) => {
   const c = col(color, uiColor(nationKey));
   return (
@@ -291,28 +372,59 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
     case 'line':
     case 'route':
     case 'front': {
-      const raw = (e.path as (number[])[]) ?? [];
-      const pts: [number, number][] = ctx.proj && !e.screen ? raw.map((q) => P(ctx, q as LonLat) ?? [0, 0]) : raw.map((q) => [q[0], q[1]]);
-      const sm = smoothPath(pts, 10);
+      const toScreen = (rw: (number[])[]): [number, number][] => (ctx.proj && !e.screen ? rw.map((q) => P(ctx, q as LonLat) ?? [0, 0]) : rw.map((q) => [q[0], q[1]]));
+      const pts0 = toScreen((e.path as (number[])[]) ?? []);
+      // a front can move: `path2` is where it ends up, `morph` 0..1 (keyable) blends between the two lines
+      const morph = e.path2 ? clamp((e.morph as number) ?? 0) : 0;
+      const sm = e.path2 ? (() => {
+        const A = resample(smoothPath(pts0, 10), 60), B = resample(smoothPath(toScreen(e.path2 as (number[])[]), 10), 60);
+        return A.map((p, i) => [p[0] + (B[i][0] - p[0]) * morph, p[1] + (B[i][1] - p[1]) * morph] as [number, number]);
+      })() : smoothPath(pts0, 10);
       const r = el.enter === 'draw' ? env.r : (e.progress as number) ?? 1;
       const part = partialPolyline(sm, r);
       const c = col(e.color, k === 'front' ? C.red : INK);
+      // movers: the icon at the tip plus `trail` more icons spaced `gap` px behind it along the drawn route
+      const iconT = e.icon as string | undefined;
+      const side = !!iconT && SIDE_ICONS.has(iconT);
+      const trailN = (e.trail as number) ?? 0;
+      const gap = (e.gap as number) ?? 70;
+      const movers: { x: number; y: number; ang: number; i: number }[] = [];
+      if (iconT) {
+        const total = part.total ?? 1;
+        const full = partialPolyline(sm, 1).total ?? total;
+        for (let i = 0; i <= trailN; i++) {
+          const rr = r - (i * gap) / Math.max(1, full);
+          if (rr <= 0.001) break;
+          const q = partialPolyline(sm, rr);
+          movers.push({ x: q.tip[0], y: q.tip[1], ang: q.angle, i });
+        }
+      }
       return (
         <g opacity={op}>
           {k === 'front' ? <path d={toD(part.pts)} stroke={INK} strokeWidth={((e.width as number) ?? 10) + 6} fill="none" strokeLinecap="round" /> : null}
           <path d={toD(part.pts)} stroke={c} strokeWidth={(e.width as number) ?? (k === 'route' ? 6 : 10)} fill="none" strokeLinecap="round" strokeDasharray={k === 'route' || e.dashed ? '18 14' : undefined} />
-          {e.icon ? (
-            <g transform={`translate(${part.tip[0]} ${part.tip[1]}) rotate(${(part.angle * 180) / Math.PI})`}>
-              <MapIcon type={e.icon as string} nationKey={e.nation as string} t={t} size={(e.iconSize as number) ?? 0.8} />
-            </g>
-          ) : null}
+          {movers.map((m) =>
+            side ? (
+              <g key={m.i} transform={`translate(${m.x} ${m.y}) scale(${((e.iconSize as number) ?? 1) * (Math.cos(m.ang) < 0 ? -1 : 1)} ${(e.iconSize as number) ?? 1})`}>
+                <SideIcon type={iconT as string} nationKey={e.nation as string} color={e.iconColor as string} t={t} i={m.i} />
+              </g>
+            ) : (
+              <g key={m.i} transform={`translate(${m.x} ${m.y}) rotate(${(m.ang * 180) / Math.PI})`}>
+                <MapIcon type={iconT as string} nationKey={e.nation as string} t={t} size={(e.iconSize as number) ?? 0.8} />
+              </g>
+            ),
+          )}
         </g>
       );
     }
     case 'region':
     case 'pocket': {
       const raw = (e.polygon as (number[])[]) ?? [];
-      const pts: [number, number][] = ctx.proj && !e.screen ? raw.map((q) => P(ctx, q as LonLat) ?? [0, 0]) : raw.map((q) => [q[0], q[1]]);
+      const pts0: [number, number][] = ctx.proj && !e.screen ? raw.map((q) => P(ctx, q as LonLat) ?? [0, 0]) : raw.map((q) => [q[0], q[1]]);
+      // `shrink` 0..1 (keyable) squeezes the area toward its centre: a pocket closing
+      const shr = clamp((e.shrink as number) ?? 0);
+      const cx0 = pts0.reduce((acc, p) => acc + p[0], 0) / Math.max(1, pts0.length), cy0 = pts0.reduce((acc, p) => acc + p[1], 0) / Math.max(1, pts0.length);
+      const pts: [number, number][] = pts0.map((p) => [cx0 + (p[0] - cx0) * (1 - shr), cy0 + (p[1] - cy0) * (1 - shr)]);
       const sm = smoothPath([...pts, pts[0]], 10);
       const c = col(e.color, k === 'pocket' ? C.red : C.grey);
       const glow = k === 'pocket' ? 0.5 + 0.5 * Math.sin(t * 4) : 0;
