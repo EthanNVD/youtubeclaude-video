@@ -2427,10 +2427,10 @@
     {
      "kind": "bars",
      "title": "GERMAN DIVISIONS IN THE WEST",
-     "x": 1150,
+     "x": 1300,
      "y": 380,
      "max": 50,
-     "width": 900,
+     "width": 620,
      "items": [
       {
        "label": "ON PAPER",
@@ -8782,7 +8782,8 @@
     }
    ],
    "set": {
-    "kind": "paper"
+    "kind": "workshop",
+    "ground": 1000
    },
    "beat": "the SS divisions were ordered to Arnhem a week before the plan existed",
    "id": "s113",
@@ -9912,8 +9913,8 @@
     }
    ],
    "set": {
-    "kind": "studio",
-    "color": "#d9cdb0"
+    "kind": "workshop",
+    "ground": 1000
    },
    "beat": "barely any: two working Panthers, 5–14 Panzer IVs",
    "id": "s135",
@@ -15797,8 +15798,8 @@
     }
    ],
    "set": {
-    "kind": "studio",
-    "color": "#d9cdb0"
+    "kind": "workshop",
+    "ground": 900
    },
    "beat": "the case for going on vs the case against",
    "id": "s203",
@@ -18098,7 +18099,8 @@
     }
    ],
    "set": {
-    "kind": "paper"
+    "kind": "workshop",
+    "ground": 1000
    },
    "chapter": "Luck, Blame and the Bill",
    "beat": "what wasn't anyone's fault was the luck; no traitor put them there",

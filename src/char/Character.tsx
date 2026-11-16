@@ -50,7 +50,9 @@ export type CharState = {
   headMove?: string; // nod | shake | tilt
 };
 
-export type Held = { node: React.ReactNode; scale?: number; rotate?: number; dx?: number; dy?: number; both?: boolean; grip?: number };
+export type Held = { node: React.ReactNode; scale?: number; rotate?: number; dx?: number; dy?: number; both?: boolean; grip?: number;
+  /** long arms: prop-local x of the right-hand grip and the left-hand grip on the axis y = 0 */
+  grips?: [number, number] };
 
 const Lw = 4;
 const ARM_INK = 16.5, ARM_FILL = 9.5;
@@ -94,7 +96,9 @@ function qpts(r: V, c: V, e: V, t0: number, t1: number, n = 10): string {
 }
 
 type HandShape = 'mitten' | 'open' | 'fist' | 'point' | 'grip' | 'none';
-type Pose = { r: [number, number]; l: [number, number]; rb?: number; lb?: number; rh?: HandShape; lh?: HandShape; behind?: boolean; tilt?: number };
+type Pose = { r: [number, number]; l: [number, number]; rb?: number; lb?: number; rh?: HandShape; lh?: HandShape; behind?: boolean; tilt?: number;
+  /** long-arm poses: the held rifle runs from the right hand at `rifleAng` degrees; 'two' = the left hand grips the handguard */
+  rifle?: 'two' | 'one'; rifleAng?: number; rifleBehind?: boolean };
 // Hand targets for the character's screen-right (r) and screen-left (l) arm, in body coords.
 // Shoulders sit at (±31, -156); head centre (0, -206), chin ≈ -157, eyes ≈ -210, mouth ≈ -173, hips -98.
 export const POSES: Record<string, Pose> = {
@@ -145,6 +149,12 @@ export const POSES: Record<string, Pose> = {
   count: { r: [72, -148], l: [-44, -92], rb: -1, rh: 'point' },
   surrender: { r: [70, -250], l: [-70, -250], rb: -1, lb: -1, rh: 'open', lh: 'open', tilt: -4 },
   thumbsup: { r: [66, -150], l: [-44, -92], rb: -1, rh: 'fist' },
+  // rifle drill (use with holds: "rifle"): port arms across the chest, aiming, slope arms on the shoulder, bayonet charge, at ease
+  port: { r: [36, -96], l: [-30, -150], rb: 1, lb: -1, rh: 'grip', lh: 'grip', rifle: 'two', rifleAng: -122 },
+  aim: { r: [16, -160], l: [48, -158], rb: 1, lb: -1, rh: 'grip', lh: 'grip', rifle: 'two', rifleAng: -3, tilt: 5 },
+  shoulder: { r: [62, -108], l: [-40, -86], rb: 1, rh: 'grip', rifle: 'one', rifleAng: -60 },
+  charge: { r: [10, -112], l: [40, -128], rb: 1, lb: -1, rh: 'grip', lh: 'grip', rifle: 'two', rifleAng: -18, tilt: -4 },
+  ease: { r: [46, -96], l: [-40, -86], rb: -1, rh: 'grip', rifle: 'one', rifleAng: -84 },
 };
 
 const shade = (hex: string, k: number) => {
@@ -289,12 +299,20 @@ export const Character: React.FC<{ spec: CharSpec; state: CharState; t: number; 
         rx = 36 - dir * Math.sin(pr) * 18; ry = -86 - Math.abs(Math.sin(pr)) * 8;
         lx = -36 - dir * Math.sin(pl) * 18; ly = -86 - Math.abs(Math.sin(pl)) * 8;
       }
-    } else if (poseName !== 'carry' && poseName !== 'hold' && poseName !== 'holdUp') {
+    } else if (poseName !== 'carry' && poseName !== 'hold' && poseName !== 'holdUp' && pose.rifle !== 'two') {
       // keep the gesture on the right hand, swing the left one
       lx = -36 - dir * Math.sin(pl) * 15; ly = -86 - Math.abs(Math.sin(pl)) * 6;
     }
   }
 
+  // long arms: the rifle hangs from the right hand at the pose angle; two-handed poses put the left hand on the handguard
+  const rifleOn = !!held?.grips && !!pose.rifle && kRaw > 0.35;
+  const rAng = ((pose.rifleAng ?? 0) * Math.PI) / 180;
+  if (rifleOn && held?.grips && pose.rifle === 'two') {
+    const len = (held.grips[1] - held.grips[0]) * (held.scale ?? 0.6);
+    lx = rx + Math.cos(rAng) * len;
+    ly = ry + Math.sin(rAng) * len;
+  }
   // flat props (paper, telegram, folder…) are held by their side edges, not with both hands in the middle
   const twoHands = held ? held.both ?? (poseName === 'hold' || poseName === 'holdUp' || poseName === 'carry') : false;
   if (held?.grip && twoHands) {
@@ -426,7 +444,9 @@ export const Character: React.FC<{ spec: CharSpec; state: CharState; t: number; 
     </g>
   ) : null;
 
-  const heldNode = held ? (() => {
+  const heldNode = held && rifleOn && held.grips ? (
+    <g transform={`translate(${R.hx} ${R.hy}) rotate(${(rAng * 180) / Math.PI}) scale(${held.scale ?? 0.6}) translate(${-held.grips[0]} 0)`}>{held.node}</g>
+  ) : held ? (() => {
     const two = held.both ?? (poseName === 'hold' || poseName === 'holdUp' || poseName === 'carry' || poseName === 'binoculars');
     const hx = two ? (R.hx + Lf.hx) / 2 : R.hx;
     const hyy = two ? (R.hy + Lf.hy) / 2 : R.hy;
@@ -446,6 +466,7 @@ export const Character: React.FC<{ spec: CharSpec; state: CharState; t: number; 
               {armTube(1, R)}
             </>
           ) : null}
+          {pose.rifleBehind && rifleOn ? heldNode : null}
           {body}
           {scarf}
           <g transform={`translate(${headDx} ${headDy}) rotate(${tilt} 0 ${hy + 46})`}>
@@ -457,7 +478,7 @@ export const Character: React.FC<{ spec: CharSpec; state: CharState; t: number; 
               {armTube(1, R)}
             </>
           )}
-          {heldNode}
+          {pose.rifleBehind && rifleOn ? null : heldNode}
           {back || behindArms ? null : (
             <>
               {handOf(-1, Lf, lh)}

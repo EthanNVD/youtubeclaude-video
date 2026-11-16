@@ -149,13 +149,14 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
         if (typeof kk.pose === 'string' && kk.pose !== pose) { prevPose = pose; pose = kk.pose; tChange = kk.t; }
       }
       const poseK = clamp((t - tChange) / ((e.poseDur as number) ?? 0.42), 0, 1);
-      const holdScale: Record<string, number> = { holdUp: 0.75, hold: 0.6, carry: 0.7, write: 0.5, phone: 0.45, show: 0.6, drink: 0.4, smoke: 0.35 };
+      const holdScale: Record<string, number> = { holdUp: 0.75, hold: 0.6, carry: 0.7, write: 0.5, phone: 0.45, show: 0.6, drink: 0.4, smoke: 0.35, port: 0.5, aim: 0.52, shoulder: 0.5, charge: 0.52, ease: 0.5 };
       const held = e.holds
         ? {
             node: <Prop item={e.holds as string} t={t} text={e.holdsText as string} nationKey={spec.nation} />,
             scale: (e.holdsScale as number) ?? holdScale[pose] ?? 0.5,
             rotate: pose === 'phone' ? -30 : (e.holdsRotate as number) ?? 0,
             dy: pose === 'holdUp' ? -95 : pose === 'hold' || pose === 'carry' ? 4 : 0,
+            grips: e.holds === 'rifle' ? ([-30, 40] as [number, number]) : undefined,
             grip: ({ paper: 52, telegram: 98, folder: 118, book: 68, crate: 58, document: 98, newspaper: 98, map: 110 } as Record<string, number>)[e.holds as string],
           }
         : undefined;

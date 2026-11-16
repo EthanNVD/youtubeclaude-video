@@ -186,7 +186,7 @@ def build():
     ], beat="the mood was something close to a fever")
     scene(189.52, {"kind": "warroom"}, [
         A("shaef_officer", 380, 900, 1.45, "present", "happy", talk=True),
-        {"kind": "bars", "title": "GERMAN DIVISIONS IN THE WEST", "x": 1150, "y": 380, "max": 50, "width": 900,
+        {"kind": "bars", "title": "GERMAN DIVISIONS IN THE WEST", "x": 1300, "y": 380, "max": 50, "width": 620,
          "items": [{"label": "ON PAPER", "nation": "GERI", "value": 48, "in": 0.6}, {"label": "WORTH ~20 INF + 4 ARMD", "nation": "GERI", "value": 24, "in": 4.0}]},
     ], beat="SHAEF counted 48 divisions worth about 20 infantry and 4 armoured")
     MAP(200.96, [5.4, 52.1], 5.0, [

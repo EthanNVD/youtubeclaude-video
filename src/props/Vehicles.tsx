@@ -1,6 +1,7 @@
 import React from 'react';
 import { INK, nation, C } from '../theme';
 import { Tank } from './Tanks';
+import { Machine, MACHINE_TYPES } from './Machines';
 
 /** Nation marking on a hull. */
 export const Mark: React.FC<{ nationKey?: string; x: number; y: number; s?: number }> = ({ nationKey, x, y, s = 1 }) => {
@@ -43,7 +44,10 @@ export const Vehicle: React.FC<{ type: string; nationKey?: string; t: number; co
     </g>
   );
   const jig = moving ? Math.sin(t * 30) * 1.2 : 0;
-  switch (type) {
+  // volume redraws (Machines.tsx); the old flat drawings stay reachable as '<type>_flat'
+  if (MACHINE_TYPES.has(type)) return <Machine type={type} nationKey={nationKey} color={color} t={t} travel={travel ?? (moving ? t * 140 : 0)} moving={!!moving} damaged={damaged} crew={crew} />;
+  const ft = type.endsWith('_flat') && type !== 'tank_flat' ? type.slice(0, -5) : type;
+  switch (ft) {
     case 'sherman':
     case 'panzer4':
     case 'tiger':

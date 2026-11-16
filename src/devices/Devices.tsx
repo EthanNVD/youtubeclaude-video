@@ -1,6 +1,6 @@
 import React from 'react';
 import { C, INK, FONT, PAPER, col, uiColor } from '../theme';
-import { clamp, easeFn, spring01, lerp } from '../lib/anim';
+import { clamp, easeFn, spring01, lerp, rnd } from '../lib/anim';
 import { Flag } from '../props/Props';
 import { Vehicle } from '../props/Vehicles';
 
@@ -43,13 +43,34 @@ export const ScaleDevice: React.FC<{ t: number; left?: string; right?: string; l
           return (
             <g key={i} transform={`translate(${bx} ${by})`} opacity={clamp(a / 0.15)}>
               <path d="M-48 50 L-40 0 H40 L48 50 Z" fill={col(it.color, '#4a4a4a')} stroke={INK} strokeWidth={3.5} />
+              <path d="M-40 8 H40" stroke="#fff" strokeOpacity={0.25} strokeWidth={6} />
               <rect x={-14} y={-12} width={28} height={14} rx={4} fill={col(it.color, '#4a4a4a')} stroke={INK} strokeWidth={3} />
-              <text y={34} textAnchor="middle" fontFamily={FONT.cond} fontWeight={700} fontSize={20} fill="#fff">{(it.label ?? '').toUpperCase()}</text>
+              <text y={38} textAnchor="middle" fontFamily={FONT.heavy} fontSize={22} fill="#fff" opacity={0.85}>{i + 1}</text>
             </g>
           );
         })}
+        {/* the newest weight's label hangs on the strings as a paper tag (one at a time: no overlapping text) */}
+        {mine.length ? (() => {
+          const it = mine[mine.length - 1];
+          const a = t - (it.in ?? 0);
+          const txt = (it.label ?? '').toUpperCase();
+          const w = Math.min(330, Math.max(140, txt.length * 13 + 30));
+          const fs = Math.min(24, ((w - 24) / Math.max(1, txt.length)) * 1.9);
+          return (
+            <g transform={`translate(0 ${96 + Math.sin(t * 1.6) * 2}) rotate(${Math.sin(t * 1.1) * 1.5})`} opacity={clamp(a / 0.3)}>
+              <rect x={-w / 2} y={-26} width={w} height={52} rx={4} fill="#f4ecd8" stroke={INK} strokeWidth={3} />
+              <circle cx={0} cy={-26} r={5} fill="#c9a24a" stroke={INK} strokeWidth={2} />
+              <text y={9} textAnchor="middle" fontFamily={FONT.cond} fontWeight={700} fontSize={fs} fill={INK}>{txt}</text>
+            </g>
+          );
+        })() : null}
         {nat ? <g transform="translate(-60 300)"><Flag nation={nat} w={120} h={80} t={t} /></g> : null}
-        {label ? <text y={nat ? 430 : 340} textAnchor="middle" fontFamily={FONT.hand} fontSize={46} fill={INK}>{label}</text> : null}
+        {label ? (
+          <g transform={`translate(0 ${nat ? 418 : 330})`}>
+            <rect x={-label.length * 12 - 26} y={-36} width={label.length * 24 + 52} height={54} rx={5} fill="#f4ecd8" stroke={INK} strokeWidth={3} />
+            <text y={4} textAnchor="middle" fontFamily={FONT.cond} fontWeight={700} fontSize={34} fill={INK}>{label.toUpperCase()}</text>
+          </g>
+        ) : null}
       </g>
     );
   };
@@ -65,7 +86,12 @@ export const ScaleDevice: React.FC<{ t: number; left?: string; right?: string; l
       <path d={`M0 -84 L-12 -130 H12 Z`} fill="#c9a24a" stroke={INK} strokeWidth={4} transform={`rotate(${ang} 0 -60)`} />
       {pan(lx, ly + 240, 'L', leftNation, left)}
       {pan(rx, ry + 240, 'R', rightNation, right)}
-      {title ? <text y={420} textAnchor="middle" fontFamily={FONT.cond} fontWeight={700} fontSize={44} fill={INK}>{title}</text> : null}
+      {title ? (
+        <g transform="translate(0 -200)">
+          <rect x={-title.length * 12 - 30} y={-34} width={title.length * 24 + 60} height={54} rx={6} fill="#d9b864" stroke={INK} strokeWidth={3} />
+          <text y={4} textAnchor="middle" fontFamily={FONT.cond} fontWeight={700} fontSize={32} letterSpacing={2} fill="#3a2a12">{title}</text>
+        </g>
+      ) : null}
     </g>
   );
 };
@@ -100,31 +126,92 @@ export const MeterDevice: React.FC<{ t: number; value?: number; left?: string; r
 
 // ---------- Bars ----------
 export const BarsDevice: React.FC<{ t: number; items?: Item[]; max?: number; unit?: string; title?: string; width?: number; vertical?: boolean }> = ({ t, items = [], max, unit = '', title, width = 1100 }) => {
+  // physical: glass tubes with coloured liquid on a wooden plaque, brass caps and engraved label plates
   const m = max ?? Math.max(1, ...items.map((i) => i.value ?? 0));
-  const rowH = Math.min(130, 560 / Math.max(1, items.length));
+  const rowH = Math.min(150, 600 / Math.max(1, items.length));
+  const tubeH = Math.min(64, rowH * 0.5);
+  const labelW = 300;
+  const plaqueW = width + labelW + 200, plaqueH = items.length * rowH + (title ? 150 : 70);
+  const top = title ? -110 : -40;
   return (
     <g>
-      {title ? <text x={0} y={-50} textAnchor="middle" fontFamily={FONT.heavy} fontSize={60} fill={INK}>{title}</text> : null}
+      <defs>
+        <linearGradient id="tube_glass" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#ffffff" stopOpacity={0.55} />
+          <stop offset="0.35" stopColor="#ffffff" stopOpacity={0.12} />
+          <stop offset="1" stopColor="#000000" stopOpacity={0.15} />
+        </linearGradient>
+        <linearGradient id="brass" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#f0d48a" />
+          <stop offset="0.5" stopColor="#c19a4a" />
+          <stop offset="1" stopColor="#7a5a24" />
+        </linearGradient>
+        <linearGradient id="plaque" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#7d5434" />
+          <stop offset="1" stopColor="#4e321e" />
+        </linearGradient>
+      </defs>
+      <rect x={-plaqueW / 2 - labelW / 2 + 8} y={top + 10} width={plaqueW} height={plaqueH} rx={14} fill="#000" opacity={0.25} />
+      <rect x={-plaqueW / 2 - labelW / 2} y={top} width={plaqueW} height={plaqueH} rx={14} fill="url(#plaque)" stroke={INK} strokeWidth={5} />
+      <rect x={-plaqueW / 2 - labelW / 2 + 14} y={top + 14} width={plaqueW - 28} height={plaqueH - 28} rx={8} fill="none" stroke="#a87a4a" strokeWidth={3} opacity={0.6} />
+      {[[-1, -1], [1, -1], [-1, 1], [1, 1]].map(([sx, sy], i) => (
+        <circle key={i} cx={-labelW / 2 + sx * (plaqueW / 2 - 30)} cy={sy < 0 ? top + 30 : top + plaqueH - 30} r={8} fill="url(#brass)" stroke={INK} strokeWidth={2} />
+      ))}
+      {title ? (
+        <g transform={`translate(${-labelW / 2} ${top + 62})`}>
+          <rect x={-title.length * 13 - 30} y={-34} width={title.length * 26 + 60} height={56} rx={6} fill="url(#brass)" stroke={INK} strokeWidth={3} />
+          <text x={0} y={6} textAnchor="middle" fontFamily={FONT.cond} fontWeight={700} fontSize={34} letterSpacing={2} fill="#3a2a12">{title}</text>
+        </g>
+      ) : null}
       {items.map((it, i) => {
         const a = t - (it.in ?? 0);
-        if (a < 0) return null;
-        const k = easeFn('out', clamp(a / 1.2));
+        const y = (title ? 60 : 20) + i * rowH;
+        const k = a < 0 ? 0 : easeFn('out', clamp(a / 1.6));
         const v = (it.value ?? 0) * k;
-        const bw = (v / m) * width;
-        const y = i * rowH;
-        const c = it.nation ? uiColor(it.nation) : col(it.color, C.red);
+        const lw = (v / m) * width;
+        const c0 = it.nation ? uiColor(it.nation) : col(it.color, C.red);
+        const c = liquid(c0);
+        const wob = a > 0 && a < 2.2 ? Math.sin(a * 9) * 3 * (1 - a / 2.2) : 0;
         return (
-          <g key={i} transform={`translate(${-width / 2} ${y})`} opacity={clamp(a / 0.2)}>
-            {it.nation ? <g transform={`translate(-140 ${rowH * 0.12})`}><Flag nation={it.nation} w={110} h={rowH * 0.62} t={t} still /></g> : null}
-            <text x={-20} y={rowH * 0.5} textAnchor="end" fontFamily={FONT.cond} fontWeight={700} fontSize={Math.min(40, rowH * 0.36)} fill={INK} dominantBaseline="middle">{it.nation ? '' : it.label}</text>
-            <rect x={0} y={rowH * 0.12} width={Math.max(4, bw)} height={rowH * 0.62} fill={c} stroke={INK} strokeWidth={4} />
-            <text x={bw + 18} y={rowH * 0.5} fontFamily={FONT.heavy} fontSize={Math.min(52, rowH * 0.46)} fill={INK} dominantBaseline="middle">{Math.round(v).toLocaleString('en-US') + unit}</text>
-            {it.nation && it.label ? <text x={12} y={rowH * 0.5} fontFamily={FONT.cond} fontWeight={700} fontSize={Math.min(34, rowH * 0.3)} fill="#fff" dominantBaseline="middle">{it.label}</text> : null}
+          <g key={i} transform={`translate(${-width / 2} ${y})`} opacity={a < 0 ? 0.55 : 1}>
+            {/* engraved label plate */}
+            <g transform={`translate(${-labelW - 24} ${tubeH / 2})`}>
+              <rect x={0} y={-26} width={labelW} height={52} rx={5} fill="#e9dfc4" stroke={INK} strokeWidth={3} />
+              {it.nation ? <g transform="translate(10 -16)"><Flag nation={it.nation} w={44} h={32} t={t} still /></g> : null}
+              <text x={it.nation ? 64 : 14} y={9} fontFamily={FONT.cond} fontWeight={700} fontSize={Math.min(26, (labelW - 70) / Math.max(8, (it.label ?? '').length) * 1.9)} fill={INK}>{it.label}</text>
+            </g>
+            {/* tube */}
+            <rect x={0} y={0} width={width} height={tubeH} rx={tubeH / 2} fill="#e9e6da" opacity={0.55} />
+            {lw > 2 ? <rect x={4} y={4 + wob * 0.2} width={Math.max(tubeH * 0.6, lw - 8)} height={tubeH - 8} rx={(tubeH - 8) / 2} fill={c} /> : null}
+            {lw > 2 ? <rect x={10} y={8} width={Math.max(0, lw - 30)} height={(tubeH - 8) * 0.28} rx={6} fill="#fff" opacity={0.28} /> : null}
+            {a > 0 && a < 2 ? [0, 1, 2].map((b) => <circle key={b} cx={Math.max(10, lw - 20 - b * 26 - ((a * 60) % 26))} cy={tubeH * 0.55 - b * 4} r={3 + b} fill="#fff" opacity={0.4 * (1 - a / 2)} />) : null}
+            <rect x={0} y={0} width={width} height={tubeH} rx={tubeH / 2} fill="url(#tube_glass)" stroke={INK} strokeWidth={4} />
+            {Array.from({ length: 11 }, (_, q) => <path key={q} d={`M${(q / 10) * width} ${tubeH} v-${q % 5 === 0 ? 16 : 9}`} stroke={INK} strokeWidth={2} opacity={0.5} />)}
+            <rect x={-18} y={-6} width={24} height={tubeH + 12} rx={5} fill="url(#brass)" stroke={INK} strokeWidth={3} />
+            <rect x={width - 6} y={-6} width={24} height={tubeH + 12} rx={5} fill="url(#brass)" stroke={INK} strokeWidth={3} />
+            {/* value tag hanging on the right end */}
+            {a > 0 ? (
+              <g transform={`translate(${width + 40} ${tubeH / 2})`}>
+                <rect x={0} y={-30} width={Math.max(90, String(Math.round(v)).length * 30 + unit.length * 20 + 30)} height={60} rx={6} fill="#f4ecd8" stroke={INK} strokeWidth={3} />
+                <text x={16} y={16} fontFamily={FONT.heavy} fontSize={44} fill={INK}>{Math.round(v).toLocaleString('en-US') + unit}</text>
+              </g>
+            ) : null}
           </g>
         );
       })}
     </g>
   );
+};
+
+/** liquids must read as liquid: pale or grey colours are deepened */
+const liquid = (c: string) => {
+  const m = /^#([0-9a-f]{6})$/i.exec(c);
+  if (!m) return c;
+  const n = parseInt(m[1], 16);
+  const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+  const sat = Math.max(r, g, b) - Math.min(r, g, b);
+  const k = sat < 40 ? 0.62 : (r + g + b) / 3 > 170 ? 0.78 : 1;
+  return `#${[r, g, b].map((v) => Math.round(v * k).toString(16).padStart(2, '0')).join('')}`;
 };
 
 // ---------- Scoreboard (two or more sides) ----------
@@ -320,24 +407,50 @@ export const RankingDevice: React.FC<{ t: number; items?: Item[]; highlight?: nu
 
 // ---------- Timeline ----------
 export const TimelineDevice: React.FC<{ t: number; items?: Item[]; cursor?: number; width?: number; start?: string; end?: string }> = ({ t, items = [], cursor, width = 1600, start, end }) => {
+  // physical: a framed corkboard, red yarn pinned along it, paper cards pinned above/below
+  const W = width + 200, H = 560;
+  const sag = (x: number) => 14 * Math.sin(((x + width / 2) / width) * Math.PI);
+  const yarn = Array.from({ length: 21 }, (_, i) => {
+    const x = -width / 2 + (i / 20) * width;
+    return `${i ? 'L' : 'M'}${x.toFixed(1)} ${sag(x).toFixed(1)}`;
+  }).join(' ');
   return (
     <g>
-      <line x1={-width / 2} x2={width / 2} stroke={INK} strokeWidth={10} strokeLinecap="round" />
-      {start ? <text x={-width / 2} y={70} textAnchor="middle" fontFamily={FONT.hand} fontSize={40} fill={INK}>{start}</text> : null}
-      {end ? <text x={width / 2} y={70} textAnchor="middle" fontFamily={FONT.hand} fontSize={40} fill={INK}>{end}</text> : null}
+      <defs>
+        <pattern id="cork" width={36} height={36} patternUnits="userSpaceOnUse">
+          <rect width={36} height={36} fill="#b98a58" />
+          {[[4, 6], [20, 3], [28, 18], [10, 24], [22, 30], [33, 33], [2, 30]].map(([x, y], i) => <circle key={i} cx={x} cy={y} r={1.6 + (i % 3) * 0.6} fill={i % 2 ? '#8e6436' : '#d3a774'} />)}
+        </pattern>
+      </defs>
+      <rect x={-W / 2 + 10} y={-H / 2 + 14} width={W} height={H} rx={8} fill="#000" opacity={0.25} />
+      <rect x={-W / 2} y={-H / 2} width={W} height={H} rx={8} fill="#6e4527" stroke={INK} strokeWidth={5} />
+      <rect x={-W / 2 + 22} y={-H / 2 + 22} width={W - 44} height={H - 44} fill="url(#cork)" stroke={INK} strokeWidth={3} />
+      <path d={yarn} stroke="#7a1a14" strokeWidth={7} fill="none" strokeLinecap="round" />
+      <path d={yarn} stroke="#c8352b" strokeWidth={4} fill="none" strokeLinecap="round" />
+      {[-width / 2, width / 2].map((x) => <circle key={x} cx={x} cy={0} r={9} fill="#c19a4a" stroke={INK} strokeWidth={2.5} />)}
+      {start ? <text x={-width / 2} y={56} textAnchor="middle" fontFamily={FONT.hand} fontSize={36} fill={INK}>{start}</text> : null}
+      {end ? <text x={width / 2} y={56} textAnchor="middle" fontFamily={FONT.hand} fontSize={36} fill={INK}>{end}</text> : null}
       {items.map((it, i) => {
         const a = t - (it.in ?? 0);
         if (a < 0) return null;
         const x = -width / 2 + (it.at ?? i / Math.max(1, items.length - 1)) * width;
         const up = i % 2 === 0;
-        const k = easeFn('back', clamp(a / 0.4));
+        const k = easeFn('back', clamp(a / 0.45));
+        const pinC = col(it.color, C.red);
+        const cw = Math.max(200, Math.max((it.label ?? '').length * 17, (it.sub ?? '').length * 18) + 40);
+        const cy = up ? -150 : 150;
+        const rot = (rnd('tl', i) - 0.5) * 6;
         return (
-          <g key={i} transform={`translate(${x} 0)`}>
-            <circle r={16 * k} fill={col(it.color, C.red)} stroke={INK} strokeWidth={4} />
-            <line y1={up ? -20 : 20} y2={(up ? -90 : 90) * k} stroke={INK} strokeWidth={3} />
-            <g transform={`translate(0 ${up ? -110 : 110}) scale(${k})`}>
-              <text y={up ? -36 : 20} textAnchor="middle" fontFamily={FONT.cond} fontWeight={700} fontSize={30} fill={C.redDark}>{it.sub ?? ''}</text>
-              <text y={up ? 0 : 56} textAnchor="middle" fontFamily={FONT.hand} fontSize={36} fill={INK}>{it.label}</text>
+          <g key={i} transform={`translate(${x} ${sag(x)})`}>
+            <path d={`M0 0 L0 ${up ? cy + 40 : cy - 40}`} stroke="#7a1a14" strokeWidth={3} opacity={k} />
+            <circle r={11 * k} fill={pinC} stroke={INK} strokeWidth={3} />
+            <circle cx={-3} cy={-3} r={3.5 * k} fill="#fff" opacity={0.6} />
+            <g transform={`translate(0 ${cy}) rotate(${rot}) scale(${k})`}>
+              <rect x={-cw / 2 + 6} y={-46} width={cw} height={98} fill="#000" opacity={0.2} />
+              <rect x={-cw / 2} y={-52} width={cw} height={98} fill="#f6efdc" stroke={INK} strokeWidth={3} />
+              <text y={-14} textAnchor="middle" fontFamily={FONT.mono} fontWeight={700} fontSize={26} fill={C.redDark}>{it.sub ?? ''}</text>
+              <text y={28} textAnchor="middle" fontFamily={FONT.hand} fontSize={32} fill={INK}>{it.label}</text>
+              <circle cx={0} cy={-52} r={9} fill={pinC} stroke={INK} strokeWidth={2.5} />
             </g>
           </g>
         );

@@ -13,7 +13,7 @@ import { Tree } from './Sets';
 const X0 = -240, Y0 = -160, W = 2400, H = 1400;
 type P = { kind: string; t: number; time?: string; [k: string]: unknown };
 
-export const RICH_SETS = new Set(['archbridge', 'river', 'polder', 'cabin', 'heath', 'hotel', 'garden', 'bridge', 'deck', 'flightdeck', 'hangar', 'radio', 'tent', 'airfield', 'corridor', 'parliament', 'cell', 'train_interior', 'cockpit']);
+export const RICH_SETS = new Set(['workshop', 'board', 'archbridge', 'river', 'polder', 'cabin', 'heath', 'hotel', 'garden', 'bridge', 'deck', 'flightdeck', 'hangar', 'radio', 'tent', 'airfield', 'corridor', 'parliament', 'cell', 'train_interior', 'cockpit']);
 
 const SKY: Record<string, [string, string]> = {
   day: ['#6fb3dc', '#d7ecf4'],
@@ -834,8 +834,75 @@ const Hotel: React.FC<P> = (p) => {
   );
 };
 
+
+/** a warm wooden workroom: plank wall, pinned papers, shelf, hanging lamp, desk edge. The home of the physical devices. */
+const Workshop: React.FC<P> = (p) => {
+  const t = p.t, g = (p.ground as number) ?? 940;
+  const desk = p.desk !== false;
+  return (
+    <g>
+      <defs>
+        <linearGradient id="ws_wall" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#5b3f29" />
+          <stop offset="0.6" stopColor="#71503a" />
+          <stop offset="1" stopColor="#4a3322" />
+        </linearGradient>
+        <linearGradient id="ws_desk" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#8d5f3a" />
+          <stop offset="0.12" stopColor="#6e4527" />
+          <stop offset="1" stopColor="#3f2716" />
+        </linearGradient>
+      </defs>
+      <rect x={X0} y={Y0} width={W} height={H} fill="url(#ws_wall)" />
+      {/* vertical planks with seams, grain and nail heads */}
+      {Array.from({ length: 21 }, (_, i) => {
+        const x = X0 + i * 120;
+        const tone = rnd('wsp', i) * 0.12 - 0.06;
+        return (
+          <g key={i}>
+            <rect x={x} y={Y0} width={120} height={H} fill={tone > 0 ? '#fff' : '#000'} opacity={Math.abs(tone)} />
+            <path d={`M${x} ${Y0} V${Y0 + H}`} stroke="#2e1d12" strokeWidth={4} opacity={0.7} />
+            {[0, 1, 2].map((k) => (
+              <path key={k} d={`M${x + 22 + k * 34 + rnd('wsg', i, k) * 10} ${Y0} q${8 - rnd('wsq', i, k) * 16} ${H / 2} 0 ${H}`} stroke="#3a2516" strokeWidth={1.6} opacity={0.35} fill="none" />
+            ))}
+            <circle cx={x + 60} cy={60} r={4} fill="#2a2018" />
+            <circle cx={x + 60} cy={720} r={4} fill="#2a2018" />
+          </g>
+        );
+      })}
+      {/* shelf with jars and box files, top right */}
+      <rect x={1560} y={250} width={520} height={18} fill="#8d5f3a" stroke={INK} strokeWidth={4} />
+      {[1590, 1650, 1710].map((x, i) => <rect key={x} x={x} y={130} width={50} height={120} rx={4} fill={['#7a2e26', '#3e4f63', '#6b6a3e'][i]} stroke={INK} strokeWidth={3} />)}
+      {[1800, 1880].map((x) => <path key={x} d={`M${x} 250 v-70 q0 -14 14 -14 h30 q14 0 14 14 v70 Z`} fill="#c8d6d4" opacity={0.85} stroke={INK} strokeWidth={3} />)}
+      {/* pinned sketch + clipboard */}
+      <g transform="translate(-60 160) rotate(-3)">
+        <rect width={260} height={190} fill="#efe6d0" stroke={INK} strokeWidth={3} />
+        <path d="M24 140 Q80 60 130 110 T236 60" stroke="#7a5a3a" strokeWidth={3} fill="none" />
+        <circle cx={130} cy={8} r={7} fill="#b8322a" stroke={INK} strokeWidth={2} />
+      </g>
+      <g transform="translate(1900 420) rotate(4)">
+        <rect width={170} height={230} rx={6} fill="#a87a4a" stroke={INK} strokeWidth={3} />
+        <rect x={14} y={28} width={142} height={186} fill="#f1e9d4" />
+        {[0, 1, 2, 3, 4].map((k) => <path key={k} d={`M28 ${64 + k * 30} h${90 + (k % 2) * 20}`} stroke="#6a6a6a" strokeWidth={3} />)}
+        <rect x={56} y={12} width={58} height={24} rx={4} fill="#9a9a9a" stroke={INK} strokeWidth={2.5} />
+      </g>
+      <Lantern x={960} y={Y0} t={t} len={170} swing={1.5} />
+      <Dust t={t} x={600} y={200} w={720} h={700} n={22} seed="ws" />
+      {desk ? (
+        <g>
+          <rect x={X0} y={g} width={W} height={1240 - g + 20} fill="url(#ws_desk)" />
+          <path d={`M${X0} ${g} H${X0 + W}`} stroke="#b07a4a" strokeWidth={5} />
+          <path d={`M${X0} ${g + 4} H${X0 + W}`} stroke={INK} strokeWidth={3} opacity={0.6} />
+        </g>
+      ) : null}
+    </g>
+  );
+};
+
 export const RichSet: React.FC<P> = (p) => {
   switch (p.kind) {
+    case 'workshop':
+    case 'board': return <Workshop {...p} />;
     case 'archbridge': return <ArchBridge {...p} />;
     case 'river': return <River {...p} />;
     case 'polder': return <Polder {...p} />;

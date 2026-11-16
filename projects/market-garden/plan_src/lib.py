@@ -210,6 +210,9 @@ LETTERBOX = {
 }
 
 
+WORKSHOP = {"s113": 1000, "s233": 1000, "s135": 1000, "s203": 900}
+
+
 def finish(meta, cast, path):
     SCENES.sort(key=lambda s: s["start"])
     for i, s in enumerate(SCENES):
@@ -218,6 +221,9 @@ def finish(meta, cast, path):
     for s in SCENES:
         if s["id"] in LETTERBOX:
             s["letterbox"] = LETTERBOX[s["id"]]
+        if s["id"] in WORKSHOP:
+            # physical devices live in the workroom (corkboard timeline, glass tubes, brass scale on the desk)
+            s["set"] = {"kind": "workshop", "ground": WORKSHOP[s["id"]]}
     plan = {"meta": meta, "cast": cast, "scenes": SCENES}
     json.dump(plan, open(path, "w", encoding="utf8"), indent=1, ensure_ascii=False)
     print(len(SCENES), "scenes")

@@ -350,10 +350,19 @@ export const Prop: React.FC<{ item: string; t: number; color?: string; text?: st
         </g>
       );
     case 'rifle':
+      // bolt-action rifle on the axis y = 0: wrist of the stock (right hand) at x −30, handguard (left hand) at x 40
       return (
         <g>
-          <path d="M-110 0 L60 -8 L70 4 L-20 10 L-60 30 L-110 20 Z" fill="#6b4a32" stroke={INK} strokeWidth={3} />
-          <path d="M40 -6 L150 -10" stroke="#2a2a2a" strokeWidth={8} />
+          <path d="M-104 12 Q-30 34 56 6" stroke="#5a4a30" strokeWidth={3} fill="none" />
+          <path d="M-128 -4 L-126 20 Q-104 26 -72 14 L-36 6 L-26 8 L-18 2 L92 1 L94 -6 L-44 -7 Q-86 -10 -128 -4 Z" fill="#7a5232" stroke={INK} strokeWidth={3.5} strokeLinejoin="round" />
+          <path d="M-124 -1 Q-90 -6 -44 -4 L60 -4" stroke="#a0744a" strokeWidth={3} fill="none" opacity={0.8} />
+          <path d="M-8 -6 L84 -8 L88 -3 L-8 -1 Z" fill="#5e3e26" stroke={INK} strokeWidth={2.5} />
+          <rect x={-46} y={-11} width={56} height={6} rx={2} fill="#3a3833" stroke={INK} strokeWidth={2} />
+          <path d="M-30 -10 L-36 -18" stroke="#2b2926" strokeWidth={3.5} strokeLinecap="round" />
+          <circle cx={-37} cy={-19} r={3.2} fill="#3a3833" stroke={INK} strokeWidth={1.5} />
+          <path d="M-24 4 Q-20 13 -12 4" stroke={INK} strokeWidth={2.5} fill="none" />
+          <rect x={86} y={-9} width={84} height={5} rx={2} fill="#2b2926" />
+          <rect x={164} y={-12} width={6} height={4} fill="#2b2926" />
         </g>
       );
     default:
