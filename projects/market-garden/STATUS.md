@@ -6,7 +6,7 @@
 | SRT / voice | `input/script.srt` · `input/voice.wav` (34:04.7) |
 | language | en |
 | started | 2026-11-16 |
-| state | re-rendering with the film-quality engine (2026-11-16) |
+| state | delivered v2 (film-quality engine, 2026-11-16) |
 
 ## Decisions
 - Device: the road to Arnhem (road device v2, exits = warnings that were ignored, painted German when lost).
@@ -20,7 +20,7 @@
 - [x] review sheets checked — all 254 scenes re-reviewed after the part-2 upgrade; fixes: map labels (s086, s091, s151), rifle drill (s005, s032), s237 in the workroom, one-hand folders
 - [x] audio (−14 LUFS)
 - [x] video rendered + muxed (old engine, `out/market-garden.mp4`)
-- [~] re-render with the film-quality engine (running; old film kept as `out/market-garden_v1-old-look.mp4`)
+- [x] re-rendered with the film-quality engine: `out/market-garden.mp4` 34:04, −14.0 LUFS, frames spot-checked (old film kept as `out/market-garden_v1-old-look.mp4`)
 - [x] thumbnails: prompts + drafts
 - [x] package (titles, description, tags)
 - [ ] QUALITY.md checklist on the re-render
@@ -30,5 +30,5 @@
 - Weak but acceptable: s209 (counter on blank paper), s230 (verdict headline on paper).
 
 ## Delivered
-- MP4: `out/market-garden.mp4` (34:04, old look)
+- MP4: `out/market-garden.mp4` (34:04, v2 look)
 - Package: `out/youtube/`
