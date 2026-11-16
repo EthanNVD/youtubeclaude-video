@@ -156,6 +156,7 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
             scale: (e.holdsScale as number) ?? holdScale[pose] ?? 0.5,
             rotate: pose === 'phone' ? -30 : (e.holdsRotate as number) ?? 0,
             dy: pose === 'holdUp' ? -95 : pose === 'hold' || pose === 'carry' ? 4 : 0,
+            grip: ({ paper: 52, telegram: 98, folder: 118, book: 68, crate: 58, document: 98, newspaper: 98, map: 110 } as Record<string, number>)[e.holds as string],
           }
         : undefined;
       body = (
@@ -324,12 +325,26 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
     case 'city': {
       const capital = !!e.capital;
       const side = (e.side as string) ?? 'right';
-      const lx = side === 'left' ? -18 : side === 'top' || side === 'bottom' ? 0 : 18;
-      const ly = side === 'top' ? -26 : side === 'bottom' ? 44 : 12;
+      const size = (e.size as number) ?? 26;
+      const name = String(e.name ?? e.text ?? '');
+      const tag = !!e.tag;
+      const lx = side === 'left' ? -14 : side === 'top' || side === 'bottom' ? 0 : 14;
+      const ly = side === 'top' ? -18 : side === 'bottom' ? size + 12 : size * 0.36;
+      const anchor = side === 'left' ? 'end' : side === 'right' ? 'start' : 'middle';
+      const font = e.font === 'hand' ? FONT.hand : FONT.cond;
+      const label = (tag || e.upper !== false) && e.font !== 'hand' ? name.toUpperCase() : name;
+      const tw = label.length * size * 0.62 + size * 0.9;
+      const tx = anchor === 'start' ? lx - size * 0.3 : anchor === 'end' ? lx - tw + size * 0.3 : -tw / 2;
       body = (
         <g>
-          {capital ? <path d="M0 -16 L4.7 -5 L16 -5 L7 2 L10 13 L0 6.5 L-10 13 L-7 2 L-16 -5 L-4.7 -5 Z" fill={C.red} stroke={INK} strokeWidth={3} /> : <circle r={10} fill="#fff" stroke={INK} strokeWidth={4} />}
-          <text x={lx} y={ly} textAnchor={side === 'left' ? 'end' : side === 'right' ? 'start' : 'middle'} fontFamily={FONT.hand} fontSize={(e.size as number) ?? 38} fill={INK} stroke="#fbf8f0" strokeWidth={7} paintOrder="stroke">{String(e.name ?? e.text ?? '')}</text>
+          {capital ? <path d="M0 -12 L3.5 -4 L12 -4 L5 1.5 L7.5 10 L0 5 L-7.5 10 L-5 1.5 L-12 -4 L-3.5 -4 Z" fill={C.red} stroke={INK} strokeWidth={2.4} /> : <circle r={6.5} fill={INK} stroke="#f4ecd8" strokeWidth={2.5} />}
+          {tag ? (
+            <g>
+              <rect x={tx + 3} y={ly - size * 0.95 + 4} width={tw} height={size * 1.35} fill="#000" opacity={0.22} />
+              <rect x={tx} y={ly - size * 0.95} width={tw} height={size * 1.35} fill="#f6f1e4" stroke={INK} strokeWidth={2.5} />
+            </g>
+          ) : null}
+          <text x={tag ? tx + tw / 2 : lx} y={ly} textAnchor={tag ? 'middle' : anchor} fontFamily={font} fontWeight={600} fontSize={size} letterSpacing={tag ? 2 : 3} fill={INK} stroke={tag ? 'none' : '#efe4c8'} strokeOpacity={0.7} strokeWidth={5} paintOrder="stroke">{label}</text>
         </g>
       );
       break;

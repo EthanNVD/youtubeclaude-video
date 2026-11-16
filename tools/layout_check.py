@@ -101,9 +101,12 @@ def overlaps(scene):
                 items.append((j, el, b, _live(el, dur)))
     # badges (always visible for the whole shot)
     zones = []
-    if scene.get("date"):
+    if scene.get("letterbox"):
+        zones.append(("letterbox bar", (0, 0, 1920, 120)))
+        zones.append(("letterbox bar", (0, 960, 1920, 1080)))
+    elif scene.get("date"):
         zones.append(("date badge", (20, 30, 40 + max(160, len(scene["date"]) * 25 + 50), 130)))
-    if scene.get("place"):
+    if scene.get("place") and not scene.get("letterbox"):
         y0 = 140 if scene.get("date") else 46
         zones.append(("place badge", (20, y0 - 16, 40 + max(160, len(scene["place"]) * 25 + 50), y0 + 84)))
     if scene.get("clock"):

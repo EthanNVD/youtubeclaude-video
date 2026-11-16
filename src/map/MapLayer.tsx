@@ -114,46 +114,93 @@ export const makeProjection = (center: LonLat, span: number, zoom: number): GeoP
     ]);
 };
 
-const STYLES: Record<string, { ocean: string; land: string; border: string; coast: string; label: string }> = {
-  paper: { ocean: '#b7d0cf', land: '#ecdcb6', border: '#9a8664', coast: '#4f6f78', label: '#4a4038' },
-  old: { ocean: '#b3c9c3', land: '#e6d3a8', border: '#8a7656', coast: '#46625f', label: '#3e3428' },
-  snow: { ocean: '#9fb8c6', land: '#f1f3f2', border: '#a9b2b8', coast: '#6e8796', label: '#3e4a52' },
-  dark: { ocean: '#1d2a38', land: '#3a3f44', border: '#59606a', coast: '#0f1820', label: '#d8d2c4' },
-  sepia: { ocean: '#c9b48e', land: '#ecdcb8', border: '#a88e66', coast: '#7a6446', label: '#4a3a28' },
-  war: { ocean: '#8fb6c9', land: '#e8dcc0', border: '#9a8a6a', coast: '#4f7486', label: '#3a3028' },
+const STYLES: Record<string, { ocean: string; land: string; border: string; coast: string; label: string; mix: number }> = {
+  // reference look: tan land with a stippled texture, flat slate-blue sea, thin dark borders, only the sides that matter coloured
+  paper: { ocean: '#9fb3b7', land: '#d8c49c', border: '#5a4e3c', coast: '#2c2a26', label: '#3a332a', mix: 0.72 },
+  old: { ocean: '#a4b3ab', land: '#d6c095', border: '#5a4a34', coast: '#2c2a26', label: '#3e3428', mix: 0.62 },
+  snow: { ocean: '#9fb8c6', land: '#f1f3f2', border: '#8a949a', coast: '#45525a', label: '#3e4a52', mix: 0.7 },
+  dark: { ocean: '#1d2a38', land: '#3a3f44', border: '#59606a', coast: '#0f1820', label: '#d8d2c4', mix: 0.8 },
+  sepia: { ocean: '#c9b48e', land: '#ecdcb8', border: '#a88e66', coast: '#7a6446', label: '#4a3a28', mix: 0.5 },
+  war: { ocean: '#8fb6c9', land: '#e8dcc0', border: '#9a8a6a', coast: '#4f7486', label: '#3a3028', mix: 0.85 },
   // thumbnail look: saturated poster map, bright sea, white borders
-  poster: { ocean: '#2f7fc1', land: '#f2cf5b', border: '#ffffff', coast: '#1d4f80', label: '#1b1b1b' },
+  poster: { ocean: '#2f7fc1', land: '#f2cf5b', border: '#ffffff', coast: '#1d4f80', label: '#1b1b1b', mix: 1 },
 };
+
+const hex = (c: string): [number, number, number] | null => {
+  const m = /^#([0-9a-f]{6})$/i.exec(c.trim());
+  if (!m) return null;
+  const n = parseInt(m[1], 16);
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+};
+/** blend a political colour into the paper so it reads clearly but stays printed-looking */
+const blend = (c: string, base: string, k: number) => {
+  const a = hex(c), b = hex(base);
+  if (!a || !b || k >= 1) return c;
+  const m = a.map((v, i) => Math.round(v * k + b[i] * (1 - k)));
+  return `#${m.map((v) => v.toString(16).padStart(2, '0')).join('')}`;
+};
+const shade = (c: string, k: number) => {
+  const a = hex(c);
+  if (!a) return c;
+  return `#${a.map((v) => Math.max(0, Math.min(255, Math.round(v * k))).toString(16).padStart(2, '0')).join('')}`;
+};
+
+/** smooth a projected polyline with quadratic curves through the segment midpoints */
+const smoothD = (pts: [number, number][]) => {
+  if (pts.length < 2) return '';
+  let d = `M${pts[0][0].toFixed(1)} ${pts[0][1].toFixed(1)}`;
+  for (let i = 1; i < pts.length - 1; i++) {
+    const mx = (pts[i][0] + pts[i + 1][0]) / 2, my = (pts[i][1] + pts[i + 1][1]) / 2;
+    d += ` Q${pts[i][0].toFixed(1)} ${pts[i][1].toFixed(1)} ${mx.toFixed(1)} ${my.toFixed(1)}`;
+  }
+  const l = pts[pts.length - 1];
+  return d + ` L${l[0].toFixed(1)} ${l[1].toFixed(1)}`;
+};
+
+type MapExtras = { rivers?: boolean | string[]; riverLabels?: boolean; paper?: boolean; graticule?: boolean; ripples?: boolean; hatch?: string[] | boolean; texture?: boolean };
 
 export const MapLayer: React.FC<{ spec: MapSpec; proj: GeoProjection; t: number }> = ({ spec, proj }) => {
   const data = useMapData(spec.era ?? '1938');
-  const sp = spec as MapSpec & { rivers?: boolean; riverLabels?: boolean; paper?: boolean; graticule?: boolean; ripples?: boolean };
+  const sp = spec as MapSpec & MapExtras;
   const styleName = spec.style ?? 'paper';
-  const physicalOn = sp.rivers !== false && styleName !== 'poster';
-  const phys = usePhysical(physicalOn);
+  // rivers are opt-in and named: the reference shows only the one or two rivers the story is about
+  const riverNames = Array.isArray(sp.rivers) ? sp.rivers.map((n) => n.toLowerCase()) : null;
+  const physicalOn = (riverNames !== null && riverNames.length > 0) || sp.rivers === true;
+  const phys = usePhysical(physicalOn && styleName !== 'poster');
   const st = STYLES[styleName] ?? STYLES.paper;
   const ocean = spec.ocean ?? st.ocean;
   const land = spec.land ?? st.land;
   const path = geoPath(proj);
   const colors = spec.colors ?? {};
-  const fillFor = (name: string) => {
+  const colourOf = (name: string): string | null => {
     if (colors[name]) return col(colors[name]);
     for (const [k, v] of Object.entries(colors)) if (k.startsWith('~') && name.toLowerCase().includes(k.slice(1).toLowerCase())) return col(v);
-    return land;
+    return null;
+  };
+  const fillFor = (name: string) => {
+    const c = colourOf(name);
+    return c ? blend(c, land, st.mix) : land;
+  };
+  const hatched = (name: string) => {
+    if (sp.hatch === true) return colourOf(name) !== null;
+    return Array.isArray(sp.hatch) && sp.hatch.some((h) => h.toLowerCase() === name.toLowerCase());
   };
   const labels = spec.labels === true ? Object.keys(colors).filter((k) => !k.startsWith('~')) : Array.isArray(spec.labels) ? spec.labels : [];
-  // visible span in degrees (for detail level)
   const p0 = proj.invert?.([0, 540]), p1 = proj.invert?.([1920, 540]);
   const spanDeg = p0 && p1 ? Math.abs(p1[0] - p0[0]) : 20;
-  const maxRank = spanDeg > 30 ? 4 : spanDeg > 12 ? 6 : spanDeg > 4 ? 8 : 9;
-  const riverW = spanDeg > 30 ? 2 : spanDeg > 8 ? 3 : 4.5;
-  const paper = sp.paper !== false && styleName !== 'poster' && styleName !== 'dark';
-  // river labels: one per named river, placed at the longest on-screen segment, rotated along it
+  const riverW = spanDeg > 30 ? 2.2 : spanDeg > 8 ? 3 : 4.2;
+  // a big river is ~0.3 km wide: on a city-scale map it becomes a water band, not a hairline
+  const pxPerKm = 1920 / (spanDeg * 111 * Math.cos(((spec.center?.[1] ?? 50) * Math.PI) / 180));
+  const bandW = Math.min(34, 0.32 * pxPerKm);
+  const plain = styleName === 'poster' || styleName === 'dark';
+  const texture = sp.texture !== false && !plain;
+  const riverOn = (f: { properties: { k: string; name?: string } }) =>
+    f.properties.k === 'river' && (sp.rivers === true || (riverNames !== null && !!f.properties.name && riverNames.includes(f.properties.name.toLowerCase())));
   const riverLabels: { x: number; y: number; a: number; name: string }[] = [];
-  if (phys && sp.riverLabels !== false && physicalOn) {
+  if (phys && sp.riverLabels !== false) {
     const seen = new Set<string>();
     for (const f of phys) {
-      if (f.properties.k !== 'river' || !f.properties.name || f.properties.rank > Math.min(maxRank, 7) || seen.has(f.properties.name)) continue;
+      if (!riverOn(f) || !f.properties.name || seen.has(f.properties.name)) continue;
       const lines = (f.geometry.type === 'MultiLineString' ? f.geometry.coordinates : [f.geometry.coordinates]) as number[][][];
       let best: { x: number; y: number; a: number; len: number } | null = null;
       for (const ln of lines) {
@@ -161,7 +208,7 @@ export const MapLayer: React.FC<{ spec: MapSpec; proj: GeoProjection; t: number 
           const a = proj(ln[i] as [number, number]), b = proj(ln[i + 1] as [number, number]);
           if (!a || !b) continue;
           const mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2;
-          if (mx < 120 || mx > 1800 || my < 160 || my > 940) continue;
+          if (mx < 200 || mx > 1720 || my < 200 || my > 860) continue;
           const len = Math.hypot(b[0] - a[0], b[1] - a[1]);
           if (!best || len > best.len) {
             let ang = (Math.atan2(b[1] - a[1], b[0] - a[0]) * 180) / Math.PI;
@@ -171,61 +218,91 @@ export const MapLayer: React.FC<{ spec: MapSpec; proj: GeoProjection; t: number 
           }
         }
       }
-      if (best && best.len > 18 && riverLabels.length < 9) {
+      if (best && best.len > 18) {
         seen.add(f.properties.name);
         riverLabels.push({ x: best.x, y: best.y, a: best.a, name: f.properties.name });
       }
     }
   }
   const grat: number[] = [];
-  if (sp.graticule !== false && paper) {
+  if (sp.graticule === true) {
     const step = spanDeg > 40 ? 10 : spanDeg > 10 ? 5 : spanDeg > 3 ? 1 : 0.5;
     const pl = proj.invert?.([0, 0]), pb = proj.invert?.([0, 1080]);
     if (pl && pb) for (let lat = Math.ceil(pb[1] / step) * step; lat <= pl[1]; lat += step) grat.push(lat);
   }
+  const uid = `m${Math.round(spanDeg * 100)}`;
   return (
     <g>
+      <defs>
+        {/* stipple: short ink flecks, like the terrain texture on the reference maps */}
+        <pattern id={`stip_${uid}`} width={140} height={140} patternUnits="userSpaceOnUse">
+          {Array.from({ length: 34 }, (_, i) => {
+            const r = (k: number) => { const v = Math.sin(i * 127.1 + k * 311.7) * 43758.5453; return v - Math.floor(v); };
+            const x = r(1) * 140, y = r(2) * 140, a = r(3) * 180;
+            return <path key={i} d={`M${x} ${y} l${1.5 + r(4) * 3} 0`} transform={`rotate(${a} ${x} ${y})`} stroke="#5a4a32" strokeWidth={1.2 + r(5)} strokeLinecap="round" opacity={0.25 + r(6) * 0.3} />;
+          })}
+        </pattern>
+        <pattern id={`hatch_${uid}`} width={16} height={16} patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <rect width={16} height={16} fill="none" />
+          <line x1={0} y1={0} x2={0} y2={16} stroke="#2c2a26" strokeWidth={3} opacity={0.22} />
+        </pattern>
+        <radialGradient id={`sea_${uid}`} cx="0.5" cy="0.45" r="0.75">
+          <stop offset="0" stopColor="#fff" stopOpacity={0.14} />
+          <stop offset="1" stopColor="#000" stopOpacity={0.12} />
+        </radialGradient>
+      </defs>
       <rect x={-300} y={-300} width={2520} height={1680} fill={ocean} />
+      {!plain ? <rect x={-300} y={-300} width={2520} height={1680} fill={`url(#sea_${uid})`} /> : null}
       {data ? (
         <g>
-          {/* coastal ripples (parallel bands along every coast, like an engraved chart) */}
-          {sp.ripples !== false && styleName !== 'poster'
-            ? [44, 30, 16].map((w, k) => (
-                <g key={'rip' + k}>
-                  {data.fc.features.map((f, i) => {
-                    const d = path(f as unknown as GeoJSON.Feature);
-                    return d ? <path key={i} d={d} fill="none" stroke={k === 2 ? '#ffffff' : st.coast} strokeOpacity={k === 2 ? 0.35 : 0.08 + k * 0.03} strokeWidth={w} strokeLinejoin="round" /> : null;
-                  })}
-                </g>
-              ))
+          {/* one soft light band along the coasts (only on request) */}
+          {sp.ripples === true && !plain
+            ? data.fc.features.map((f, i) => {
+                const d = path(f as unknown as GeoJSON.Feature);
+                return d ? <path key={'rip' + i} d={d} fill="none" stroke="#ffffff" strokeOpacity={0.18} strokeWidth={26} strokeLinejoin="round" /> : null;
+              })
             : null}
           {data.fc.features.map((f, i) => {
             const d = path(f as unknown as GeoJSON.Feature);
             if (!d) return null;
-            return <path key={i} d={d} fill={fillFor(f.properties.name)} stroke={styleName === 'poster' ? st.border : st.border} strokeWidth={styleName === 'poster' ? 3.2 : 1.8} strokeLinejoin="round" />;
+            const fill = fillFor(f.properties.name);
+            return <path key={i} d={d} fill={fill} stroke={styleName === 'poster' ? st.border : shade(fill, 0.55)} strokeWidth={styleName === 'poster' ? 3.2 : 1.6} strokeLinejoin="round" />;
+          })}
+          {texture
+            ? data.fc.features.map((f, i) => {
+                const d = path(f as unknown as GeoJSON.Feature);
+                return d ? <path key={'tx' + i} d={d} fill={`url(#stip_${uid})`} opacity={0.45} /> : null;
+              })
+            : null}
+          {data.fc.features.map((f, i) => {
+            if (!hatched(f.properties.name)) return null;
+            const d = path(f as unknown as GeoJSON.Feature);
+            return d ? <path key={'h' + i} d={d} fill={`url(#hatch_${uid})`} /> : null;
           })}
           {/* inked coastline on top of the land fills */}
           {styleName !== 'poster'
             ? data.fc.features.map((f, i) => {
                 const d = path(f as unknown as GeoJSON.Feature);
-                return d ? <path key={'c' + i} d={d} fill="none" stroke={INK} strokeOpacity={0.55} strokeWidth={2.4} strokeLinejoin="round" /> : null;
+                return d ? <path key={'c' + i} d={d} fill="none" stroke={st.coast} strokeOpacity={0.4} strokeWidth={2} strokeLinejoin="round" /> : null;
               })
             : null}
-          {/* physical layer: lakes + rivers */}
+          {/* named rivers only */}
           {phys
             ? phys.map((f, i) => {
-                if (f.properties.rank > maxRank) return null;
-                const d = path(f.geometry as unknown as GeoJSON.Geometry);
-                if (!d) return null;
-                return f.properties.k === 'lake' ? (
-                  <path key={'p' + i} d={d} fill={ocean} stroke={INK} strokeOpacity={0.4} strokeWidth={1.5} />
-                ) : (
-                  <path key={'p' + i} d={d} fill="none" stroke="#5f8fa8" strokeWidth={f.properties.rank <= 4 ? riverW * 1.3 : riverW} strokeLinecap="round" strokeLinejoin="round" opacity={0.9} />
+                if (!riverOn(f)) return null;
+                const lines = (f.geometry.type === 'MultiLineString' ? f.geometry.coordinates : [f.geometry.coordinates]) as number[][][];
+                const d = lines.map((ln) => smoothD(ln.map((q) => proj(q as [number, number])).filter((q): q is [number, number] => !!q))).join(' ');
+                if (!d.trim()) return null;
+                return (
+                  <g key={'p' + i}>
+                    {bandW > riverW * 1.6 ? <path d={d} fill="none" stroke={st.coast} strokeOpacity={0.45} strokeWidth={bandW + 4} strokeLinecap="round" strokeLinejoin="round" /> : null}
+                    <path d={d} fill="none" stroke={bandW > riverW * 1.6 ? ocean : shade(ocean, 0.78)} strokeWidth={Math.max(riverW, bandW)} strokeLinecap="round" strokeLinejoin="round" opacity={0.95} />
+                  </g>
                 );
               })
             : null}
           {riverLabels.map((r, i) => (
-            <text key={'rl' + i} transform={`translate(${r.x} ${r.y - 10}) rotate(${r.a})`} textAnchor="middle" fontFamily={FONT.serif} fontStyle="italic" fontSize={30} fill="#3f6d86" stroke={land} strokeWidth={5} paintOrder="stroke" opacity={0.95}>{r.name}</text>
+            <text key={'rl' + i} transform={`translate(${r.x} ${r.y - 9}) rotate(${r.a})`} textAnchor="middle" fontFamily={FONT.serif} fontStyle="italic" fontSize={24} fill={shade(ocean, 0.55)} opacity={0.9}>{r.name}</text>
           ))}
           {labels.map((n) => {
             const c = data.centroids.get(n);
@@ -233,19 +310,18 @@ export const MapLayer: React.FC<{ spec: MapSpec; proj: GeoProjection; t: number 
             const p = proj(c);
             if (!p) return null;
             return (
-              <text key={n} x={p[0]} y={p[1]} textAnchor="middle" fontFamily={FONT.cond} fontWeight={600} fontSize={34} letterSpacing={6} fill={st.label} opacity={0.75} stroke="#fff" strokeOpacity={0.35} strokeWidth={4} paintOrder="stroke">
+              <text key={n} x={p[0]} y={p[1]} textAnchor="middle" fontFamily={FONT.cond} fontWeight={600} fontSize={30} letterSpacing={9} fill={st.label} opacity={0.6}>
                 {(spec as { labelNames?: Record<string, string> }).labelNames?.[n] ?? n.toUpperCase()}
               </text>
             );
           })}
         </g>
       ) : null}
-      {/* graticule: faint parallels with degree tags at the left edge */}
       {grat.map((lat) => {
         const a = proj([proj.invert?.([0, 540])?.[0] ?? 0, lat]);
         if (!a) return null;
         return (
-          <g key={'g' + lat} opacity={0.35}>
+          <g key={'g' + lat} opacity={0.25}>
             <line x1={-300} x2={2220} y1={a[1]} y2={a[1]} stroke={INK} strokeWidth={1.2} strokeDasharray="2 10" />
             <text x={40} y={a[1] - 6} fontFamily={FONT.serif} fontSize={22} fill={INK}>{`${Math.round(lat * 10) / 10}°`}</text>
           </g>
@@ -266,14 +342,14 @@ export const PaperOverlay: React.FC = () => (
       </radialGradient>
       <linearGradient id="fold_v" x1="0" x2="1">
         <stop offset="0" stopColor="#000" stopOpacity={0} />
-        <stop offset="0.48" stopColor="#000" stopOpacity={0.1} />
-        <stop offset="0.5" stopColor="#fff" stopOpacity={0.22} />
+        <stop offset="0.48" stopColor="#000" stopOpacity={0.05} />
+        <stop offset="0.5" stopColor="#fff" stopOpacity={0.1} />
         <stop offset="0.53" stopColor="#000" stopOpacity={0} />
       </linearGradient>
       <linearGradient id="fold_h" x1="0" x2="0" y1="0" y2="1">
         <stop offset="0" stopColor="#000" stopOpacity={0} />
-        <stop offset="0.48" stopColor="#000" stopOpacity={0.09} />
-        <stop offset="0.5" stopColor="#fff" stopOpacity={0.2} />
+        <stop offset="0.48" stopColor="#000" stopOpacity={0.05} />
+        <stop offset="0.5" stopColor="#fff" stopOpacity={0.1} />
         <stop offset="0.53" stopColor="#000" stopOpacity={0} />
       </linearGradient>
     </defs>

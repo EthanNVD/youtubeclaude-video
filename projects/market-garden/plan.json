@@ -194,7 +194,8 @@
    "chapter": "The Last Four Tanks",
    "beat": "A little after seven on 20 Sept 1944, four British tanks cross the Nijmegen road bridge",
    "id": "s001",
-   "end": 5.68
+   "end": 5.68,
+   "letterbox": "DRAMATISED — NIJMEGEN, 20 SEPTEMBER 1944"
   },
   {
    "start": 5.68,
@@ -895,7 +896,7 @@
      ],
      "side": "right",
      "in": 0.1,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -906,7 +907,7 @@
      ],
      "side": "right",
      "in": 0.1,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -917,7 +918,7 @@
      ],
      "side": "right",
      "in": 0.1,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -928,7 +929,7 @@
      ],
      "side": "right",
      "in": 0.1,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "unit",
@@ -993,13 +994,22 @@
     "span": 0.8,
     "style": "sepia",
     "colors": {
-     "Germany": "#a9a69a",
-     "Netherlands": "#e8d4a2",
-     "Belgium": "#d8dcb8",
-     "France": "#d8dcb8",
-     "Luxembourg": "#d8dcb8",
-     "United Kingdom": "#a9bccf"
-    }
+     "Germany": "#8a8f8c",
+     "Netherlands": "#cfa264",
+     "Belgium": "#93ab6e",
+     "France": "#93ab6e",
+     "Luxembourg": "#93ab6e",
+     "United Kingdom": "#7f9fc4"
+    },
+    "hatch": [
+     "Germany"
+    ],
+    "rivers": [
+     "Rhine",
+     "Waal",
+     "Maas",
+     "Nederrijn"
+    ]
    },
    "camera": [
     {
@@ -1435,13 +1445,16 @@
     "span": 9.5,
     "style": "paper",
     "colors": {
-     "Germany": "#a9a69a",
-     "Netherlands": "#e8d4a2",
-     "Belgium": "#d8dcb8",
-     "France": "#d8dcb8",
-     "Luxembourg": "#d8dcb8",
-     "United Kingdom": "#a9bccf"
-    }
+     "Germany": "#8a8f8c",
+     "Netherlands": "#cfa264",
+     "Belgium": "#93ab6e",
+     "France": "#93ab6e",
+     "Luxembourg": "#93ab6e",
+     "United Kingdom": "#7f9fc4"
+    },
+    "hatch": [
+     "Germany"
+    ]
    },
    "beat": "not the war in the West, not the advance into Holland",
    "id": "s020",
@@ -2196,13 +2209,16 @@
     "span": 8.5,
     "style": "paper",
     "colors": {
-     "Germany": "#a9a69a",
-     "Netherlands": "#e8d4a2",
-     "Belgium": "#d8dcb8",
-     "France": "#d8dcb8",
-     "Luxembourg": "#d8dcb8",
-     "United Kingdom": "#a9bccf"
-    }
+     "Germany": "#8a8f8c",
+     "Netherlands": "#cfa264",
+     "Belgium": "#93ab6e",
+     "France": "#93ab6e",
+     "Luxembourg": "#93ab6e",
+     "United Kingdom": "#7f9fc4"
+    },
+    "hatch": [
+     "Germany"
+    ]
    },
    "beat": "breakout from Normandy, Falaise pocket, chase across France and Belgium",
    "id": "s031",
@@ -2485,13 +2501,22 @@
     "span": 5.0,
     "style": "paper",
     "colors": {
-     "Germany": "#a9a69a",
-     "Netherlands": "#e8d4a2",
-     "Belgium": "#d8dcb8",
-     "France": "#d8dcb8",
-     "Luxembourg": "#d8dcb8",
-     "United Kingdom": "#a9bccf"
-    }
+     "Germany": "#8a8f8c",
+     "Netherlands": "#cfa264",
+     "Belgium": "#93ab6e",
+     "France": "#93ab6e",
+     "Luxembourg": "#93ab6e",
+     "United Kingdom": "#7f9fc4"
+    },
+    "hatch": [
+     "Germany"
+    ],
+    "rivers": [
+     "Rhine",
+     "Waal",
+     "Maas",
+     "Nederrijn"
+    ]
    },
    "beat": "British airborne staff: the whole Netherlands held no more than 50–100 tanks",
    "id": "s036",
@@ -2855,7 +2880,7 @@
      ],
      "side": "right",
      "in": 0.2,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "label",
@@ -2899,13 +2924,22 @@
     "span": 1.7,
     "style": "paper",
     "colors": {
-     "Germany": "#a9a69a",
-     "Netherlands": "#e8d4a2",
-     "Belgium": "#d8dcb8",
-     "France": "#d8dcb8",
-     "Luxembourg": "#d8dcb8",
-     "United Kingdom": "#a9bccf"
-    }
+     "Germany": "#8a8f8c",
+     "Netherlands": "#cfa264",
+     "Belgium": "#93ab6e",
+     "France": "#93ab6e",
+     "Luxembourg": "#93ab6e",
+     "United Kingdom": "#7f9fc4"
+    },
+    "hatch": [
+     "Germany"
+    ],
+    "rivers": [
+     "Rhine",
+     "Waal",
+     "Maas",
+     "Nederrijn"
+    ]
    },
    "camera": [
     {
@@ -3065,7 +3099,7 @@
      ],
      "side": "right",
      "in": 0.1,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "arrow",
@@ -3151,13 +3185,22 @@
     "span": 3.2,
     "style": "paper",
     "colors": {
-     "Germany": "#a9a69a",
-     "Netherlands": "#e8d4a2",
-     "Belgium": "#d8dcb8",
-     "France": "#d8dcb8",
-     "Luxembourg": "#d8dcb8",
-     "United Kingdom": "#a9bccf"
-    }
+     "Germany": "#8a8f8c",
+     "Netherlands": "#cfa264",
+     "Belgium": "#93ab6e",
+     "France": "#93ab6e",
+     "Luxembourg": "#93ab6e",
+     "United Kingdom": "#7f9fc4"
+    },
+    "hatch": [
+     "Germany"
+    ],
+    "rivers": [
+     "Rhine",
+     "Waal",
+     "Maas",
+     "Nederrijn"
+    ]
    },
    "beat": "the German 15th Army was quietly escaping across the estuary behind them",
    "id": "s043",
@@ -3689,13 +3732,22 @@
     "span": 6.5,
     "style": "paper",
     "colors": {
-     "Germany": "#a9a69a",
-     "Netherlands": "#e8d4a2",
-     "Belgium": "#d8dcb8",
-     "France": "#d8dcb8",
-     "Luxembourg": "#d8dcb8",
-     "United Kingdom": "#a9bccf"
-    }
+     "Germany": "#8a8f8c",
+     "Netherlands": "#cfa264",
+     "Belgium": "#93ab6e",
+     "France": "#93ab6e",
+     "Luxembourg": "#93ab6e",
+     "United Kingdom": "#7f9fc4"
+    },
+    "hatch": [
+     "Germany"
+    ],
+    "rivers": [
+     "Rhine",
+     "Waal",
+     "Maas",
+     "Nederrijn"
+    ]
    },
    "camera": [
     {
@@ -4401,7 +4453,8 @@
    ],
    "beat": "10 Sept Montgomery meets Eisenhower inside the Supreme Commander's plane",
    "id": "s059",
-   "end": 391.92
+   "end": 391.92,
+   "letterbox": "DRAMATISED — BRUSSELS AIRPORT, 10 SEPTEMBER 1944"
   },
   {
    "start": 391.92,
@@ -5418,7 +5471,7 @@
      ],
      "side": "right",
      "in": 0.6,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -5429,7 +5482,7 @@
      ],
      "side": "right",
      "in": 0.6,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -5440,7 +5493,7 @@
      ],
      "side": "right",
      "in": 0.6,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -5451,7 +5504,7 @@
      ],
      "side": "right",
      "in": 0.6,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -5462,7 +5515,7 @@
      ],
      "side": "right",
      "in": 0.6,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "label",
@@ -5493,13 +5546,22 @@
     "span": 2.8,
     "style": "paper",
     "colors": {
-     "Germany": "#a9a69a",
-     "Netherlands": "#e8d4a2",
-     "Belgium": "#d8dcb8",
-     "France": "#d8dcb8",
-     "Luxembourg": "#d8dcb8",
-     "United Kingdom": "#a9bccf"
-    }
+     "Germany": "#8a8f8c",
+     "Netherlands": "#cfa264",
+     "Belgium": "#93ab6e",
+     "France": "#93ab6e",
+     "Luxembourg": "#93ab6e",
+     "United Kingdom": "#7f9fc4"
+    },
+    "hatch": [
+     "Germany"
+    ],
+    "rivers": [
+     "Rhine",
+     "Waal",
+     "Maas",
+     "Nederrijn"
+    ]
    },
    "chapter": "Carpet of Paratroopers",
    "beat": "three and a half airborne divisions along a single road",
@@ -5563,7 +5625,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -5574,7 +5636,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -5585,7 +5647,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -5596,7 +5658,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -5607,7 +5669,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -5618,7 +5680,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "ring",
@@ -5718,13 +5780,22 @@
     "span": 2.8,
     "style": "paper",
     "colors": {
-     "Germany": "#a9a69a",
-     "Netherlands": "#e8d4a2",
-     "Belgium": "#d8dcb8",
-     "France": "#d8dcb8",
-     "Luxembourg": "#d8dcb8",
-     "United Kingdom": "#a9bccf"
-    }
+     "Germany": "#8a8f8c",
+     "Netherlands": "#cfa264",
+     "Belgium": "#93ab6e",
+     "France": "#93ab6e",
+     "Luxembourg": "#93ab6e",
+     "United Kingdom": "#7f9fc4"
+    },
+    "hatch": [
+     "Germany"
+    ],
+    "rivers": [
+     "Rhine",
+     "Waal",
+     "Maas",
+     "Nederrijn"
+    ]
    },
    "camera": [
     {
@@ -5785,7 +5856,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -5796,7 +5867,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -5807,7 +5878,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -5818,7 +5889,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -5829,7 +5900,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "ring",
@@ -5944,13 +6015,22 @@
     "span": 2.8,
     "style": "paper",
     "colors": {
-     "Germany": "#a9a69a",
-     "Netherlands": "#e8d4a2",
-     "Belgium": "#d8dcb8",
-     "France": "#d8dcb8",
-     "Luxembourg": "#d8dcb8",
-     "United Kingdom": "#a9bccf"
-    }
+     "Germany": "#8a8f8c",
+     "Netherlands": "#cfa264",
+     "Belgium": "#93ab6e",
+     "France": "#93ab6e",
+     "Luxembourg": "#93ab6e",
+     "United Kingdom": "#7f9fc4"
+    },
+    "hatch": [
+     "Germany"
+    ],
+    "rivers": [
+     "Rhine",
+     "Waal",
+     "Maas",
+     "Nederrijn"
+    ]
    },
    "beat": "then XXX Corps' tanks drive up that road across the carpet, cross the Rhine, keep going",
    "id": "s076",
@@ -6484,7 +6564,7 @@
      ],
      "side": "right",
      "in": 0.2,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -6495,7 +6575,7 @@
      ],
      "side": "right",
      "in": 0.2,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -6527,13 +6607,22 @@
     "span": 0.55,
     "style": "paper",
     "colors": {
-     "Germany": "#a9a69a",
-     "Netherlands": "#e8d4a2",
-     "Belgium": "#d8dcb8",
-     "France": "#d8dcb8",
-     "Luxembourg": "#d8dcb8",
-     "United Kingdom": "#a9bccf"
-    }
+     "Germany": "#8a8f8c",
+     "Netherlands": "#cfa264",
+     "Belgium": "#93ab6e",
+     "France": "#93ab6e",
+     "Luxembourg": "#93ab6e",
+     "United Kingdom": "#7f9fc4"
+    },
+    "hatch": [
+     "Germany"
+    ],
+    "rivers": [
+     "Rhine",
+     "Waal",
+     "Maas",
+     "Nederrijn"
+    ]
    },
    "beat": "for the British at Arnhem the decision was multiplied by geography",
    "id": "s084",
@@ -6596,7 +6685,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "label",
@@ -6686,13 +6775,22 @@
     "span": 0.4,
     "style": "paper",
     "colors": {
-     "Germany": "#a9a69a",
-     "Netherlands": "#e8d4a2",
-     "Belgium": "#d8dcb8",
-     "France": "#d8dcb8",
-     "Luxembourg": "#d8dcb8",
-     "United Kingdom": "#a9bccf"
-    }
+     "Germany": "#8a8f8c",
+     "Netherlands": "#cfa264",
+     "Belgium": "#93ab6e",
+     "France": "#93ab6e",
+     "Luxembourg": "#93ab6e",
+     "United Kingdom": "#7f9fc4"
+    },
+    "hatch": [
+     "Germany"
+    ],
+    "rivers": [
+     "Rhine",
+     "Waal",
+     "Maas",
+     "Nederrijn"
+    ]
    },
    "beat": "the city full of AA guns; south bank too soft and cut up by dykes",
    "id": "s086",
@@ -6711,7 +6809,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -6722,7 +6820,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "ring",
@@ -6812,13 +6910,22 @@
     "span": 0.5,
     "style": "paper",
     "colors": {
-     "Germany": "#a9a69a",
-     "Netherlands": "#e8d4a2",
-     "Belgium": "#d8dcb8",
-     "France": "#d8dcb8",
-     "Luxembourg": "#d8dcb8",
-     "United Kingdom": "#a9bccf"
-    }
+     "Germany": "#8a8f8c",
+     "Netherlands": "#cfa264",
+     "Belgium": "#93ab6e",
+     "France": "#93ab6e",
+     "Luxembourg": "#93ab6e",
+     "United Kingdom": "#7f9fc4"
+    },
+    "hatch": [
+     "Germany"
+    ],
+    "rivers": [
+     "Rhine",
+     "Waal",
+     "Maas",
+     "Nederrijn"
+    ]
    },
    "beat": "the drop zones went in heathland west of Arnhem, up to 13 km from the bridge",
    "id": "s087",
@@ -7099,7 +7206,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -7110,7 +7217,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "ring",
@@ -7174,13 +7281,22 @@
     "span": 0.5,
     "style": "paper",
     "colors": {
-     "Germany": "#a9a69a",
-     "Netherlands": "#e8d4a2",
-     "Belgium": "#d8dcb8",
-     "France": "#d8dcb8",
-     "Luxembourg": "#d8dcb8",
-     "United Kingdom": "#a9bccf"
-    }
+     "Germany": "#8a8f8c",
+     "Netherlands": "#cfa264",
+     "Belgium": "#93ab6e",
+     "France": "#93ab6e",
+     "Luxembourg": "#93ab6e",
+     "United Kingdom": "#7f9fc4"
+    },
+    "hatch": [
+     "Germany"
+    ],
+    "rivers": [
+     "Rhine",
+     "Waal",
+     "Maas",
+     "Nederrijn"
+    ]
    },
    "beat": "the Type 22 set: effective range about 5 km",
    "id": "s091",
@@ -7612,7 +7728,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "arrow",
@@ -7696,13 +7812,22 @@
     "span": 3.6,
     "style": "paper",
     "colors": {
-     "Germany": "#a9a69a",
-     "Netherlands": "#e8d4a2",
-     "Belgium": "#d8dcb8",
-     "France": "#d8dcb8",
-     "Luxembourg": "#d8dcb8",
-     "United Kingdom": "#a9bccf"
-    }
+     "Germany": "#8a8f8c",
+     "Netherlands": "#cfa264",
+     "Belgium": "#93ab6e",
+     "France": "#93ab6e",
+     "Luxembourg": "#93ab6e",
+     "United Kingdom": "#7f9fc4"
+    },
+    "hatch": [
+     "Germany"
+    ],
+    "rivers": [
+     "Rhine",
+     "Waal",
+     "Maas",
+     "Nederrijn"
+    ]
    },
    "beat": "two battered SS panzer divisions sent near Arnhem to rest and refit",
    "id": "s097",
@@ -8046,7 +8171,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -8057,7 +8182,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -8068,7 +8193,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "arrow",
@@ -8154,13 +8279,22 @@
     "span": 3.2,
     "style": "paper",
     "colors": {
-     "Germany": "#a9a69a",
-     "Netherlands": "#e8d4a2",
-     "Belgium": "#d8dcb8",
-     "France": "#d8dcb8",
-     "Luxembourg": "#d8dcb8",
-     "United Kingdom": "#a9bccf"
-    }
+     "Germany": "#8a8f8c",
+     "Netherlands": "#cfa264",
+     "Belgium": "#93ab6e",
+     "France": "#93ab6e",
+     "Luxembourg": "#93ab6e",
+     "United Kingdom": "#7f9fc4"
+    },
+    "hatch": [
+     "Germany"
+    ],
+    "rivers": [
+     "Rhine",
+     "Waal",
+     "Maas",
+     "Nederrijn"
+    ]
    },
    "beat": "right about the ground attack, wrong about the airborne army",
    "id": "s104",
@@ -8986,7 +9120,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -8997,7 +9131,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -9008,7 +9142,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "unit",
@@ -9062,13 +9196,22 @@
     "span": 1.4,
     "style": "paper",
     "colors": {
-     "Germany": "#a9a69a",
-     "Netherlands": "#e8d4a2",
-     "Belgium": "#d8dcb8",
-     "France": "#d8dcb8",
-     "Luxembourg": "#d8dcb8",
-     "United Kingdom": "#a9bccf"
-    }
+     "Germany": "#8a8f8c",
+     "Netherlands": "#cfa264",
+     "Belgium": "#93ab6e",
+     "France": "#93ab6e",
+     "Luxembourg": "#93ab6e",
+     "United Kingdom": "#7f9fc4"
+    },
+    "hatch": [
+     "Germany"
+    ],
+    "rivers": [
+     "Rhine",
+     "Waal",
+     "Maas",
+     "Nederrijn"
+    ]
    },
    "beat": "SHAEF named the 9th SS and probably the 10th, refitting near Kleve",
    "id": "s121",
@@ -10160,7 +10303,8 @@
    "clock": "EVENING",
    "beat": "evening of 16 Sept, forecast good, the final decision: go",
    "id": "s140",
-   "end": 1043.28
+   "end": 1043.28,
+   "letterbox": "DRAMATISED — 16 SEPTEMBER 1944, EVENING"
   },
   {
    "start": 1043.28,
@@ -10981,7 +11125,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -10992,7 +11136,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "arrow",
@@ -11066,13 +11210,22 @@
     "span": 1.3,
     "style": "paper",
     "colors": {
-     "Germany": "#a9a69a",
-     "Netherlands": "#e8d4a2",
-     "Belgium": "#d8dcb8",
-     "France": "#d8dcb8",
-     "Luxembourg": "#d8dcb8",
-     "United Kingdom": "#a9bccf"
-    }
+     "Germany": "#8a8f8c",
+     "Netherlands": "#cfa264",
+     "Belgium": "#93ab6e",
+     "France": "#93ab6e",
+     "Luxembourg": "#93ab6e",
+     "United Kingdom": "#7f9fc4"
+    },
+    "hatch": [
+     "Germany"
+    ],
+    "rivers": [
+     "Rhine",
+     "Waal",
+     "Maas",
+     "Nederrijn"
+    ]
    },
    "beat": "within hours Model and Bittrich sent the SS toward Arnhem and Nijmegen",
    "id": "s150",
@@ -11091,7 +11244,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -11102,7 +11255,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "ring",
@@ -11168,13 +11321,22 @@
     "span": 0.4,
     "style": "paper",
     "colors": {
-     "Germany": "#a9a69a",
-     "Netherlands": "#e8d4a2",
-     "Belgium": "#d8dcb8",
-     "France": "#d8dcb8",
-     "Luxembourg": "#d8dcb8",
-     "United Kingdom": "#a9bccf"
-    }
+     "Germany": "#8a8f8c",
+     "Netherlands": "#cfa264",
+     "Belgium": "#93ab6e",
+     "France": "#93ab6e",
+     "Luxembourg": "#93ab6e",
+     "United Kingdom": "#7f9fc4"
+    },
+    "hatch": [
+     "Germany"
+    ],
+    "rivers": [
+     "Rhine",
+     "Waal",
+     "Maas",
+     "Nederrijn"
+    ]
    },
    "beat": "they had landed next to the one man best placed to stop them",
    "id": "s151",
@@ -11532,7 +11694,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -11543,7 +11705,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "route",
@@ -11590,13 +11752,22 @@
     "span": 0.35,
     "style": "paper",
     "colors": {
-     "Germany": "#a9a69a",
-     "Netherlands": "#e8d4a2",
-     "Belgium": "#d8dcb8",
-     "France": "#d8dcb8",
-     "Luxembourg": "#d8dcb8",
-     "United Kingdom": "#a9bccf"
-    }
+     "Germany": "#8a8f8c",
+     "Netherlands": "#cfa264",
+     "Belgium": "#93ab6e",
+     "France": "#93ab6e",
+     "Luxembourg": "#93ab6e",
+     "United Kingdom": "#7f9fc4"
+    },
+    "hatch": [
+     "Germany"
+    ],
+    "rivers": [
+     "Rhine",
+     "Waal",
+     "Maas",
+     "Nederrijn"
+    ]
    },
    "beat": "and slipped past",
    "id": "s158",
@@ -12194,7 +12365,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -12205,7 +12376,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -12216,7 +12387,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "region",
@@ -12320,13 +12491,22 @@
     "span": 0.6,
     "style": "paper",
     "colors": {
-     "Germany": "#a9a69a",
-     "Netherlands": "#e8d4a2",
-     "Belgium": "#d8dcb8",
-     "France": "#d8dcb8",
-     "Luxembourg": "#d8dcb8",
-     "United Kingdom": "#a9bccf"
-    }
+     "Germany": "#8a8f8c",
+     "Netherlands": "#cfa264",
+     "Belgium": "#93ab6e",
+     "France": "#93ab6e",
+     "Luxembourg": "#93ab6e",
+     "United Kingdom": "#7f9fc4"
+    },
+    "hatch": [
+     "Germany"
+    ],
+    "rivers": [
+     "Rhine",
+     "Waal",
+     "Maas",
+     "Nederrijn"
+    ]
    },
    "beat": "Gavin's first worry: the high ground by the border; reports of armour massing in the Reichswald",
    "id": "s167",
@@ -12733,7 +12913,8 @@
    ],
    "beat": "Monday morning Gräbner drove back north to clear Frost's men off the bridge",
    "id": "s172",
-   "end": 1294.44
+   "end": 1294.44,
+   "letterbox": "DRAMATISED — ARNHEM, MONDAY 18 SEPTEMBER"
   },
   {
    "start": 1294.44,
@@ -13493,7 +13674,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -13504,7 +13685,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "label",
@@ -13582,13 +13763,22 @@
     "span": 0.9,
     "style": "paper",
     "colors": {
-     "Germany": "#a9a69a",
-     "Netherlands": "#e8d4a2",
-     "Belgium": "#d8dcb8",
-     "France": "#d8dcb8",
-     "Luxembourg": "#d8dcb8",
-     "United Kingdom": "#a9bccf"
-    }
+     "Germany": "#8a8f8c",
+     "Netherlands": "#cfa264",
+     "Belgium": "#93ab6e",
+     "France": "#93ab6e",
+     "Luxembourg": "#93ab6e",
+     "United Kingdom": "#7f9fc4"
+    },
+    "hatch": [
+     "Germany"
+    ],
+    "rivers": [
+     "Rhine",
+     "Waal",
+     "Maas",
+     "Nederrijn"
+    ]
    },
    "beat": "Nijmegen reinforced from Arnhem, but not over the bridge Frost held: by ferry further east",
    "id": "s180",
@@ -13684,7 +13874,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -13800,13 +13990,22 @@
     "span": 0.2,
     "style": "paper",
     "colors": {
-     "Germany": "#a9a69a",
-     "Netherlands": "#e8d4a2",
-     "Belgium": "#d8dcb8",
-     "France": "#d8dcb8",
-     "Luxembourg": "#d8dcb8",
-     "United Kingdom": "#a9bccf"
-    }
+     "Germany": "#8a8f8c",
+     "Netherlands": "#cfa264",
+     "Belgium": "#93ab6e",
+     "France": "#93ab6e",
+     "Luxembourg": "#93ab6e",
+     "United Kingdom": "#7f9fc4"
+    },
+    "hatch": [
+     "Germany"
+    ],
+    "rivers": [
+     "Rhine",
+     "Waal",
+     "Maas",
+     "Nederrijn"
+    ]
    },
    "beat": "take the bridge from both ends: the 504th crosses in boats and hits the north end",
    "id": "s183",
@@ -14046,7 +14245,8 @@
    "clock": "EARLY AFTERNOON",
    "beat": "the boats arrived early Wednesday afternoon: small, flat, canvas and plywood",
    "id": "s185",
-   "end": 1420.55
+   "end": 1420.55,
+   "letterbox": "DRAMATISED — THE WAAL, WEDNESDAY 20 SEPTEMBER"
   },
   {
    "start": 1420.55,
@@ -15200,7 +15400,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -15211,7 +15411,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -15222,7 +15422,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -15233,7 +15433,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "arrow",
@@ -15298,13 +15498,22 @@
     "span": 0.55,
     "style": "paper",
     "colors": {
-     "Germany": "#a9a69a",
-     "Netherlands": "#e8d4a2",
-     "Belgium": "#d8dcb8",
-     "France": "#d8dcb8",
-     "Luxembourg": "#d8dcb8",
-     "United Kingdom": "#a9bccf"
-    }
+     "Germany": "#8a8f8c",
+     "Netherlands": "#cfa264",
+     "Belgium": "#93ab6e",
+     "France": "#93ab6e",
+     "Luxembourg": "#93ab6e",
+     "United Kingdom": "#7f9fc4"
+    },
+    "hatch": [
+     "Germany"
+    ],
+    "rivers": [
+     "Rhine",
+     "Waal",
+     "Maas",
+     "Nederrijn"
+    ]
    },
    "beat": "they poured tanks and men south and built the screen between Lent and Arnhem",
    "id": "s200",
@@ -15835,7 +16044,7 @@
      "kind": "label",
      "text": "STALLED ON THE RAISED HIGHWAY",
      "x": 960,
-     "y": 110,
+     "y": 160,
      "style": "red",
      "size": 42,
      "in": 6.4
@@ -15849,7 +16058,8 @@
    "date": "THURSDAY 21 SEPTEMBER",
    "beat": "Thursday the Guards tried the road in daylight; stalled short of Elst",
    "id": "s205",
-   "end": 1605.7
+   "end": 1605.7,
+   "letterbox": "DRAMATISED — THE ROAD TO ELST, 21 SEPTEMBER"
   },
   {
    "start": 1605.7,
@@ -15864,7 +16074,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -15875,7 +16085,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -15886,7 +16096,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -15897,7 +16107,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "line",
@@ -16032,13 +16242,22 @@
     "span": 1.6,
     "style": "paper",
     "colors": {
-     "Germany": "#a9a69a",
-     "Netherlands": "#e8d4a2",
-     "Belgium": "#d8dcb8",
-     "France": "#d8dcb8",
-     "Luxembourg": "#d8dcb8",
-     "United Kingdom": "#a9bccf"
-    }
+     "Germany": "#8a8f8c",
+     "Netherlands": "#cfa264",
+     "Belgium": "#93ab6e",
+     "France": "#93ab6e",
+     "Luxembourg": "#93ab6e",
+     "United Kingdom": "#7f9fc4"
+    },
+    "hatch": [
+     "Germany"
+    ],
+    "rivers": [
+     "Rhine",
+     "Waal",
+     "Maas",
+     "Nederrijn"
+    ]
    },
    "beat": "German attacks cut the corridor to the south; tanks turned back; Hell's Highway",
    "id": "s206",
@@ -16149,7 +16368,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "city",
@@ -16160,7 +16379,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "ring",
@@ -16195,13 +16414,22 @@
     "span": 0.32,
     "style": "paper",
     "colors": {
-     "Germany": "#a9a69a",
-     "Netherlands": "#e8d4a2",
-     "Belgium": "#d8dcb8",
-     "France": "#d8dcb8",
-     "Luxembourg": "#d8dcb8",
-     "United Kingdom": "#a9bccf"
-    }
+     "Germany": "#8a8f8c",
+     "Netherlands": "#cfa264",
+     "Belgium": "#93ab6e",
+     "France": "#93ab6e",
+     "Luxembourg": "#93ab6e",
+     "United Kingdom": "#7f9fc4"
+    },
+    "hatch": [
+     "Germany"
+    ],
+    "rivers": [
+     "Rhine",
+     "Waal",
+     "Maas",
+     "Nederrijn"
+    ]
    },
    "beat": "landing zone changed to the polder near Driel on the south bank",
    "id": "s208",
@@ -16444,7 +16672,7 @@
      ],
      "side": "right",
      "in": 0.0,
-     "size": 36
+     "size": 28
     },
     {
      "kind": "pocket",
@@ -16505,13 +16733,22 @@
     "span": 0.25,
     "style": "paper",
     "colors": {
-     "Germany": "#a9a69a",
-     "Netherlands": "#e8d4a2",
-     "Belgium": "#d8dcb8",
-     "France": "#d8dcb8",
-     "Luxembourg": "#d8dcb8",
-     "United Kingdom": "#a9bccf"
-    }
+     "Germany": "#8a8f8c",
+     "Netherlands": "#cfa264",
+     "Belgium": "#93ab6e",
+     "France": "#93ab6e",
+     "Luxembourg": "#93ab6e",
+     "United Kingdom": "#7f9fc4"
+    },
+    "hatch": [
+     "Germany"
+    ],
+    "rivers": [
+     "Rhine",
+     "Waal",
+     "Maas",
+     "Nederrijn"
+    ]
    },
    "beat": "the British squeezed into a pocket around Oosterbeek, the same village as Model's hotel",
    "id": "s213",
@@ -16801,7 +17038,8 @@
    "clock": "09:30",
    "beat": "Horrocks and Browning agreed to bring the survivors back",
    "id": "s217",
-   "end": 1717.42
+   "end": 1717.42,
+   "letterbox": "DRAMATISED — 25 SEPTEMBER 1944"
   },
   {
    "start": 1717.42,

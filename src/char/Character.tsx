@@ -50,7 +50,7 @@ export type CharState = {
   headMove?: string; // nod | shake | tilt
 };
 
-export type Held = { node: React.ReactNode; scale?: number; rotate?: number; dx?: number; dy?: number; both?: boolean };
+export type Held = { node: React.ReactNode; scale?: number; rotate?: number; dx?: number; dy?: number; both?: boolean; grip?: number };
 
 const Lw = 4;
 const ARM_INK = 16.5, ARM_FILL = 9.5;
@@ -165,23 +165,35 @@ const backOut = (k: number) => {
 const Hand: React.FC<{ x: number; y: number; ang: number; shape: HandShape; skin: string; side: number }> = ({ x, y, ang, shape, skin, side }) => {
   if (shape === 'none') return null;
   const deg = (ang * 180) / Math.PI;
+  // the thumb is drawn BEHIND the palm so only a small bump shows (never a separate ball on top)
+  const thumb = (cx: number, cy: number, rx: number, ry: number, rot: number) => (
+    <ellipse cx={cx} cy={cy * side} rx={rx} ry={ry} transform={`rotate(${rot * side} ${cx} ${cy * side})`} fill={skin} stroke={INK} strokeWidth={2.6} />
+  );
   return (
     <g transform={`translate(${x} ${y}) rotate(${deg})`}>
-      {shape === 'point' ? <rect x={2} y={-4.2} width={21} height={8.4} rx={4.2} fill={skin} stroke={INK} strokeWidth={3} /> : null}
-      {shape === 'open' ? (
+      {shape === 'point' ? (
         <g>
-          <path d="M-2 -9 Q16 -14 17 -2 Q18 8 2 10 Q-6 6 -2 -9 Z" fill={skin} stroke={INK} strokeWidth={3} strokeLinejoin="round" />
-          <path d={`M4 ${side * -8} q4 ${side * -10} 12 ${side * -9}`} stroke={INK} strokeWidth={3} fill={skin} strokeLinecap="round" />
+          <rect x={4} y={-4} width={20} height={8} rx={4} fill={skin} stroke={INK} strokeWidth={2.8} />
+          {thumb(5, -8, 5, 3.6, -25)}
+          <ellipse cx={4} cy={0} rx={9.5} ry={8.5} fill={skin} stroke={INK} strokeWidth={3} />
+        </g>
+      ) : shape === 'open' ? (
+        <g>
+          {thumb(5, -9.5, 6.5, 3.8, -38)}
+          <path d="M-3 -8 Q9 -12 16 -6 Q19 0 16 6 Q9 12 -3 8 Q-6 0 -3 -8 Z" fill={skin} stroke={INK} strokeWidth={3} strokeLinejoin="round" />
+          <path d="M9 -3.5 h6 M9 1.5 h6" stroke={INK} strokeWidth={1.6} strokeOpacity={0.35} strokeLinecap="round" />
         </g>
       ) : shape === 'fist' ? (
         <g>
-          <circle cx={5} cy={0} r={10.5} fill={skin} stroke={INK} strokeWidth={3} />
-          <path d="M9 -5 v10" stroke={INK} strokeWidth={2} strokeOpacity={0.5} />
+          <circle cx={5} cy={0} r={10} fill={skin} stroke={INK} strokeWidth={3} />
+          <path d="M10 -5 v10" stroke={INK} strokeWidth={1.8} strokeOpacity={0.45} strokeLinecap="round" />
         </g>
+      ) : shape === 'grip' ? (
+        <ellipse cx={5} cy={0} rx={9.5} ry={8.5} fill={skin} stroke={INK} strokeWidth={3} />
       ) : (
         <g>
-          <ellipse cx={5} cy={0} rx={10.5} ry={9} fill={skin} stroke={INK} strokeWidth={3} />
-          {shape === 'grip' ? null : <circle cx={3} cy={side * -8} r={4.2} fill={skin} stroke={INK} strokeWidth={2.5} />}
+          {thumb(4, -7.5, 5, 3.6, -30)}
+          <ellipse cx={5} cy={0} rx={10} ry={8.6} fill={skin} stroke={INK} strokeWidth={3} />
         </g>
       )}
     </g>
@@ -283,6 +295,13 @@ export const Character: React.FC<{ spec: CharSpec; state: CharState; t: number; 
     }
   }
 
+  // flat props (paper, telegram, folder…) are held by their side edges, not with both hands in the middle
+  const twoHands = held ? held.both ?? (poseName === 'hold' || poseName === 'holdUp' || poseName === 'carry') : false;
+  if (held?.grip && twoHands) {
+    const half = held.grip * (held.scale ?? 0.55) * 0.92;
+    const cx = (rx + lx) / 2, cy = (ry + ly) / 2;
+    rx = cx + half; lx = cx - half; ry = cy; ly = cy;
+  }
   const bw2 = build ** 0.3;
   let R = ik(shX, shoulderY, rx * bw2, ry, L1, L2, run ? -dir : -rb);
   let Lf = ik(-shX, shoulderY, lx * bw2, ly, L1, L2, run ? -dir : lb);

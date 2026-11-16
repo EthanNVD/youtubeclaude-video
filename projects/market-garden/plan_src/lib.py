@@ -104,7 +104,8 @@ def scene(start, set_=None, els=(), typ="stage", **kw):
 
 
 # ---------------- maps ----------------
-NL_COLORS = {"Germany": "#a9a69a", "Netherlands": "#e8d4a2", "Belgium": "#d8dcb8", "France": "#d8dcb8", "Luxembourg": "#d8dcb8", "United Kingdom": "#a9bccf"}
+NL_COLORS = {"Germany": "#8a8f8c", "Netherlands": "#cfa264", "Belgium": "#93ab6e", "France": "#93ab6e", "Luxembourg": "#93ab6e", "United Kingdom": "#7f9fc4"}
+MG_RIVERS = ["Rhine", "Waal", "Maas", "Nederrijn"]
 RIVERS = {
     "waal": [[5.20, 51.84], [5.50, 51.855], [5.70, 51.86], [5.86, 51.85], [6.00, 51.87], [6.10, 51.85]],
     "rhine": [[5.30, 51.965], [5.60, 51.975], [5.78, 51.98], [5.90, 51.976], [5.98, 51.965], [6.08, 51.90], [6.12, 51.87]],
@@ -126,7 +127,7 @@ def rivers(*names, at=0.0):
     return [{"kind": "line", "path": RIVERS[n], "color": "#5b8fb0", "width": 10, "in": at, "enter": "none"} for n in names]
 
 
-def towns(*names, at=0.2, side="right", size=36):
+def towns(*names, at=0.2, side="right", size=28):
     return [{"kind": "city", "name": n, "at": TOWNS[n], "side": side, "in": at, "size": size} for n in names]
 
 
@@ -135,7 +136,9 @@ LEGEND = {"kind": "legend", "x": 40, "y": 860, "hud": True, "in": 0, "enter": "f
 
 
 def MAP(start, center, span, els, style="paper", colors=None, camera=None, legend=False, **kw):
-    m = {"era": "1938", "center": center, "span": span, "style": style, "colors": colors or NL_COLORS}
+    m = {"era": "1938", "center": center, "span": span, "style": style, "colors": colors or NL_COLORS, "hatch": ["Germany"]}
+    if span <= 8:
+        m["rivers"] = MG_RIVERS
     if legend:
         els = list(els) + [LEGEND]
     return scene(start, None, els, typ="map", map=m, **({"camera": camera} if camera else {}), **kw)
@@ -195,11 +198,26 @@ def LEDGER(start, allied, german, extra=(), new_at=None, **kw):
     return scene(start, {"kind": "study", "desk": False, "portrait": False, "shelf": True}, [{"kind": "ledger", "x": 960, "y": 520, "columns": cols, "scale": 0.95, "in": 0, "enter": "fade"}, *extra], **kw)
 
 
+# cinema bars on the dramatised moments only (a handful per film)
+LETTERBOX = {
+    "s001": "DRAMATISED — NIJMEGEN, 20 SEPTEMBER 1944",
+    "s059": "DRAMATISED — BRUSSELS AIRPORT, 10 SEPTEMBER 1944",
+    "s140": "DRAMATISED — 16 SEPTEMBER 1944, EVENING",
+    "s172": "DRAMATISED — ARNHEM, MONDAY 18 SEPTEMBER",
+    "s185": "DRAMATISED — THE WAAL, WEDNESDAY 20 SEPTEMBER",
+    "s205": "DRAMATISED — THE ROAD TO ELST, 21 SEPTEMBER",
+    "s217": "DRAMATISED — 25 SEPTEMBER 1944",
+}
+
+
 def finish(meta, cast, path):
     SCENES.sort(key=lambda s: s["start"])
     for i, s in enumerate(SCENES):
         s["id"] = f"s{i + 1:03d}"
         s["end"] = SCENES[i + 1]["start"] if i + 1 < len(SCENES) else END
+    for s in SCENES:
+        if s["id"] in LETTERBOX:
+            s["letterbox"] = LETTERBOX[s["id"]]
     plan = {"meta": meta, "cast": cast, "scenes": SCENES}
     json.dump(plan, open(path, "w", encoding="utf8"), indent=1, ensure_ascii=False)
     print(len(SCENES), "scenes")

@@ -1,6 +1,6 @@
 import React from 'react';
 import type { CameraKey, CastMember, LonLat, Scene } from '../types';
-import { resolveKeys, rnd } from '../lib/anim';
+import { resolveKeys, rnd, clamp } from '../lib/anim';
 import { SetBackground } from '../sets/Sets';
 import { Foreground } from '../sets/Rich';
 import { MapLayer, makeProjection, PaperOverlay } from '../map/MapLayer';
@@ -71,6 +71,10 @@ export const SceneView: React.FC<{ scene: Scene; t: number; cast?: Record<string
   const hudEls = els.map((el, i) => ({ el, i })).filter(({ el }) => el.hud || HUD_KINDS.has(el.kind));
   const weather = scene.set?.weather as string | undefined;
 
+  const lbRaw = scene.letterbox;
+  const lb = !!lbRaw;
+  const lbH = lb ? 118 * clamp(t / 0.45, 0, 1) ** 0.6 : 0;
+  const lbText = typeof lbRaw === 'string' ? lbRaw : lb ? [scene.date, scene.place].filter(Boolean).join(' — ').toUpperCase() : '';
   return (
     <svg viewBox="0 0 1920 1080" width="100%" height="100%" style={{ position: 'absolute', inset: 0 }}>
       <defs>
@@ -95,9 +99,22 @@ export const SceneView: React.FC<{ scene: Scene; t: number; cast?: Record<string
         </g>
       ) : null}
       {hudEls.map(({ el, i }) => <ElementView key={'h' + i} el={el} ctx={ctx} index={i} />)}
-      {scene.date ? <DateBadge text={scene.date} a={t} /> : null}
-      {scene.clock ? <DateBadge text={scene.clock} a={t} right /> : null}
-      {scene.place ? <DateBadge text={scene.place} a={t - 0.2} y={scene.date ? 140 : 46} /> : null}
+      {lb ? (
+        // cinema bars for dramatised moments; the caption replaces the date/place badges
+        <g>
+          <rect x={0} y={-10} width={1920} height={10 + lbH} fill="#0b0a09" />
+          <rect x={0} y={1080 - lbH} width={1920} height={lbH + 10} fill="#0b0a09" />
+          {lbText ? (
+            <text x={960} y={1080 - lbH / 2 + 12} textAnchor="middle" fontFamily={FONT.mono} fontWeight={700} fontSize={34} letterSpacing={6} fill="#efe6d2" opacity={clamp((t - 0.3) / 0.5, 0, 1)}>{lbText}</text>
+          ) : null}
+        </g>
+      ) : (
+        <>
+          {scene.date ? <DateBadge text={scene.date} a={t} /> : null}
+          {scene.clock ? <DateBadge text={scene.clock} a={t} right /> : null}
+          {scene.place ? <DateBadge text={scene.place} a={t - 0.2} y={scene.date ? 140 : 46} /> : null}
+        </>
+      )}
     </svg>
   );
 };

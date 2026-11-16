@@ -64,6 +64,8 @@ export type Scene = {
   elements?: ElementBase[];
   date?: string;
   clock?: string;
+  /** cinema bars (true, or the caption for the bottom bar, e.g. "DRAMATISED — ARNHEM, 19 SEPT 1944") */
+  letterbox?: boolean | string;
   place?: string;
   transition?: 'cut' | 'fade' | 'dip' | 'wipe' | 'flash';
   /** tints: sepia (counterfactual/past), night, cold, warm, grey (grief) */

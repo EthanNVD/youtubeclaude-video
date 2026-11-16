@@ -405,7 +405,7 @@ def build():
         *tanks(-200, 900, 578, 0.4, 5.0, n=3, gap=240),
         {"kind": "burst", "x": 900, "y": 560, "in": 5.4, "size": 0.6}, FX("smoke", 900, 520, **{"in": 5.8}),
         L("ELST", 1700, 520, "tag", 46, at=0.4),
-        L("STALLED ON THE RAISED HIGHWAY", 960, 110, "red", 42, at=6.4),
+        L("STALLED ON THE RAISED HIGHWAY", 960, 160, "red", 42, at=6.4),
     ], chapter="Hell's Highway", date="THURSDAY 21 SEPTEMBER", beat="Thursday the Guards tried the road in daylight; stalled short of Elst")
     MAP(1605.7, [5.62, 51.64], 1.6, [
         *rivers("maas", "waal"), *towns("Eindhoven", "Veghel", "Grave", "Nijmegen", at=0.0),
