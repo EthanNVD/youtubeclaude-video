@@ -2,6 +2,12 @@
 
 Newest first. One entry per change that matters to the look, the pipeline or the docs.
 
+## 2026-11-17 — Script-writer skill and first drafts
+Why: the user wanted the Codex `two-sides-war-script-writer` skill ported to Claude, upgraded from an editor's study of the channel's top 10 videos, able to research new topics and rewrite old scripts in the channel's voice.
+- `.claude/skills/two-sides-war-script-writer/`: modes `topic_research` / `new_from_title` / `rewrite_channel_voice` / `rewrite_same_structure`; new references (top-10 analysis, channel formula, topic research, channel-voice rewrite); dialogue policy (QUOTE / REPORTED / DRAMATIZED / HOST, ≤15 %); clean + speaker-tagged outputs.
+- Scripts: `channel_snapshot.py` (yt-dlp channel list + subtitles), `script_metrics.py --tagged` (tagged file matches clean text, dialogue share).
+- `scripts_out/`: topic shortlist (18 scored candidates) and four research-limited drafts — Market Garden, WW1 turning point, Singapore, Battle of the Bulge — each with clean text, tagged text and sources.
+
 ## 2026-11-16 — Proportion and depth
 Why: the user saw people as big as (or bigger than) the tank they stand next to.
 Reference study:

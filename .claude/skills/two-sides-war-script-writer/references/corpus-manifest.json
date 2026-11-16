@@ -1,0 +1,80 @@
+[
+  {
+    "slug": "barbarossa",
+    "path": "D:\\LAMYOUTUBE\\SACHNOI\\SÁCH NÓI KỊCH BẢN MẪU\\Abooks\\[English (auto-generated)] Why Operation Barbarossa Was COMPLETELY Avoidable [DownSub.com].srt",
+    "sha256": "691a09e3ac3966be753e39848c54b92a54cad3132a15a188b284375ef35242af",
+    "cues": 705,
+    "first_start": "00:00:00,000",
+    "last_end": "00:26:41,440",
+    "duration_seconds": 1601.44,
+    "spoken_words": 4434,
+    "spoken_characters_joined": 25353,
+    "words_per_minute": 166.13,
+    "word_method": "Unicode word tokens; internal apostrophes/hyphens retained; no ASR repair or deduplication"
+  },
+  {
+    "slug": "midway",
+    "path": "D:\\LAMYOUTUBE\\SACHNOI\\SÁCH NÓI KỊCH BẢN MẪU\\Abooks\\[English (auto-generated)] Why The Battle of Midway Was COMPLETELY Avoidable [DownSub.com].srt",
+    "sha256": "e965f00940330a1815adc1bf73994835af9d2d51b5295a335e38951915b35ee6",
+    "cues": 887,
+    "first_start": "00:00:00,080",
+    "last_end": "00:35:33,414",
+    "duration_seconds": 2133.414,
+    "spoken_words": 5833,
+    "spoken_characters_joined": 33318,
+    "words_per_minute": 164.05,
+    "word_method": "Unicode word tokens; internal apostrophes/hyphens retained; no ASR repair or deduplication"
+  },
+  {
+    "slug": "deadliest-battles",
+    "path": "D:\\LAMYOUTUBE\\SACHNOI\\SÁCH NÓI KỊCH BẢN MẪU\\Abooks\\[English (auto-generated)] The Deadliest Battles in Human History [DownSub.com].srt",
+    "sha256": "f09df384e1a0e7051cbffad0e5658e9582f6c7569fb46c12a1c8e937caae1175",
+    "cues": 706,
+    "first_start": "00:00:00,000",
+    "last_end": "00:26:59,320",
+    "duration_seconds": 1619.32,
+    "spoken_words": 4408,
+    "spoken_characters_joined": 25111,
+    "words_per_minute": 163.33,
+    "word_method": "Unicode word tokens; internal apostrophes/hyphens retained; no ASR repair or deduplication"
+  },
+  {
+    "slug": "pacific-turning-point",
+    "path": "D:\\LAMYOUTUBE\\SACHNOI\\SÁCH NÓI KỊCH BẢN MẪU\\Abooks\\[English (auto-generated)] What Was The REAL Turning Point of the Pacific War [DownSub.com].srt",
+    "sha256": "77f17340bc1da64e46c8c5e982e7d91a2d1fde0863ceace81b8cf95369ebcd28",
+    "cues": 807,
+    "first_start": "00:00:00,080",
+    "last_end": "00:32:56,867",
+    "duration_seconds": 1976.867,
+    "spoken_words": 5266,
+    "spoken_characters_joined": 29936,
+    "words_per_minute": 159.83,
+    "word_method": "Unicode word tokens; internal apostrophes/hyphens retained; no ASR repair or deduplication"
+  },
+  {
+    "slug": "stalingrad",
+    "path": "D:\\LAMYOUTUBE\\SACHNOI\\SÁCH NÓI KỊCH BẢN MẪU\\Abooks\\[English (auto-generated)] Why Stalingrad Was COMPLETELY Avoidable [DownSub.com].srt",
+    "sha256": "995077c7d60ce5c80ca4f36dd3b444f2e826549aacb4654a1fef3137b467ff4e",
+    "cues": 620,
+    "first_start": "00:00:00,080",
+    "last_end": "00:26:00,720",
+    "duration_seconds": 1560.72,
+    "spoken_words": 4164,
+    "spoken_characters_joined": 23243,
+    "words_per_minute": 160.08,
+    "word_method": "Unicode word tokens; internal apostrophes/hyphens retained; no ASR repair or deduplication"
+  },
+  {
+    "slug": "eastern-front",
+    "path": "D:\\LAMYOUTUBE\\SACHNOI\\SÁCH NÓI KỊCH BẢN MẪU\\Abooks\\[English (auto-generated)] The ENTIRE Eastern Front Explained  WW2 1941–1945 (Animated) [DownSub.com].srt",
+    "sha256": "a748189ab78d8292b161c310c7c558b890746726af7c8dad75d632ce01d96dd3",
+    "cues": 952,
+    "first_start": "00:00:00,080",
+    "last_end": "00:36:37,119",
+    "duration_seconds": 2197.119,
+    "spoken_words": 6311,
+    "spoken_characters_joined": 36018,
+    "words_per_minute": 172.34,
+    "word_method": "Unicode word tokens; internal apostrophes/hyphens retained; no ASR repair or deduplication"
+  }
+]
