@@ -16,6 +16,11 @@ not charts — like an animated film; maps and devices are the minority ([storyt
 **the host** (`who: "host"`, the channel's recurring narrator) opens the video, presents the device and closes it ·
 **thumbnails = detailed prompts** for an image model + engine drafts ([thumbnails.md](references/thumbnails.md)).
 
+## Before anything
+Read `ROADMAP.md` (what the engine can and cannot do yet, known issues) and `docs/STYLE_GUIDE.md` (what a good frame looks like).
+Copy `projects/_template/STATUS.md` to `projects/<slug>/STATUS.md` and keep it current (decisions, progress, open issues).
+A video is finished only when every box in `docs/QUALITY.md` is ticked.
+
 ## 0. Set up the project
 
 ```
@@ -56,10 +61,12 @@ Coverage is mandatory: scenes are contiguous from 0 to the end of the voice (val
 - Use only vocabulary the engine has (sets, props, vehicles, fx, poses, presets — listed in plan-schema.md; the validator reads them from `src/`). If something is truly missing, add it to the engine (see §8) rather than faking it with a label.
 
 `python tools/make.py projects/<slug> validate` → fix every error; read every warning.
+**Zero tolerance** for layout/motion warnings: text overlapping text, a badge zone (date/place top-left, clock top-right, name card bottom-left) or a face, and vehicles faster than their type (`moves … u/s`).
+If you generate the plan from Python, call `tools/layout_check.fix_speeds(plan)` before writing it (keeps each vehicle's destination, starts it closer).
 
 ## 4. Look at it — `python tools/make.py projects/<slug> review`
 
-Open every `review/sheet_*.jpg` and judge as a viewer: does each frame show what the narration says at that moment? Check overlaps, text cut off, characters floating, empty frames, repeated compositions, wrong flags/colours/dates. Count the shots: if world/acting shots are under ~60 %, replace charts/inserts with scenes of people doing the thing. Use `--scenes s012,s013 --at all` to inspect start/middle/end of a shot. Fix and re-review the changed scenes. Do this for the whole film, not a sample.
+Open every `review/sheet_*.jpg` and judge as a viewer: does each frame show what the narration says at that moment? Check overlaps, text cut off, characters floating, empty frames, vehicles barely in frame, scenery that should scroll but stands still, repeated compositions, wrong flags/colours/dates. Count the shots: if world/acting shots are under ~60 %, replace charts/inserts with scenes of people doing the thing. Use `--scenes s012,s013 --at all` to inspect start/middle/end of a shot. Fix and re-review the changed scenes. Do this for the whole film, not a sample.
 
 ## 5. Sound — [sound.md](references/sound.md)
 

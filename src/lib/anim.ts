@@ -18,6 +18,13 @@ export const easeFn = (e: Ease | undefined, x: number): number => {
     }
     case 'step':
       return x < 1 ? 0 : 1;
+    case 'drive': {
+      // trapezoid speed profile: accelerate over the first 25 %, cruise, brake over the last 25 %
+      const A = 0.25, vmax = 1 / (1 - A);
+      if (x < A) return 0.5 * vmax * (x * x) / A;
+      if (x > 1 - A) return 1 - 0.5 * vmax * ((1 - x) * (1 - x)) / A;
+      return vmax * (x - A / 2);
+    }
     default:
       return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
   }

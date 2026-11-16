@@ -48,6 +48,11 @@ Detailed acting sets. All of them animate (sea rolls, lamps sway, dust in light,
 - `cell`: barred-window light; `bars`.
 - `train_interior`: landscape rushing past; `outside`.
 - `cockpit`: canopy view with banking horizon; `bank`, `below: "land"`.
+- `archbridge`: big steel arch bridge over a river (Arnhem/Nijmegen); `time` (default dusk), `burning`.
+- `river`: river bank with far shore; `polder`: flat Dutch fields behind a dyke road (`dyke` y), poplars, windmills; best set for road/convoy shots.
+- `cabin`: inside a transport aircraft (paratroopers), `jumplight: red|green`. `heath`: open heath / drop zone. `hotel`: HQ hotel front.
+
+Film look (every set): backgrounds get a depth-of-field blur (`dof`, default 1.6; 0 on paper/studio/void/dark/memorial) and, when the scene has no camera keys, a slow push-in (`drift` = end zoom − 1, default 0.045; `driftX` px; `drift: 0` for devices that must stay still). `meta.grade: "none"` disables the warm film grade.
 
 Lighting runs on every set (corner falloff, window shafts with dust, lamp dust); `light: "none"` disables it.
 
@@ -63,7 +68,9 @@ Common: `time`: `day|dusk|dawn|night`; `weather`: `rain|snow`; `ground` (y of fl
 `center` + `span` (degrees of longitude across the frame: 6 = a city/island, 25 = a country, 60–90 = an ocean/continent). Antimeridian works (Pacific: center 175).
 **Vertical extent**: the frame is 16:9 and Mercator stretches latitude, so it shows only `span × 0.5625 × cos(lat)` degrees of latitude (≈ 0.35 × span at 52° N). For a north–south route, choose `span ≥ 2.9 × (latitude extent)` — e.g. Eindhoven→Arnhem (0.55°) needs span ≈ 2.8, the Nijmegen–Arnhem stretch (0.14°) needs ≈ 0.6. Check the review sheet: every named town must be inside the frame.
 `labels`: names to write at their centroid (or `true` = all coloured); `labelNames` rename them ("Empire of Japan" → "JAPAN").
-`style`: `paper` (default), `war`, `snow` (eastern front winter), `dark`, `sepia`, `poster` (saturated thumbnail look, white borders).
+`style`: `paper` (default, muted old-paper map), `old` (browner), `war`, `snow` (eastern front winter), `dark`, `sepia`, `poster` (saturated thumbnail look, white borders).
+Physical layer (on by default): rivers and lakes (Natural Earth), river names in italic, coast ripple hatching, graticule with degree tags, paper folds. Flags: `rivers`, `riverLabels`, `ripples`, `graticule`, `paper` — each `false` to switch off. Fewer, bigger rivers are shown as the span grows.
+Standard map furniture: a `legend` (who is who) on every map with two or more sides, a date badge on every time jump, and `blocks` when strength matters.
 Borders are the basemap's — for exact front lines draw `front`/`region` elements yourself.
 
 ## Element (all kinds)
@@ -76,7 +83,7 @@ Borders are the basemap's — for exact front lines draw `front`/`region` elemen
 | `in`, `out` | appear / disappear time (s from scene start) |
 | `enter` | `pop` (default) · `fade` · `drop` · `rise` · `slideL` · `slideR` · `grow` · `stamp` · `draw` (arrows/lines/rings) · `none` |
 | `exit` | `fade` (default) · `pop` · `drop` · `rise` · `slideL` · `slideR` · `none` |
-| `keys` | `[{t, …any prop…, ease?, dur?}]` — numbers and `[lon,lat]` arrays tween **into** `t` from the previous key (or from the scene start); strings (pose, expr, text) switch at `t`. `ease`: `inOut` (default) `in` `out` `linear` `back` `step` |
+| `keys` | `[{t, …any prop…, ease?, dur?}]` — numbers and `[lon,lat]` arrays tween **into** `t` from the previous key (or from the scene start); strings (pose, expr, text) switch at `t`. `ease`: `inOut` (default) `in` `out` `linear` `back` `step` `drive` (accelerate–cruise–brake; **default for vehicle `x`/`at` keys**) |
 | `hud` | `true` = fixed on screen (ignores camera) |
 | `dur` | duration of a `draw` reveal (default 1.2–1.4 s) |
 
@@ -104,7 +111,8 @@ Expressions: `neutral happy smile laugh angry rage determined smug worried sad c
 
 **prop** — `item`: `paper telegram folder book phone radio stopwatch clock candle helmet crate barrel bomb shell binoculars globe hourglass medal cigar typewriter microphone sign exit flag ledger coins oil factory chair table pen skull cross grave rifle`; `text` (telegram/folder/book/crate/barrel/sign), `value` (stopwatch seconds, clock hour, hourglass 0–1, coins count), `nation`, `on` (phone ringing / radio playing), `color`.
 
-**vehicle** — `type`: `tank truck car jeep artillery gun train locomotive wagon traincar horse cart fighter plane bomber divebomber carrier battleship cruiser destroyer cargo freighter submarine uboat boat`; `nation`, `color`, `moving`, `damaged`, `burning`. Side view facing right (`flip` for left). Ships: scale 0.3–0.6.
+**vehicle** — `type`: `tank sherman panzer4 tiger t34 panther stug tank_flat halftrack truck car jeep artillery gun train locomotive wagon traincar horse cart fighter plane bomber divebomber dakota transport glider carrier battleship cruiser destroyer cargo freighter submarine uboat boat assaultboat`; `nation`, `color`, `moving`, `damaged`, `burning`, `crew` (tank commander in the hatch). Side view facing right (`flip` for left). Ships: scale 0.3–0.6. `tank` picks the nation's usual tank.
+Motion: key `x` (or `at`); the default `drive` profile accelerates and brakes, wheels/tracks turn with the distance, exhaust/dust while moving. **Speed limits** (drawing units/s at scale 1, peak): tanks 320–450, half-track 520, truck 650, jeep 800, boats 120–260, ships 160–240, Dakota 1300, fighters 2600. On screen that is roughly: a tank at scale 0.4 crosses ≤ 170 px/s — give a 1000 px drive ≥ 6 s, or start it closer. The validator flags anything faster.
 
 **fx** — `type`: `smoke fire explosion impact muzzle flash tracer searchlight rain snow sparks dust splash wake fireworks speedlines question exclaim`; `dir` (deg), `count`, `color`. Explosions play once from `in`.
 **burst** — explosion at `x,y` / `at` (`size` 0.4–1).
@@ -138,9 +146,11 @@ Map-oriented (work on stage too with `screen: true` + px coordinates):
 **meter** — `value` −1…1 (keyable), `left`, `right`, `title`, `leftColor`, `rightColor`.
 **bars** — `items: [{label, value, nation|color, in}]`, `max`, `unit`, `title`, `width`.
 **scoreboard** — `sides: [{nation, label, score}]`, `scores` (keyable array), `title`.
-**road** — `progress` 0…1 (keyable), `exits: [{at, label, side:"up"|"down", taken}]`, `vehicle`, `nation`, `sea` (red sea-lane + ship), `length`.
+**road** — a journey as a road through a scrolling landscape: `progress` 0…1 (keyable), `length` (px of road; 24000 for a 30-min film, keep exits ≥ 900 px apart), `exits: [{at, label, painted: "allied"|"german"|"blank", paintIn, num, in}]` (slip road + gantry sign above the road; the sign is repainted at `paintIn` s, `num` shows in a badge), `towns: [{at, label}]` (boards at the verge), `vehicle`, `nation`, `vehicles` (convoy size), `time`. The convoy stays at the left third; the world (forests, poplars, posts, signs) scrolls past with parallax.
 **ranking** — `items: [{label, sub, in}]` (listed top = No.N … bottom = No.1), `highlight` index, `title`.
 **timeline** — `items: [{label, sub(date), at 0…1, in, color}]`, `cursor` 0…1, `start`, `end`, `width`.
+**legend** — map key box: `items: [{nation, label, color?}]`, `x`, `y` (bottom-right by default).
+**blocks** — strength as a grid of small division squares: `count`, `cols`, `nation`|`color`, `size`, `label`, `dur` (squares pop in over `dur`), shows a "≈N" tag.
 **ledger** — `columns: [{title, nation, entries: [{label, value, in, taken:false → struck}]}]` (running totals).
 
 ## Nation keys

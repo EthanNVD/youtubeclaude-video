@@ -21,4 +21,8 @@ CAST["shaef_officer"] = {"preset": "american_soldier", "hat": "none", "hair": "p
 
 META = {"title": "Why Operation Market Garden Was COMPLETELY Avoidable", "lang": "en", "fps": 24, "duration": 2044.72,
         "voice": "input/voice.wav", "grain": 0.5}
+import lib  # noqa: E402
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "..", "..", "tools"))
+import layout_check  # noqa: E402
+print("speed fixes:", layout_check.fix_speeds({"scenes": lib.SCENES}))
 finish(META, CAST, os.path.join(os.path.dirname(__file__), "..", "plan.json"))

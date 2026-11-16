@@ -62,14 +62,15 @@ export const Video: React.FC<VideoProps> = ({ plan }) => {
 
   return (
     <AbsoluteFill style={{ background: '#111' }}>
-      {content}
+      {/* film grade: warm, slightly desaturated (meta.grade: 'film' default | 'none') */}
+      <AbsoluteFill style={{ filter: plan.meta.grade === 'none' ? undefined : 'saturate(0.86) sepia(0.12) contrast(1.05) brightness(0.98)' }}>{content}</AbsoluteFill>
       {tr === 'flash' && t < 0.25 ? <AbsoluteFill style={{ background: '#fff', opacity: 1 - t / 0.25 }} /> : null}
       {grain > 0 ? (
         <AbsoluteFill style={{ mixBlendMode: 'multiply', opacity: grain * 0.55, pointerEvents: 'none' }}>
           <Img src={staticFile('textures/grain.png')} style={{ width: '120%', height: '120%', transform: `translate(${-((frame * 37) % 100) / 10}%, ${-((frame * 53) % 100) / 10}%)` }} />
         </AbsoluteFill>
       ) : null}
-      <AbsoluteFill style={{ background: 'radial-gradient(ellipse at center, rgba(0,0,0,0) 62%, rgba(0,0,0,0.28) 100%)', pointerEvents: 'none' }} />
+      <AbsoluteFill style={{ background: 'radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(20,12,4,0.42) 100%)', pointerEvents: 'none' }} />
     </AbsoluteFill>
   );
 };

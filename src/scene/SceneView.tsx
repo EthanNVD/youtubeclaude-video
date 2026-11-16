@@ -3,7 +3,7 @@ import type { CameraKey, CastMember, LonLat, Scene } from '../types';
 import { resolveKeys, rnd } from '../lib/anim';
 import { SetBackground } from '../sets/Sets';
 import { Foreground } from '../sets/Rich';
-import { MapLayer, makeProjection } from '../map/MapLayer';
+import { MapLayer, makeProjection, PaperOverlay } from '../map/MapLayer';
 import { ElementView, type Ctx } from './Elements';
 import { DateBadge } from '../overlays/Overlays';
 import { FONT, INK, C } from '../theme';
@@ -29,21 +29,41 @@ export const SceneView: React.FC<{ scene: Scene; t: number; cast?: Record<string
   let proj: Ctx['proj'];
   let world: React.ReactNode;
   let camT = '';
+  let dofDef: React.ReactNode = null;
 
   if (scene.type === 'map' && scene.map) {
-    const cam = cameraAt(scene.camera, t, { center: scene.map.center, zoom: 1, span: scene.map.span });
+    const cam = scene.camera
+      ? cameraAt(scene.camera, t, { center: scene.map.center, zoom: 1, span: scene.map.span })
+      : { center: scene.map.center, zoom: 1 + 0.035 * (t / Math.max(1, dur)), span: scene.map.span };
     const center = (cam.center ?? scene.map.center) as LonLat;
     proj = makeProjection(center, (cam.span as number) ?? scene.map.span, cam.zoom ?? 1);
     world = <MapLayer spec={scene.map} proj={proj} t={t} />;
   } else if (scene.type === 'title' || scene.type === 'chapter') {
     world = <ChapterCard scene={scene} t={t} />;
   } else {
-    const cam = cameraAt(scene.camera, t, { x: 960, y: 540, zoom: 1, rotate: 0, shake: 0 });
+    // no camera keys -> a slow, gentle push-in so the frame is never dead (reference style: 3-6 % over the shot)
+    const drift = !scene.camera && scene.set?.kind !== 'paper' && scene.set?.kind !== 'studio' && (scene.set?.drift as number) !== 0;
+    const dz = (scene.set?.drift as number) ?? 0.045;
+    const cam = drift
+      ? { x: 960 + (scene.set?.driftX as number ?? 0) * (t / Math.max(1, dur)), y: 540, zoom: 1 + dz * (t / Math.max(1, dur)), rotate: 0, shake: 0 }
+      : cameraAt(scene.camera, t, { x: 960, y: 540, zoom: 1, rotate: 0, shake: 0 });
     const sh = cam.shake ?? 0;
     const jx = sh ? (rnd(Math.floor(t * 24), 'x') - 0.5) * sh * 2 : 0;
     const jy = sh ? (rnd(Math.floor(t * 24), 'y') - 0.5) * sh * 2 : 0;
     camT = `translate(${960 + jx} ${540 + jy}) scale(${cam.zoom}) rotate(${cam.rotate ?? 0}) translate(${-cam.x} ${-cam.y})`;
-    world = scene.set ? <SetBackground {...scene.set} t={t} /> : <rect x={-240} y={-160} width={2400} height={1400} fill="#e6dcc4" />;
+    // depth of field: the set is softly blurred so actors and props read sharp in front of it
+    const flat = ['paper', 'studio', 'void', 'dark', 'memorial'].includes(scene.set?.kind ?? '');
+    const dof = (scene.set?.dof as number) ?? (flat ? 0 : 1.6);
+    world = scene.set ? (
+      <g filter={dof > 0 ? `url(#dof_${scene.id})` : undefined}>
+        <SetBackground {...scene.set} t={t} />
+      </g>
+    ) : <rect x={-240} y={-160} width={2400} height={1400} fill="#e6dcc4" />;
+    dofDef = dof > 0 ? (
+      <filter id={`dof_${scene.id}`} x="-5%" y="-5%" width="110%" height="110%">
+        <feGaussianBlur stdDeviation={dof} />
+      </filter>
+    ) : null;
   }
 
   const ctx: Ctx = { t, dur, cast, proj, sceneId: scene.id };
@@ -54,6 +74,7 @@ export const SceneView: React.FC<{ scene: Scene; t: number; cast?: Record<string
   return (
     <svg viewBox="0 0 1920 1080" width="100%" height="100%" style={{ position: 'absolute', inset: 0 }}>
       <defs>
+        {dofDef}
         <linearGradient id="flagshade" x1="0" x2="1">
           <stop offset="0" stopColor="#000" stopOpacity={0} />
           <stop offset="0.3" stopColor="#000" stopOpacity={0.5} />
@@ -67,6 +88,7 @@ export const SceneView: React.FC<{ scene: Scene; t: number; cast?: Record<string
         {worldEls.map(({ el, i }) => <ElementView key={i} el={el} ctx={ctx} index={i} />)}
         {scene.set?.fg ? <g transform={`translate(${(960 - ((cameraAt(scene.camera, t, { x: 960 }) as { x: number }).x ?? 960)) * 0.25} 0)`}><Foreground kind={scene.set.fg as string} t={t} side={scene.set.fgSide as string} /></g> : null}
       </g>
+      {scene.type === 'map' && scene.map && (scene.map as { paper?: boolean }).paper !== false && scene.map.style !== 'poster' && scene.map.style !== 'dark' ? <PaperOverlay /> : null}
       {weather === 'rain' || weather === 'snow' ? (
         <g transform="translate(960 540)">
           <ElementView el={{ kind: 'fx', type: weather, enter: 'none' }} ctx={ctx} index={999} />

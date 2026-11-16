@@ -1,0 +1,77 @@
+# Style guide — what the reference channel does (frame studies, Nov 2026)
+
+These rules come from studying, frame by frame, five videos of the reference channel: Midway, Turning Point, Barbarossa, *Could the Soviets Have Beaten Hitler Alone?* and *Why German Soldiers Couldn't Use Captured M1 Garands*.
+
+Every plan and every engine change is judged against them.
+
+## 1. Picture
+- **Depth.** Three or more layers in every exterior: far (soft, lighter, bluish), mid, near. Backgrounds are **blurred** (depth of field) while the characters stay sharp. Often a blurred foreground element sits at a frame edge: a branch, a snow bank, the edge of a desk.
+- **Grade.** Warm, slightly desaturated colours; never candy-bright. Strong vignette and visible film grain. Night is blue-grey, not black.
+- **Atmosphere.** Snow falls in small, sparse flakes. Snow sits on helmets and branches. Breath, dust and smoke drift slowly.
+- **Lighting.** Window shafts and lamp cones with dust motes. Firelight is orange on faces. Wide snow shots are pale and empty.
+- **Negative space.** Wide shots are sparse: a horizon of pines, a road, a few tiny figures, one truck, at most one label. Clutter is the enemy.
+
+## 2. Camera
+- **Always slightly alive.** A slow push-in or drift of 3–8 % over the shot. Never a fully static frame.
+- **Cut, don't whip.** Wide → close-up on the reaction → detail insert. A push-in to a face takes 2–5 s, not 0.2 s.
+- **Two-shots.** Characters are big at the frame edges facing each other, with the background blurred between them.
+- **Moving subjects.** On maps the camera follows the ship or column it is talking about.
+
+## 3. Characters
+- Big round head on a small body; rubber-hose limbs; small hands.
+- Hands do things:
+  - a rifle is held across the body with **two hands**;
+  - papers are read; telegrams are lifted.
+- Reactions are slow and readable: one pose change per sentence, an expression that holds for a moment.
+- In close-ups the face fills 30–50 % of the frame height.
+
+## 4. Vehicles, ships, aircraft
+- **Drawn with volume.** The top is lit and the side darker. Tracks have links, a drive sprocket, hubcap road wheels, mud on the lower hull. Markings are small. Crew sometimes sits on the hull.
+- **Move at believable speeds.** A tank crosses a wide frame in 8–15 s, a truck in 5–10 s. Motion accelerates and brakes gently; wheels turn with the distance travelled. A close pass fills the frame and leaves motion blur and kicked-up snow or dust.
+- **Planes in formation** drift slowly in wide shots. A dive or close pass is fast but short (≤ 1.5 s).
+
+## 5. Maps
+- **Old paper.** Fold creases, a texture, ink coastlines, ripple hatching along coasts, faint graticule (55°…).
+- **Muted political colours:**
+  - Germany: grey;
+  - USSR: terracotta;
+  - Britain: muted blue;
+  - neutral land: beige;
+  - sea: pale teal.
+- **Physical detail.** Main rivers drawn and named in italic script (Dnieper, Don, Volga, Rhine, Waal, Maas).
+- **Map furniture.**
+  - Date tag top-left ("BLACK SEA · 1945").
+  - Legend box bottom-left with flags.
+  - Small pinned paper labels ("• THE ATLANTIC: U-BOATS").
+- **Quantities as objects.**
+  - Clusters of small division blocks with a "≈160" tag.
+  - Tiny ship silhouettes.
+  - Illustrated wagon/tank columns moving along a dashed route.
+- **Motion.**
+  - Routes draw behind a moving icon.
+  - Fronts and pockets change over time.
+  - The camera zooms from a close-up to the continent (or back) in one smooth move.
+
+## 6. Text and layout
+- **Very little text on screen.**
+  - One date tag (top-left).
+  - One small pinned label per idea: paper tag with a pin dot, condensed capitals, ≤ 6 words.
+  - Speech bubbles for quoted words, typed on.
+- **Text never overlaps** other text, a face or a key object. Reserve:
+  - top-left for date/place;
+  - top-right for the clock;
+  - bottom-left for the name card.
+- Numbers are big only when the number *is* the point; otherwise they live on a tag.
+
+## 7. Devices (the scored metaphor)
+- Built as **physical objects in a space**:
+  - a glass measuring tube on a wooden wall;
+  - a brass gauge with a needle;
+  - a chalkboard;
+  - a ledger on a desk with a fountain pen;
+  - a blueprint.
+- Lit like the rest of the scene.
+- Introduced once, then revisited with a small, legible change each time.
+
+## 8. Sound (unchanged)
+Voice is the clock. Ambience beds under every place. SFX only for visible contacts. No music.

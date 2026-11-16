@@ -191,7 +191,7 @@ def build():
     ], beat="SHAEF counted 48 divisions worth about 20 infantry and 4 armoured")
     MAP(200.96, [5.4, 52.1], 5.0, [
         L("NETHERLANDS", 960, 520, "map", 50, at=0.2, hud=True),
-        CNT(0, 100, 960, 300, 1.0, suffix=" TANKS", prefix="50–", size=110, dur=1.6, hud=True),
+        CNT(0, 100, 960, 380, 1.0, suffix=" TANKS", prefix="50–", size=110, dur=1.6, hud=True),
         L("BRITISH AIRBORNE STAFF ESTIMATE", 960, 140, "tag", 42, at=0.4, hud=True),
     ], beat="British airborne staff: the whole Netherlands held no more than 50–100 tanks")
     scene(208.88, {"kind": "paper"}, [
@@ -287,7 +287,7 @@ def build():
     scene(339.48, {"kind": "warroom"}, [
         A("brereton", 1600, 900, 1.4, "facepalm", "sad"),
         DOC("order", "OPERATION LINNET", ["DROP AT TOURNAI"], x=520, y=380, w=620, h=300, at=0.2, size=44, speed=30, stamp="CANCELLED"),
-        DOC("order", "OPERATION COMET", ["ARNHEM · NIJMEGEN · GRAVE"], x=1050, y=560, w=620, h=300, at=1.6, size=40, speed=30, stamp="CANCELLED"),
+        DOC("order", "OPERATION COMET", ["ARNHEM · NIJMEGEN · GRAVE"], x=1150, y=640, w=620, h=300, at=1.6, size=40, speed=30, stamp="CANCELLED"),
         L("GROUND TROOPS GOT THERE FIRST", 960, 980, "tag", 44, at=4.4),
     ], beat="every one cancelled; ground troops overran the objective")
     scene(347.82, {"kind": "office", "flag": US, "portrait": False, "map": "DEEP BEHIND ENEMY LINES", "desk": False}, [
@@ -311,11 +311,11 @@ def build():
     ROAD(362.0, -0.16, p_for("A1") - 0.01, move=(2.0, 7.0), extra=[
         A("host", 1700, 1010, 1.25, "explain", "determined", talk=True, keys=K((4.5, {"pose": "pointL"}))),
         A("aide", 1400, 1010, 1.25, "hold", "neutral", holds="radio"),
-        L("THE ROAD NOBODY TOOK", 960, 110, "tag", 46, at=4.0),
+        L("THE ROAD NOBODY TOOK", 960, 92, "tag", 46, at=4.0),
     ], beat="HOST: the cheapest way to lose at Arnhem is to go to Arnhem; first exit isn't on the road")
     ROAD(369.6, p_for("A1") - 0.01, p_for("A1"), move=(0.2, 8.0), extra=[
         A("host", 1700, 1010, 1.25, "idle", "neutral", talk=True, keys=K((4.2, {"pose": "pointL", "expr": "determined"}), (10.0, {"pose": "present", "expr": "smug"}))),
-        L("CLEAR THE SCHELDT IN SEPTEMBER", 960, 110, "tag", 44, at=4.6),
-        L("PEOPLE SAID SO AT THE TIME", 960, 200, "plain", 40, at=11.2),
+        L("CLEAR THE SCHELDT IN SEPTEMBER", 960, 92, "tag", 44, at=4.6),
+        L("PEOPLE SAID SO AT THE TIME", 960, 180, "plain", 40, at=11.2),
     ], beat="which exit? Antwerp first: clear the Scheldt in September and there's no Market Garden. That's one")
     LEDGER(383.44, [("A1 Antwerp first", 383.6)], [], beat="Allied column")

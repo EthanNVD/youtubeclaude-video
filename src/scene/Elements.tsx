@@ -103,7 +103,9 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
   const { t, dur } = ctx;
   const env = envelope(el, t, dur);
   if (!env.visible) return null;
-  const e = resolveKeys(el, el.keys, t) as ElementBase;
+  // vehicles move with a physical speed profile unless a key says otherwise
+  const keysUsed = el.kind === 'vehicle' && el.keys ? el.keys.map((kk) => (('x' in kk || 'at' in kk) && !kk.ease ? { ...kk, ease: 'drive' as const } : kk)) : el.keys;
+  const e = resolveKeys(el, keysUsed, t) as ElementBase;
   const a = t - (el.in ?? 0);
   const seed = ctx.sceneId + ':' + (el.id ?? index);
 
@@ -203,13 +205,16 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
       break;
     case 'vehicle': {
       let moving = !!e.moving;
+      let travel: number | undefined;
       if (el.keys?.some((kk) => 'x' in kk || 'at' in kk)) {
-        const e2 = resolveKeys(el, el.keys, t + 0.08) as ElementBase;
+        const e2 = resolveKeys(el, keysUsed, t + 0.08) as ElementBase;
         if (Math.abs(((e2.x as number) ?? 0) - ((e.x as number) ?? 0)) > 0.3) moving = true;
-      }
+        // distance travelled in the vehicle's own drawing units (drives wheel and track animation)
+        travel = Math.abs(((e.x as number) ?? 0) - ((el.x as number) ?? 0)) / Math.max(0.05, (e.scale as number) ?? 1);
+      } else if (moving) travel = t * 140;
       body = (
         <g>
-          <Vehicle type={(e.type as string) ?? 'tank'} nationKey={e.nation as string} t={t} color={e.color as string} moving={moving} damaged={!!e.damaged} />
+          <Vehicle type={(e.type as string) ?? 'tank'} nationKey={e.nation as string} t={t} color={e.color as string} moving={moving} damaged={!!e.damaged} travel={travel} crew={!!e.crew} />
           {e.burning ? <g transform="translate(0 -80)"><Fx kind="fire" a={a} t={t} seed={seed} size={0.8} /><g transform="translate(20 -60)"><Fx kind="smoke" a={a} t={t} seed={seed} size={1} /></g></g> : null}
         </g>
       );
@@ -336,6 +341,47 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
     case 'ship':
       body = <MapIcon type={(e.type as string) ?? 'ship'} nationKey={e.nation as string} color={e.color as string} label={e.label as string} t={t} burning={!!e.burning} />;
       break;
+    case 'legend': {
+      // map legend box: flag + name rows (bottom-left by default, hud)
+      const items = (e.items as { nation?: string; label: string; color?: string }[]) ?? [];
+      const w = Math.max(...items.map((it) => it.label.length * 17 + 110), 220);
+      const h = 30 + items.length * 46;
+      body = (
+        <g>
+          <rect x={4} y={6} width={w} height={h} rx={6} fill="#000" opacity={0.18} />
+          <rect x={0} y={0} width={w} height={h} rx={6} fill="#f4ecd8" stroke={INK} strokeWidth={4} />
+          {items.map((it, i) => (
+            <g key={i} transform={`translate(18 ${18 + i * 46})`}>
+              {it.nation ? <Flag nation={it.nation} w={54} h={36} t={t} still /> : <rect width={54} height={36} fill={col(it.color, C.grey)} stroke={INK} strokeWidth={2} />}
+              <text x={70} y={28} fontFamily={FONT.cond} fontWeight={700} fontSize={28} fill={INK}>{it.label.toUpperCase()}</text>
+            </g>
+          ))}
+        </g>
+      );
+      break;
+    }
+    case 'blocks': {
+      // quantity as objects: a grid of small division blocks + optional "≈160" tag
+      const n = (e.count as number) ?? 20, cols = (e.cols as number) ?? Math.ceil(Math.sqrt(n * 1.6));
+      const c = col(e.color, uiColor(e.nation as string));
+      const sz = (e.size as number) ?? 16;
+      const rows = Math.ceil(n / cols);
+      const shown = Math.min(n, Math.floor(n * clamp(a / ((e.dur as number) ?? 1.2))));
+      body = (
+        <g transform={`translate(${(-cols * (sz + 3)) / 2} ${(-rows * (sz + 3)) / 2})`}>
+          {Array.from({ length: shown }, (_, i) => (
+            <rect key={i} x={(i % cols) * (sz + 3)} y={Math.floor(i / cols) * (sz + 3)} width={sz} height={sz} rx={2} fill={c} stroke={INK} strokeWidth={1.6} />
+          ))}
+          {e.label ? (
+            <g transform={`translate(${cols * (sz + 3) + 16} ${(rows * (sz + 3)) / 2 - 24})`}>
+              <rect width={String(e.label).length * 22 + 30} height={48} rx={4} fill="#f4ecd8" stroke={INK} strokeWidth={3} />
+              <text x={15} y={35} fontFamily={FONT.heavy} fontSize={34} fill={INK}>{String(e.label)}</text>
+            </g>
+          ) : null}
+        </g>
+      );
+      break;
+    }
     case 'paras': {
       // parachutists drifting down under round canopies (count, spread px, fall px, dur s, color)
       const n = (e.count as number) ?? 12, spread = (e.spread as number) ?? 1400, fall = (e.fall as number) ?? 700, pd = (e.pdur as number) ?? 6;
@@ -456,7 +502,7 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
       body = <ScoreDevice t={t} sides={e.sides as never} title={e.title as string} scores={e.scores as number[]} />;
       break;
     case 'road':
-      body = <RoadDevice t={t} progress={e.progress as number} exits={e.exits as never} towns={e.towns as never} vehicle={e.vehicle as string} nation={e.nation as string} length={e.length as number} color={e.color as string} sea={!!e.sea} polder={!!e.polder} vehicles={e.vehicles as number} />;
+      body = <RoadDevice t={t} progress={e.progress as number} exits={e.exits as never} towns={e.towns as never} vehicle={e.vehicle as string} nation={e.nation as string} length={e.length as number} color={e.color as string} sea={!!e.sea} polder={!!e.polder} vehicles={e.vehicles as number} time={e.time as string} />;
       break;
     case 'ranking':
       body = <RankingDevice t={t} items={e.items as never} highlight={e.highlight as number} title={e.title as string} />;

@@ -8,6 +8,11 @@ python tools/validate_plan.py projects/<slug>
   it never drifts from the engine.
 """
 import json, re, sys
+
+try:
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+except Exception:
+    pass
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -137,6 +142,17 @@ def main(proj):
             n = el.get("nation")
             if n and n.upper() not in V["nations"]:
                 warn.append(f"{tag}: unknown nation '{n}'")
+    # layout + motion checks (text never on text / badges / faces; vehicles at believable speeds)
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import layout_check
+    layout = []
+    for s in scenes:
+        if s.get("type") == "stage":
+            layout += layout_check.overlaps(s)
+            layout += layout_check.speeds(s)
+        elif s.get("type") == "map":
+            layout += [w for w in layout_check.overlaps(s)]
+    warn += layout
     for name, c in cast.items():
         if c.get("preset") and c["preset"] not in V["presets"]:
             err.append(f"cast.{name}: unknown preset '{c['preset']}'")
@@ -147,7 +163,7 @@ def main(proj):
     out.write_text(json.dumps(plan, ensure_ascii=False), encoding="utf-8")
     chapters = [(s["start"], s.get("chapter") or s.get("title")) for s in scenes if s.get("chapter") or s.get("type") == "chapter"]
     print(json.dumps({"scenes": len(scenes), "duration": scenes[-1]["end"] if scenes else 0, "chapters": len(chapters),
-                      "errors": err, "warnings": warn[:80], "merged": str(out)}, ensure_ascii=False, indent=1))
+                      "errors": err, "warnings": warn[:150], "warnings_total": len(warn), "merged": str(out)}, ensure_ascii=False, indent=1))
     sys.exit(1 if err else 0)
 
 

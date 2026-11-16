@@ -102,7 +102,7 @@
     {
      "kind": "vehicle",
      "type": "tank",
-     "x": -200,
+     "x": 1100.2,
      "y": 528,
      "scale": 0.2,
      "nation": "UK",
@@ -118,7 +118,7 @@
     {
      "kind": "vehicle",
      "type": "tank",
-     "x": -320,
+     "x": 980.2,
      "y": 528,
      "scale": 0.2,
      "nation": "UK",
@@ -134,7 +134,7 @@
     {
      "kind": "vehicle",
      "type": "tank",
-     "x": -440,
+     "x": 860.2,
      "y": 528,
      "scale": 0.2,
      "nation": "UK",
@@ -150,7 +150,7 @@
     {
      "kind": "vehicle",
      "type": "tank",
-     "x": -560,
+     "x": 740.2,
      "y": 528,
      "scale": 0.2,
      "nation": "UK",
@@ -203,7 +203,7 @@
     {
      "kind": "vehicle",
      "type": "tank",
-     "x": -300,
+     "x": -193.5,
      "y": 960,
      "scale": 1.15,
      "nation": "UK",
@@ -560,7 +560,7 @@
     {
      "kind": "vehicle",
      "type": "tank",
-     "x": -300,
+     "x": 950.2,
      "y": 600,
      "scale": 0.42,
      "nation": "UK",
@@ -576,7 +576,7 @@
     {
      "kind": "vehicle",
      "type": "tank",
-     "x": -500,
+     "x": 750.2,
      "y": 600,
      "scale": 0.42,
      "nation": "UK",
@@ -592,7 +592,7 @@
     {
      "kind": "vehicle",
      "type": "tank",
-     "x": -700,
+     "x": 550.2,
      "y": 600,
      "scale": 0.42,
      "nation": "UK",
@@ -608,7 +608,7 @@
     {
      "kind": "vehicle",
      "type": "tank",
-     "x": -900,
+     "x": 350.2,
      "y": 600,
      "scale": 0.42,
      "nation": "UK",
@@ -665,7 +665,7 @@
     {
      "kind": "vehicle",
      "type": "halftrack",
-     "x": 2100,
+     "x": 1053.2,
      "y": 528,
      "scale": 0.22,
      "nation": "GERI",
@@ -681,7 +681,7 @@
     {
      "kind": "vehicle",
      "type": "halftrack",
-     "x": 2320,
+     "x": 1273.2,
      "y": 528,
      "scale": 0.22,
      "nation": "GERI",
@@ -697,7 +697,7 @@
     {
      "kind": "vehicle",
      "type": "halftrack",
-     "x": 2540,
+     "x": 1493.2,
      "y": 528,
      "scale": 0.22,
      "nation": "GERI",
@@ -887,76 +887,6 @@
    "type": "map",
    "elements": [
     {
-     "kind": "line",
-     "path": [
-      [
-       5.2,
-       51.84
-      ],
-      [
-       5.5,
-       51.855
-      ],
-      [
-       5.7,
-       51.86
-      ],
-      [
-       5.86,
-       51.85
-      ],
-      [
-       6.0,
-       51.87
-      ],
-      [
-       6.1,
-       51.85
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
-    {
-     "kind": "line",
-     "path": [
-      [
-       5.3,
-       51.965
-      ],
-      [
-       5.6,
-       51.975
-      ],
-      [
-       5.78,
-       51.98
-      ],
-      [
-       5.9,
-       51.976
-      ],
-      [
-       5.98,
-       51.965
-      ],
-      [
-       6.08,
-       51.9
-      ],
-      [
-       6.12,
-       51.87
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
-    {
      "kind": "city",
      "name": "Nijmegen",
      "at": [
@@ -1063,12 +993,12 @@
     "span": 0.8,
     "style": "sepia",
     "colors": {
-     "Germany": "#b9b3a2",
-     "Netherlands": "#f0d29a",
-     "Belgium": "#d9e6c4",
-     "France": "#d9e6c4",
-     "Luxembourg": "#d9e6c4",
-     "United Kingdom": "#d9e6c4"
+     "Germany": "#a9a69a",
+     "Netherlands": "#e8d4a2",
+     "Belgium": "#d8dcb8",
+     "France": "#d8dcb8",
+     "Luxembourg": "#d8dcb8",
+     "United Kingdom": "#a9bccf"
     }
    },
    "camera": [
@@ -1503,14 +1433,14 @@
      50.6
     ],
     "span": 9.5,
-    "style": "war",
+    "style": "paper",
     "colors": {
-     "Germany": "#b9b3a2",
-     "Netherlands": "#f0d29a",
-     "Belgium": "#d9e6c4",
-     "France": "#d9e6c4",
-     "Luxembourg": "#d9e6c4",
-     "United Kingdom": "#d9e6c4"
+     "Germany": "#a9a69a",
+     "Netherlands": "#e8d4a2",
+     "Belgium": "#d8dcb8",
+     "France": "#d8dcb8",
+     "Luxembourg": "#d8dcb8",
+     "United Kingdom": "#a9bccf"
     }
    },
    "beat": "not the war in the West, not the advance into Holland",
@@ -1559,12 +1489,13 @@
     {
      "kind": "road",
      "x": 960,
-     "y": 600,
+     "y": 700,
+     "scale": 1.35,
      "progress": -0.12,
-     "length": 6000,
-     "vehicle": "tank",
+     "length": 24000,
+     "vehicle": "sherman",
      "nation": "UK",
-     "polder": true,
+     "time": "day",
      "exits": [],
      "towns": [
       {
@@ -1658,11 +1589,8 @@
     }
    ],
    "set": {
-    "kind": "field",
-    "road": false,
-    "houses": false,
-    "poles": false,
-    "trees": "round"
+    "kind": "paper",
+    "drift": 0
    },
    "beat": "AIDE: Sir, it's one road. How many ways can you get lost? HOST: on this road?",
    "id": "s022",
@@ -1675,12 +1603,13 @@
     {
      "kind": "road",
      "x": 960,
-     "y": 600,
+     "y": 700,
+     "scale": 1.35,
      "progress": -0.08,
-     "length": 6000,
-     "vehicle": "tank",
+     "length": 24000,
+     "vehicle": "sherman",
      "nation": "UK",
-     "polder": true,
+     "time": "day",
      "exits": [
       {
        "at": 0.02,
@@ -1688,7 +1617,7 @@
        "label": "? ? ?"
       },
       {
-       "at": 0.07,
+       "at": 0.065,
        "side": "up",
        "label": "? ? ?"
       },
@@ -1698,7 +1627,7 @@
        "label": "? ? ?"
       },
       {
-       "at": 0.15,
+       "at": 0.155,
        "side": "down",
        "label": "? ? ?"
       },
@@ -1708,7 +1637,7 @@
        "label": "? ? ?"
       },
       {
-       "at": 0.52,
+       "at": 0.5,
        "side": "down",
        "label": "? ? ?"
       },
@@ -1718,7 +1647,7 @@
        "label": "? ? ?"
       },
       {
-       "at": 0.66,
+       "at": 0.665,
        "side": "down",
        "label": "? ? ?"
       },
@@ -1788,11 +1717,8 @@
     }
    ],
    "set": {
-    "kind": "field",
-    "road": false,
-    "houses": false,
-    "poles": false,
-    "trees": "round"
+    "kind": "paper",
+    "drift": 0
    },
    "beat": "let's count: every turn-off gets assigned; five bridges, two armies, one road",
    "id": "s023",
@@ -1981,12 +1907,13 @@
     {
      "kind": "road",
      "x": 960,
-     "y": 600,
+     "y": 700,
+     "scale": 1.35,
      "progress": 0.62,
-     "length": 6000,
-     "vehicle": "tank",
+     "length": 24000,
+     "vehicle": "sherman",
      "nation": "UK",
-     "polder": true,
+     "time": "day",
      "exits": [],
      "towns": [
       {
@@ -2063,11 +1990,8 @@
     }
    ],
    "set": {
-    "kind": "field",
-    "road": false,
-    "houses": false,
-    "poles": false,
-    "trees": "round"
+    "kind": "paper",
+    "drift": 0
    },
    "beat": "clock starts on a Sunday; one sign we won't paint at all",
    "id": "s028",
@@ -2270,14 +2194,14 @@
      49.9
     ],
     "span": 8.5,
-    "style": "war",
+    "style": "paper",
     "colors": {
-     "Germany": "#b9b3a2",
-     "Netherlands": "#f0d29a",
-     "Belgium": "#d9e6c4",
-     "France": "#d9e6c4",
-     "Luxembourg": "#d9e6c4",
-     "United Kingdom": "#d9e6c4"
+     "Germany": "#a9a69a",
+     "Netherlands": "#e8d4a2",
+     "Belgium": "#d8dcb8",
+     "France": "#d8dcb8",
+     "Luxembourg": "#d8dcb8",
+     "United Kingdom": "#a9bccf"
     }
    },
    "beat": "breakout from Normandy, Falaise pocket, chase across France and Belgium",
@@ -2351,7 +2275,7 @@
     {
      "kind": "vehicle",
      "type": "tank",
-     "x": -200,
+     "x": 29.0,
      "y": 900,
      "scale": 0.75,
      "nation": "UK",
@@ -2367,7 +2291,7 @@
     {
      "kind": "vehicle",
      "type": "tank",
-     "x": -620,
+     "x": -391.0,
      "y": 900,
      "scale": 0.75,
      "nation": "UK",
@@ -2533,7 +2457,7 @@
      "from": 0,
      "to": 100,
      "x": 960,
-     "y": 300,
+     "y": 380,
      "in": 1.0,
      "suffix": " TANKS",
      "prefix": "50–",
@@ -2559,14 +2483,14 @@
      52.1
     ],
     "span": 5.0,
-    "style": "war",
+    "style": "paper",
     "colors": {
-     "Germany": "#b9b3a2",
-     "Netherlands": "#f0d29a",
-     "Belgium": "#d9e6c4",
-     "France": "#d9e6c4",
-     "Luxembourg": "#d9e6c4",
-     "United Kingdom": "#d9e6c4"
+     "Germany": "#a9a69a",
+     "Netherlands": "#e8d4a2",
+     "Belgium": "#d8dcb8",
+     "France": "#d8dcb8",
+     "Luxembourg": "#d8dcb8",
+     "United Kingdom": "#a9bccf"
     }
    },
    "beat": "British airborne staff: the whole Netherlands held no more than 50–100 tanks",
@@ -2973,14 +2897,14 @@
      51.38
     ],
     "span": 1.7,
-    "style": "war",
+    "style": "paper",
     "colors": {
-     "Germany": "#b9b3a2",
-     "Netherlands": "#f0d29a",
-     "Belgium": "#d9e6c4",
-     "France": "#d9e6c4",
-     "Luxembourg": "#d9e6c4",
-     "United Kingdom": "#d9e6c4"
+     "Germany": "#a9a69a",
+     "Netherlands": "#e8d4a2",
+     "Belgium": "#d8dcb8",
+     "France": "#d8dcb8",
+     "Luxembourg": "#d8dcb8",
+     "United Kingdom": "#a9bccf"
     }
    },
    "camera": [
@@ -3225,14 +3149,14 @@
      51.5
     ],
     "span": 3.2,
-    "style": "war",
+    "style": "paper",
     "colors": {
-     "Germany": "#b9b3a2",
-     "Netherlands": "#f0d29a",
-     "Belgium": "#d9e6c4",
-     "France": "#d9e6c4",
-     "Luxembourg": "#d9e6c4",
-     "United Kingdom": "#d9e6c4"
+     "Germany": "#a9a69a",
+     "Netherlands": "#e8d4a2",
+     "Belgium": "#d8dcb8",
+     "France": "#d8dcb8",
+     "Luxembourg": "#d8dcb8",
+     "United Kingdom": "#a9bccf"
     }
    },
    "beat": "the German 15th Army was quietly escaping across the estuary behind them",
@@ -3246,7 +3170,7 @@
     {
      "kind": "vehicle",
      "type": "boat",
-     "x": -200,
+     "x": 788.4,
      "y": 640,
      "scale": 0.55,
      "keys": [
@@ -3259,7 +3183,7 @@
     {
      "kind": "vehicle",
      "type": "boat",
-     "x": -700,
+     "x": 288.4,
      "y": 730,
      "scale": 0.55,
      "keys": [
@@ -3272,7 +3196,7 @@
     {
      "kind": "vehicle",
      "type": "boat",
-     "x": -1200,
+     "x": -211.6,
      "y": 640,
      "scale": 0.55,
      "keys": [
@@ -3285,7 +3209,7 @@
     {
      "kind": "vehicle",
      "type": "cargo",
-     "x": -900,
+     "x": 441.0,
      "y": 720,
      "scale": 0.4,
      "keys": [
@@ -3763,14 +3687,14 @@
      51.0
     ],
     "span": 6.5,
-    "style": "war",
+    "style": "paper",
     "colors": {
-     "Germany": "#b9b3a2",
-     "Netherlands": "#f0d29a",
-     "Belgium": "#d9e6c4",
-     "France": "#d9e6c4",
-     "Luxembourg": "#d9e6c4",
-     "United Kingdom": "#d9e6c4"
+     "Germany": "#a9a69a",
+     "Netherlands": "#e8d4a2",
+     "Belgium": "#d8dcb8",
+     "France": "#d8dcb8",
+     "Luxembourg": "#d8dcb8",
+     "United Kingdom": "#a9bccf"
     }
    },
    "camera": [
@@ -3916,8 +3840,8 @@
      "lines": [
       "ARNHEM · NIJMEGEN · GRAVE"
      ],
-     "x": 1050,
-     "y": 560,
+     "x": 1150,
+     "y": 640,
      "w": 620,
      "h": 300,
      "in": 1.6,
@@ -4052,12 +3976,13 @@
     {
      "kind": "road",
      "x": 960,
-     "y": 600,
+     "y": 700,
+     "scale": 1.35,
      "progress": -0.16,
-     "length": 6000,
-     "vehicle": "tank",
+     "length": 24000,
+     "vehicle": "sherman",
      "nation": "UK",
-     "polder": true,
+     "time": "day",
      "exits": [
       {
        "at": 0.02,
@@ -4140,11 +4065,8 @@
     }
    ],
    "set": {
-    "kind": "field",
-    "road": false,
-    "houses": false,
-    "poles": false,
-    "trees": "round"
+    "kind": "paper",
+    "drift": 0
    },
    "chapter": "The Road Nobody Took",
    "beat": "AIDE: why does Antwerp get a sign? we haven't started driving",
@@ -4158,12 +4080,13 @@
     {
      "kind": "road",
      "x": 960,
-     "y": 600,
+     "y": 700,
+     "scale": 1.35,
      "progress": -0.16,
-     "length": 6000,
-     "vehicle": "tank",
+     "length": 24000,
+     "vehicle": "sherman",
      "nation": "UK",
-     "polder": true,
+     "time": "day",
      "exits": [
       {
        "at": 0.02,
@@ -4219,7 +4142,7 @@
       },
       {
        "t": 7.0,
-       "progress": -0.06333333333333332,
+       "progress": -0.0004166666666666659,
        "ease": "inOut"
       }
      ]
@@ -4254,18 +4177,15 @@
      "kind": "label",
      "text": "THE ROAD NOBODY TOOK",
      "x": 960,
-     "y": 110,
+     "y": 92,
      "style": "tag",
      "size": 46,
      "in": 4.0
     }
    ],
    "set": {
-    "kind": "field",
-    "road": false,
-    "houses": false,
-    "poles": false,
-    "trees": "round"
+    "kind": "paper",
+    "drift": 0
    },
    "beat": "HOST: the cheapest way to lose at Arnhem is to go to Arnhem; first exit isn't on the road",
    "id": "s056",
@@ -4278,12 +4198,13 @@
     {
      "kind": "road",
      "x": 960,
-     "y": 600,
-     "progress": -0.06333333333333332,
-     "length": 6000,
-     "vehicle": "tank",
+     "y": 700,
+     "scale": 1.35,
+     "progress": -0.0004166666666666659,
+     "length": 24000,
+     "vehicle": "sherman",
      "nation": "UK",
-     "polder": true,
+     "time": "day",
      "exits": [
       {
        "at": 0.02,
@@ -4335,11 +4256,11 @@
      "keys": [
       {
        "t": 0.2,
-       "progress": -0.06333333333333332
+       "progress": -0.0004166666666666659
       },
       {
        "t": 8.0,
-       "progress": -0.05333333333333333,
+       "progress": 0.009583333333333334,
        "ease": "inOut"
       }
      ]
@@ -4370,7 +4291,7 @@
      "kind": "label",
      "text": "CLEAR THE SCHELDT IN SEPTEMBER",
      "x": 960,
-     "y": 110,
+     "y": 92,
      "style": "tag",
      "size": 44,
      "in": 4.6
@@ -4379,18 +4300,15 @@
      "kind": "label",
      "text": "PEOPLE SAID SO AT THE TIME",
      "x": 960,
-     "y": 200,
+     "y": 180,
      "style": "plain",
      "size": 40,
      "in": 11.2
     }
    ],
    "set": {
-    "kind": "field",
-    "road": false,
-    "houses": false,
-    "poles": false,
-    "trees": "round"
+    "kind": "paper",
+    "drift": 0
    },
    "beat": "which exit? Antwerp first: clear the Scheldt in September and there's no Market Garden. That's one",
    "id": "s057",
@@ -4672,7 +4590,8 @@
      "in": 0.2,
      "speed": 34,
      "size": 40,
-     "stamp": "CANCELLED"
+     "stamp": "CANCELLED",
+     "out": 3.0
     },
     {
      "kind": "document",
@@ -4716,7 +4635,7 @@
     {
      "kind": "vehicle",
      "type": "dakota",
-     "x": -500,
+     "x": -484.6,
      "y": 140,
      "scale": 0.42,
      "nation": "USA",
@@ -4731,7 +4650,7 @@
     {
      "kind": "vehicle",
      "type": "dakota",
-     "x": -950,
+     "x": -934.6,
      "y": 210,
      "scale": 0.42,
      "nation": "USA",
@@ -4746,7 +4665,7 @@
     {
      "kind": "vehicle",
      "type": "dakota",
-     "x": -1400,
+     "x": -1384.6,
      "y": 280,
      "scale": 0.42,
      "nation": "USA",
@@ -4780,7 +4699,7 @@
     {
      "kind": "vehicle",
      "type": "tank",
-     "x": -300,
+     "x": 486.0,
      "y": 588,
      "scale": 0.38,
      "nation": "UK",
@@ -4796,7 +4715,7 @@
     {
      "kind": "vehicle",
      "type": "tank",
-     "x": -540,
+     "x": 246.0,
      "y": 588,
      "scale": 0.38,
      "nation": "UK",
@@ -4812,7 +4731,7 @@
     {
      "kind": "vehicle",
      "type": "tank",
-     "x": -780,
+     "x": 6.0,
      "y": 588,
      "scale": 0.38,
      "nation": "UK",
@@ -5053,9 +4972,9 @@
     {
      "kind": "headline",
      "text": "SUNDAY 17 SEPTEMBER",
-     "x": 1320,
+     "x": 1400,
      "y": 560,
-     "size": 96,
+     "size": 84,
      "in": 2.6,
      "accent": "17"
     },
@@ -5174,12 +5093,13 @@
     {
      "kind": "road",
      "x": 960,
-     "y": 600,
-     "progress": -0.033333333333333326,
-     "length": 6000,
-     "vehicle": "tank",
+     "y": 700,
+     "scale": 1.35,
+     "progress": 0.02458333333333334,
+     "length": 24000,
+     "vehicle": "sherman",
      "nation": "UK",
-     "polder": true,
+     "time": "day",
      "exits": [
       {
        "at": 0.02,
@@ -5191,7 +5111,7 @@
        "num": "A1"
       },
       {
-       "at": 0.07,
+       "at": 0.065,
        "side": "up",
        "label": "Seven days to plan",
        "sub": "a toll either way"
@@ -5237,11 +5157,11 @@
      "keys": [
       {
        "t": 0.2,
-       "progress": -0.033333333333333326
+       "progress": 0.02458333333333334
       },
       {
        "t": 3.4,
-       "progress": -0.003333333333333327,
+       "progress": 0.05458333333333334,
        "ease": "inOut"
       }
      ]
@@ -5274,11 +5194,8 @@
     }
    ],
    "set": {
-    "kind": "field",
-    "road": false,
-    "houses": false,
-    "poles": false,
-    "trees": "round"
+    "kind": "paper",
+    "drift": 0
    },
    "beat": "AIDE: is that an exit, sir? take more time? HOST: hmm",
    "id": "s071",
@@ -5330,12 +5247,13 @@
     {
      "kind": "road",
      "x": 960,
-     "y": 600,
-     "progress": -0.003333333333333327,
-     "length": 6000,
-     "vehicle": "tank",
+     "y": 700,
+     "scale": 1.35,
+     "progress": 0.05458333333333334,
+     "length": 24000,
+     "vehicle": "sherman",
      "nation": "UK",
-     "polder": true,
+     "time": "day",
      "exits": [
       {
        "at": 0.02,
@@ -5347,7 +5265,7 @@
        "num": "A1"
       },
       {
-       "at": 0.07,
+       "at": 0.065,
        "side": "up",
        "label": "Seven days to plan",
        "sub": "a toll either way"
@@ -5393,11 +5311,11 @@
      "keys": [
       {
        "t": 0.2,
-       "progress": -0.003333333333333327
+       "progress": 0.05458333333333334
       },
       {
        "t": 0.4,
-       "progress": -0.003333333333333327,
+       "progress": 0.05458333333333334,
        "ease": "inOut"
       }
      ]
@@ -5434,11 +5352,8 @@
     }
    ],
    "set": {
-    "kind": "field",
-    "road": false,
-    "houses": false,
-    "poles": false,
-    "trees": "round"
+    "kind": "paper",
+    "drift": 0
    },
    "beat": "that's a toll either way; no sign",
    "id": "s073",
@@ -5448,105 +5363,6 @@
    "start": 477.32,
    "type": "map",
    "elements": [
-    {
-     "kind": "line",
-     "path": [
-      [
-       5.3,
-       51.8
-      ],
-      [
-       5.55,
-       51.78
-      ],
-      [
-       5.74,
-       51.766
-      ],
-      [
-       5.9,
-       51.73
-      ],
-      [
-       6.05,
-       51.68
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
-    {
-     "kind": "line",
-     "path": [
-      [
-       5.2,
-       51.84
-      ],
-      [
-       5.5,
-       51.855
-      ],
-      [
-       5.7,
-       51.86
-      ],
-      [
-       5.86,
-       51.85
-      ],
-      [
-       6.0,
-       51.87
-      ],
-      [
-       6.1,
-       51.85
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
-    {
-     "kind": "line",
-     "path": [
-      [
-       5.3,
-       51.965
-      ],
-      [
-       5.6,
-       51.975
-      ],
-      [
-       5.78,
-       51.98
-      ],
-      [
-       5.9,
-       51.976
-      ],
-      [
-       5.98,
-       51.965
-      ],
-      [
-       6.08,
-       51.9
-      ],
-      [
-       6.12,
-       51.87
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
     {
      "kind": "line",
      "path": [
@@ -5675,14 +5491,14 @@
      51.62
     ],
     "span": 2.8,
-    "style": "war",
+    "style": "paper",
     "colors": {
-     "Germany": "#b9b3a2",
-     "Netherlands": "#f0d29a",
-     "Belgium": "#d9e6c4",
-     "France": "#d9e6c4",
-     "Luxembourg": "#d9e6c4",
-     "United Kingdom": "#d9e6c4"
+     "Germany": "#a9a69a",
+     "Netherlands": "#e8d4a2",
+     "Belgium": "#d8dcb8",
+     "France": "#d8dcb8",
+     "Luxembourg": "#d8dcb8",
+     "United Kingdom": "#a9bccf"
     }
    },
    "chapter": "Carpet of Paratroopers",
@@ -5694,105 +5510,6 @@
    "start": 486.7,
    "type": "map",
    "elements": [
-    {
-     "kind": "line",
-     "path": [
-      [
-       5.3,
-       51.8
-      ],
-      [
-       5.55,
-       51.78
-      ],
-      [
-       5.74,
-       51.766
-      ],
-      [
-       5.9,
-       51.73
-      ],
-      [
-       6.05,
-       51.68
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
-    {
-     "kind": "line",
-     "path": [
-      [
-       5.2,
-       51.84
-      ],
-      [
-       5.5,
-       51.855
-      ],
-      [
-       5.7,
-       51.86
-      ],
-      [
-       5.86,
-       51.85
-      ],
-      [
-       6.0,
-       51.87
-      ],
-      [
-       6.1,
-       51.85
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
-    {
-     "kind": "line",
-     "path": [
-      [
-       5.3,
-       51.965
-      ],
-      [
-       5.6,
-       51.975
-      ],
-      [
-       5.78,
-       51.98
-      ],
-      [
-       5.9,
-       51.976
-      ],
-      [
-       5.98,
-       51.965
-      ],
-      [
-       6.08,
-       51.9
-      ],
-      [
-       6.12,
-       51.87
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
     {
      "kind": "line",
      "path": [
@@ -5999,14 +5716,14 @@
      51.62
     ],
     "span": 2.8,
-    "style": "war",
+    "style": "paper",
     "colors": {
-     "Germany": "#b9b3a2",
-     "Netherlands": "#f0d29a",
-     "Belgium": "#d9e6c4",
-     "France": "#d9e6c4",
-     "Luxembourg": "#d9e6c4",
-     "United Kingdom": "#d9e6c4"
+     "Germany": "#a9a69a",
+     "Netherlands": "#e8d4a2",
+     "Belgium": "#d8dcb8",
+     "France": "#d8dcb8",
+     "Luxembourg": "#d8dcb8",
+     "United Kingdom": "#a9bccf"
     }
    },
    "camera": [
@@ -6059,105 +5776,6 @@
    "start": 508.11,
    "type": "map",
    "elements": [
-    {
-     "kind": "line",
-     "path": [
-      [
-       5.3,
-       51.8
-      ],
-      [
-       5.55,
-       51.78
-      ],
-      [
-       5.74,
-       51.766
-      ],
-      [
-       5.9,
-       51.73
-      ],
-      [
-       6.05,
-       51.68
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
-    {
-     "kind": "line",
-     "path": [
-      [
-       5.2,
-       51.84
-      ],
-      [
-       5.5,
-       51.855
-      ],
-      [
-       5.7,
-       51.86
-      ],
-      [
-       5.86,
-       51.85
-      ],
-      [
-       6.0,
-       51.87
-      ],
-      [
-       6.1,
-       51.85
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
-    {
-     "kind": "line",
-     "path": [
-      [
-       5.3,
-       51.965
-      ],
-      [
-       5.6,
-       51.975
-      ],
-      [
-       5.78,
-       51.98
-      ],
-      [
-       5.9,
-       51.976
-      ],
-      [
-       5.98,
-       51.965
-      ],
-      [
-       6.08,
-       51.9
-      ],
-      [
-       6.12,
-       51.87
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
     {
      "kind": "city",
      "name": "Neerpelt",
@@ -6324,14 +5942,14 @@
      51.62
     ],
     "span": 2.8,
-    "style": "war",
+    "style": "paper",
     "colors": {
-     "Germany": "#b9b3a2",
-     "Netherlands": "#f0d29a",
-     "Belgium": "#d9e6c4",
-     "France": "#d9e6c4",
-     "Luxembourg": "#d9e6c4",
-     "United Kingdom": "#d9e6c4"
+     "Germany": "#a9a69a",
+     "Netherlands": "#e8d4a2",
+     "Belgium": "#d8dcb8",
+     "France": "#d8dcb8",
+     "Luxembourg": "#d8dcb8",
+     "United Kingdom": "#a9bccf"
     }
    },
    "beat": "then XXX Corps' tanks drive up that road across the carpet, cross the Rhine, keep going",
@@ -6345,7 +5963,7 @@
     {
      "kind": "vehicle",
      "type": "tank",
-     "x": -300,
+     "x": -56.7,
      "y": 578,
      "scale": 0.36,
      "nation": "UK",
@@ -6361,7 +5979,7 @@
     {
      "kind": "vehicle",
      "type": "tank",
-     "x": -560,
+     "x": -316.7,
      "y": 578,
      "scale": 0.36,
      "nation": "UK",
@@ -6377,7 +5995,7 @@
     {
      "kind": "vehicle",
      "type": "tank",
-     "x": -820,
+     "x": -576.7,
      "y": 578,
      "scale": 0.36,
      "nation": "UK",
@@ -6571,7 +6189,7 @@
      "kind": "label",
      "text": "\"HOW LONG CAN\nTHEY HOLD OUT?\"",
      "x": 1250,
-     "y": 400,
+     "y": 320,
      "style": "plain",
      "size": 44,
      "in": 8.0
@@ -6858,43 +6476,6 @@
    "type": "map",
    "elements": [
     {
-     "kind": "line",
-     "path": [
-      [
-       5.3,
-       51.965
-      ],
-      [
-       5.6,
-       51.975
-      ],
-      [
-       5.78,
-       51.98
-      ],
-      [
-       5.9,
-       51.976
-      ],
-      [
-       5.98,
-       51.965
-      ],
-      [
-       6.08,
-       51.9
-      ],
-      [
-       6.12,
-       51.87
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
-    {
      "kind": "city",
      "name": "Arnhem",
      "at": [
@@ -6944,14 +6525,14 @@
      51.98
     ],
     "span": 0.55,
-    "style": "war",
+    "style": "paper",
     "colors": {
-     "Germany": "#b9b3a2",
-     "Netherlands": "#f0d29a",
-     "Belgium": "#d9e6c4",
-     "France": "#d9e6c4",
-     "Luxembourg": "#d9e6c4",
-     "United Kingdom": "#d9e6c4"
+     "Germany": "#a9a69a",
+     "Netherlands": "#e8d4a2",
+     "Belgium": "#d8dcb8",
+     "France": "#d8dcb8",
+     "Luxembourg": "#d8dcb8",
+     "United Kingdom": "#a9bccf"
     }
    },
    "beat": "for the British at Arnhem the decision was multiplied by geography",
@@ -7006,43 +6587,6 @@
    "start": 586.1,
    "type": "map",
    "elements": [
-    {
-     "kind": "line",
-     "path": [
-      [
-       5.3,
-       51.965
-      ],
-      [
-       5.6,
-       51.975
-      ],
-      [
-       5.78,
-       51.98
-      ],
-      [
-       5.9,
-       51.976
-      ],
-      [
-       5.98,
-       51.965
-      ],
-      [
-       6.08,
-       51.9
-      ],
-      [
-       6.12,
-       51.87
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
     {
      "kind": "city",
      "name": "Arnhem",
@@ -7140,14 +6684,14 @@
      51.97
     ],
     "span": 0.4,
-    "style": "war",
+    "style": "paper",
     "colors": {
-     "Germany": "#b9b3a2",
-     "Netherlands": "#f0d29a",
-     "Belgium": "#d9e6c4",
-     "France": "#d9e6c4",
-     "Luxembourg": "#d9e6c4",
-     "United Kingdom": "#d9e6c4"
+     "Germany": "#a9a69a",
+     "Netherlands": "#e8d4a2",
+     "Belgium": "#d8dcb8",
+     "France": "#d8dcb8",
+     "Luxembourg": "#d8dcb8",
+     "United Kingdom": "#a9bccf"
     }
    },
    "beat": "the city full of AA guns; south bank too soft and cut up by dykes",
@@ -7158,43 +6702,6 @@
    "start": 593.92,
    "type": "map",
    "elements": [
-    {
-     "kind": "line",
-     "path": [
-      [
-       5.3,
-       51.965
-      ],
-      [
-       5.6,
-       51.975
-      ],
-      [
-       5.78,
-       51.98
-      ],
-      [
-       5.9,
-       51.976
-      ],
-      [
-       5.98,
-       51.965
-      ],
-      [
-       6.08,
-       51.9
-      ],
-      [
-       6.12,
-       51.87
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
     {
      "kind": "city",
      "name": "Arnhem",
@@ -7303,14 +6810,14 @@
      51.985
     ],
     "span": 0.5,
-    "style": "war",
+    "style": "paper",
     "colors": {
-     "Germany": "#b9b3a2",
-     "Netherlands": "#f0d29a",
-     "Belgium": "#d9e6c4",
-     "France": "#d9e6c4",
-     "Luxembourg": "#d9e6c4",
-     "United Kingdom": "#d9e6c4"
+     "Germany": "#a9a69a",
+     "Netherlands": "#e8d4a2",
+     "Belgium": "#d8dcb8",
+     "France": "#d8dcb8",
+     "Luxembourg": "#d8dcb8",
+     "United Kingdom": "#a9bccf"
     }
    },
    "beat": "the drop zones went in heathland west of Arnhem, up to 13 km from the bridge",
@@ -7461,12 +6968,13 @@
     {
      "kind": "road",
      "x": 960,
-     "y": 600,
-     "progress": 0.016666666666666663,
-     "length": 6000,
-     "vehicle": "tank",
+     "y": 700,
+     "scale": 1.35,
+     "progress": 0.08458333333333334,
+     "length": 24000,
+     "vehicle": "sherman",
      "nation": "UK",
-     "polder": true,
+     "time": "day",
      "exits": [
       {
        "at": 0.02,
@@ -7478,7 +6986,7 @@
        "num": "A1"
       },
       {
-       "at": 0.07,
+       "at": 0.065,
        "side": "up",
        "label": "Seven days to plan",
        "sub": "a toll either way"
@@ -7524,11 +7032,11 @@
      "keys": [
       {
        "t": 0.2,
-       "progress": 0.016666666666666663
+       "progress": 0.08458333333333334
       },
       {
        "t": 6.0,
-       "progress": 0.026666666666666658,
+       "progress": 0.09458333333333334,
        "ease": "inOut"
       }
      ]
@@ -7571,11 +7079,8 @@
     }
    ],
    "set": {
-    "kind": "field",
-    "road": false,
-    "houses": false,
-    "poles": false,
-    "trees": "round"
+    "kind": "paper",
+    "drift": 0
    },
    "beat": "AIDE: my set reaches about 5 km, the bridge is 13 away. HOST: noted",
    "id": "s090",
@@ -7585,43 +7090,6 @@
    "start": 620.43,
    "type": "map",
    "elements": [
-    {
-     "kind": "line",
-     "path": [
-      [
-       5.3,
-       51.965
-      ],
-      [
-       5.6,
-       51.975
-      ],
-      [
-       5.78,
-       51.98
-      ],
-      [
-       5.9,
-       51.976
-      ],
-      [
-       5.98,
-       51.965
-      ],
-      [
-       6.08,
-       51.9
-      ],
-      [
-       6.12,
-       51.87
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
     {
      "kind": "city",
      "name": "Arnhem",
@@ -7704,14 +7172,14 @@
      51.985
     ],
     "span": 0.5,
-    "style": "war",
+    "style": "paper",
     "colors": {
-     "Germany": "#b9b3a2",
-     "Netherlands": "#f0d29a",
-     "Belgium": "#d9e6c4",
-     "France": "#d9e6c4",
-     "Luxembourg": "#d9e6c4",
-     "United Kingdom": "#d9e6c4"
+     "Germany": "#a9a69a",
+     "Netherlands": "#e8d4a2",
+     "Belgium": "#d8dcb8",
+     "France": "#d8dcb8",
+     "Luxembourg": "#d8dcb8",
+     "United Kingdom": "#a9bccf"
     }
    },
    "beat": "the Type 22 set: effective range about 5 km",
@@ -7772,12 +7240,13 @@
     {
      "kind": "road",
      "x": 960,
-     "y": 600,
-     "progress": 0.006666666666666668,
-     "length": 6000,
-     "vehicle": "tank",
+     "y": 700,
+     "scale": 1.35,
+     "progress": 0.06958333333333333,
+     "length": 24000,
+     "vehicle": "sherman",
      "nation": "UK",
-     "polder": true,
+     "time": "day",
      "exits": [
       {
        "at": 0.02,
@@ -7789,7 +7258,7 @@
        "num": "A1"
       },
       {
-       "at": 0.07,
+       "at": 0.065,
        "side": "up",
        "label": "Seven days to plan",
        "sub": "a toll either way"
@@ -7804,7 +7273,7 @@
        "num": "A2"
       },
       {
-       "at": 0.15,
+       "at": 0.155,
        "side": "down",
        "label": "Drop near the bridge",
        "sub": "England · the planners",
@@ -7853,11 +7322,11 @@
      "keys": [
       {
        "t": 0.4,
-       "progress": 0.006666666666666668
+       "progress": 0.06958333333333333
       },
       {
        "t": 11.0,
-       "progress": 0.09666666666666666,
+       "progress": 0.16458333333333333,
        "ease": "inOut"
       }
      ]
@@ -7887,18 +7356,15 @@
      "kind": "label",
      "text": "TWO EXITS — BOTH IN ENGLAND",
      "x": 960,
-     "y": 110,
+     "y": 92,
      "style": "tag",
      "size": 44,
      "in": 3.2
     }
    ],
    "set": {
-    "kind": "field",
-    "road": false,
-    "houses": false,
-    "poles": false,
-    "trees": "round"
+    "kind": "paper",
+    "drift": 0
    },
    "beat": "which exits? two, both in England: one lift a day, distant drop zones. That's three",
    "id": "s093",
@@ -7959,12 +7425,13 @@
     {
      "kind": "road",
      "x": 960,
-     "y": 600,
-     "progress": 0.07666666666666666,
-     "length": 6000,
-     "vehicle": "tank",
+     "y": 700,
+     "scale": 1.35,
+     "progress": 0.14458333333333334,
+     "length": 24000,
+     "vehicle": "sherman",
      "nation": "UK",
-     "polder": true,
+     "time": "day",
      "exits": [
       {
        "at": 0.02,
@@ -7976,7 +7443,7 @@
        "num": "A1"
       },
       {
-       "at": 0.07,
+       "at": 0.065,
        "side": "up",
        "label": "Seven days to plan",
        "sub": "a toll either way"
@@ -7991,7 +7458,7 @@
        "num": "A2"
       },
       {
-       "at": 0.15,
+       "at": 0.155,
        "side": "down",
        "label": "Drop near the bridge",
        "sub": "England · the planners",
@@ -8040,11 +7507,11 @@
      "keys": [
       {
        "t": 0.2,
-       "progress": 0.07666666666666666
+       "progress": 0.14458333333333334
       },
       {
        "t": 0.4,
-       "progress": 0.07666666666666666,
+       "progress": 0.14458333333333334,
        "ease": "inOut"
       }
      ]
@@ -8069,18 +7536,15 @@
      "kind": "label",
      "text": "THE GERMANS WERE MAKING PLANS TOO",
      "x": 960,
-     "y": 110,
+     "y": 92,
      "style": "tag",
      "size": 44,
      "in": 1.0
     }
    ],
    "set": {
-    "kind": "field",
-    "road": false,
-    "houses": false,
-    "poles": false,
-    "trees": "round"
+    "kind": "paper",
+    "drift": 0
    },
    "chapter": "The Germans Next Door",
    "sfx": [
@@ -8139,76 +7603,6 @@
    "start": 665.13,
    "type": "map",
    "elements": [
-    {
-     "kind": "line",
-     "path": [
-      [
-       5.2,
-       51.84
-      ],
-      [
-       5.5,
-       51.855
-      ],
-      [
-       5.7,
-       51.86
-      ],
-      [
-       5.86,
-       51.85
-      ],
-      [
-       6.0,
-       51.87
-      ],
-      [
-       6.1,
-       51.85
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
-    {
-     "kind": "line",
-     "path": [
-      [
-       5.3,
-       51.965
-      ],
-      [
-       5.6,
-       51.975
-      ],
-      [
-       5.78,
-       51.98
-      ],
-      [
-       5.9,
-       51.976
-      ],
-      [
-       5.98,
-       51.965
-      ],
-      [
-       6.08,
-       51.9
-      ],
-      [
-       6.12,
-       51.87
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
     {
      "kind": "city",
      "name": "Arnhem",
@@ -8300,14 +7694,14 @@
      51.5
     ],
     "span": 3.6,
-    "style": "war",
+    "style": "paper",
     "colors": {
-     "Germany": "#b9b3a2",
-     "Netherlands": "#f0d29a",
-     "Belgium": "#d9e6c4",
-     "France": "#d9e6c4",
-     "Luxembourg": "#d9e6c4",
-     "United Kingdom": "#d9e6c4"
+     "Germany": "#a9a69a",
+     "Netherlands": "#e8d4a2",
+     "Belgium": "#d8dcb8",
+     "France": "#d8dcb8",
+     "Luxembourg": "#d8dcb8",
+     "United Kingdom": "#a9bccf"
     }
    },
    "beat": "two battered SS panzer divisions sent near Arnhem to rest and refit",
@@ -8562,8 +7956,8 @@
     {
      "kind": "label",
      "text": "KEEP AN EYE ON THAT HOTEL",
-     "x": 960,
-     "y": 110,
+     "x": 1150,
+     "y": 170,
      "style": "red",
      "size": 46,
      "in": 3.6
@@ -8622,9 +8016,9 @@
       "PRIZE: THE RUHR"
      ],
      "x": 1000,
-     "y": 330,
+     "y": 270,
      "w": 900,
-     "h": 380,
+     "h": 330,
      "in": 2.4,
      "speed": 26,
      "size": 36
@@ -8643,76 +8037,6 @@
    "start": 724.71,
    "type": "map",
    "elements": [
-    {
-     "kind": "line",
-     "path": [
-      [
-       5.2,
-       51.84
-      ],
-      [
-       5.5,
-       51.855
-      ],
-      [
-       5.7,
-       51.86
-      ],
-      [
-       5.86,
-       51.85
-      ],
-      [
-       6.0,
-       51.87
-      ],
-      [
-       6.1,
-       51.85
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
-    {
-     "kind": "line",
-     "path": [
-      [
-       5.3,
-       51.965
-      ],
-      [
-       5.6,
-       51.975
-      ],
-      [
-       5.78,
-       51.98
-      ],
-      [
-       5.9,
-       51.976
-      ],
-      [
-       5.98,
-       51.965
-      ],
-      [
-       6.08,
-       51.9
-      ],
-      [
-       6.12,
-       51.87
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
     {
      "kind": "city",
      "name": "Nijmegen",
@@ -8828,14 +8152,14 @@
      51.8
     ],
     "span": 3.2,
-    "style": "war",
+    "style": "paper",
     "colors": {
-     "Germany": "#b9b3a2",
-     "Netherlands": "#f0d29a",
-     "Belgium": "#d9e6c4",
-     "France": "#d9e6c4",
-     "Luxembourg": "#d9e6c4",
-     "United Kingdom": "#d9e6c4"
+     "Germany": "#a9a69a",
+     "Netherlands": "#e8d4a2",
+     "Belgium": "#d8dcb8",
+     "France": "#d8dcb8",
+     "Luxembourg": "#d8dcb8",
+     "United Kingdom": "#a9bccf"
     }
    },
    "beat": "right about the ground attack, wrong about the airborne army",
@@ -8893,7 +8217,7 @@
     {
      "kind": "vehicle",
      "type": "dakota",
-     "x": -400,
+     "x": 355.2,
      "y": 300,
      "scale": 0.4,
      "nation": "USA",
@@ -8908,7 +8232,7 @@
     {
      "kind": "vehicle",
      "type": "dakota",
-     "x": -750,
+     "x": 5.2,
      "y": 440,
      "scale": 0.4,
      "nation": "USA",
@@ -8923,7 +8247,7 @@
     {
      "kind": "vehicle",
      "type": "dakota",
-     "x": -1100,
+     "x": -344.8,
      "y": 580,
      "scale": 0.4,
      "nation": "USA",
@@ -8938,7 +8262,7 @@
     {
      "kind": "vehicle",
      "type": "dakota",
-     "x": -1450,
+     "x": -694.8,
      "y": 300,
      "scale": 0.4,
      "nation": "USA",
@@ -8953,7 +8277,7 @@
     {
      "kind": "vehicle",
      "type": "dakota",
-     "x": -1800,
+     "x": -1044.8,
      "y": 440,
      "scale": 0.4,
      "nation": "USA",
@@ -8968,7 +8292,7 @@
     {
      "kind": "vehicle",
      "type": "dakota",
-     "x": -2150,
+     "x": -1394.8,
      "y": 580,
      "scale": 0.4,
      "nation": "USA",
@@ -9254,7 +8578,7 @@
      "kind": "label",
      "text": "A FRENCH HISTORIAN:",
      "x": 1400,
-     "y": 380,
+     "y": 330,
      "style": "plain",
      "size": 38,
      "in": 6.2
@@ -9654,76 +8978,6 @@
    "type": "map",
    "elements": [
     {
-     "kind": "line",
-     "path": [
-      [
-       5.2,
-       51.84
-      ],
-      [
-       5.5,
-       51.855
-      ],
-      [
-       5.7,
-       51.86
-      ],
-      [
-       5.86,
-       51.85
-      ],
-      [
-       6.0,
-       51.87
-      ],
-      [
-       6.1,
-       51.85
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
-    {
-     "kind": "line",
-     "path": [
-      [
-       5.3,
-       51.965
-      ],
-      [
-       5.6,
-       51.975
-      ],
-      [
-       5.78,
-       51.98
-      ],
-      [
-       5.9,
-       51.976
-      ],
-      [
-       5.98,
-       51.965
-      ],
-      [
-       6.08,
-       51.9
-      ],
-      [
-       6.12,
-       51.87
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
-    {
      "kind": "city",
      "name": "Arnhem",
      "at": [
@@ -9806,14 +9060,14 @@
      51.9
     ],
     "span": 1.4,
-    "style": "war",
+    "style": "paper",
     "colors": {
-     "Germany": "#b9b3a2",
-     "Netherlands": "#f0d29a",
-     "Belgium": "#d9e6c4",
-     "France": "#d9e6c4",
-     "Luxembourg": "#d9e6c4",
-     "United Kingdom": "#d9e6c4"
+     "Germany": "#a9a69a",
+     "Netherlands": "#e8d4a2",
+     "Belgium": "#d8dcb8",
+     "France": "#d8dcb8",
+     "Luxembourg": "#d8dcb8",
+     "United Kingdom": "#a9bccf"
     }
    },
    "beat": "SHAEF named the 9th SS and probably the 10th, refitting near Kleve",
@@ -10703,12 +9957,13 @@
     {
      "kind": "road",
      "x": 960,
-     "y": 600,
-     "progress": 0.17666666666666664,
-     "length": 6000,
-     "vehicle": "tank",
+     "y": 700,
+     "scale": 1.35,
+     "progress": 0.23958333333333331,
+     "length": 24000,
+     "vehicle": "sherman",
      "nation": "UK",
-     "polder": true,
+     "time": "day",
      "exits": [
       {
        "at": 0.02,
@@ -10720,7 +9975,7 @@
        "num": "A1"
       },
       {
-       "at": 0.07,
+       "at": 0.065,
        "side": "up",
        "label": "Seven days to plan",
        "sub": "a toll either way"
@@ -10735,7 +9990,7 @@
        "num": "A2"
       },
       {
-       "at": 0.15,
+       "at": 0.155,
        "side": "down",
        "label": "Drop near the bridge",
        "sub": "England · the planners",
@@ -10793,11 +10048,11 @@
      "keys": [
       {
        "t": 0.4,
-       "progress": 0.17666666666666664
+       "progress": 0.23958333333333331
       },
       {
        "t": 8.0,
-       "progress": 0.22666666666666666,
+       "progress": 0.2895833333333333,
        "ease": "inOut"
       }
      ]
@@ -10827,7 +10082,7 @@
      "kind": "label",
      "text": "BEDELL SMITH'S: PUT MORE STRENGTH AT ARNHEM",
      "x": 960,
-     "y": 110,
+     "y": 92,
      "style": "tag",
      "size": 40,
      "in": 2.8
@@ -10836,18 +10091,15 @@
      "kind": "label",
      "text": "IT WAS WAVED AWAY",
      "x": 960,
-     "y": 200,
+     "y": 180,
      "style": "red",
      "size": 40,
      "in": 8.4
     }
    ],
    "set": {
-    "kind": "field",
-    "road": false,
-    "houses": false,
-    "poles": false,
-    "trees": "round"
+    "kind": "paper",
+    "drift": 0
    },
    "beat": "which exit? Bedell Smith's: more strength at Arnhem, waved away. That's four",
    "id": "s139",
@@ -11205,7 +10457,7 @@
      "kind": "headline",
      "text": "THE CLOCK STARTS NOW",
      "x": 960,
-     "y": 180,
+     "y": 270,
      "size": 96,
      "in": 2.6,
      "accent": "NOW"
@@ -11243,7 +10495,7 @@
     {
      "kind": "vehicle",
      "type": "dakota",
-     "x": 300,
+     "x": 1008.2,
      "y": 780,
      "scale": 0.6,
      "nation": "USA",
@@ -11721,76 +10973,6 @@
    "type": "map",
    "elements": [
     {
-     "kind": "line",
-     "path": [
-      [
-       5.2,
-       51.84
-      ],
-      [
-       5.5,
-       51.855
-      ],
-      [
-       5.7,
-       51.86
-      ],
-      [
-       5.86,
-       51.85
-      ],
-      [
-       6.0,
-       51.87
-      ],
-      [
-       6.1,
-       51.85
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
-    {
-     "kind": "line",
-     "path": [
-      [
-       5.3,
-       51.965
-      ],
-      [
-       5.6,
-       51.975
-      ],
-      [
-       5.78,
-       51.98
-      ],
-      [
-       5.9,
-       51.976
-      ],
-      [
-       5.98,
-       51.965
-      ],
-      [
-       6.08,
-       51.9
-      ],
-      [
-       6.12,
-       51.87
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
-    {
      "kind": "city",
      "name": "Arnhem",
      "at": [
@@ -11882,14 +11064,14 @@
      51.97
     ],
     "span": 1.3,
-    "style": "war",
+    "style": "paper",
     "colors": {
-     "Germany": "#b9b3a2",
-     "Netherlands": "#f0d29a",
-     "Belgium": "#d9e6c4",
-     "France": "#d9e6c4",
-     "Luxembourg": "#d9e6c4",
-     "United Kingdom": "#d9e6c4"
+     "Germany": "#a9a69a",
+     "Netherlands": "#e8d4a2",
+     "Belgium": "#d8dcb8",
+     "France": "#d8dcb8",
+     "Luxembourg": "#d8dcb8",
+     "United Kingdom": "#a9bccf"
     }
    },
    "beat": "within hours Model and Bittrich sent the SS toward Arnhem and Nijmegen",
@@ -11900,43 +11082,6 @@
    "start": 1126.72,
    "type": "map",
    "elements": [
-    {
-     "kind": "line",
-     "path": [
-      [
-       5.3,
-       51.965
-      ],
-      [
-       5.6,
-       51.975
-      ],
-      [
-       5.78,
-       51.98
-      ],
-      [
-       5.9,
-       51.976
-      ],
-      [
-       5.98,
-       51.965
-      ],
-      [
-       6.08,
-       51.9
-      ],
-      [
-       6.12,
-       51.87
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
     {
      "kind": "city",
      "name": "Oosterbeek",
@@ -12021,14 +11166,14 @@
      51.99
     ],
     "span": 0.4,
-    "style": "war",
+    "style": "paper",
     "colors": {
-     "Germany": "#b9b3a2",
-     "Netherlands": "#f0d29a",
-     "Belgium": "#d9e6c4",
-     "France": "#d9e6c4",
-     "Luxembourg": "#d9e6c4",
-     "United Kingdom": "#d9e6c4"
+     "Germany": "#a9a69a",
+     "Netherlands": "#e8d4a2",
+     "Belgium": "#d8dcb8",
+     "France": "#d8dcb8",
+     "Luxembourg": "#d8dcb8",
+     "United Kingdom": "#a9bccf"
     }
    },
    "beat": "they had landed next to the one man best placed to stop them",
@@ -12379,43 +11524,6 @@
    "type": "map",
    "elements": [
     {
-     "kind": "line",
-     "path": [
-      [
-       5.3,
-       51.965
-      ],
-      [
-       5.6,
-       51.975
-      ],
-      [
-       5.78,
-       51.98
-      ],
-      [
-       5.9,
-       51.976
-      ],
-      [
-       5.98,
-       51.965
-      ],
-      [
-       6.08,
-       51.9
-      ],
-      [
-       6.12,
-       51.87
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
-    {
      "kind": "city",
      "name": "Oosterbeek",
      "at": [
@@ -12480,14 +11588,14 @@
      51.983
     ],
     "span": 0.35,
-    "style": "war",
+    "style": "paper",
     "colors": {
-     "Germany": "#b9b3a2",
-     "Netherlands": "#f0d29a",
-     "Belgium": "#d9e6c4",
-     "France": "#d9e6c4",
-     "Luxembourg": "#d9e6c4",
-     "United Kingdom": "#d9e6c4"
+     "Germany": "#a9a69a",
+     "Netherlands": "#e8d4a2",
+     "Belgium": "#d8dcb8",
+     "France": "#d8dcb8",
+     "Luxembourg": "#d8dcb8",
+     "United Kingdom": "#a9bccf"
     }
    },
    "beat": "and slipped past",
@@ -12501,7 +11609,7 @@
     {
      "kind": "vehicle",
      "type": "halftrack",
-     "x": -200,
+     "x": 1497.8,
      "y": 528,
      "scale": 0.22,
      "nation": "GER",
@@ -12516,7 +11624,7 @@
     {
      "kind": "vehicle",
      "type": "halftrack",
-     "x": -430,
+     "x": 1267.8,
      "y": 528,
      "scale": 0.22,
      "nation": "GER",
@@ -12531,7 +11639,7 @@
     {
      "kind": "vehicle",
      "type": "halftrack",
-     "x": -660,
+     "x": 1037.8,
      "y": 528,
      "scale": 0.22,
      "nation": "GER",
@@ -12546,7 +11654,7 @@
     {
      "kind": "vehicle",
      "type": "halftrack",
-     "x": -890,
+     "x": 807.8,
      "y": 528,
      "scale": 0.22,
      "nation": "GER",
@@ -12605,7 +11713,7 @@
     {
      "kind": "vehicle",
      "type": "halftrack",
-     "x": 2200,
+     "x": 1342.8,
      "y": 588,
      "scale": 0.36,
      "nation": "GER",
@@ -12621,7 +11729,7 @@
     {
      "kind": "vehicle",
      "type": "halftrack",
-     "x": 2460,
+     "x": 1602.8,
      "y": 588,
      "scale": 0.36,
      "nation": "GER",
@@ -12637,7 +11745,7 @@
     {
      "kind": "vehicle",
      "type": "halftrack",
-     "x": 2720,
+     "x": 1862.8,
      "y": 588,
      "scale": 0.36,
      "nation": "GER",
@@ -12653,7 +11761,7 @@
     {
      "kind": "vehicle",
      "type": "halftrack",
-     "x": 2980,
+     "x": 2122.8,
      "y": 588,
      "scale": 0.36,
      "nation": "GER",
@@ -12894,7 +12002,7 @@
     {
      "kind": "vehicle",
      "type": "tank",
-     "x": -300,
+     "x": 1493.1,
      "y": 520,
      "scale": 0.3,
      "nation": "UK",
@@ -13078,68 +12186,6 @@
    "type": "map",
    "elements": [
     {
-     "kind": "line",
-     "path": [
-      [
-       5.2,
-       51.84
-      ],
-      [
-       5.5,
-       51.855
-      ],
-      [
-       5.7,
-       51.86
-      ],
-      [
-       5.86,
-       51.85
-      ],
-      [
-       6.0,
-       51.87
-      ],
-      [
-       6.1,
-       51.85
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
-    {
-     "kind": "line",
-     "path": [
-      [
-       5.3,
-       51.8
-      ],
-      [
-       5.55,
-       51.78
-      ],
-      [
-       5.74,
-       51.766
-      ],
-      [
-       5.9,
-       51.73
-      ],
-      [
-       6.05,
-       51.68
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
-    {
      "kind": "city",
      "name": "Nijmegen",
      "at": [
@@ -13272,14 +12318,14 @@
      51.78
     ],
     "span": 0.6,
-    "style": "war",
+    "style": "paper",
     "colors": {
-     "Germany": "#b9b3a2",
-     "Netherlands": "#f0d29a",
-     "Belgium": "#d9e6c4",
-     "France": "#d9e6c4",
-     "Luxembourg": "#d9e6c4",
-     "United Kingdom": "#d9e6c4"
+     "Germany": "#a9a69a",
+     "Netherlands": "#e8d4a2",
+     "Belgium": "#d8dcb8",
+     "France": "#d8dcb8",
+     "Luxembourg": "#d8dcb8",
+     "United Kingdom": "#a9bccf"
     }
    },
    "beat": "Gavin's first worry: the high ground by the border; reports of armour massing in the Reichswald",
@@ -13509,7 +12555,7 @@
     {
      "kind": "vehicle",
      "type": "halftrack",
-     "x": 2300,
+     "x": 1956.4,
      "y": 528,
      "scale": 0.22,
      "nation": "GER",
@@ -13526,7 +12572,7 @@
     {
      "kind": "vehicle",
      "type": "halftrack",
-     "x": 2520,
+     "x": 2176.4,
      "y": 528,
      "scale": 0.22,
      "nation": "GER",
@@ -13543,7 +12589,7 @@
     {
      "kind": "vehicle",
      "type": "halftrack",
-     "x": 2740,
+     "x": 2396.4,
      "y": 528,
      "scale": 0.22,
      "nation": "GER",
@@ -13592,7 +12638,7 @@
     {
      "kind": "vehicle",
      "type": "halftrack",
-     "x": -300,
+     "x": 745.3,
      "y": 588,
      "scale": 0.36,
      "nation": "GER",
@@ -13607,7 +12653,7 @@
     {
      "kind": "vehicle",
      "type": "halftrack",
-     "x": -560,
+     "x": 485.3,
      "y": 588,
      "scale": 0.36,
      "nation": "GER",
@@ -13622,7 +12668,7 @@
     {
      "kind": "vehicle",
      "type": "halftrack",
-     "x": -820,
+     "x": 225.3,
      "y": 588,
      "scale": 0.36,
      "nation": "GER",
@@ -13637,7 +12683,7 @@
     {
      "kind": "vehicle",
      "type": "halftrack",
-     "x": -1080,
+     "x": -34.7,
      "y": 588,
      "scale": 0.36,
      "nation": "GER",
@@ -13667,8 +12713,8 @@
     {
      "kind": "label",
      "text": "GRÄBNER TURNS BACK NORTH — TO CLEAR THE BRIDGE",
-     "x": 960,
-     "y": 110,
+     "x": 1100,
+     "y": 160,
      "style": "tag",
      "size": 38,
      "in": 0.6
@@ -13913,12 +12959,13 @@
     {
      "kind": "road",
      "x": 960,
-     "y": 600,
-     "progress": 0.49666666666666665,
-     "length": 6000,
-     "vehicle": "tank",
+     "y": 700,
+     "scale": 1.35,
+     "progress": 0.5595833333333333,
+     "length": 24000,
+     "vehicle": "sherman",
      "nation": "UK",
-     "polder": true,
+     "time": "day",
      "exits": [
       {
        "at": 0.02,
@@ -13930,7 +12977,7 @@
        "num": "A1"
       },
       {
-       "at": 0.07,
+       "at": 0.065,
        "side": "up",
        "label": "Seven days to plan",
        "sub": "a toll either way"
@@ -13945,7 +12992,7 @@
        "num": "A2"
       },
       {
-       "at": 0.15,
+       "at": 0.155,
        "side": "down",
        "label": "Drop near the bridge",
        "sub": "England · the planners",
@@ -14012,11 +13059,11 @@
      "keys": [
       {
        "t": 0.3,
-       "progress": 0.49666666666666665
+       "progress": 0.5595833333333333
       },
       {
        "t": 13.0,
-       "progress": 0.5066666666666666,
+       "progress": 0.5495833333333333,
        "ease": "inOut"
       }
      ]
@@ -14046,7 +13093,7 @@
      "kind": "label",
      "text": "ALLIED: NIJMEGEN BRIDGE ON DAY ONE",
      "x": 960,
-     "y": 110,
+     "y": 92,
      "style": "tag",
      "size": 40,
      "in": 2.6
@@ -14055,18 +13102,15 @@
      "kind": "label",
      "text": "GERMAN: GRAVE, READY TO BLOW, LEFT STANDING",
      "x": 960,
-     "y": 200,
+     "y": 180,
      "style": "dark",
      "size": 38,
      "in": 9.8
     }
    ],
    "set": {
-    "kind": "field",
-    "road": false,
-    "houses": false,
-    "poles": false,
-    "trees": "round"
+    "kind": "paper",
+    "drift": 0
    },
    "chapter": "Monday Night",
    "beat": "exits: Nijmegen bridge day one (five); Grave left standing (German one)",
@@ -14080,12 +13124,13 @@
     {
      "kind": "road",
      "x": 960,
-     "y": 600,
-     "progress": 0.12666666666666668,
-     "length": 6000,
-     "vehicle": "tank",
+     "y": 700,
+     "scale": 1.35,
+     "progress": 0.18166666666666667,
+     "length": 24000,
+     "vehicle": "sherman",
      "nation": "UK",
-     "polder": true,
+     "time": "day",
      "exits": [
       {
        "at": 0.02,
@@ -14097,7 +13142,7 @@
        "num": "A1"
       },
       {
-       "at": 0.07,
+       "at": 0.065,
        "side": "up",
        "label": "Seven days to plan",
        "sub": "a toll either way"
@@ -14112,7 +13157,7 @@
        "num": "A2"
       },
       {
-       "at": 0.15,
+       "at": 0.155,
        "side": "down",
        "label": "Drop near the bridge",
        "sub": "England · the planners",
@@ -14130,7 +13175,7 @@
        "num": "A4"
       },
       {
-       "at": 0.52,
+       "at": 0.5,
        "side": "down",
        "label": "Blow the Grave bridge",
        "sub": "17 Sept · Grave",
@@ -14188,11 +13233,11 @@
      "keys": [
       {
        "t": 0.2,
-       "progress": 0.12666666666666668
+       "progress": 0.18166666666666667
       },
       {
        "t": 9.0,
-       "progress": 0.13666666666666666,
+       "progress": 0.19166666666666665,
        "ease": "inOut"
       }
      ]
@@ -14212,7 +13257,7 @@
      "kind": "label",
      "text": "PLAN: WELL ON THE WAY TO ARNHEM",
      "x": 960,
-     "y": 110,
+     "y": 92,
      "style": "tag",
      "size": 40,
      "in": 0.6
@@ -14221,18 +13266,15 @@
      "kind": "label",
      "text": "ACTUAL: JUST PAST EINDHOVEN",
      "x": 960,
-     "y": 200,
+     "y": 180,
      "style": "red",
      "size": 40,
      "in": 3.4
     }
    ],
    "set": {
-    "kind": "field",
-    "road": false,
-    "houses": false,
-    "poles": false,
-    "trees": "round"
+    "kind": "paper",
+    "drift": 0
    },
    "clock": "MON 18 SEP · NIGHT",
    "beat": "Monday night: the tanks only just past Eindhoven, running late",
@@ -14246,7 +13288,7 @@
     {
      "kind": "vehicle",
      "type": "tank",
-     "x": -300,
+     "x": -3.2,
      "y": 900,
      "scale": 0.75,
      "nation": "UK",
@@ -14282,7 +13324,7 @@
      "kind": "label",
      "text": "GRENADIER GUARDS MEET THE 82ND AT GRAVE",
      "x": 960,
-     "y": 110,
+     "y": 160,
      "style": "tag",
      "size": 38,
      "in": 0.6
@@ -14443,76 +13485,6 @@
    "type": "map",
    "elements": [
     {
-     "kind": "line",
-     "path": [
-      [
-       5.2,
-       51.84
-      ],
-      [
-       5.5,
-       51.855
-      ],
-      [
-       5.7,
-       51.86
-      ],
-      [
-       5.86,
-       51.85
-      ],
-      [
-       6.0,
-       51.87
-      ],
-      [
-       6.1,
-       51.85
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
-    {
-     "kind": "line",
-     "path": [
-      [
-       5.3,
-       51.965
-      ],
-      [
-       5.6,
-       51.975
-      ],
-      [
-       5.78,
-       51.98
-      ],
-      [
-       5.9,
-       51.976
-      ],
-      [
-       5.98,
-       51.965
-      ],
-      [
-       6.08,
-       51.9
-      ],
-      [
-       6.12,
-       51.87
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
-    {
      "kind": "city",
      "name": "Arnhem",
      "at": [
@@ -14608,14 +13580,14 @@
      51.91
     ],
     "span": 0.9,
-    "style": "war",
+    "style": "paper",
     "colors": {
-     "Germany": "#b9b3a2",
-     "Netherlands": "#f0d29a",
-     "Belgium": "#d9e6c4",
-     "France": "#d9e6c4",
-     "Luxembourg": "#d9e6c4",
-     "United Kingdom": "#d9e6c4"
+     "Germany": "#a9a69a",
+     "Netherlands": "#e8d4a2",
+     "Belgium": "#d8dcb8",
+     "France": "#d8dcb8",
+     "Luxembourg": "#d8dcb8",
+     "United Kingdom": "#a9bccf"
     }
    },
    "beat": "Nijmegen reinforced from Arnhem, but not over the bridge Frost held: by ferry further east",
@@ -14703,39 +13675,6 @@
    "start": 1386.43,
    "type": "map",
    "elements": [
-    {
-     "kind": "line",
-     "path": [
-      [
-       5.2,
-       51.84
-      ],
-      [
-       5.5,
-       51.855
-      ],
-      [
-       5.7,
-       51.86
-      ],
-      [
-       5.86,
-       51.85
-      ],
-      [
-       6.0,
-       51.87
-      ],
-      [
-       6.1,
-       51.85
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
     {
      "kind": "city",
      "name": "Nijmegen",
@@ -14859,14 +13798,14 @@
      51.852
     ],
     "span": 0.2,
-    "style": "war",
+    "style": "paper",
     "colors": {
-     "Germany": "#b9b3a2",
-     "Netherlands": "#f0d29a",
-     "Belgium": "#d9e6c4",
-     "France": "#d9e6c4",
-     "Luxembourg": "#d9e6c4",
-     "United Kingdom": "#d9e6c4"
+     "Germany": "#a9a69a",
+     "Netherlands": "#e8d4a2",
+     "Belgium": "#d8dcb8",
+     "France": "#d8dcb8",
+     "Luxembourg": "#d8dcb8",
+     "United Kingdom": "#a9bccf"
     }
    },
    "beat": "take the bridge from both ends: the 504th crosses in boats and hits the north end",
@@ -14880,12 +13819,13 @@
     {
      "kind": "road",
      "x": 960,
-     "y": 600,
-     "progress": 0.4666666666666666,
-     "length": 6000,
-     "vehicle": "tank",
+     "y": 700,
+     "scale": 1.35,
+     "progress": 0.5295833333333334,
+     "length": 24000,
+     "vehicle": "sherman",
      "nation": "UK",
-     "polder": true,
+     "time": "day",
      "exits": [
       {
        "at": 0.02,
@@ -14897,7 +13837,7 @@
        "num": "A1"
       },
       {
-       "at": 0.07,
+       "at": 0.065,
        "side": "up",
        "label": "Seven days to plan",
        "sub": "a toll either way"
@@ -14912,7 +13852,7 @@
        "num": "A2"
       },
       {
-       "at": 0.15,
+       "at": 0.155,
        "side": "down",
        "label": "Drop near the bridge",
        "sub": "England · the planners",
@@ -14930,7 +13870,7 @@
        "num": "A4"
       },
       {
-       "at": 0.52,
+       "at": 0.5,
        "side": "down",
        "label": "Blow the Grave bridge",
        "sub": "17 Sept · Grave",
@@ -14988,11 +13928,11 @@
      "keys": [
       {
        "t": 0.2,
-       "progress": 0.4666666666666666
+       "progress": 0.5295833333333334
       },
       {
        "t": 7.0,
-       "progress": 0.4716666666666666,
+       "progress": 0.5345833333333334,
        "ease": "inOut"
       }
      ]
@@ -15033,18 +13973,15 @@
      "kind": "label",
      "text": "THE BOATS: BEHIND THE TANKS, BEHIND THE TRAFFIC",
      "x": 960,
-     "y": 110,
+     "y": 92,
      "style": "tag",
      "size": 38,
      "in": 2.6
     }
    ],
    "set": {
-    "kind": "field",
-    "road": false,
-    "houses": false,
-    "poles": false,
-    "trees": "round"
+    "kind": "paper",
+    "drift": 0
    },
    "beat": "AIDE: what boats? HOST: coming up the road behind the tanks, behind the traffic. Noted",
    "id": "s184",
@@ -15465,7 +14402,7 @@
     {
      "kind": "vehicle",
      "type": "tank",
-     "x": -200,
+     "x": 1071.6,
      "y": 528,
      "scale": 0.2,
      "nation": "UK",
@@ -15481,7 +14418,7 @@
     {
      "kind": "vehicle",
      "type": "tank",
-     "x": -320,
+     "x": 951.6,
      "y": 528,
      "scale": 0.2,
      "nation": "UK",
@@ -15497,7 +14434,7 @@
     {
      "kind": "vehicle",
      "type": "tank",
-     "x": -440,
+     "x": 831.6,
      "y": 528,
      "scale": 0.2,
      "nation": "UK",
@@ -15513,7 +14450,7 @@
     {
      "kind": "vehicle",
      "type": "tank",
-     "x": -560,
+     "x": 711.6,
      "y": 528,
      "scale": 0.2,
      "nation": "UK",
@@ -15579,10 +14516,10 @@
       "BRIDGES OVER THE WAAL AND",
       "THE RHINE NOT TO BE DESTROYED"
      ],
-     "x": 1450,
-     "y": 340,
-     "w": 760,
-     "h": 360,
+     "x": 1490,
+     "y": 400,
+     "w": 740,
+     "h": 340,
      "in": 3.4,
      "speed": 26,
      "size": 34
@@ -15599,10 +14536,10 @@
     {
      "kind": "label",
      "text": "HE WANTED THEM FOR HIS OWN COUNTER-ATTACK",
-     "x": 1300,
-     "y": 600,
+     "x": 1440,
+     "y": 640,
      "style": "plain",
-     "size": 36,
+     "size": 32,
      "in": 8.8
     }
    ],
@@ -15782,7 +14719,7 @@
     {
      "kind": "vehicle",
      "type": "tank",
-     "x": -300,
+     "x": 890.2,
      "y": 600,
      "scale": 0.42,
      "nation": "UK",
@@ -15798,7 +14735,7 @@
     {
      "kind": "vehicle",
      "type": "tank",
-     "x": -500,
+     "x": 690.2,
      "y": 600,
      "scale": 0.42,
      "nation": "UK",
@@ -15814,7 +14751,7 @@
     {
      "kind": "vehicle",
      "type": "tank",
-     "x": -700,
+     "x": 490.2,
      "y": 600,
      "scale": 0.42,
      "nation": "UK",
@@ -15830,7 +14767,7 @@
     {
      "kind": "vehicle",
      "type": "tank",
-     "x": -900,
+     "x": 290.2,
      "y": 600,
      "scale": 0.42,
      "nation": "UK",
@@ -16165,7 +15102,7 @@
     {
      "kind": "vehicle",
      "type": "halftrack",
-     "x": 2100,
+     "x": 1629.3,
      "y": 528,
      "scale": 0.22,
      "nation": "GER",
@@ -16182,7 +15119,7 @@
     {
      "kind": "vehicle",
      "type": "halftrack",
-     "x": 2320,
+     "x": 1849.3,
      "y": 528,
      "scale": 0.22,
      "nation": "GER",
@@ -16199,7 +15136,7 @@
     {
      "kind": "vehicle",
      "type": "halftrack",
-     "x": 2540,
+     "x": 2069.3,
      "y": 528,
      "scale": 0.22,
      "nation": "GER",
@@ -16216,7 +15153,7 @@
     {
      "kind": "vehicle",
      "type": "halftrack",
-     "x": 2760,
+     "x": 2289.3,
      "y": 528,
      "scale": 0.22,
      "nation": "GER",
@@ -16254,76 +15191,6 @@
    "start": 1545.33,
    "type": "map",
    "elements": [
-    {
-     "kind": "line",
-     "path": [
-      [
-       5.2,
-       51.84
-      ],
-      [
-       5.5,
-       51.855
-      ],
-      [
-       5.7,
-       51.86
-      ],
-      [
-       5.86,
-       51.85
-      ],
-      [
-       6.0,
-       51.87
-      ],
-      [
-       6.1,
-       51.85
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
-    {
-     "kind": "line",
-     "path": [
-      [
-       5.3,
-       51.965
-      ],
-      [
-       5.6,
-       51.975
-      ],
-      [
-       5.78,
-       51.98
-      ],
-      [
-       5.9,
-       51.976
-      ],
-      [
-       5.98,
-       51.965
-      ],
-      [
-       6.08,
-       51.9
-      ],
-      [
-       6.12,
-       51.87
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
     {
      "kind": "city",
      "name": "Nijmegen",
@@ -16429,14 +15296,14 @@
      51.92
     ],
     "span": 0.55,
-    "style": "war",
+    "style": "paper",
     "colors": {
-     "Germany": "#b9b3a2",
-     "Netherlands": "#f0d29a",
-     "Belgium": "#d9e6c4",
-     "France": "#d9e6c4",
-     "Luxembourg": "#d9e6c4",
-     "United Kingdom": "#d9e6c4"
+     "Germany": "#a9a69a",
+     "Netherlands": "#e8d4a2",
+     "Belgium": "#d8dcb8",
+     "France": "#d8dcb8",
+     "Luxembourg": "#d8dcb8",
+     "United Kingdom": "#a9bccf"
     }
    },
    "beat": "they poured tanks and men south and built the screen between Lent and Arnhem",
@@ -16478,12 +15345,13 @@
     {
      "kind": "road",
      "x": 960,
-     "y": 600,
-     "progress": 0.6266666666666666,
-     "length": 6000,
-     "vehicle": "tank",
+     "y": 700,
+     "scale": 1.35,
+     "progress": 0.6895833333333333,
+     "length": 24000,
+     "vehicle": "sherman",
      "nation": "UK",
-     "polder": true,
+     "time": "day",
      "exits": [
       {
        "at": 0.02,
@@ -16495,7 +15363,7 @@
        "num": "A1"
       },
       {
-       "at": 0.07,
+       "at": 0.065,
        "side": "up",
        "label": "Seven days to plan",
        "sub": "a toll either way"
@@ -16510,7 +15378,7 @@
        "num": "A2"
       },
       {
-       "at": 0.15,
+       "at": 0.155,
        "side": "down",
        "label": "Drop near the bridge",
        "sub": "England · the planners",
@@ -16528,7 +15396,7 @@
        "num": "A4"
       },
       {
-       "at": 0.52,
+       "at": 0.5,
        "side": "down",
        "label": "Blow the Grave bridge",
        "sub": "17 Sept · Grave",
@@ -16594,11 +15462,11 @@
      "keys": [
       {
        "t": 0.2,
-       "progress": 0.6266666666666666
+       "progress": 0.6895833333333333
       },
       {
        "t": 2.6,
-       "progress": 0.6366666666666666,
+       "progress": 0.6995833333333333,
        "ease": "inOut"
       }
      ]
@@ -16633,18 +15501,15 @@
      "kind": "label",
      "text": "THE SIGN WE PROMISED NOT TO PAINT",
      "x": 960,
-     "y": 110,
+     "y": 92,
      "style": "tag",
      "size": 40,
      "in": 3.2
     }
    ],
    "set": {
-    "kind": "field",
-    "road": false,
-    "houses": false,
-    "poles": false,
-    "trees": "round"
+    "kind": "paper",
+    "drift": 0
    },
    "beat": "AIDE: should they have kept going from Lent? HOST: the sign we wouldn't paint",
    "id": "s202",
@@ -16709,7 +15574,8 @@
      "y": 90,
      "style": "green",
      "size": 40,
-     "in": 0.2
+     "in": 0.2,
+     "out": 11.4
     },
     {
      "kind": "label",
@@ -16736,12 +15602,13 @@
     {
      "kind": "road",
      "x": 960,
-     "y": 600,
-     "progress": 0.6366666666666666,
-     "length": 6000,
-     "vehicle": "tank",
+     "y": 700,
+     "scale": 1.35,
+     "progress": 0.6995833333333333,
+     "length": 24000,
+     "vehicle": "sherman",
      "nation": "UK",
-     "polder": true,
+     "time": "day",
      "exits": [
       {
        "at": 0.02,
@@ -16753,7 +15620,7 @@
        "num": "A1"
       },
       {
-       "at": 0.07,
+       "at": 0.065,
        "side": "up",
        "label": "Seven days to plan",
        "sub": "a toll either way"
@@ -16768,7 +15635,7 @@
        "num": "A2"
       },
       {
-       "at": 0.15,
+       "at": 0.155,
        "side": "down",
        "label": "Drop near the bridge",
        "sub": "England · the planners",
@@ -16786,7 +15653,7 @@
        "num": "A4"
       },
       {
-       "at": 0.52,
+       "at": 0.5,
        "side": "down",
        "label": "Blow the Grave bridge",
        "sub": "17 Sept · Grave",
@@ -16852,11 +15719,11 @@
      "keys": [
       {
        "t": 0.2,
-       "progress": 0.6366666666666666
+       "progress": 0.6995833333333333
       },
       {
        "t": 0.4,
-       "progress": 0.6366666666666666,
+       "progress": 0.6995833333333333,
        "ease": "inOut"
       }
      ]
@@ -16875,18 +15742,15 @@
      "kind": "label",
      "text": "PAINT IT IN THE COMMENTS",
      "x": 960,
-     "y": 110,
+     "y": 92,
      "style": "tag",
      "size": 46,
      "in": 4.8
     }
    ],
    "set": {
-    "kind": "field",
-    "road": false,
-    "houses": false,
-    "poles": false,
-    "trees": "round"
+    "kind": "paper",
+    "drift": 0
    },
    "beat": "a bridge that was falling as they drove: we'll leave that sign blank; paint it in the comments",
    "id": "s204",
@@ -16899,7 +15763,7 @@
     {
      "kind": "vehicle",
      "type": "tank",
-     "x": -200,
+     "x": 186.0,
      "y": 578,
      "scale": 0.4,
      "nation": "UK",
@@ -16915,7 +15779,7 @@
     {
      "kind": "vehicle",
      "type": "tank",
-     "x": -440,
+     "x": -54.0,
      "y": 578,
      "scale": 0.4,
      "nation": "UK",
@@ -16931,7 +15795,7 @@
     {
      "kind": "vehicle",
      "type": "tank",
-     "x": -680,
+     "x": -294.0,
      "y": 578,
      "scale": 0.4,
      "nation": "UK",
@@ -16991,68 +15855,6 @@
    "start": 1605.7,
    "type": "map",
    "elements": [
-    {
-     "kind": "line",
-     "path": [
-      [
-       5.3,
-       51.8
-      ],
-      [
-       5.55,
-       51.78
-      ],
-      [
-       5.74,
-       51.766
-      ],
-      [
-       5.9,
-       51.73
-      ],
-      [
-       6.05,
-       51.68
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
-    {
-     "kind": "line",
-     "path": [
-      [
-       5.2,
-       51.84
-      ],
-      [
-       5.5,
-       51.855
-      ],
-      [
-       5.7,
-       51.86
-      ],
-      [
-       5.86,
-       51.85
-      ],
-      [
-       6.0,
-       51.87
-      ],
-      [
-       6.1,
-       51.85
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
     {
      "kind": "city",
      "name": "Eindhoven",
@@ -17228,14 +16030,14 @@
      51.64
     ],
     "span": 1.6,
-    "style": "war",
+    "style": "paper",
     "colors": {
-     "Germany": "#b9b3a2",
-     "Netherlands": "#f0d29a",
-     "Belgium": "#d9e6c4",
-     "France": "#d9e6c4",
-     "Luxembourg": "#d9e6c4",
-     "United Kingdom": "#d9e6c4"
+     "Germany": "#a9a69a",
+     "Netherlands": "#e8d4a2",
+     "Belgium": "#d8dcb8",
+     "France": "#d8dcb8",
+     "Luxembourg": "#d8dcb8",
+     "United Kingdom": "#a9bccf"
     }
    },
    "beat": "German attacks cut the corridor to the south; tanks turned back; Hell's Highway",
@@ -17339,43 +16141,6 @@
    "type": "map",
    "elements": [
     {
-     "kind": "line",
-     "path": [
-      [
-       5.3,
-       51.965
-      ],
-      [
-       5.6,
-       51.975
-      ],
-      [
-       5.78,
-       51.98
-      ],
-      [
-       5.9,
-       51.976
-      ],
-      [
-       5.98,
-       51.965
-      ],
-      [
-       6.08,
-       51.9
-      ],
-      [
-       6.12,
-       51.87
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
-    {
      "kind": "city",
      "name": "Oosterbeek",
      "at": [
@@ -17428,14 +16193,14 @@
      51.97
     ],
     "span": 0.32,
-    "style": "war",
+    "style": "paper",
     "colors": {
-     "Germany": "#b9b3a2",
-     "Netherlands": "#f0d29a",
-     "Belgium": "#d9e6c4",
-     "France": "#d9e6c4",
-     "Luxembourg": "#d9e6c4",
-     "United Kingdom": "#d9e6c4"
+     "Germany": "#a9a69a",
+     "Netherlands": "#e8d4a2",
+     "Belgium": "#d8dcb8",
+     "France": "#d8dcb8",
+     "Luxembourg": "#d8dcb8",
+     "United Kingdom": "#a9bccf"
     }
    },
    "beat": "landing zone changed to the polder near Driel on the south bank",
@@ -17450,8 +16215,8 @@
      "kind": "counter",
      "from": 0,
      "to": 114,
-     "x": 480,
-     "y": 420,
+     "x": 960,
+     "y": 300,
      "in": 0.2,
      "suffix": " SET OUT",
      "prefix": "",
@@ -17463,7 +16228,7 @@
      "from": 0,
      "to": 41,
      "x": 960,
-     "y": 420,
+     "y": 460,
      "in": 2.6,
      "suffix": " TURNED BACK",
      "prefix": "",
@@ -17475,8 +16240,8 @@
      "kind": "counter",
      "from": 0,
      "to": 1000,
-     "x": 1440,
-     "y": 420,
+     "x": 960,
+     "y": 620,
      "in": 4.6,
      "suffix": " POLES LANDED",
      "prefix": "~",
@@ -17486,8 +16251,8 @@
     {
      "kind": "vehicle",
      "type": "dakota",
-     "x": 480,
-     "y": 700,
+     "x": 300,
+     "y": 860,
      "scale": 0.3,
      "nation": "USA"
     }
@@ -17671,43 +16436,6 @@
    "type": "map",
    "elements": [
     {
-     "kind": "line",
-     "path": [
-      [
-       5.3,
-       51.965
-      ],
-      [
-       5.6,
-       51.975
-      ],
-      [
-       5.78,
-       51.98
-      ],
-      [
-       5.9,
-       51.976
-      ],
-      [
-       5.98,
-       51.965
-      ],
-      [
-       6.08,
-       51.9
-      ],
-      [
-       6.12,
-       51.87
-      ]
-     ],
-     "color": "#5b8fb0",
-     "width": 10,
-     "in": 0.0,
-     "enter": "none"
-    },
-    {
      "kind": "city",
      "name": "Oosterbeek",
      "at": [
@@ -17775,14 +16503,14 @@
      51.988
     ],
     "span": 0.25,
-    "style": "war",
+    "style": "paper",
     "colors": {
-     "Germany": "#b9b3a2",
-     "Netherlands": "#f0d29a",
-     "Belgium": "#d9e6c4",
-     "France": "#d9e6c4",
-     "Luxembourg": "#d9e6c4",
-     "United Kingdom": "#d9e6c4"
+     "Germany": "#a9a69a",
+     "Netherlands": "#e8d4a2",
+     "Belgium": "#d8dcb8",
+     "France": "#d8dcb8",
+     "Luxembourg": "#d8dcb8",
+     "United Kingdom": "#a9bccf"
     }
    },
    "beat": "the British squeezed into a pocket around Oosterbeek, the same village as Model's hotel",
@@ -18518,12 +17246,13 @@
     {
      "kind": "road",
      "x": 960,
-     "y": 600,
+     "y": 700,
+     "scale": 1.35,
      "progress": -0.1,
-     "length": 6000,
-     "vehicle": "tank",
+     "length": 24000,
+     "vehicle": "sherman",
      "nation": "UK",
-     "polder": true,
+     "time": "day",
      "exits": [
       {
        "at": 0.02,
@@ -18535,7 +17264,7 @@
        "num": "A1"
       },
       {
-       "at": 0.07,
+       "at": 0.065,
        "side": "up",
        "label": "Seven days to plan",
        "sub": "a toll either way"
@@ -18550,7 +17279,7 @@
        "num": "A2"
       },
       {
-       "at": 0.15,
+       "at": 0.155,
        "side": "down",
        "label": "Drop near the bridge",
        "sub": "England · the planners",
@@ -18568,7 +17297,7 @@
        "num": "A4"
       },
       {
-       "at": 0.52,
+       "at": 0.5,
        "side": "down",
        "label": "Blow the Grave bridge",
        "sub": "17 Sept · Grave",
@@ -18667,18 +17396,15 @@
      "kind": "label",
      "text": "READ THE ROAD BACK, ONE SIGN AT A TIME",
      "x": 960,
-     "y": 110,
+     "y": 92,
      "style": "tag",
      "size": 40,
      "in": 0.4
     }
    ],
    "set": {
-    "kind": "field",
-    "road": false,
-    "houses": false,
-    "poles": false,
-    "trees": "round"
+    "kind": "paper",
+    "drift": 0
    },
    "chapter": "Reading the Road",
    "beat": "read the road back: Antwerp, seven days, one lift, drop zones, Bedell Smith, Nijmegen, Grave, Nijmegen standing, Lent",
@@ -18871,12 +17597,13 @@
     {
      "kind": "road",
      "x": 960,
-     "y": 600,
-     "progress": 0.016666666666666666,
-     "length": 6000,
-     "vehicle": "tank",
+     "y": 700,
+     "scale": 1.35,
+     "progress": 0.07958333333333333,
+     "length": 24000,
+     "vehicle": "sherman",
      "nation": "UK",
-     "polder": true,
+     "time": "day",
      "exits": [
       {
        "at": 0.02,
@@ -18888,7 +17615,7 @@
        "num": "A1"
       },
       {
-       "at": 0.07,
+       "at": 0.065,
        "side": "up",
        "label": "Seven days to plan",
        "sub": "a toll either way"
@@ -18903,7 +17630,7 @@
        "num": "A2"
       },
       {
-       "at": 0.15,
+       "at": 0.155,
        "side": "down",
        "label": "Drop near the bridge",
        "sub": "England · the planners",
@@ -18921,7 +17648,7 @@
        "num": "A4"
       },
       {
-       "at": 0.52,
+       "at": 0.5,
        "side": "down",
        "label": "Blow the Grave bridge",
        "sub": "17 Sept · Grave",
@@ -18939,7 +17666,7 @@
        "num": "A5"
       },
       {
-       "at": 0.66,
+       "at": 0.665,
        "side": "down",
        "label": "Blow the Nijmegen bridge",
        "sub": "20 Sept · Model",
@@ -18996,11 +17723,11 @@
      "keys": [
       {
        "t": 0.3,
-       "progress": 0.016666666666666666
+       "progress": 0.07958333333333333
       },
       {
        "t": 14.0,
-       "progress": 0.5466666666666666,
+       "progress": 0.6095833333333334,
        "ease": "inOut"
       }
      ]
@@ -19019,18 +17746,15 @@
      "kind": "label",
      "text": "ANY ONE OF THESE MIGHT HAVE BEEN ENOUGH",
      "x": 960,
-     "y": 110,
+     "y": 92,
      "style": "tag",
      "size": 40,
      "in": 11.0
     }
    ],
    "set": {
-    "kind": "field",
-    "road": false,
-    "houses": false,
-    "poles": false,
-    "trees": "round"
+    "kind": "paper",
+    "drift": 0
    },
    "beat": "two lifts, closer drop zones, Bedell Smith's advice, Nijmegen bridge the first evening",
    "id": "s231",
@@ -19832,7 +18556,7 @@
      "from": 0,
      "to": 20000,
      "x": 960,
-     "y": 260,
+     "y": 320,
      "in": 2.4,
      "suffix": " STARVED TO DEATH",
      "prefix": "> ",
@@ -19858,7 +18582,7 @@
     {
      "kind": "vehicle",
      "type": "freighter",
-     "x": -500,
+     "x": 459.4,
      "y": 760,
      "scale": 0.6,
      "nation": "UK",
@@ -19949,12 +18673,13 @@
     {
      "kind": "road",
      "x": 960,
-     "y": 600,
-     "progress": 0.6366666666666666,
-     "length": 6000,
-     "vehicle": "tank",
+     "y": 700,
+     "scale": 1.35,
+     "progress": 0.6995833333333333,
+     "length": 24000,
+     "vehicle": "sherman",
      "nation": "UK",
-     "polder": true,
+     "time": "day",
      "exits": [
       {
        "at": 0.02,
@@ -19966,7 +18691,7 @@
        "num": "A1"
       },
       {
-       "at": 0.07,
+       "at": 0.065,
        "side": "up",
        "label": "Seven days to plan",
        "sub": "a toll either way"
@@ -19981,7 +18706,7 @@
        "num": "A2"
       },
       {
-       "at": 0.15,
+       "at": 0.155,
        "side": "down",
        "label": "Drop near the bridge",
        "sub": "England · the planners",
@@ -19999,7 +18724,7 @@
        "num": "A4"
       },
       {
-       "at": 0.52,
+       "at": 0.5,
        "side": "down",
        "label": "Blow the Grave bridge",
        "sub": "17 Sept · Grave",
@@ -20017,7 +18742,7 @@
        "num": "A5"
       },
       {
-       "at": 0.66,
+       "at": 0.665,
        "side": "down",
        "label": "Blow the Nijmegen bridge",
        "sub": "20 Sept · Model",
@@ -20074,11 +18799,11 @@
      "keys": [
       {
        "t": 0.2,
-       "progress": 0.6366666666666666
+       "progress": 0.6995833333333333
       },
       {
        "t": 0.4,
-       "progress": 0.6366666666666666,
+       "progress": 0.6995833333333333,
        "ease": "inOut"
       }
      ]
@@ -20112,18 +18837,15 @@
      "kind": "label",
      "text": "SEND THE FOUR TANKS ON — OR HOLD UNTIL MORNING?",
      "x": 960,
-     "y": 190,
+     "y": 180,
      "style": "red",
      "size": 38,
      "in": 4.0
     }
    ],
    "set": {
-    "kind": "field",
-    "road": false,
-    "houses": false,
-    "poles": false,
-    "trees": "round"
+    "kind": "paper",
+    "drift": 0
    },
    "beat": "that's our reading of the road; what's yours? at Lent would you have sent the tanks on?",
    "id": "s250",

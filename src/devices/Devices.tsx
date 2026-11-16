@@ -150,77 +150,143 @@ export const ScoreDevice: React.FC<{ t: number; sides?: { nation?: string; label
 };
 
 // ---------- Road with EXITs ----------
-// exits: {at 0..1, label, sub, side 'up'|'down', taken, painted: 'allied'|'german'|'blank'|'none', num, paintIn}
-// towns: {at, label} roadside place-name boards. The camera follows the vehicle (progress 0..1).
+// A self-contained, scrolling world (draw it on a plain set):
+// - sky, far forest (parallax 0.12), poplar row (0.45) and fields;
+// - the road with verges, fence posts and kilometre stones at road speed (1.0).
+// Exits sit ABOVE the road as real slip roads with a gantry sign; town boards stand on the near verge, so they never collide.
+// progress 0..1 = how far along `length` the convoy (fixed at screen x 660) has driven.
 type RoadExit = Item & { painted?: string; num?: string; paintIn?: number };
-export const RoadDevice: React.FC<{ t: number; progress?: number; exits?: RoadExit[]; towns?: Item[]; vehicle?: string; nation?: string; length?: number; color?: string; sea?: boolean; polder?: boolean; vehicles?: number }> = ({ t, progress = 0, exits = [], towns = [], vehicle = 'truck', nation: nat, length = 6000, color, sea, polder, vehicles = 1 }) => {
+const PAINT: Record<string, [string, string, string]> = {
+  allied: ['#2f5d9a', '#fff', 'ALLIED EXIT'],
+  german: ['#5a6066', '#fff', 'GERMAN EXIT'],
+  blank: ['#f4f1ea', INK, ''],
+};
+export const RoadDevice: React.FC<{ t: number; progress?: number; exits?: RoadExit[]; towns?: Item[]; vehicle?: string; nation?: string; length?: number; color?: string; sea?: boolean; polder?: boolean; vehicles?: number; time?: string }> = ({ t, progress = 0, exits = [], towns = [], vehicle = 'tank', nation: nat, length = 24000, vehicles = 1, time = 'day' }) => {
   const vx = progress * length;
-  const off = -vx - 300;
-  const roadC = col(color, sea ? '#c8352b' : '#b9925f');
-  const PAINT: Record<string, [string, string]> = { allied: ['#2f5d9a', '#fff'], german: ['#5a6066', '#fff'], blank: ['#fbf8f0', INK] };
+  const night = time === 'night';
+  const W = 2800; // drawn width (local x -1400..1400)
+  const wrap = (x: number, period: number) => ((x % period) + period) % period;
+  const sky = night ? ['#1b2740', '#3a4a66'] : time === 'dusk' ? ['#6b6f96', '#f0b88a'] : ['#8fbfdc', '#e4eef0'];
+  const asphalt = '#8c8478';
+  const VEH_X = -300; // convoy position (screen x 660 when the element sits at x 960)
+  // far forest strip (repeats every 600 px)
+  const forest = (off: number, y: number, h: number, c: string, seed: number) => (
+    <g transform={`translate(${-wrap(off, 600) - 1400} 0)`}>
+      {Array.from({ length: 6 }, (_, k) => (
+        <g key={k} transform={`translate(${k * 600} 0)`}>
+          {Array.from({ length: 14 }, (_, i) => {
+            const x = i * 43 + ((i * 37 + seed) % 17);
+            const hh = h * (0.7 + (((i * 53 + seed) % 10) / 30));
+            return <path key={i} d={`M${x - 16} ${y} L${x} ${y - hh} L${x + 16} ${y} Z`} fill={c} />;
+          })}
+        </g>
+      ))}
+    </g>
+  );
   return (
     <g>
-      <g transform={`translate(${off} 0)`}>
-        {polder ? (
-          <g>
-            <path d={`M-1200 30 L${length + 1800} 30 L${length + 1800} 120 L-1200 120 Z`} fill="#7f9a52" />
-            {Array.from({ length: Math.ceil((length + 3000) / 420) }, (_, i) => <line key={i} x1={-1200 + i * 420} y1={40} x2={-1260 + i * 420} y2={400} stroke="#5b86a8" strokeWidth={8} opacity={0.6} />)}
+      {/* sky + far world (slow parallax) */}
+      <defs>
+        <linearGradient id="road_sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor={sky[0]} />
+          <stop offset="1" stopColor={sky[1]} />
+        </linearGradient>
+      </defs>
+      <rect x={-1400} y={-900} width={W} height={760} fill="url(#road_sky)" />
+      {[0, 1, 2, 3].map((i) => {
+        const cx = wrap(-vx * 0.05 + i * 700 + t * 6, 2800) - 1400;
+        return <ellipse key={i} cx={cx} cy={-720 + (i % 2) * 70} rx={130} ry={34} fill="#fff" opacity={night ? 0.12 : 0.75} />;
+      })}
+      <rect x={-1400} y={-150} width={W} height={900} fill={night ? '#3d4a3a' : '#8fae5a'} />
+      <g opacity={0.55}>{forest(vx * 0.12, -150, 80, night ? '#2a3a32' : '#6f8f78', 7)}</g>
+      <g>{forest(vx * 0.2, -140, 60, night ? '#24322a' : '#557a5c', 3)}</g>
+      {/* field bands */}
+      {[-120, -95, -70].map((y, i) => <rect key={i} x={-1400} y={y} width={W} height={10} fill="#000" opacity={0.04 + i * 0.01} />)}
+      {/* poplar row behind the road (mid parallax) */}
+      <g transform={`translate(${-wrap(vx * 0.45, 260) - 1400} 0)`}>
+        {Array.from({ length: 13 }, (_, i) => (
+          <g key={i} transform={`translate(${i * 260} -60)`}>
+            <rect x={-4} y={-20} width={8} height={22} fill="#5a4030" />
+            <ellipse cx={0} cy={-70} rx={20} ry={58} fill={night ? '#2f4a32' : '#4f7a3a'} stroke={INK} strokeWidth={2.5} />
           </g>
-        ) : null}
-        <rect x={-1200} y={-30} width={length + 3000} height={60} fill={roadC} stroke={INK} strokeWidth={4} />
-        {!sea ? Array.from({ length: Math.ceil((length + 3000) / 160) }, (_, i) => <rect key={i} x={-1200 + i * 160} y={-4} width={80} height={8} fill="#fff" opacity={0.7} />) : null}
-        {towns.map((tw, i) => {
-          const x = (tw.at ?? 0) * length;
-          return (
-            <g key={'t' + i} transform={`translate(${x} 40)`}>
-              <line x1={0} y1={0} x2={0} y2={120} stroke="#6a5a4a" strokeWidth={8} />
-              <rect x={-130} y={100} width={260} height={64} rx={6} fill="#fbf8f0" stroke={INK} strokeWidth={4} />
-              <rect x={-120} y={108} width={240} height={48} rx={4} fill="none" stroke={C.red} strokeWidth={4} />
-              <text y={142} textAnchor="middle" fontFamily={FONT.cond} fontWeight={700} fontSize={Math.min(34, 420 / Math.max(6, (tw.label ?? '').length))} fill={INK}>{(tw.label ?? '').toUpperCase()}</text>
-            </g>
-          );
-        })}
+        ))}
+      </g>
+      {/* everything at road speed */}
+      <g transform={`translate(${-vx} 0)`}>
+        {/* exits (above the road): slip road + gantry sign */}
         {exits.map((e, i) => {
           const x = (e.at ?? (i + 1) / (exits.length + 1)) * length;
-          const up = e.side !== 'down';
-          const dy = up ? -1 : 1;
+          if (Math.abs(x - vx) > 2200) return null;
           const painted = e.painted && e.painted !== 'none' && t >= (e.paintIn ?? 0) ? e.painted : undefined;
-          const pk = painted ? clamp((t - (e.paintIn ?? 0)) / 0.5) : 0;
-          const [pc, tc] = painted ? PAINT[painted] ?? PAINT.allied : ['#2f7a3a', '#fff'];
-          const lit = painted && pk > 0.5;
+          const pk = painted ? clamp((t - (e.paintIn ?? 0)) / 0.6) : 0;
+          const [pc, tc, head] = painted ? PAINT[painted] ?? PAINT.allied : ['#2f7a3a', '#fff', 'EXIT'];
+          const lit = !!painted && pk > 0.5;
+          const sx = x - 60; // sign centre
           return (
             <g key={i}>
-              <path d={`M${x - 120} ${dy * 30} Q${x} ${dy * 40} ${x + 120} ${dy * 260}`} stroke={e.taken ? roadC : '#5f9446'} strokeWidth={50} fill="none" strokeLinecap="round" />
-              <path d={`M${x - 120} ${dy * 30} Q${x} ${dy * 40} ${x + 120} ${dy * 260}`} stroke={INK} strokeWidth={56} fill="none" strokeLinecap="round" opacity={0.15} />
-              <g transform={`translate(${x - 40} ${up ? -70 : 360})`}>
-                <line x1={0} y1={0} x2={0} y2={up ? -10 : -110} stroke="#6a5a4a" strokeWidth={10} />
-                <g transform={`translate(0 ${up ? -120 : -240})`}>
-                  <rect x={-190} y={-62} width={380} height={124} rx={10} fill="#2f7a3a" stroke={INK} strokeWidth={4} />
-                  {painted ? <rect x={-190} y={-62} width={380 * pk} height={124} rx={10} fill={pc} stroke={INK} strokeWidth={4} /> : null}
-                  {painted === 'blank' && pk >= 1 ? (
-                    <text y={18} textAnchor="middle" fontFamily={FONT.heavy} fontSize={56} fill="#c9c2b0">?</text>
-                  ) : (
-                    <g>
-                      <text y={-22} textAnchor="middle" fontFamily={FONT.cond} fontWeight={700} fontSize={24} fill={lit ? tc : '#fff'} letterSpacing={3}>{painted ? (painted === 'german' ? 'GERMAN EXIT' : painted === 'blank' ? 'EXIT' : 'ALLIED EXIT') : 'EXIT'}</text>
-                      <text y={14} textAnchor="middle" fontFamily={FONT.cond} fontWeight={700} fontSize={Math.min(34, 620 / Math.max(8, (e.label ?? '').length))} fill={lit ? tc : '#fff'}>{(e.label ?? '').toUpperCase()}</text>
-                      {e.sub ? <text y={46} textAnchor="middle" fontFamily={FONT.hand} fontSize={24} fill={lit ? tc : '#e9f2e4'}>{e.sub}</text> : null}
-                    </g>
-                  )}
-                  {painted && painted !== 'blank' && e.num && pk >= 1 ? (
-                    <g transform="translate(176 -58)">
-                      <circle r={30} fill={C.yellow} stroke={INK} strokeWidth={4} />
-                      <text y={11} textAnchor="middle" fontFamily={FONT.heavy} fontSize={30} fill={INK}>{e.num}</text>
-                    </g>
-                  ) : null}
-                </g>
+              {/* slip road leaving the carriageway and receding toward the horizon */}
+              <path d={`M${x - 140} -26 L${x + 40} -26 L${x + 230} -138 L${x + 200} -142 Z`} fill={asphalt} stroke={INK} strokeWidth={3} strokeLinejoin="round" />
+              <path d={`M${x - 60} -26 L${x + 215} -140`} stroke="#fff" strokeWidth={3} strokeDasharray="14 12" opacity={0.6} />
+              {/* gantry */}
+              <path d={`M${sx - 150} -30 V-200 M${sx + 150} -30 V-200`} stroke="#5a5a52" strokeWidth={8} />
+              <g transform={`translate(${sx} -270)`}>
+                <rect x={-190} y={-64} width={380} height={128} rx={10} fill="#2f7a3a" stroke={INK} strokeWidth={4} />
+                {painted ? <rect x={-190} y={-64} width={380 * pk} height={128} rx={10} fill={pc} stroke={INK} strokeWidth={4} /> : null}
+                <rect x={-180} y={-54} width={360} height={108} rx={7} fill="none" stroke={lit ? tc : '#fff'} strokeOpacity={0.7} strokeWidth={3} />
+                {painted === 'blank' && pk >= 1 ? (
+                  <text y={20} textAnchor="middle" fontFamily={FONT.heavy} fontSize={60} fill="#c9c2b0">?</text>
+                ) : (
+                  <g>
+                    <text y={-22} textAnchor="middle" fontFamily={FONT.cond} fontWeight={700} fontSize={22} fill={lit ? tc : '#fff'} letterSpacing={3}>{lit ? head : 'EXIT'}</text>
+                    <text y={12} textAnchor="middle" fontFamily={FONT.cond} fontWeight={700} fontSize={Math.min(32, 640 / Math.max(10, (e.label ?? '').length))} fill={lit ? tc : '#fff'}>{(e.label ?? '').toUpperCase()}</text>
+                    {e.sub ? <text y={42} textAnchor="middle" fontFamily={FONT.hand} fontSize={24} fill={lit ? tc : '#e9f2e4'}>{e.sub}</text> : null}
+                  </g>
+                )}
+                {painted && painted !== 'blank' && e.num && pk >= 1 ? (
+                  <g transform="translate(178 -60)">
+                    <circle r={30} fill={C.yellow} stroke={INK} strokeWidth={4} />
+                    <text y={11} textAnchor="middle" fontFamily={FONT.heavy} fontSize={30} fill={INK}>{e.num}</text>
+                  </g>
+                ) : null}
               </g>
             </g>
           );
         })}
+        {/* road */}
+        <rect x={vx - 1500} y={-30} width={3000} height={60} fill={asphalt} />
+        <path d={`M${vx - 1500} -30 H${vx + 1500} M${vx - 1500} 30 H${vx + 1500}`} stroke={INK} strokeWidth={4} />
+        {Array.from({ length: 22 }, (_, i) => {
+          const x = Math.floor((vx - 1500) / 160) * 160 + i * 160;
+          return <rect key={i} x={x} y={-3} width={80} height={6} fill="#fff" opacity={0.75} />;
+        })}
+        {/* near verge: fence posts + kilometre stones */}
+        <rect x={vx - 1500} y={30} width={3000} height={40} fill={night ? '#34402f' : '#7a9a4a'} />
+        {Array.from({ length: 14 }, (_, i) => {
+          const x = Math.floor((vx - 1500) / 240) * 240 + i * 240;
+          return <rect key={i} x={x} y={48} width={8} height={40} fill="#6a5040" stroke={INK} strokeWidth={2} />;
+        })}
+        <path d={`M${vx - 1500} 62 H${vx + 1500}`} stroke="#6a5040" strokeWidth={3} />
+        {/* town boards on the near verge */}
+        {towns.map((tw, i) => {
+          const x = (tw.at ?? 0) * length;
+          if (Math.abs(x - vx) > 2200) return null;
+          return (
+            <g key={'t' + i} transform={`translate(${x} 60)`}>
+              <line x1={0} y1={0} x2={0} y2={70} stroke="#5a5a52" strokeWidth={6} />
+              <rect x={-120} y={-58} width={240} height={58} rx={5} fill="#f4f1ea" stroke={INK} strokeWidth={4} />
+              <rect x={-112} y={-50} width={224} height={42} rx={3} fill="none" stroke={C.red} strokeWidth={4} />
+              <text y={-17} textAnchor="middle" fontFamily={FONT.cond} fontWeight={700} fontSize={Math.min(30, 380 / Math.max(6, (tw.label ?? '').length))} fill={INK}>{(tw.label ?? '').toUpperCase()}</text>
+            </g>
+          );
+        })}
       </g>
+      {/* foreground field below the verge */}
+      <rect x={-1400} y={70} width={W} height={700} fill={night ? '#2f3a2b' : '#86a650'} />
+      {Array.from({ length: 6 }, (_, i) => <path key={i} d={`M-1400 ${110 + i * i * 14} H1400`} stroke="#5b86a8" strokeWidth={3 + i} opacity={0.35} />)}
+      {/* convoy (fixed on screen, the world scrolls past) */}
       {Array.from({ length: Math.max(1, vehicles) }, (_, i) => (
-        <g key={'v' + i} transform={`translate(${-300 - i * 300} ${sea ? 10 : 0}) scale(${sea ? 0.32 : 0.7})`}>
-          <Vehicle type={vehicle} nationKey={nat} t={t + i * 0.3} moving={progress > 0} />
+        <g key={'v' + i} transform={`translate(${VEH_X - i * 290} 6) scale(0.62)`}>
+          <Vehicle type={vehicle} nationKey={nat} t={t + i * 0.3} moving={progress > 0} travel={vx / 0.62} />
         </g>
       ))}
     </g>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { INK, nation, C } from '../theme';
+import { Tank } from './Tanks';
 
 /** Nation marking on a hull. */
 export const Mark: React.FC<{ nationKey?: string; x: number; y: number; s?: number }> = ({ nationKey, x, y, s = 1 }) => {
@@ -28,11 +29,12 @@ const shadeV = (hex: string) => {
 };
 
 /** Vehicles in side view, facing right. Origin = ground contact center. `burning`/`damaged` add states. */
-export const Vehicle: React.FC<{ type: string; nationKey?: string; t: number; color?: string; moving?: boolean; damaged?: boolean; prop?: boolean }> = ({ type, nationKey, t, color, moving, damaged }) => {
+export const Vehicle: React.FC<{ type: string; nationKey?: string; t: number; color?: string; moving?: boolean; damaged?: boolean; prop?: boolean; travel?: number; crew?: boolean }> = ({ type, nationKey, t, color, moving, damaged, travel, crew }) => {
   const n = nation(nationKey);
   const body = color ?? n.uniform;
   const dark = n.uniformDark;
-  const wheelRot = moving ? t * 360 : 0;
+  // wheels turn with the distance travelled (falls back to time when no distance is known)
+  const wheelRot = travel !== undefined ? (travel / 22) * (180 / Math.PI) : moving ? t * 360 : 0;
   const Wheel = ({ x, y, r }: { x: number; y: number; r: number }) => (
     <g transform={`translate(${x} ${y}) rotate(${wheelRot})`}>
       <circle r={r} fill="#2a2a2a" stroke={INK} strokeWidth={3} />
@@ -42,7 +44,16 @@ export const Vehicle: React.FC<{ type: string; nationKey?: string; t: number; co
   );
   const jig = moving ? Math.sin(t * 30) * 1.2 : 0;
   switch (type) {
+    case 'sherman':
+    case 'panzer4':
+    case 'tiger':
+    case 't34':
+    case 'panther':
+    case 'stug':
     case 'tank': {
+      return <Tank type={type} nationKey={nationKey} color={color} travel={travel ?? (moving ? t * 120 : 0)} moving={!!moving} t={t} damaged={damaged} crew={crew} />;
+    }
+    case 'tank_flat': {
       return (
         <g transform={`translate(0 ${jig})`}>
           <path d="M-170 -20 Q-180 -60 -140 -66 H150 Q180 -60 170 -20 Q150 0 120 0 H-120 Q-150 0 -170 -20 Z" fill="#3a3a36" stroke={INK} strokeWidth={4} />

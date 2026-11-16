@@ -27,7 +27,7 @@ def build():
         ST("APPROVED", 960, 350, 1.2, size=110, color="green"),
     ], beat="by the end Eisenhower had approved the plan")
     scene(407.92, {"kind": "paper"}, [
-        DOC("order", "OPERATION COMET", ["1 BRITISH DIVISION + POLES", "ARNHEM · NIJMEGEN · GRAVE"], x=560, y=480, w=760, h=380, at=0.2, size=40, speed=34, stamp="CANCELLED"),
+        DOC("order", "OPERATION COMET", ["1 BRITISH DIVISION + POLES", "ARNHEM · NIJMEGEN · GRAVE"], x=560, y=480, w=760, h=380, at=0.2, size=40, speed=34, stamp="CANCELLED", out=3.0),
         DOC("order", "OPERATION MARKET GARDEN", ["3½ AIRBORNE DIVISIONS", "+ XXX CORPS"], x=1300, y=600, w=900, h=460, at=3.2, size=48, speed=30, enter="grow"),
         L("BIGGER · BOLDER · NEW NAME", 1300, 160, "tag", 44, at=5.6),
     ], date="10 SEPTEMBER 1944", beat="Comet cancelled the same day, reborn bigger with a new name")
@@ -60,7 +60,7 @@ def build():
     scene(451.16, {"kind": "paper"}, [
         DOC("note", "D-DAY", ["23RD?  26TH?"], x=640, y=520, w=640, h=360, at=0.1, size=60, speed=30),
         {"kind": "shape", "shape": "cross", "x": 640, "y": 560, "in": 1.4, "scale": 1.6},
-        HEAD("SUNDAY 17 SEPTEMBER", 1320, 560, 96, at=2.6, accent="17"),
+        HEAD("SUNDAY 17 SEPTEMBER", 1400, 560, 84, at=2.6, accent="17"),
         {"kind": "arrow", "screen": True, "path": [[900, 560], [1020, 560]], "color": "red", "in": 2.2, "dur": 0.5, "width": 20},
     ], beat="pulled the date forward to Sunday the 17th")
     scene(456.7, {"kind": "warroom"}, [
@@ -133,7 +133,7 @@ def build():
         A("us_para", 1350, 900, 1.4, "write", "neutral", holds="paper"),
         L("AN AMERICAN LIAISON OFFICER HEARD:", 960, 110, "plain", 40, at=0.4),
         L("\"HOW MANY DAYS' RATIONS\nWILL THEY JUMP WITH?\"", 700, 260, "plain", 44, at=5.4),
-        L("\"HOW LONG CAN\nTHEY HOLD OUT?\"", 1250, 400, "plain", 44, at=8.0),
+        L("\"HOW LONG CAN\nTHEY HOLD OUT?\"", 1250, 320, "plain", 44, at=8.0),
     ], beat="in private Horrocks asked how many days' rations, how long can they hold")
     scene(548.24, {"kind": "airfield", "nation": UK, "planes": 0}, [
         *[V("dakota", 300 + i * 600, 760, 0.6, US) for i in range(3)],
@@ -214,14 +214,14 @@ def build():
     ], beat="remember that radio, it keeps coming back")
     ROAD(630.89, p_for("A2") - 0.03, p_for("A3") + 0.02, move=(0.4, 11.0), extra=[
         A("host", 1700, 1010, 1.25, "explain", "determined", talk=True, keys=K((4.0, {"pose": "pointL"}), (9.6, {"pose": "present", "expr": "smug"}))),
-        L("TWO EXITS — BOTH IN ENGLAND", 960, 110, "tag", 44, at=3.2),
+        L("TWO EXITS — BOTH IN ENGLAND", 960, 92, "tag", 44, at=3.2),
     ], beat="which exits? two, both in England: one lift a day, distant drop zones. That's three")
     LEDGER(645.49, [("A1 Antwerp first", 383.6), ("A2 Two lifts on day one", 646.0), ("A3 Drop near the bridge", 646.6)], [], beat="Allied column: three")
 
     # =============== CH7 THE GERMANS NEXT DOOR ===============
     ROAD(647.69, p_for("A3"), p_for("A3"), move=(0.2, 0.4), extra=[
         A("host", 1750, 1010, 1.25, "idle", "determined", talk=True, keys=K((3.8, {"x": 300}))),
-        L("THE GERMANS WERE MAKING PLANS TOO", 960, 110, "tag", 44, at=1.0),
+        L("THE GERMANS WERE MAKING PLANS TOO", 960, 92, "tag", 44, at=1.0),
     ], chapter="The Germans Next Door", sfx=[{"t": 0.1, "id": "footsteps", "dur": 3.6}], beat="cross to the other side of the road")
     scene(655.61, {"kind": "office", "portrait": False, "desk": False, "fg": "officedesk", "map": "WEST"}, [
         A("model", 960, 900, 1.6, "write", "neutral"),
@@ -260,12 +260,12 @@ def build():
     scene(705.0, {"kind": "hotel", "name": "Hotel Tafelberg"}, [
         A("model", 300, 930, 1.3, "idle", "smug", keys=K((3.0, {"x": 900}))),
         {"kind": "ring", "x": 960, "y": 520, "r": 520, "color": "red", "in": 3.4, "enter": "grow", "dashed": False},
-        L("KEEP AN EYE ON THAT HOTEL", 960, 110, "red", 46, at=3.6),
+        L("KEEP AN EYE ON THAT HOTEL", 1150, 170, "red", 46, at=3.6),
     ], place="OOSTERBEEK · WEST OF ARNHEM", sfx=[{"t": 0.1, "id": "footsteps", "dur": 3}], beat="Model set up his HQ in a pleasant hotel in Oosterbeek")
     scene(710.07, {"kind": "office", "portrait": False, "desk": False}, [
         A("german_officer", 600, 900, 1.5, "hold", "worried", holds="folder", talk=True, look_={"glasses": "round"}),
         A("model", 1450, 900, 1.5, "cross", "neutral"),
-        DOC("order", "INTELLIGENCE — DAILY", ["9–14 SEPT: BRITISH OFFENSIVE COMING", "→ NIJMEGEN · ARNHEM · WESEL", "PRIZE: THE RUHR"], x=1000, y=330, w=900, h=380, at=2.4, size=36, speed=26),
+        DOC("order", "INTELLIGENCE — DAILY", ["9–14 SEPT: BRITISH OFFENSIVE COMING", "→ NIJMEGEN · ARNHEM · WESEL", "PRIZE: THE RUHR"], x=1000, y=270, w=900, h=330, at=2.4, size=36, speed=26),
     ], beat="Model's intelligence officer warned every day of a British offensive")
     MAP(724.71, [6.1, 51.8], 3.2, [
         *rivers("waal", "rhine"), *towns("Nijmegen", "Arnhem", "Wesel", at=0.0),
@@ -312,7 +312,7 @@ def build():
     scene(783.51, {"kind": "cell"}, [
         A("lindemans", 960, 900, 1.6, "behind", "sad"),
         L("ARRESTED OCTOBER 1944 · DIED IN HIS CELL 1946", 960, 120, "tag", 40, at=0.6),
-        L("A FRENCH HISTORIAN:", 1400, 380, "plain", 38, at=6.2),
+        L("A FRENCH HISTORIAN:", 1400, 330, "plain", 38, at=6.2),
         ST("DOUBLE AGENT", 1400, 480, 7.6, size=70),
     ], tint="grey", beat="Lindemans arrested 1944, killed himself 1946; a historian concluded he was a double agent")
     scene(796.39, {"kind": "paper"}, [
@@ -451,6 +451,6 @@ def build():
     ], camera=[{"t": 0, "zoom": 1.0}, {"t": 15, "zoom": 1.1}], beat="the danger was thousands of experienced SS soldiers a short march from the drop zones")
     ROAD(1022.12, p_for("A4") - 0.05, p_for("A4"), move=(0.4, 8.0), extra=[
         A("host", 1700, 1010, 1.25, "explain", "determined", talk=True, keys=K((6.0, {"pose": "pointL"}), (10.4, {"pose": "present", "expr": "smug"}))),
-        L("BEDELL SMITH'S: PUT MORE STRENGTH AT ARNHEM", 960, 110, "tag", 40, at=2.8),
-        L("IT WAS WAVED AWAY", 960, 200, "red", 40, at=8.4),
+        L("BEDELL SMITH'S: PUT MORE STRENGTH AT ARNHEM", 960, 92, "tag", 40, at=2.8),
+        L("IT WAS WAVED AWAY", 960, 180, "red", 40, at=8.4),
     ], beat="which exit? Bedell Smith's: more strength at Arnhem, waved away. That's four")

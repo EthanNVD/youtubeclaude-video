@@ -86,6 +86,15 @@ Keep him out of the historical scenes themselves.
 9. **Variety**: no more than ~3 consecutive shots of the same visual language; alternate wide/close; don't reuse the same composition for different ideas.
 10. **Respect**: victims are never a punchline; Nazi symbols are not drawn (the armband is a plain red band).
 
+## Camera, depth and motion (see `docs/STYLE_GUIDE.md`)
+- Every shot moves a little: no camera keys → automatic slow push-in. Keep explicit moves slow (≥ 3 s for a pan); fast moves only for impact.
+- Depth: soft background, sharp actors, an occluder in front when it helps (`fg`). Wide establishing shots are sparse — small figures, lots of sky or snow.
+- Two-shots and over-the-shoulder (`view: "back"`) for conversations instead of two people facing the camera.
+- Vehicles enter already moving or ease off; they never zip across and stop. Prefer a short visible drive inside the frame to a long one from off-screen.
+- Scenery belongs to the world: if the camera or a road scrolls, everything on the ground scrolls with it.
+- Maps: old paper look, named rivers, legend, unit blocks; the camera follows the mover along a route instead of showing the whole theatre at once.
+- Text: one label at a time per area, never on a face or on a badge corner; small pinned labels beat big floating captions.
+
 ## Shot recipes (copy the idea, not the numbers)
 - **Decision in an office**: `office` + actor `chin`/`worried` → cut-in (`zoom` 1.4 in 0.2 s) on the telegram prop → reaction `sweat`.
 - **Phone call between capitals**: two scenes back-to-back, each actor `pose: phone`, same framing mirrored (`flip`).

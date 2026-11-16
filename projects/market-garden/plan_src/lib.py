@@ -104,7 +104,7 @@ def scene(start, set_=None, els=(), typ="stage", **kw):
 
 
 # ---------------- maps ----------------
-NL_COLORS = {"Germany": "#b9b3a2", "Netherlands": "#f0d29a", "Belgium": "#d9e6c4", "France": "#d9e6c4", "Luxembourg": "#d9e6c4", "United Kingdom": "#d9e6c4"}
+NL_COLORS = {"Germany": "#a9a69a", "Netherlands": "#e8d4a2", "Belgium": "#d8dcb8", "France": "#d8dcb8", "Luxembourg": "#d8dcb8", "United Kingdom": "#a9bccf"}
 RIVERS = {
     "waal": [[5.20, 51.84], [5.50, 51.855], [5.70, 51.86], [5.86, 51.85], [6.00, 51.87], [6.10, 51.85]],
     "rhine": [[5.30, 51.965], [5.60, 51.975], [5.78, 51.98], [5.90, 51.976], [5.98, 51.965], [6.08, 51.90], [6.12, 51.87]],
@@ -121,6 +121,8 @@ ROUTE = [TOWNS[t] for t in ("Neerpelt", "Eindhoven", "Son", "Veghel", "Grave", "
 
 
 def rivers(*names, at=0.0):
+    # the map now draws real rivers (Natural Earth); only the Scheldt is missing from that data
+    names = [n for n in names if n == "scheldt"]
     return [{"kind": "line", "path": RIVERS[n], "color": "#5b8fb0", "width": 10, "in": at, "enter": "none"} for n in names]
 
 
@@ -128,22 +130,28 @@ def towns(*names, at=0.2, side="right", size=36):
     return [{"kind": "city", "name": n, "at": TOWNS[n], "side": side, "in": at, "size": size} for n in names]
 
 
-def MAP(start, center, span, els, style="war", colors=None, camera=None, **kw):
+LEGEND = {"kind": "legend", "x": 40, "y": 860, "hud": True, "in": 0, "enter": "fade",
+          "items": [{"nation": "UK", "label": "Britain"}, {"nation": "USA", "label": "United States"}, {"nation": "GERI", "label": "Germany"}]}
+
+
+def MAP(start, center, span, els, style="paper", colors=None, camera=None, legend=False, **kw):
     m = {"era": "1938", "center": center, "span": span, "style": style, "colors": colors or NL_COLORS}
+    if legend:
+        els = list(els) + [LEGEND]
     return scene(start, None, els, typ="map", map=m, **({"camera": camera} if camera else {}), **kw)
 
 
 # ---------------- the road device ----------------
-ROAD_LEN = 6000
+ROAD_LEN = 24000
 EXITS = {
     "A1": dict(at=0.02, label="Antwerp first", sub="Sept 1944 · Montgomery", side="down", painted="allied", num="A1", reveal=362.0, paint=382.54),
-    "T": dict(at=0.07, label="Seven days to plan", sub="a toll either way", side="up", painted="none", reveal=470.3, paint=None),
+    "T": dict(at=0.065, label="Seven days to plan", sub="a toll either way", side="up", painted="none", reveal=470.3, paint=None),
     "A2": dict(at=0.11, label="Two lifts on day one", sub="England · Brereton", side="up", painted="allied", num="A2", reveal=636.1, paint=637.0),
-    "A3": dict(at=0.15, label="Drop near the bridge", sub="England · the planners", side="down", painted="allied", num="A3", reveal=638.5, paint=642.0),
-    "A4": dict(at=0.30, label="More strength at Arnhem", sub="mid-Sept · Bedell Smith", side="up", painted="allied", num="A4", reveal=1024.9, paint=1033.0),
-    "G1": dict(at=0.52, label="Blow the Grave bridge", sub="17 Sept · Grave", side="down", painted="german", num="G1", reveal=1321.1, paint=1324.6),
+    "A3": dict(at=0.155, label="Drop near the bridge", sub="England · the planners", side="down", painted="allied", num="A3", reveal=638.5, paint=642.0),
+    "A4": dict(at=0.3, label="More strength at Arnhem", sub="mid-Sept · Bedell Smith", side="up", painted="allied", num="A4", reveal=1024.9, paint=1033.0),
+    "G1": dict(at=0.5, label="Blow the Grave bridge", sub="17 Sept · Grave", side="down", painted="german", num="G1", reveal=1321.1, paint=1324.6),
     "A5": dict(at=0.62, label="Nijmegen bridge, day one", sub="17 Sept · Gavin", side="up", painted="allied", num="A5", reveal=1314.0, paint=1319.98),
-    "G2": dict(at=0.66, label="Blow the Nijmegen bridge", sub="20 Sept · Model", side="down", painted="german", num="G2", reveal=1797.5, paint=1799.5),
+    "G2": dict(at=0.665, label="Blow the Nijmegen bridge", sub="20 Sept · Model", side="down", painted="german", num="G2", reveal=1797.5, paint=1799.5),
     "L": dict(at=0.71, label="Lent", sub="20 Sept, night", side="up", painted="blank", reveal=1559.6, paint=1562.6),
 }
 TOWN_POS = [("Belgian border", 0.04), ("Eindhoven", 0.20), ("Son", 0.25), ("Veghel", 0.38), ("Grave", 0.49), ("Nijmegen", 0.64), ("Elst", 0.80), ("Arnhem", 0.93)]
@@ -151,10 +159,10 @@ TOWN_POS = [("Belgian border", 0.04), ("Eindhoven", 0.20), ("Son", 0.25), ("Vegh
 
 def p_for(exit_id):
     """vehicle progress that puts the exit's sign a little right of the tank"""
-    return EXITS[exit_id]["at"] - 440 / ROAD_LEN
+    return EXITS[exit_id]["at"] - 250 / ROAD_LEN
 
 
-def ROAD(start, p0, p1, move=(0.3, 4.0), y=600, extra=(), vehicles=1, set_=None, show_unknown=False, **kw):
+def ROAD(start, p0, p1, move=(0.3, 4.0), y=700, extra=(), vehicles=1, set_=None, show_unknown=False, **kw):
     exits = []
     for k, e in EXITS.items():
         d = {"at": e["at"], "side": e["side"]}
@@ -171,10 +179,10 @@ def ROAD(start, p0, p1, move=(0.3, 4.0), y=600, extra=(), vehicles=1, set_=None,
                 if e.get("num"):
                     d["num"] = e["num"]
         exits.append(d)
-    road = {"kind": "road", "x": 960, "y": y, "progress": p0, "length": ROAD_LEN, "vehicle": "tank", "nation": "UK", "polder": True,
+    road = {"kind": "road", "x": 960, "y": y, "scale": 1.35, "progress": p0, "length": ROAD_LEN, "vehicle": "sherman", "nation": "UK", "time": kw.pop("time", "day"),
             "exits": exits, "towns": [{"at": a, "label": n} for n, a in TOWN_POS], "vehicles": vehicles, "in": 0, "enter": "none",
             "keys": [{"t": move[0], "progress": p0}, {"t": move[1], "progress": p1, "ease": "inOut"}]}
-    s = set_ or {"kind": "field", "road": False, "houses": False, "poles": False, "trees": "round"}
+    s = set_ or {"kind": "paper", "drift": 0}
     return scene(start, s, [road, *extra], **kw)
 
 

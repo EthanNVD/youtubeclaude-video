@@ -25,7 +25,7 @@ def build():
     ], camera=[{"t": 0, "zoom": 1.0, "shake": 4}, {"t": 3, "zoom": 1.05, "shake": 0}], beat="one raid cratered an Me 262 base so none could take off")
     scene(1060.58, STUDY, [
         A("host", 960, 900, 1.7, "show", "determined", holds="stopwatch"),
-        HEAD("THE CLOCK STARTS NOW", 960, 180, 96, at=2.6, accent="NOW"),
+        HEAD("THE CLOCK STARTS NOW", 960, 270, 96, at=2.6, accent="NOW"),
     ], clock="SUN 17 SEP · 13:00", sfx=[{"t": 2.6, "id": "tick"}, {"t": 2.8, "id": "clock_tick", "dur": 1.6}], beat="Sunday 17 September, one o'clock: the clock starts now")
     scene(1065.04, {"kind": "airfield", "nation": UK, "planes": 0}, [
         *[V("dakota", 300 + i * 700, 780, 0.6, US, keys=K((3.0 + i, {"x": 2500, "y": 300, "rotate": -10}))) for i in range(3)],
@@ -199,7 +199,7 @@ def build():
     scene(1285.94, {"kind": "polder"}, [
         *[V("halftrack", -300 - i * 260, 588, 0.36, "GER", moving=True, keys=K((8.0, {"x": 1700 - i * 260}))) for i in range(4)],
         A("grabner", 400, 920, 1.4, "pointUp", "determined", keys=K((1.0, {"pose": "point"}))),
-        L("GRÄBNER TURNS BACK NORTH — TO CLEAR THE BRIDGE", 960, 110, "tag", 38, at=0.6),
+        L("GRÄBNER TURNS BACK NORTH — TO CLEAR THE BRIDGE", 1100, 160, "tag", 38, at=0.6),
     ], date="MONDAY 18 SEPTEMBER", sfx=[{"t": 0, "id": "tank_engine", "dur": 8}], beat="Monday morning Gräbner drove back north to clear Frost's men off the bridge")
     scene(1294.44, {"kind": "archbridge", "time": "day", "burning": True}, [
         *[V("halftrack", 1500 - i * 260, 930, 0.6, "GER", flip=True, damaged=i < 2) for i in range(3)],
@@ -218,13 +218,13 @@ def build():
     # =============== CH10 MONDAY NIGHT ===============
     ROAD(1311.34, p_for("A5") - 0.05, p_for("G1") + 0.06, move=(0.3, 13.0), extra=[
         A("host", 1700, 1010, 1.25, "explain", "determined", talk=True, keys=K((8.6, {"pose": "pointL"}), (13.0, {"pose": "present", "expr": "smug"}))),
-        L("ALLIED: NIJMEGEN BRIDGE ON DAY ONE", 960, 110, "tag", 40, at=2.6),
-        L("GERMAN: GRAVE, READY TO BLOW, LEFT STANDING", 960, 200, "dark", 38, at=9.8),
+        L("ALLIED: NIJMEGEN BRIDGE ON DAY ONE", 960, 92, "tag", 40, at=2.6),
+        L("GERMAN: GRAVE, READY TO BLOW, LEFT STANDING", 960, 180, "dark", 38, at=9.8),
     ], chapter="Monday Night", beat="exits: Nijmegen bridge day one (five); Grave left standing (German one)")
     ROAD(1325.6, 0.20 - 440 / ROAD_LEN, 0.21 - 440 / ROAD_LEN, move=(0.2, 9.0), extra=[
         A("host", 1700, 1010, 1.25, "show", "worried", holds="stopwatch", talk=True),
-        L("PLAN: WELL ON THE WAY TO ARNHEM", 960, 110, "tag", 40, at=0.6),
-        L("ACTUAL: JUST PAST EINDHOVEN", 960, 200, "red", 40, at=3.4),
+        L("PLAN: WELL ON THE WAY TO ARNHEM", 960, 92, "tag", 40, at=0.6),
+        L("ACTUAL: JUST PAST EINDHOVEN", 960, 180, "red", 40, at=3.4),
     ], clock="MON 18 SEP · NIGHT", beat="Monday night: the tanks only just past Eindhoven, running late")
 
     # =============== CH11 BOATS ACROSS THE WAAL ===============
@@ -232,7 +232,7 @@ def build():
         V("tank", -300, 900, 0.75, UK, moving=True, keys=K((4.0, {"x": 800}))),
         A("us_para", 1450, 920, 1.5, "wave", "happy", talk=True),
         A("guards_tanker", 1100, 920, 1.4, "salute", "happy", **{"in": 4.2}),
-        L("GRENADIER GUARDS MEET THE 82ND AT GRAVE", 960, 110, "tag", 38, at=0.6),
+        L("GRENADIER GUARDS MEET THE 82ND AT GRAVE", 960, 160, "tag", 38, at=0.6),
     ], chapter="Boats Across the Waal", date="TUESDAY 19 SEPTEMBER", clock="08:20", sfx=[{"t": 0, "id": "tank_engine", "dur": 4}], beat="8:20 Tuesday the Guards meet the paratroopers at Grave")
     scene(1343.28, {"kind": "archbridge", "time": "day"}, [
         V("tank", 400, 960, 0.9, UK),
@@ -276,7 +276,7 @@ def build():
     ROAD(1403.25, p_for("A5") - 0.08, p_for("A5") - 0.075, move=(0.2, 7.0), vehicles=4, extra=[
         A("aide", 1350, 1010, 1.25, "shrug", "worried", holds="radio", talk=True),
         A("host", 1700, 1010, 1.25, "idle", "neutral", keys=K((2.4, {"pose": "pointL", "talk": True}), (6.6, {"pose": "write", "talk": False}))),
-        L("THE BOATS: BEHIND THE TANKS, BEHIND THE TRAFFIC", 960, 110, "tag", 38, at=2.6),
+        L("THE BOATS: BEHIND THE TANKS, BEHIND THE TRAFFIC", 960, 92, "tag", 38, at=2.6),
     ], beat="AIDE: what boats? HOST: coming up the road behind the tanks, behind the traffic. Noted")
     scene(1411.24, {"kind": "river", "bridges": True}, [
         V("truck", -300, 930, 0.7, UK, moving=True, keys=K((3.0, {"x": 500}))),
@@ -308,9 +308,9 @@ def build():
     ], clock="19:10", camera=[{"t": 0, "zoom": 1.0}, {"t": 6, "zoom": 1.08, "x": 1000, "y": 520}], beat="at ten past seven British tanks drove across")
     scene(1453.81, {"kind": "office", "portrait": False, "desk": False, "map": "WAAL · RHINE"}, [
         A("model", 960, 900, 1.6, "stop", "determined", talk=True),
-        DOC("order", "MODEL — ORDER", ["BRIDGES OVER THE WAAL AND", "THE RHINE NOT TO BE DESTROYED"], x=1450, y=340, w=760, h=360, at=3.4, size=34, speed=26),
+        DOC("order", "MODEL — ORDER", ["BRIDGES OVER THE WAAL AND", "THE RHINE NOT TO BE DESTROYED"], x=1490, y=400, w=740, h=340, at=3.4, size=34, speed=26),
         L("IT NEVER WENT UP — PART OF THE REASON:", 960, 110, "tag", 38, at=0.2),
-        L("HE WANTED THEM FOR HIS OWN COUNTER-ATTACK", 1300, 600, "plain", 36, at=8.8),
+        L("HE WANTED THEM FOR HIS OWN COUNTER-ATTACK", 1440, 640, "plain", 32, at=8.8),
     ], beat="it never went up: Model had ordered the bridges not destroyed")
     scene(1464.08, {"kind": "office", "portrait": False, "desk": False, "time": "night", "clockTime": "11:50"}, [
         A("model", 960, 900, 1.6, "facepalm", "angry"),
@@ -381,7 +381,7 @@ def build():
     ROAD(1559.55, p_for("L") - 0.01, p_for("L"), move=(0.2, 2.6), extra=[
         A("aide", 1350, 1010, 1.25, "hold", "worried", holds="radio", talk=True),
         A("host", 1700, 1010, 1.25, "pointL", "neutral", keys=K((2.4, {"talk": True}))),
-        L("THE SIGN WE PROMISED NOT TO PAINT", 960, 110, "tag", 40, at=3.2),
+        L("THE SIGN WE PROMISED NOT TO PAINT", 960, 92, "tag", 40, at=3.2),
     ], beat="AIDE: should they have kept going from Lent? HOST: the sign we wouldn't paint")
     scene(1565.47, {"kind": "studio", "color": "#d9cdb0"}, [
         {"kind": "scale", "x": 960, "y": 640, "left": "KEEP GOING", "right": "HOLD", "leftNation": "UK", "rightNation": "UK", "title": "LENT, 20 SEPT, NIGHT",
@@ -392,12 +392,12 @@ def build():
              {"side": "R", "label": "FOUR TANKS, AT NIGHT", "value": 1, "in": 12.2},
              {"side": "R", "label": "RAISED ROAD", "value": 1, "in": 15.0},
              {"side": "R", "label": "ENEMY OF UNKNOWN STRENGTH", "value": 1, "in": 17.0}]},
-        L("THE CASE FOR GOING ON IS STRONG", 960, 90, "green", 40, at=0.2),
+        L("THE CASE FOR GOING ON IS STRONG", 960, 90, "green", 40, at=0.2, out=11.4),
         L("THE CASE AGAINST IS STRONG TOO", 960, 90, "red", 40, at=11.6),
     ], beat="the case for going on vs the case against")
     ROAD(1588.03, p_for("L"), p_for("L"), move=(0.2, 0.4), extra=[
         A("host", 1700, 1010, 1.25, "offer", "smile", talk=True),
-        L("PAINT IT IN THE COMMENTS", 960, 110, "tag", 46, at=4.8),
+        L("PAINT IT IN THE COMMENTS", 960, 92, "tag", 46, at=4.8),
     ], beat="a bridge that was falling as they drove: we'll leave that sign blank; paint it in the comments")
 
     # =============== CH13 HELL'S HIGHWAY ===============
@@ -431,10 +431,10 @@ def build():
         ML("SOUTH BANK — OPPOSITE THE BRITISH", [5.81, 51.94], style="tag", at=1.2),
     ], beat="landing zone changed to the polder near Driel on the south bank")
     scene(1641.94, {"kind": "studio", "color": "#d9cdb0"}, [
-        CNT(0, 114, 480, 420, 0.2, suffix=" SET OUT", size=80, dur=1.0),
-        CNT(0, 41, 960, 420, 2.6, suffix=" TURNED BACK", size=80, dur=0.8, color="red"),
-        CNT(0, 1000, 1440, 420, 4.6, prefix="~", suffix=" POLES LANDED", size=70, dur=1.0),
-        *[V("dakota", 480, 700, 0.3, US)],
+        CNT(0, 114, 960, 300, 0.2, suffix=" SET OUT", size=80, dur=1.0),
+        CNT(0, 41, 960, 460, 2.6, suffix=" TURNED BACK", size=80, dur=0.8, color="red"),
+        CNT(0, 1000, 960, 620, 4.6, prefix="~", suffix=" POLES LANDED", size=70, dur=1.0),
+        *[V("dakota", 300, 860, 0.3, US)],
     ], beat="114 transports set out, 41 turned back, about a thousand Poles landed")
     scene(1648.92, {"kind": "river", "bridges": False}, [
         V("boat", 900, 700, 0.8, rotate=-14, damaged=True),
@@ -531,7 +531,7 @@ def build():
     # =============== CH14 READING THE ROAD ===============
     ROAD(1780.95, -0.10, 0.70, move=(1.0, 21.0), extra=[
         A("host", 1720, 1010, 1.2, "explain", "neutral", talk=True, keys=K((12.0, {"pose": "pointL"}), (20.6, {"pose": "idle"}))),
-        L("READ THE ROAD BACK, ONE SIGN AT A TIME", 960, 110, "tag", 40, at=0.4),
+        L("READ THE ROAD BACK, ONE SIGN AT A TIME", 960, 92, "tag", 40, at=0.4),
     ], chapter="Reading the Road", beat="read the road back: Antwerp, seven days, one lift, drop zones, Bedell Smith, Nijmegen, Grave, Nijmegen standing, Lent")
     LEDGER(1803.37, [("A1 Antwerp first", 0), ("A2 Two lifts on day one", 0), ("A3 Drop near the bridge", 0), ("A4 More strength at Arnhem", 0), ("A5 Nijmegen bridge, day one", 0)],
            [("G1 Grave left standing", 0), ("G2 Nijmegen left standing", 0)],
@@ -548,7 +548,7 @@ def build():
     ], beat="the defeat was avoidable but not by one heroic decision; no spare time built in")
     ROAD(1825.9, p_for("A2") - 0.02, p_for("A5"), move=(0.3, 14.0), extra=[
         A("host", 1720, 1010, 1.2, "explain", "determined", talk=True),
-        L("ANY ONE OF THESE MIGHT HAVE BEEN ENOUGH", 960, 110, "tag", 40, at=11.0),
+        L("ANY ONE OF THESE MIGHT HAVE BEEN ENOUGH", 960, 92, "tag", 40, at=11.0),
     ], beat="two lifts, closer drop zones, Bedell Smith's advice, Nijmegen bridge the first evening")
     scene(1840.61, STUDY, [
         A("host", 960, 900, 1.7, "count", "determined", talk=True, keys=K((3.6, {"pose": "stop", "expr": "sad"}))),
@@ -631,7 +631,7 @@ def build():
     scene(1969.0, {"kind": "city", "time": "dawn", "weather": "snow"}, [
         {"kind": "crowd", "who": ["dutch_civilian", "dutch_woman", "civilian_man"], "count": 5, "spacing": 200, "x": 960, "y": 930, "scale": 1.1, "pose": "idle", "expr": "sad"},
         L("THE HUNGER WINTER", 960, 120, "plain", 64, at=0.4),
-        CNT(0, 20000, 960, 260, 2.4, prefix="> ", suffix=" STARVED TO DEATH", size=70, dur=2.0),
+        CNT(0, 20000, 960, 320, 2.4, prefix="> ", suffix=" STARVED TO DEATH", size=70, dur=2.0),
     ], tint="grey", ambience="wind_cold", beat="in the hunger winter more than 20,000 Dutch civilians starved")
     scene(1977.74, {"kind": "harbor"}, [
         V("freighter", -500, 760, 0.6, UK, keys=K((6.4, {"x": 900}))),
@@ -646,7 +646,7 @@ def build():
     ROAD(1994.41, p_for("L"), p_for("L"), move=(0.2, 0.4), extra=[
         A("host", 1700, 1010, 1.25, "offer", "neutral", talk=True, keys=K((6.0, {"pose": "chin"}))),
         L("AT LENT, 20 SEPT, NIGHT:", 960, 100, "tag", 40, at=2.8),
-        L("SEND THE FOUR TANKS ON — OR HOLD UNTIL MORNING?", 960, 190, "red", 38, at=4.0),
+        L("SEND THE FOUR TANKS ON — OR HOLD UNTIL MORNING?", 960, 180, "red", 38, at=4.0),
     ], beat="that's our reading of the road; what's yours? at Lent would you have sent the tanks on?")
     scene(2005.78, STUDY, [
         A("aide", 700, 900, 1.6, "thumbsup", "happy"),

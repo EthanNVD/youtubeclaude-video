@@ -5,7 +5,7 @@ export type LonLat = [number, number];
 
 /** A keyframe: any element prop may appear; numbers are eased between keys, other values switch at `t`. */
 export type Key = { t: number; ease?: Ease } & Record<string, unknown>;
-export type Ease = 'linear' | 'in' | 'out' | 'inOut' | 'back' | 'step';
+export type Ease = 'linear' | 'in' | 'out' | 'inOut' | 'back' | 'step' | 'drive';
 
 export type Enter = 'none' | 'pop' | 'fade' | 'drop' | 'rise' | 'slideL' | 'slideR' | 'grow' | 'stamp' | 'draw';
 
@@ -90,6 +90,7 @@ export type Plan = {
     voice?: string;
     /** 0..1 film grain/paper texture */
     grain?: number;
+    grade?: string;
   };
   cast?: Record<string, CastMember>;
   scenes: Scene[];
