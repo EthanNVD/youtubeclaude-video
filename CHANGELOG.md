@@ -2,6 +2,41 @@
 
 Newest first. One entry per change that matters to the look, the pipeline or the docs.
 
+## 2026-11-17 — Acting, coverage and natural motion
+Why: the user found Market Garden v2 static and its motion jerky.
+- Static: one frozen set-up per 8 s scene, no close-ups, actions told by labels.
+- Jerky: things popping in on every cut, moves that lunge then stop dead, sliding feet.
+
+Approved on a 1-minute test (`projects/acting-test`).
+
+Changes:
+- **Coverage** (`scene.shots` in `src/scene/SceneView.tsx`):
+  - set-ups framed by subject id and size (`wide … ecu`), `frameX`, push/pan;
+  - `track` with a lagging camera;
+  - hard cuts inside a place.
+- **Acting:**
+  - `turn` (3/4 face);
+  - expression take;
+  - `front` layer for desk props and over-the-shoulder actors;
+  - keyed `holds`;
+  - walking toward/away from the camera;
+  - props `photo`, `magnifier`, `suitcase`; element `viewfinder`.
+- **Motion** (`src/lib/anim.ts`, `Elements.tsx`, `Character.tsx`):
+  - default ease is smoothstep (the old cubic peaked at 3× speed);
+  - people travel with `walk`/`arrive`/`leave` profiles and vehicles with `drive`;
+  - the gait is driven by the distance covered and its amplitude follows speed;
+  - pose blends take 0.45–0.95 s with overlapping hands, anticipation and a 4 % settle;
+  - no pop on cuts (`place`/`drop` enters for props, soft pop for text);
+  - vehicles pitch with acceleration and aircraft bank;
+  - camera shake is smooth noise.
+- **Validator:**
+  - errors for unknown shot ids/sizes;
+  - warnings for single set-ups over 6.5 s and for sprinting actors;
+  - a `coverage` summary (set-ups, average length, close-ups, acting share).
+- **shotlib:** `SHOT`, `AID`, coverage templates `desk_read`, `ots_dialogue`, `desk_insert`, `walk_to_camera`, `walk_away`, `vehicle_arrives`.
+- **Skill:** new `references/acting-camera.md` (reads, coverage, acting, motion, strip checks); SKILL, plan-schema, shots, storytelling, STYLE_GUIDE, QUALITY and ROADMAP updated.
+- **Learned from** the ethanNVD frame studies (cut grammar, phases of an action) and opus-video-skills *painted-animation* (reads, timing, animation principles).
+
 ## 2026-11-17 — Script-writer skill and first drafts
 Why: the user wanted the Codex `two-sides-war-script-writer` skill ported to Claude, upgraded from an editor's study of the channel's top 10 videos, able to research new topics and rewrite old scripts in the channel's voice.
 - `.claude/skills/two-sides-war-script-writer/`: modes `topic_research` / `new_from_title` / `rewrite_channel_voice` / `rewrite_same_structure`; new references (top-10 analysis, channel formula, topic research, channel-voice rewrite); dialogue policy (QUOTE / REPORTED / DRAMATIZED / HOST, ≤15 %); clean + speaker-tagged outputs.

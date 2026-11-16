@@ -60,6 +60,10 @@ def merge(proj):
     return base
 
 
+SHOT_SIZES = ("wide", "full", "medium", "mediumclose", "close", "ecu")
+COVER = {"setups": 0, "close": 0, "acting_s": 0.0}
+
+
 def main(proj):
     proj = Path(proj)
     plan = merge(proj)
@@ -103,6 +107,45 @@ def main(proj):
             fg = (s.get("set") or {}).get("fg")
             if fg and fg not in V["fg"]:
                 err.append(f"{sid}: unknown foreground '{fg}' (have: {', '.join(sorted(V['fg']))})")
+            # coverage: shots inside the scene (see references/acting-camera.md)
+            els = s.get("elements", [])
+            ids = {e.get("id") for e in els if e.get("id")}
+            shots = s.get("shots") or []
+            for q in shots:
+                refs = q.get("on")
+                refs = [] if refs is None else refs if isinstance(refs, list) else [refs]
+                for r in refs:
+                    if isinstance(r, int) and not 0 <= r < len(els):
+                        err.append(f"{sid}: shot t={q.get('t')} frames element #{r}, which does not exist")
+                    elif isinstance(r, str) and r not in ids:
+                        err.append(f"{sid}: shot t={q.get('t')} frames '{r}' — no element has that id")
+                if q.get("size") and q["size"] not in SHOT_SIZES:
+                    err.append(f"{sid}: shot size '{q['size']}' (have {', '.join(SHOT_SIZES)})")
+                if q.get("t", 0) > dur + 0.01:
+                    warn.append(f"{sid}: shot at t={q['t']} is after the scene end")
+            starts = sorted({0.0} | {float(q.get("t", 0)) for q in shots})
+            longest = max([b - a for a, b in zip(starts, starts[1:] + [dur])] or [dur])
+            has_people = any(e.get("kind") in ("actor", "crowd") for e in els)
+            if has_people and not s.get("camera") and longest > 6.5:
+                warn.append(f"{sid}: one set-up for {longest:.1f}s — add a cut inside the place (scene.shots: wide → medium → close/insert)")
+            COVER["setups"] += max(1, len(shots))
+            COVER["acting_s"] += dur if has_people else 0
+            for q in shots:
+                if q.get("size") in ("close", "ecu", "mediumclose"):
+                    COVER["close"] += 1
+            # people do not sprint across rooms: a walk is ~60-140 px/s at scale 1, a run up to ~330
+            for j2, e2 in enumerate(els):
+                if e2.get("kind") != "actor" or e2.get("run"):
+                    continue
+                keys = sorted([k for k in (e2.get("keys") or []) if "x" in k], key=lambda k: k["t"])
+                t0, x0 = 0.0, e2.get("x")
+                for k in keys:
+                    if x0 is not None and k["t"] > t0:
+                        sc = e2.get("scale") or 1.0
+                        v = abs(k["x"] - x0) / (k["t"] - t0) / max(0.2, sc)
+                        if v > 420:
+                            warn.append(f"{sid}.e{j2}(actor {e2.get('who')}): crosses {abs(k['x'] - x0):.0f}px in {k['t'] - t0:.2f}s ({v:.0f} px/s at scale 1) — that is a sprint; give the walk more time")
+                    t0, x0 = k["t"], k["x"]
         if t == "map":
             m = s.get("map") or {}
             if "center" not in m or "span" not in m:
@@ -163,7 +206,11 @@ def main(proj):
     out.parent.mkdir(exist_ok=True)
     out.write_text(json.dumps(plan, ensure_ascii=False), encoding="utf-8")
     chapters = [(s["start"], s.get("chapter") or s.get("title")) for s in scenes if s.get("chapter") or s.get("type") == "chapter"]
-    print(json.dumps({"scenes": len(scenes), "duration": scenes[-1]["end"] if scenes else 0, "chapters": len(chapters),
+    total = scenes[-1]["end"] if scenes else 0
+    coverage = {"setups": COVER["setups"] + sum(1 for s in scenes if s.get("type") != "stage"),
+                "avg_setup_s": round(total / max(1, COVER["setups"] + sum(1 for s in scenes if s.get("type") != "stage")), 2),
+                "close_shots": COVER["close"], "acting_share": round(COVER["acting_s"] / max(1e-6, total), 2)}
+    print(json.dumps({"scenes": len(scenes), "duration": total, "chapters": len(chapters), "coverage": coverage,
                       "errors": err, "warnings": warn[:150], "warnings_total": len(warn), "merged": str(out)}, ensure_ascii=False, indent=1))
     sys.exit(1 if err else 0)
 

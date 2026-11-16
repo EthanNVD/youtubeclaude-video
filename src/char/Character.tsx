@@ -48,6 +48,18 @@ export type CharState = {
   seated?: boolean;
   kneel?: boolean;
   headMove?: string; // nod | shake | tilt
+  /** 3/4 view of the face: -1 (turned to screen-left) .. 1 (turned to screen-right); 0 = full front */
+  turn?: number;
+  /** seconds since the expression last changed (drives the anticipation squash + take) */
+  exprAge?: number;
+  /** size of the take on an expression change (default 1) */
+  take?: number;
+  /** stride phase in radians, driven by the distance walked (falls back to time) */
+  gait?: number;
+  /** seconds the current pose change lasts (for overlap timing) */
+  poseDur?: number;
+  /** the pose change moves the hands far: add a little anticipation */
+  bigMove?: boolean;
 };
 
 export type Held = { node: React.ReactNode; scale?: number; rotate?: number; dx?: number; dy?: number; both?: boolean; grip?: number;
@@ -166,10 +178,19 @@ const shade = (hex: string, k: number) => {
   return '#' + ((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1);
 };
 const lerp = (a: number, b: number, k: number) => a + (b - a) * k;
-const backOut = (k: number) => {
-  const s = 1.5;
-  const x = clamp(k, 0, 1) - 1;
-  return 1 + (s + 1) * x * x * x + s * x * x;
+/**
+ * Pose blend curve: optional anticipation (a small move the other way), a smooth ease into the new pose,
+ * reaching it a little early and settling with a 4 % overshoot — slow in, slow out, follow-through.
+ */
+const poseEase = (k: number, anticipate = false) => {
+  const x = clamp(k, 0, 1);
+  const A = anticipate ? 0.14 : 0;
+  if (x < A) return -0.06 * Math.sin((Math.PI * x) / A);
+  const u = (x - A) / (1 - A);
+  const v = Math.min(1, u / 0.86);
+  const base = v * v * v * (v * (6 * v - 15) + 10);
+  const over = u > 0.86 ? 0.04 * Math.sin((Math.PI * (u - 0.86)) / 0.14) : 0;
+  return base + over;
 };
 
 const Hand: React.FC<{ x: number; y: number; ang: number; shape: HandShape; skin: string; side: number }> = ({ x, y, ang, shape, skin, side }) => {
@@ -224,20 +245,37 @@ export const Character: React.FC<{ spec: CharSpec; state: CharState; t: number; 
   const pose = POSES[poseName] ?? POSES.idle;
   const prev = POSES[state.prevPose ?? poseName] ?? pose;
   const kRaw = state.poseK ?? 1;
-  const k = backOut(kRaw);
+  // overlapping action: the leading (right) hand starts first, the other hand follows ~0.08 s later
+  const pd = state.poseDur ?? 0.6;
+  const k = poseEase(kRaw, !!state.bigMove);
+  const kLeft = poseEase(clamp((kRaw * pd - 0.08) / Math.max(0.1, pd - 0.08)), !!state.bigMove);
   const back = state.view === 'back';
   const r1 = rnd(seed), r2 = rnd(seed, 1), r3 = rnd(seed, 2);
+  const turn = clamp(state.turn ?? 0, -1, 1);
+  // a take on every expression change: a quick squash (anticipation), a stretch, then a damped settle
+  let takeSx = 1, takeSy = 1;
+  {
+    const a = state.exprAge ?? 99, amt = state.take ?? 1;
+    if (a >= 0 && a < 0.9 && amt > 0) {
+      const sq = a < 0.09 ? Math.sin((a / 0.09) * Math.PI * 0.5) : Math.exp(-(a - 0.09) * 6.5) * Math.cos((a - 0.09) * 19);
+      takeSy = 1 - 0.035 * amt * (a < 0.09 ? sq : -sq);
+      takeSx = 1 + 0.025 * amt * (a < 0.09 ? sq : -sq * 0.7);
+    }
+  }
 
   // ---------- motion ----------
-  const walking = (state.walk ?? 0) > 0 && !state.seated && !state.kneel;
+  // walk amount 0..1: the stride opens as the character speeds up and closes as it stops (no on/off snap)
+  const wAmt = state.seated || state.kneel ? 0 : clamp(state.walk ?? 0);
+  const walking = wAmt > 0.02;
   const run = walking && !!state.run;
   const dir = state.dir ?? 1;
-  const freq = run ? 2.7 : 1.75; // stride cycles per second
-  const ph = t * Math.PI * 2 * freq + r1 * 6;
-  const stride = run ? 30 : 19;
-  const lift = run ? 26 : 13;
-  const bob = walking ? (Math.abs(Math.cos(ph)) - 0.5) * (run ? -9 : -5) : Math.sin(t * 1.7 + r2 * 6) * 1.1;
-  const lean = walking ? dir * (run ? 8 : 2.5) : Math.sin(t * 0.83 + r3 * 6) * 0.7;
+  const freq = run ? 2.7 : 1.75; // stride cycles per second (only when the gait is not distance-driven)
+  const ph = state.gait !== undefined ? state.gait + r1 * 6 : t * Math.PI * 2 * freq + r1 * 6;
+  const stride = (run ? 30 : 19) * wAmt;
+  const lift = (run ? 26 : 13) * wAmt;
+  const idleBob = Math.sin(t * 1.7 + r2 * 6) * 1.1;
+  const bob = walking ? lerp(idleBob, (Math.abs(Math.cos(ph)) - 0.5) * (run ? -9 : -5), wAmt) : idleBob;
+  const lean = walking ? lerp(Math.sin(t * 0.83 + r3 * 6) * 0.7, dir * (run ? 8 : 2.5), wAmt) : Math.sin(t * 0.83 + r3 * 6) * 0.7;
   const breathe = 1 + Math.sin(t * 1.7 + r2 * 6) * 0.01;
   const bp = 3.2 + r3 * 2;
   const blink = (t + rnd(seed, 4) * bp) % bp < 0.12;
@@ -255,7 +293,7 @@ export const Character: React.FC<{ spec: CharSpec; state: CharState; t: number; 
 
   // ---------- hand targets (pose blend + life) ----------
   let [rx, ry] = [lerp(prev.r[0], pose.r[0], k), lerp(prev.r[1], pose.r[1], k)];
-  let [lx, ly] = [lerp(prev.l[0], pose.l[0], k), lerp(prev.l[1], pose.l[1], k)];
+  let [lx, ly] = [lerp(prev.l[0], pose.l[0], kLeft), lerp(prev.l[1], pose.l[1], kLeft)];
   const rb = kRaw < 0.5 ? prev.rb ?? 1 : pose.rb ?? 1;
   const lb = kRaw < 0.5 ? prev.lb ?? 1 : pose.lb ?? 1;
   const rh: HandShape = (kRaw < 0.5 ? prev.rh : pose.rh) ?? 'mitten';
@@ -290,18 +328,18 @@ export const Character: React.FC<{ spec: CharSpec; state: CharState; t: number; 
 
   // walking / running arm swing (only when the arms are free)
   if (walking) {
-    const pr = ph, pl = ph + Math.PI;
+    const pr = ph, pl = ph + Math.PI, w = wAmt;
     if (restingR || state.pose === undefined) {
       if (run) {
-        rx = 30 - dir * Math.sin(pr) * 24; ry = -136 - Math.abs(Math.sin(pr)) * 10;
-        lx = -30 - dir * Math.sin(pl) * 24; ly = -136 - Math.abs(Math.sin(pl)) * 10;
+        rx = lerp(rx, 30 - dir * Math.sin(pr) * 24, w); ry = lerp(ry, -136 - Math.abs(Math.sin(pr)) * 10, w);
+        lx = lerp(lx, -30 - dir * Math.sin(pl) * 24, w); ly = lerp(ly, -136 - Math.abs(Math.sin(pl)) * 10, w);
       } else {
-        rx = 36 - dir * Math.sin(pr) * 18; ry = -86 - Math.abs(Math.sin(pr)) * 8;
-        lx = -36 - dir * Math.sin(pl) * 18; ly = -86 - Math.abs(Math.sin(pl)) * 8;
+        rx = lerp(rx, 36 - dir * Math.sin(pr) * 18, w); ry = lerp(ry, -86 - Math.abs(Math.sin(pr)) * 8, w);
+        lx = lerp(lx, -36 - dir * Math.sin(pl) * 18, w); ly = lerp(ly, -86 - Math.abs(Math.sin(pl)) * 8, w);
       }
     } else if (poseName !== 'carry' && poseName !== 'hold' && poseName !== 'holdUp' && pose.rifle !== 'two') {
       // keep the gesture on the right hand, swing the left one
-      lx = -36 - dir * Math.sin(pl) * 15; ly = -86 - Math.abs(Math.sin(pl)) * 6;
+      lx = lerp(lx, -36 - dir * Math.sin(pl) * 15, w); ly = lerp(ly, -86 - Math.abs(Math.sin(pl)) * 6, w);
     }
   }
 
@@ -383,8 +421,9 @@ export const Character: React.FC<{ spec: CharSpec; state: CharState; t: number; 
       );
     }
     if (walking) {
+      // feet come back under the hips as the stride closes
       const p = ph + (s > 0 ? 0 : Math.PI);
-      foot = { x: s * 10 + dir * stride * Math.sin(p), y: -6 - Math.max(0, Math.cos(p)) * lift };
+      foot = { x: lerp(s * 15 * build, s * 10, wAmt) + dir * stride * Math.sin(p), y: -6 - Math.max(0, Math.cos(p)) * lift };
     } else {
       foot = { x: s * 15 * build, y: -6 };
       bend = -s; // knees bow slightly outward when standing
@@ -393,7 +432,7 @@ export const Character: React.FC<{ spec: CharSpec; state: CharState; t: number; 
     const { d, c } = hose(hip, { x: j.ex, y: j.ey }, { x: j.hx, y: j.hy }, walking ? 0.75 : 0.3);
     const fx = j.hx, fy = j.hy;
     const toe = walking ? dir : s * 0.4;
-    const footAng = walking ? Math.max(0, Math.cos(ph + (s > 0 ? 0 : Math.PI))) * dir * -16 : 0;
+    const footAng = walking ? Math.max(0, Math.cos(ph + (s > 0 ? 0 : Math.PI))) * dir * -16 * wAmt : 0;
     return (
       <g key={'l' + s}>
         <path d={d} stroke={INK} strokeWidth={LEG_INK} fill="none" strokeLinecap="round" />
@@ -458,7 +497,7 @@ export const Character: React.FC<{ spec: CharSpec; state: CharState; t: number; 
   return (
     <g>
       <ellipse cx={0} cy={2} rx={54 * build} ry={9} fill="#000" opacity={0.16} />
-      <g transform={`rotate(${lean} 0 0)`}>
+      <g transform={`rotate(${lean} 0 0) scale(${takeSx} ${takeSy})`}>
         {[-1, 1].map(leg)}
         <g transform={`translate(0 ${bob + (state.kneel ? 44 : 0)})`}>
           {back || behindArms ? (
@@ -471,7 +510,7 @@ export const Character: React.FC<{ spec: CharSpec; state: CharState; t: number; 
           {body}
           {scarf}
           <g transform={`translate(${headDx} ${headDy}) rotate(${tilt} 0 ${hy + 46})`}>
-            <Head spec={spec} expr={expr} blink={blink} talk={talkOpen} look={look} hy={hy} hairC={hairC} skin={skin} back={back} extra={extra} t={t} seed={seed} />
+            <Head spec={spec} expr={expr} blink={blink} talk={talkOpen} look={look + turn * 3} hy={hy} hairC={hairC} skin={skin} back={back} extra={extra} t={t} seed={seed} turn={turn} />
           </g>
           {back || behindArms ? null : (
             <>
@@ -612,8 +651,8 @@ const Outfit: React.FC<{ outfit: string; jacket: string; shY: number; hipY: numb
 };
 
 const Head: React.FC<{
-  spec: CharSpec; expr: string; blink: boolean; talk: number; look: number; hy: number; hairC: string; skin: string; back: boolean; extra: Set<string>; t: number; seed: string;
-}> = ({ spec, expr, blink, talk, look, hy, hairC, skin, back, extra, t, seed }) => {
+  spec: CharSpec; expr: string; blink: boolean; talk: number; look: number; hy: number; hairC: string; skin: string; back: boolean; extra: Set<string>; t: number; seed: string; turn?: number;
+}> = ({ spec, expr, blink, talk, look, hy, hairC, skin, back, extra, t, seed, turn = 0 }) => {
   const rx = 68, ry = 63;
   const jowl = extra.has('jowls') || (spec.build ?? 1) > 1.15;
   const age = spec.age ?? 0.3;
@@ -735,9 +774,18 @@ const Head: React.FC<{
   return (
     <g>
       {/* ears */}
-      <ellipse cx={-rx + 1} cy={hy + 2} rx={9} ry={14} fill={skin} stroke={INK} strokeWidth={3} />
-      <ellipse cx={rx - 1} cy={hy + 2} rx={9} ry={14} fill={skin} stroke={INK} strokeWidth={3} />
+      {turn > -0.55 ? <ellipse cx={-rx + 1 + Math.max(0, turn) * 22} cy={hy + 2} rx={9} ry={14} fill={skin} stroke={INK} strokeWidth={3} /> : null}
+      {turn < 0.55 ? <ellipse cx={rx - 1 + Math.min(0, turn) * 22} cy={hy + 2} rx={9} ry={14} fill={skin} stroke={INK} strokeWidth={3} /> : null}
       <path d={face} fill={skin} stroke={INK} strokeWidth={Lw} />
+      {turn !== 0 ? (
+        // the side of the head turned away: a soft darker crescent + the ear moved onto the cheek
+        <g>
+          <defs><clipPath id={`fc_${seed.replace(/[^a-zA-Z0-9]/g, '')}`}><path d={face} /></clipPath></defs>
+          <g clipPath={`url(#fc_${seed.replace(/[^a-zA-Z0-9]/g, '')})`}>
+            <ellipse cx={-Math.sign(turn) * (rx + 30 - Math.abs(turn) * 34)} cy={hy + 6} rx={46} ry={90} fill="#8a6a58" opacity={0.18 * Math.abs(turn) + 0.06} />
+          </g>
+        </g>
+      ) : null}
       {redFace ? <path d={face} fill="#e0504a" opacity={0.28} /> : null}
       {/* chin shade */}
       {spec.shadeFace ? (
@@ -745,6 +793,7 @@ const Head: React.FC<{
       ) : (
         <path d={`M${-rx + 16} ${hy + 34} Q0 ${hy + 66} ${rx - 16} ${hy + 34} Q0 ${hy + 56} ${-rx + 16} ${hy + 34}`} fill="#e6bfa2" opacity={0.55} />
       )}
+      <g transform={`translate(${turn * 21} 0)`}>
       {extra.has('freckles') ? (
         <g fill="#c9946e" opacity={0.75}>
           {[[-44, 14], [-36, 20], [-50, 22], [-40, 28], [44, 14], [36, 20], [50, 22], [40, 28]].map(([fx, fy], i) => <circle key={i} cx={fx} cy={hy + fy} r={2.2} />)}
@@ -765,9 +814,16 @@ const Head: React.FC<{
           <path d={`M-22 ${my - 10} q-6 6 -4 12 M22 ${my - 10} q6 6 4 12`} />
         </g>
       ) : null}
+      </g>
       <Hair kind={spec.hair ?? 'short'} color={hairC} hy={hy} rx={rx} hat={hat} />
+      <g transform={`translate(${turn * 21} 0)`}>
       {[-1, 1].map(brow)}
-      {[-1, 1].map(eye)}
+      {[-1, 1].map((s2) => {
+        // the far eye is foreshortened
+        const far = turn !== 0 && Math.sign(turn) !== s2;
+        const k2 = far ? 1 - 0.28 * Math.abs(turn) : 1;
+        return <g key={s2} transform={`translate(${s2 * ex} 0) scale(${k2} 1) translate(${-s2 * ex} 0)`}>{eye(s2)}</g>;
+      })}
       {/* nose */}
       <path d={`M-3 ${hy + 8} q4 5 8 0`} stroke="#b88f74" strokeWidth={3} fill="none" strokeLinecap="round" />
       <Facial kind={spec.facial ?? 'none'} color={hairC === '#c9c4bc' ? '#a29c94' : hairC} my={my} />
@@ -785,6 +841,7 @@ const Head: React.FC<{
       {extra.has('pipe') ? <path d={`M10 ${my + 4} q20 6 30 0 v-14 h12 v18 q-4 8 -14 6`} fill="#5a3a22" stroke={INK} strokeWidth={3} /> : null}
       {extra.has('cigarette') ? <path d={`M12 ${my + 2} l46 -10`} stroke="#1b1b1b" strokeWidth={4} /> : null}
       {sweat ? <Sweat hy={hy} t={t} /> : null}
+      </g>
       {expr === 'cry' ? (
         <g fill="#7cc4f0" stroke={INK} strokeWidth={2}>
           <path d={`M${-ex - 4} ${eyeY + 6} q-6 ${14 + ((t * 30) % 20)} 0 ${18 + ((t * 30) % 20)} q6 -4 0 ${-18 - ((t * 30) % 20)}`} />

@@ -112,6 +112,56 @@ export const Prop: React.FC<{ item: string; t: number; color?: string; text?: st
           <rect x={-90} y={30} width={180} height={4} fill={INK} opacity={0.4} />
         </g>
       );
+    case 'photo': {
+      // aerial reconnaissance print: white border, grey-green fields and woods, a road, small tank shapes under the trees
+      const W = 250, H = 200;
+      const tanks = (value ?? 3) | 0;
+      return (
+        <g>
+          <rect x={-W / 2 + 6} y={-H / 2 + 7} width={W} height={H} fill="#000" opacity={0.18} />
+          <rect x={-W / 2} y={-H / 2} width={W} height={H} fill="#f4f1e8" stroke={INK} strokeWidth={3} />
+          <rect x={-W / 2 + 12} y={-H / 2 + 12} width={W - 24} height={H - 44} fill="#8e9584" />
+          <path d={`M${-W / 2 + 12} ${-20} Q-40 -40 10 -10 T${W / 2 - 12} -30 V${-H / 2 + 12} H${-W / 2 + 12} Z`} fill="#a3a893" />
+          <path d={`M${-W / 2 + 12} 34 Q-20 10 30 26 T${W / 2 - 12} 14`} stroke="#d3d2c4" strokeWidth={7} fill="none" />
+          {[[-80, -60, 34], [-40, -66, 28], [-58, -38, 30], [40, -2, 36], [74, 10, 30], [56, -26, 26], [-96, 18, 24]].map(([cx, cy, r], i) => (
+            <circle key={i} cx={cx} cy={cy} r={r} fill="#5d6656" />
+          ))}
+          {Array.from({ length: tanks }, (_, i) => {
+            const [cx, cy, a] = [[-60, -46, 20], [52, -6, -14], [-84, 22, 8], [70, 18, 30], [-30, -60, 4]][i % 5];
+            return (
+              <g key={i} transform={`translate(${cx} ${cy}) rotate(${a})`}>
+                <rect x={-9} y={-5} width={18} height={10} rx={1.5} fill="#2c2f2a" />
+                <rect x={-2} y={-1} width={14} height={2} fill="#2c2f2a" />
+                <rect x={-7} y={5} width={18} height={3} fill="#000" opacity={0.25} />
+              </g>
+            );
+          })}
+          <rect x={-W / 2 + 12} y={-H / 2 + 12} width={W - 24} height={H - 44} fill="none" stroke="#4a4a42" strokeWidth={2} />
+          <text x={-W / 2 + 14} y={H / 2 - 10} fontFamily={FONT.mono} fontSize={15} fontWeight={700} fill="#3a3a3a">{text ?? 'ARNHEM  12.9.44'}</text>
+        </g>
+      );
+    }
+    case 'magnifier':
+      return (
+        <g>
+          <path d="M34 34 L96 96" stroke={INK} strokeWidth={22} strokeLinecap="round" />
+          <path d="M34 34 L96 96" stroke="#6b4a2c" strokeWidth={14} strokeLinecap="round" />
+          <circle r={52} fill="#dfeef2" fillOpacity={0.28} stroke={INK} strokeWidth={6} />
+          <circle r={46} fill="none" stroke="#b8a46a" strokeWidth={6} />
+          <path d="M-26 -22 Q-14 -34 4 -36" stroke="#fff" strokeWidth={6} fill="none" strokeLinecap="round" opacity={0.8} />
+        </g>
+      );
+    case 'suitcase':
+      return (
+        <g>
+          <path d="M-22 -62 v-14 h44 v14" fill="none" stroke={INK} strokeWidth={8} />
+          <path d="M-22 -62 v-14 h44 v14" fill="none" stroke="#5a3a22" strokeWidth={4} />
+          <rect x={-80} y={-62} width={160} height={110} rx={10} fill={color ?? '#8a5a34'} stroke={INK} strokeWidth={4} />
+          <rect x={-80} y={-62} width={160} height={22} rx={8} fill="#000" opacity={0.12} />
+          <rect x={-50} y={-62} width={12} height={110} fill="#c9a96a" stroke={INK} strokeWidth={2} />
+          <rect x={38} y={-62} width={12} height={110} fill="#c9a96a" stroke={INK} strokeWidth={2} />
+        </g>
+      );
     case 'book':
       return (
         <g>

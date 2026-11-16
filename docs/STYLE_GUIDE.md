@@ -17,12 +17,27 @@ Every plan and every engine change is judged against them.
 - **Two-shots.** Characters are big at the frame edges facing each other, with the background blurred between them.
 - **Moving subjects.** On maps the camera follows the ship or column it is talking about.
 
+## 2b. Coverage (several set-ups per place)
+- A place is filmed as **wide → medium → close-up on the reaction → insert on the evidence**, joined by hard cuts:
+  - 2–4 s per set-up in action;
+  - 4–6 s in explanations.
+- **Close-ups come before the reaction** and hold it. The subject sits off-centre, clear of the name-card corner.
+- **Dialogue** is over the shoulder: the listener big in back view at the frame edge, the speaker in 3/4.
+- **Inserts are top-down on a desk**: a print under a magnifier, a red pencil ringing or crossing out, a form being stamped.
+- **Arrivals and departures** use depth: walking down a corridor toward the lens, walking away in the rain.
+
 ## 3. Characters
 - Big round head on a small body; rubber-hose limbs; small hands.
 - Hands do things:
   - a rifle is held across the body with **two hands**;
   - papers are read; telegrams are lifted.
 - Reactions are slow and readable: one pose change per sentence, an expression that holds for a moment.
+- **Motion like an animated film, not a machine**:
+  - walks accelerate, keep a steady pace and slow down;
+  - feet never slide;
+  - pose changes take ½–1 s, with one hand leading and a small settle;
+  - nothing pops onto the screen on a cut;
+  - vehicles squat when they pull away and dip when they brake.
 - In close-ups the face fills 30–50 % of the frame height.
 
 ## 4. Vehicles, ships, aircraft

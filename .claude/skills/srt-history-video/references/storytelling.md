@@ -45,9 +45,13 @@ Maps and devices bridge these scenes. Target per chapter: **world/acting ≥ 60 
   - `time`/`weather` for mood.
 - **Entrance**: characters walk or run in (keyframe `x`: walking is automatic, with stride, knee bend and arm swing; fast moves become a run). Do not start every shot with people already standing still.
 - **Business**: what the hands do on the key words: `hold`/`show` a document (`holds`), `typing`, `write`, `binoculars`, `phone`, `carry` a crate or bomb, `pointUp` at the sky, `pointL`/`point` at a map, `drink`, `smoke`, `salute`.
-- **Reaction**: switch `pose` + `expr` on the word that hurts or helps (pose keys blend in 0.4 s with overshoot), e.g. binoculars → hands on head + panic; hold paper → cheer. Use `headMove: nod|shake|tilt` for listening, denial and doubt.
+- **Reaction**: switch `pose` + `expr` on the word that hurts or helps, e.g. binoculars → hands on head + panic; hold paper → cheer.
+  - Pose keys blend over 0.45–0.95 s, the hands overlap, and an expression change gets a small take.
+  - Cut to a close-up **before** the reaction.
+  - Use `headMove: nod|shake|tilt` for listening, denial and doubt.
 - **Talking**: `talk: true` gives mouth, head nods and beat gestures, so the speaker gestures every few seconds.
-- **Cut rhythm**: 2–4 s shots inside action sequences (wide → reaction close-up → detail), 5–8 s for explanations. Push in on the reaction (zoom 1.2–1.4 over 0.2–0.3 s).
+- **Cut rhythm**: 2–4 s set-ups inside action sequences (wide → reaction close-up → detail), 4–6 s for explanations, using `scene.shots`.
+  Hard cuts between set-ups, a slow 3–7 % push inside one. See [acting-camera.md](acting-camera.md).
 
 ### The host (recurring narrator — `who: "host"`)
 Drawn in the style of the reference channel's narrator (pale face with cool grey shading on the lower half, heavy-lidded sardonic eyes with small pupils, thick brows) but a different, younger man: about 30, clean-shaven with freckles, dark-brown hair under an olive eight-panel newsboy cap, camel belted trench coat over a white shirt and navy tie, a pencil tucked behind the right ear; carries a reporter's notebook. Variants: `host_field` (trench + Brodie helmet), `host_winter` (greatcoat + ushanka + navy scarf). He is the same in every video.

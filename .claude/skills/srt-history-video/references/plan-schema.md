@@ -25,7 +25,8 @@ Scene `start`/`end` are absolute seconds on the voice clock.
 | `chapter` | on the first shot of a chapter → YouTube chapter title |
 | `set` | `{kind, time?, weather?, …options}` (stage) |
 | `map` | `{era, center:[lon,lat], span, colors, labels, labelNames, style, land, ocean, grid}` |
-| `camera` | keys `{t, x, y, zoom, rotate, shake, ease}` (stage; x,y = point at screen centre) or `{t, center:[lon,lat], zoom, span}` (map). A big zoom change over ≤0.25 s reads as a cut-in. |
+| `shots` | **coverage inside the place** (stage): `[{t, on, size, frameX?, frameY?, push?, panX?, panY?, track?, dx?, dy?, shake?, x?, y?, zoom?}]`, joined by hard cuts at each `t`.<br>• `on`: an element `id` (or index), or a list of them for a group.<br>• `size`: `wide` `full` `medium` `mediumclose` `close` `ecu`.<br>• `frameX`/`frameY`: subject off-centre (fraction of the frame).<br>• `push`: zoom gain over the set-up (default 0.04).<br>• `panX`/`panY`: px of drift.<br>• `track`: follow a walking subject (with a little lag).<br>• Raw `x,y,zoom` for wides and inserts.<br>Takes precedence over `camera`. |
+| `camera` | keys `{t, x, y, zoom, rotate, shake, ease}` (stage; x,y = point at screen centre) or `{t, center:[lon,lat], zoom, span}` (map). Shake is smooth noise. Prefer `shots` for stage scenes. |
 | `date` | paper badge top-left ("27 MAY 1940"); `clock` badge top-right ("10:22 AM"); `place` second badge |
 | `transition` | `cut` (default) · `fade` · `dip` (through black: time/place jump) · `wipe` · `flash` (impact) |
 | `world` | **depth model** for stage scenes with people and vehicles: `{horizon?, y?, scale?, vehicles?}` — actors/vehicles/crowds **without** `scale` are sized from their ground y (`scale` = person scale at `y`, default 1.45 at 900; `horizon` defaults per set). Vehicles get the size they should have next to a person at the same depth; far → near draw order is automatic; keying `y` makes things grow toward the camera. `depthScale` on an element nudges one item. |
@@ -88,9 +89,9 @@ Borders are the basemap's — for exact front lines draw `front`/`region` elemen
 | `x`, `y` | stage px (map scenes: use `at: [lon, lat]` instead) |
 | `scale`, `rotate`, `flip`, `opacity` | transform |
 | `in`, `out` | appear / disappear time (s from scene start) |
-| `enter` | `pop` (default) · `fade` · `drop` · `rise` · `slideL` · `slideR` · `grow` · `stamp` · `draw` (arrows/lines/rings) · `none` |
+| `enter` | Default: `none` when the element is there at the shot start (`in` ≤ 0.05). Otherwise people/vehicles `fade`, props `place`, everything else a soft `pop`.<br>Other values: `fade` · `place` (set down, no bounce) · `drop` (tossed sheet: arc + sway) · `rise` · `slideL` · `slideR` · `grow` · `stamp` · `draw` (arrows/lines/rings) · `none` |
 | `exit` | `fade` (default) · `pop` · `drop` · `rise` · `slideL` · `slideR` · `none` |
-| `keys` | `[{t, …any prop…, ease?, dur?}]` — numbers and `[lon,lat]` arrays tween **into** `t` from the previous key (or from the scene start); strings (pose, expr, text) switch at `t`. `ease`: `inOut` (default) `in` `out` `linear` `back` `step` `drive` (accelerate–cruise–brake; **default for vehicle `x`/`at` keys**) |
+| `keys` | `[{t, …any prop…, ease?, dur?}]` — numbers and `[lon,lat]` arrays tween **into** `t` from the previous key (or from the scene start); strings (pose, expr, holds, text) switch at `t`.<br>`ease`: `inOut`/`smooth` (default, smoothstep) · `in` · `out` · `linear` · `back` · `step` · `drive` · `walk` · `arrive` · `leave`.<br>Travel keys (`x`/`y`/`at`) of people default to `walk` (accelerate, steady pace, brake), with `out` → `arrive` and `in` → `leave`. Vehicles default to `drive`. |
 | `hud` | `true` = fixed on screen (ignores camera) |
 | `dur` | duration of a `draw` reveal (default 1.2–1.4 s) |
 
@@ -102,13 +103,19 @@ Borders are the basemap's — for exact front lines draw `front`/`region` elemen
 - `talk`: mouth + head nods + beat gestures.
 - `look`: −1…1 pupils. `headMove`: `nod shake tilt`.
 - `view: "back"` (over-the-shoulder), `seated`, `kneel`.
-- `holds`: prop item, placed in the hand(s) automatically; `holdsScale`, `holdsRotate`, `holdsText`.
+- `turn`: −1…1 — 3/4 view of the face (features shifted toward the heading, far eye foreshortened); negative = looking screen-left. Use it for dialogue.
+- `id`: needed when a `shot` frames the actor.
+- `front: true`: drawn after the set foreground (a shoulder over a desk; also props lying on a foreground desk). `fixedLayer: true` keeps the slot in the depth sort.
+- `holds`: prop item, placed in the hand(s) automatically; `holdsScale`, `holdsRotate`, `holdsText`. Key it to change props (`"holds": ""` puts it down).
 - `tag`: nameplate under the feet.
 
 Motion:
-- Keyframing `x`/`at` makes the actor **walk**: direction comes from the movement, with stride, knee bend, counter-swinging arms and lean.
-- Faster than ~330 px/s at scale 1 becomes a **run**. Use `walk: true` / `run: true` + `dir` to walk on the spot.
-- **Pose keys blend** (0.42 s with overshoot; `poseDur` changes it), e.g. `"keys":[{"t":1.1,"pose":"head","expr":"panic"}]`.
+- Keyframing `x`/`y`/`at` makes the actor **walk**: direction comes from the movement, with stride, knee bend, counter-swinging arms and lean. Keying `y` walks toward/away from the camera.
+- The stride phase follows the distance covered, so feet don't slide. The stride opens and closes with speed.
+- About 90–140 px/s at scale 1 is a walk; above ~300 px/s becomes a **run**. The validator warns above 420 px/s.
+- `walk: true` / `run: true` + `dir` walks on the spot.
+- **Pose keys blend** over 0.45–0.95 s (by hand travel): the leading hand first, the other 0.08 s later, a little anticipation on big moves, a 4 % settle. `poseDur` overrides the duration. Example: `"keys":[{"t":1.1,"pose":"head","expr":"panic"}]`.
+- An expression change gets a small take (`take: 0` disables it).
 - Height ≈ 280 px × scale: 1.3–1.7 for medium shots, 3.2–3.8 for thumbnail busts.
 
 Rifle drill (with `holds: "rifle"`): `port` (across the chest, two hands), `aim`, `shoulder` (marching, rifle on the shoulder), `charge` (bayonet forward), `ease` (butt on the ground). Flat props held with `hold`/`carry` (`paper telegram folder book crate`) are gripped by their side edges.
@@ -117,7 +124,7 @@ Expressions: `neutral happy smile laugh angry rage determined smug worried sad c
 
 **crowd** — `who` (id or list), `count`, `spacing`, `pose`, `expr`, `walk`.
 
-**prop** — `item`: `paper telegram folder book phone radio stopwatch clock candle helmet crate barrel bomb shell binoculars globe hourglass medal cigar typewriter microphone sign exit flag ledger coins oil factory chair table pen skull cross grave rifle`; `text` (telegram/folder/book/crate/barrel/sign), `value` (stopwatch seconds, clock hour, hourglass 0–1, coins count), `nation`, `on` (phone ringing / radio playing), `color`.
+**prop** — `item`: `paper telegram folder book photo magnifier suitcase phone radio stopwatch clock candle helmet crate barrel bomb shell binoculars globe hourglass medal cigar typewriter microphone sign exit flag ledger coins oil factory chair table pen skull cross grave rifle`. `photo` is an aerial reconnaissance print (`text` = caption, `value` = number of tanks); `text` (telegram/folder/book/crate/barrel/sign), `value` (stopwatch seconds, clock hour, hourglass 0–1, coins count), `nation`, `on` (phone ringing / radio playing), `color`.
 
 **vehicle** — `type`: `tank sherman panzer4 tiger t34 panther stug halftrack truck car jeep artillery gun train locomotive wagon traincar horse cart fighter plane bomber divebomber dakota transport glider carrier battleship cruiser destroyer cargo freighter submarine uboat boat assaultboat` (all drawn with volume; nation sets the look: e.g. `fighter` UK = Spitfire camouflage, GER = grey with yellow nose, USA = bare metal; `car` GER = Kübelwagen; `bomber` UK = Lancaster black belly; old flat drawings stay as `<type>_flat`); `nation`, `color`, `moving`, `damaged`, `burning`, `crew` (tank commander in the hatch). Side view facing right (`flip` for left). Ships: scale 0.3–0.6. `tank` picks the nation's usual tank.
 `parked: true` draws landing gear and puts an aircraft's wheels on its `y` (for planes on the ground).
@@ -133,6 +140,8 @@ Motion: key `x` (or `at`); the default `drive` profile accelerates and brakes, w
 **headline** / **text** — big outlined words (`size`, `color`, `accent` word in yellow, `font: "hand"`).
 **counter** — `from`, `to`, `dur`, `prefix`, `suffix`, `decimals`, `size`, `color`.
 **document** — `style`: `telegram letter order newspaper book blackboard note`; `title`, `lines[]` (typed progressively at `speed` chars/s), `w`, `h`, `size`, `stamp` (applied after the text finishes).
+
+**viewfinder** (`hud: true`) — reconnaissance-camera view over an aerial `photo` (scaled up to fill the frame): corner brackets, crosshair and an `F24 <label> 042` counter; `shots: [t…]` fire the shutter (short flash, counter +1), `start` = first frame number.
 **namecard** — `name`, `role` (first appearance of a person; bottom-left). **date** — extra badge (`text`, `right`).
 **panel** — coloured rectangle (`w`,`h`,`color`|`nation`) for split screens; **shape** — `shape: circle|rect|ring|cross|check`.
 **flag** — `nation`, `w`, `h`, `still`.
