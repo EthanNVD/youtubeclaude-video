@@ -63,6 +63,75 @@ def merge(proj):
 SHOT_SIZES = ("wide", "full", "medium", "mediumclose", "close", "ecu")
 COVER = {"setups": 0, "close": 0, "acting_s": 0.0}
 
+# ------------------------------------------------------------------ screen-time mix (see references/action.md)
+GROUND_FX = {"shellburst", "explosion", "impact", "dust", "smoke", "fire", "splash"}
+COMBAT_FX = {"shellburst", "explosion", "impact", "muzzle", "tracer", "flash"}
+DEVICE_KINDS = {"document", "bars", "counter", "ledger", "ranking", "scoreboard", "timeline", "blocks", "meter", "scale", "score", "paras", "headline"}
+HOSTS = {"host", "aide"}
+
+
+def _moves(e):
+    ks = [k for k in (e.get("keys") or []) if "x" in k or "y" in k or "at" in k]
+    return any(abs(k.get("x", e.get("x", 0)) - e.get("x", 0)) > 20 or abs(k.get("y", e.get("y", 0)) - e.get("y", 0)) > 20 for k in ks)
+
+
+def classify(s):
+    """What a scene shows: action (people/vehicles DOING something: moving, firing, falling, under fire) · talk (people in
+    place, gesturing) · map · device (documents, charts, counters with nobody acting) · host (the narrator)."""
+    if s.get("type") == "map":
+        return "map"
+    if s.get("type") != "stage":
+        return "device"
+    els = s.get("elements", [])
+    people = [e for e in els if e.get("kind") in ("actor", "crowd")]
+    movers = [e for e in els if e.get("kind") in ("actor", "crowd", "vehicle")]
+    if any(e.get("who") in HOSTS for e in people):
+        return "host"
+    busy = any(_moves(e) or e.get("fireAt") or e.get("fire") or e.get("fallAt") is not None or e.get("lying") or e.get("run") for e in movers)
+    combat = any(e.get("kind") == "fx" and e.get("type") in COMBAT_FX for e in els) and bool(movers)
+    if busy or combat:
+        return "action"
+    if people:
+        return "talk"
+    return "device" if any(e.get("kind") in DEVICE_KINDS for e in els) or (s.get("set") or {}).get("kind") in ("paper", "workshop", "memorial", "board") else "action" if movers else "device"
+
+
+def is_battle(s):
+    els = s.get("elements", [])
+    return any((e.get("kind") == "fx" and e.get("type") in COMBAT_FX) or e.get("fireAt") or e.get("fire") or e.get("fallAt") is not None for e in els)
+
+
+def mix_report(scenes, warn):
+    """Per chapter: share of screen time per kind. Targets: action >= 40 % of a chapter (>= 55 % in a battle chapter),
+    talk <= 15 %, maps <= 15 %, devices <= 15 %. A battle chapter = one where >= 25 % of the time has combat on screen."""
+    chapters, cur = [], None
+    for s in scenes:
+        if cur is None or s.get("chapter") or s.get("type") == "chapter":
+            cur = {"title": s.get("chapter") or s.get("title") or "(start)", "start": s["start"], "t": {}, "battle": 0.0, "dur": 0.0}
+            chapters.append(cur)
+        d = s["end"] - s["start"]
+        k = classify(s)
+        cur["t"][k] = cur["t"].get(k, 0.0) + d
+        cur["dur"] += d
+        cur["battle"] += d if is_battle(s) else 0.0
+    out, film = [], {}
+    for c in chapters:
+        dur = max(1e-6, c["dur"])
+        sh = {k: round(v / dur, 2) for k, v in sorted(c["t"].items())}
+        for k, v in c["t"].items():
+            film[k] = film.get(k, 0.0) + v
+        battle = c["battle"] / dur >= 0.25
+        need = 0.55 if battle else 0.4
+        if c["dur"] >= 45 and sh.get("action", 0) < need - 0.05:
+            warn.append(f"chapter '{c['title']}' ({c['start']:.0f}s): action is {sh.get('action', 0):.0%} of the time"
+                        f" (target >= {need:.0%}{' — battle chapter' if battle else ''}); turn talk/chart/map beats into people doing the thing")
+        for k, lim in (("talk", 0.2), ("map", 0.2), ("device", 0.2)):
+            if c["dur"] >= 45 and sh.get(k, 0) > lim:
+                warn.append(f"chapter '{c['title']}' ({c['start']:.0f}s): {k} is {sh[k]:.0%} of the time (keep it <= 15 %)")
+        out.append({"chapter": c["title"], "start": round(c["start"], 1), "battle": battle, "mix": sh})
+    tot = max(1e-6, sum(film.values()))
+    return {k: round(v / tot, 2) for k, v in sorted(film.items())}, out
+
 
 def main(proj):
     proj = Path(proj)
@@ -128,6 +197,10 @@ def main(proj):
             has_people = any(e.get("kind") in ("actor", "crowd") for e in els)
             if has_people and not s.get("camera") and longest > 6.5:
                 warn.append(f"{sid}: one set-up for {longest:.1f}s — add a cut inside the place (scene.shots: wide → medium → close/insert)")
+            if not s.get("world") and any(e.get("kind") == "fx" and e.get("type") in GROUND_FX for e in els) and any(e.get("kind") in ("actor", "vehicle") and e.get("scale") is None for e in els):
+                warn.append(f"{sid}: explosions/smoke next to people without scene.world — add world so bursts sort and scale by depth")
+            if classify(s) == "talk" and dur > 6 and not any(len([k for k in (e.get("keys") or []) if "pose" in k]) for e in els if e.get("kind") == "actor"):
+                warn.append(f"{sid}: {dur:.1f}s of people standing with no business (no pose change) — give them something to do or cut to the action")
             COVER["setups"] += max(1, len(shots))
             COVER["acting_s"] += dur if has_people else 0
             for q in shots:
@@ -196,6 +269,8 @@ def main(proj):
             layout += layout_check.proportions(s)
         elif s.get("type") == "map":
             layout += [w for w in layout_check.overlaps(s)]
+            if s["end"] - s["start"] > 12:
+                warn.append(f"{sid}: map held {s['end'] - s['start']:.1f}s — keep maps short (<= 12 s) and moving, cut back to people")
     warn += layout
     for name, c in cast.items():
         if c.get("preset") and c["preset"] not in V["presets"]:
@@ -210,7 +285,9 @@ def main(proj):
     coverage = {"setups": COVER["setups"] + sum(1 for s in scenes if s.get("type") != "stage"),
                 "avg_setup_s": round(total / max(1, COVER["setups"] + sum(1 for s in scenes if s.get("type") != "stage")), 2),
                 "close_shots": COVER["close"], "acting_share": round(COVER["acting_s"] / max(1e-6, total), 2)}
-    print(json.dumps({"scenes": len(scenes), "duration": total, "chapters": len(chapters), "coverage": coverage,
+    mix, mix_ch = mix_report(scenes, warn)
+    (proj / "work" / "mix.json").write_text(json.dumps({"film": mix, "chapters": mix_ch}, ensure_ascii=False, indent=1), encoding="utf-8")
+    print(json.dumps({"scenes": len(scenes), "duration": total, "chapters": len(chapters), "coverage": coverage, "mix": mix,
                       "errors": err, "warnings": warn[:150], "warnings_total": len(warn), "merged": str(out)}, ensure_ascii=False, indent=1))
     sys.exit(1 if err else 0)
 

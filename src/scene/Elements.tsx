@@ -10,7 +10,7 @@ import { Fx } from '../fx/Fx';
 import { Label, Stamp, Bubble, Headline, Counter, Document, NameCard, DateBadge } from '../overlays/Overlays';
 import { ScaleDevice, MeterDevice, BarsDevice, ScoreDevice, RoadDevice, RankingDevice, TimelineDevice, LedgerDevice } from '../devices/Devices';
 import { C, INK, FONT, col, nation, uiColor } from '../theme';
-import { type WorldCtx, personScaleAt, vehicleScaleFor } from '../lib/depth';
+import { type WorldCtx, personScaleAt, vehicleScaleFor, GROUND_FX } from '../lib/depth';
 
 export type Ctx = { t: number; dur: number; cast?: Record<string, CastMember>; proj?: GeoProjection; sceneId: string; world?: WorldCtx };
 
@@ -201,6 +201,10 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
     const ps = personScaleAt(ctx.world, y) * ((e.depthScale as number) ?? 1);
     (e as Record<string, unknown>).scale = el.kind === 'vehicle' ? vehicleScaleFor((e.type as string) ?? 'tank', ps, ctx.world.vehicles) : ps;
   }
+  // ground effects in a world scene shrink with distance like the men around them (a far burst is small, a near one big)
+  if (ctx.world && e.scale === undefined && el.kind === 'fx' && GROUND_FX.has(e.type as string) && !e.at && e.depth !== false) {
+    (e as Record<string, unknown>).scale = Math.max(0.08, personScaleAt(ctx.world, y) / Math.max(0.1, ctx.world.scale)); // 1 at the world's reference y
+  }
   const s = ((e.scale as number) ?? 1) * env.s;
   const rot = (e.rotate as number) ?? 0;
   const flip = e.flip ? -1 : 1;
@@ -245,7 +249,15 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
         gait = (d / (run ? 150 : 84)) * Math.PI * 2;
       }
       if (e.walk === true) { walk = 1; dir = ((e.dir as number) ?? 1); gait = undefined; }
-      if (e.run === true) { walk = 1; run = true; dir = ((e.dir as number) ?? dir); gait = undefined; }
+      // `run: true` = use the running gait while the path moves (a standing runner does not run on the spot);
+      // without any x/y keys it still means "run in place" (treadmill shots where the set scrolls)
+      if (e.run === true) {
+        if (moves) run = walk > 0.05;
+        else { walk = 1; run = true; dir = ((e.dir as number) ?? dir); gait = undefined; }
+      }
+      // a man who is down (hit with `fallAt`, or `lying: true` — e.g. carried on a stretcher) never walks,
+      // even while his position is still keyed (he is carried, dragged or slides with the others)
+      if (e.lying === true || (typeof e.fallAt === 'number' && t >= (e.fallAt as number))) { walk = 0; run = false; gait = undefined; }
       // pose blending: find the last pose change at or before t
       let pose = (el.pose as string) ?? 'idle', prevPose = pose, tChange = -99;
       for (const kk of [...(el.keys ?? [])].sort((a, b) => a.t - b.t)) {
@@ -274,11 +286,17 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
             grip: ({ paper: 52, telegram: 98, folder: 118, book: 68, crate: 58, document: 98, newspaper: 98, map: 110 } as Record<string, number>)[e.holds as string],
           }
         : undefined;
+      // firing a held rifle: `fireAt: [t, ...]` single shots, or `fire: [from, to, period]` automatic fire (machine gun)
+      let muzzle: number | undefined;
+      const shots = ((e.fireAt as number[]) ?? []).filter((q) => q <= t);
+      if (shots.length) muzzle = t - shots[shots.length - 1];
+      const auto = e.fire as number[] | undefined;
+      if (auto && t >= auto[0] && t <= auto[1]) muzzle = (t - auto[0]) % (auto[2] ?? 0.12);
       body = (
         <g>
           <Character
             spec={spec}
-            state={{ pose, prevPose, poseK, expr: e.expr as string, talk: !!e.talk, look: e.look as number, view: e.view as 'front' | 'back', seated: !!e.seated, kneel: !!e.kneel, walk, run, dir, headMove: e.headMove as string, turn: e.turn as number, exprAge: t - tExpr, take: e.take as number, gait, poseDur, bigMove: handTravel > 90 }}
+            state={{ pose, prevPose, poseK, expr: e.expr as string, talk: !!e.talk, look: e.look as number, view: e.view as 'front' | 'back', seated: !!e.seated, kneel: !!e.kneel, muzzle, walk, run, dir, headMove: e.headMove as string, turn: e.turn as number, exprAge: t - tExpr, take: e.take as number, gait, poseDur, bigMove: handTravel > 90 }}
             t={t}
             seed={seed}
             held={held}
@@ -342,8 +360,31 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
         else pitch = clamp(-ax * facing * 0.012, -2.6, 2.6) * (Math.sign(vx) || 1) * facing;
       }
       if (air && !e.parked) { pitch += Math.sin(t * 1.3 + rnd(seed) * 6) * 1.2; vdy = Math.sin(t * 1.7 + rnd(seed, 2) * 6) * 5; }
+      // firing: `fireAt: [t, ...]` -> muzzle flash + smoke + recoil (the body kicks back and returns)
+      const shotsAt = ((e.fireAt as number[]) ?? []).filter((q) => q <= t);
+      const lastShot = shotsAt.length ? t - shotsAt[shotsAt.length - 1] : 99;
+      const recoil = lastShot < 0.6 ? 16 * Math.exp(-lastShot * 7) * Math.sin(Math.min(1, lastShot * 14) * Math.PI * 0.5) : 0;
+      const MUZ: Record<string, [number, number]> = { artillery: [222, -118], gun: [222, -118], markiv: [112, -98], renault: [78, -147], tank: [250, -150],
+        sherman: [250, -150], panzer4: [250, -150], tiger: [280, -160], battleship: [180, -120], cruiser: [170, -110], destroyer: [150, -90] };
+      const mz = (e.muzzle as [number, number]) ?? MUZ[(e.type as string) ?? ''] ?? [200, -100];
+      const muzzle = lastShot < 1.6 ? (
+        <g transform={`translate(${mz[0]} ${mz[1]})`}>
+          {lastShot < 0.12 ? (
+            <g opacity={1 - lastShot / 0.12}>
+              <path d="M0 0 L70 -22 L150 0 L70 22 Z" fill="#ffe28a" />
+              <path d="M0 0 L40 -40 L60 0 L40 40 Z" fill="#ffb347" />
+              <circle r={34} fill="#fff6c8" />
+            </g>
+          ) : null}
+          {[0, 1, 2].map((i) => {
+            const k = Math.min(1, lastShot / 1.6);
+            return <circle key={i} cx={30 + i * 26 + k * 60} cy={-k * (40 + i * 30)} r={(18 + i * 8) * (0.5 + k * 1.6)} fill="#8d8a82" opacity={0.55 * (1 - k)} />;
+          })}
+        </g>
+      ) : null;
       body = (
-        <g transform={`translate(0 ${vdy}) rotate(${pitch} 0 -20)`}>
+        <g transform={`translate(${-recoil} ${vdy}) rotate(${pitch} 0 -20)`}>
+          {muzzle}
           <Vehicle type={(e.type as string) ?? 'tank'} nationKey={e.nation as string} t={t} color={e.color as string} moving={moving} damaged={!!e.damaged} travel={travel} crew={!!e.crew} parked={!!e.parked} />
           {e.burning ? <g transform="translate(0 -80)"><Fx kind="fire" a={a} t={t} seed={seed} size={0.8} /><g transform="translate(20 -60)"><Fx kind="smoke" a={a} t={t} seed={seed} size={1} /></g></g> : null}
         </g>
@@ -709,6 +750,16 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
     default:
       body = <text fontSize={30} fill="red">{`?${k}`}</text>;
   }
+  // hit reaction: `fallAt: t` tips the body over around the feet (eases out, small bounce) and leaves it lying
+  if ((k === 'actor' || k === 'crowd') && (e.lying === true || (typeof e.fallAt === 'number' && t >= (e.fallAt as number)))) {
+    const q = e.lying === true ? 1 : Math.min(1, (t - (e.fallAt as number)) / 0.5);
+    const ease = 1 - Math.pow(1 - q, 3);
+    const bounce = q >= 1 ? 0 : Math.sin(q * Math.PI) * 6;
+    const side = (e.fallDir as number) ?? -1;
+    body = <g transform={`translate(${side * 30 * ease} ${-bounce}) rotate(${side * 84 * ease})`}>{body}</g>;
+  }
+  // silhouette: a dark cut-out against a bright sky (dusk/dawn wides)
+  if (e.silhouette) body = <g style={{ filter: 'brightness(0.12) saturate(0)' }}>{body}</g>;
   return (
     <g transform={tr} opacity={op}>
       {body}

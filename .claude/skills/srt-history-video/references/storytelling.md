@@ -36,7 +36,7 @@ Frame studies of the reference videos (Midway, Turning Point) show that most scr
 - A pilot looking down from the cockpit.
 - Crews loading bombs in the hangar.
 
-Maps and devices bridge these scenes. Target per chapter: **world/acting ≥ 60 %**, maps 15–25 %, device/charts/documents ≤ 20 %, host 5–10 %.
+Maps and devices bridge these scenes. Target per chapter: **world/acting ≥ 60 %**, of which **action ≥ 40 %** of the chapter (≥ 55 % in battle chapters); talk ≤ 15 %, maps 12–15 %, device/charts/documents 12–15 %, host 5–7 %. `validate` measures it (`mix`); the battle recipes and the rules for animating action are in [action.md](action.md).
 
 **Every world shot** = place + action + reaction:
 - **Place**: use a detailed set and add life.

@@ -13,6 +13,7 @@ Fixed decisions (do not re-ask): topic = military history · the user supplies t
 **no music** — only ambience + action SFX · visuals drawn in code in the channel style · output 1920×1080 24 fps MP4 ·
 **acting first**: most shots are characters *doing things in real places* (decks, bridges, offices, corridors, trenches),
 not charts — like an animated film; maps and devices are the minority ([storytelling.md](references/storytelling.md) §Acting first) ·
+**action share**: ≥ 40 % of every chapter is *action* (people/vehicles moving, firing, falling, under fire), ≥ 55 % in battle chapters; talk ≤ 15 %, maps ≤ 15 %, devices ≤ 15 % — measured by `validate` (`mix`, `work/mix.json`); recipes in [action.md](references/action.md) ·
 **the host** (`who: "host"`, the channel's recurring narrator) opens the video, presents the device and closes it ·
 **thumbnails = detailed prompts** for an image model + engine drafts ([thumbnails.md](references/thumbnails.md)).
 
@@ -51,6 +52,7 @@ Read **all** of `work/reading.md` (in chunks if long). Never plan from the first
 Work chapter by chapter. Group cues into **beats** (one idea, usually 8–20 s). Then split each beat into **scenes** (one place, usually 3–10 s), and each scene into **set-ups** inside the place (`scene.shots`: wide → medium → close/insert, 2–4 s each in action). Read [acting-camera.md](references/acting-camera.md) first: it covers reads, coverage, acting and motion. For every beat decide, before writing JSON:
 
 - **Which visual language**: *world* (people acting in places — who did what, who suffered: the default, ≥ 60 % of screen time), *map* (where, how far, encirclement, routes), *device/chart/document* (comparison, verdict, numbers, evidence), *host* (the narrator in his study / at the device for hooks, transitions, verdicts).
+- **Action first in battles** ([action.md](references/action.md)): ask "who or what is *doing* something in this frame?" for every shot. A general's decision gets 2–4 s, then cut to the men carrying it out (command → field). A number lands on a scene (HUD counter over the advancing line, over the stretcher bearers), a chart only for comparisons (≤ 7 s). A document ≤ 4 s. Maps ≤ 5 s inside a battle chapter. One symbolic consequence object per battle (crosses appearing, empty helmet, stretcher, life rings).
 - **The reads**: the ordered list of what a first-time viewer must understand. Show one read at a time; actions can be fast, meanings are held. The reads set the length of every set-up.
 - **The acting beat**: for every *world* shot write the physical action in one line:
   - entrance (walk/run in);
@@ -79,6 +81,8 @@ Coverage is mandatory: scenes are contiguous from 0 to the end of the voice (val
 - Put `"chapter": "Title"` on the first scene of each chapter (drives YouTube chapters).
 - Start from the shot templates in `tools/shotlib.py` ([shots.md](references/shots.md)) and the `Plan` helper (tiles the timeline, fixes vehicle speeds); then tune every timing to the cue words.
 - Coverage templates: `desk_read`, `ots_dialogue`, `desk_insert`, `walk_to_camera`, `walk_away`, `vehicle_arrives`, plus `SHOT()` / `AID()`. Give every actor a set-up frames an `id`.
+- **Action recipes** (battle scenes, [action.md](references/action.md) §2): `assault` (over the top / wave in staggered depth rows, men falling), `shells` (bursts + `impacts`), `gun_crew`, `mg_nest`, `hit_and_help`, `stretcher_team`, `fallen`, `man_path` — all in `tools/shotlib.py`, all for scenes with `world=WORLD`. Never hand-place stretcher parts or fallen men: the builders compute hand heights, sort depth and stop the gait.
+- Battle depth rules: bursts get the y **where they land** (they are sorted and sized with the men around them); put their times in scene `impacts`; men who are hit (`fallAt`) or carried (`lying`) never walk; `run: true` only runs while the path moves.
 - Motion: let the engine's defaults work.
   - Walking and driving profiles, distance-driven strides, slow pose changes.
   - Nothing pops on a cut.
@@ -94,7 +98,8 @@ Coverage is mandatory: scenes are contiguous from 0 to the end of the voice (val
 - text overlapping text, a badge zone (date/place top-left, clock top-right, name card bottom-left) or a face;
 - vehicles faster than their type (`moves … u/s`);
 - people sprinting (`crosses … px`);
-- single set-ups held too long (`one set-up for …`).
+- single set-ups held too long (`one set-up for …`);
+- chapter mix warnings (`chapter '…': action is …`, `talk is …`, `map held …`, `people standing with no business`) — fix by turning talk/chart/map beats into action, not by relabelling.
 
 The `coverage` block of the validate output must show:
 - an average set-up of ≤ 4 s;
@@ -104,6 +109,7 @@ If you generate the plan from Python, call `tools/layout_check.fix_speeds(plan)`
 ## 4. Look at it — `python tools/make.py projects/<slug> review`
 
 Open every `review/sheet_*.jpg` and judge as a viewer: does each frame show what the narration says at that moment? Check overlaps, text cut off, characters floating, empty frames, vehicles barely in frame, scenery that should scroll but stands still, repeated compositions, wrong flags/colours/dates. Count the shots: if world/acting shots are under ~60 %, replace charts/inserts with scenes of people doing the thing. Use `--scenes s012,s013 --at all` to inspect start/middle/end of a shot. Fix and re-review the changed scenes. Do this for the whole film, not a sample.
+In battle scenes also check: bursts behind the near men (never a far explosion over a near face), nobody lying and walking, stretchers reading (bearers, canvas, man on it), no rifle floating across a face, muzzle flashes at the rifle tips.
 Stills cannot show motion. After the render, check **frame strips** of the key motions (a walk-in, a vehicle arriving and braking, a pose change, a prop put down). Look for jumps, stops with no slowing, sliding feet, and things appearing from nothing ([acting-camera.md](references/acting-camera.md) §5).
 
 ## 5. Sound — [sound.md](references/sound.md)

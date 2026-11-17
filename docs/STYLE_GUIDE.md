@@ -58,6 +58,15 @@ Every plan and every engine change is judged against them.
 - **Close passes.** A heavy vehicle crossing the foreground fills half the frame, with a small camera pan or shake.
 - **Engine.** Use `scene.world`: sizes come from the ground y, and draw order runs far → near.
 
+## 4c. Battle action (see `.claude/skills/srt-history-video/references/action.md`)
+- **Something moves in every battle frame**: men advancing in staggered depth rows, smoke drifting, guns recoiling, muzzle flashes. Battle chapters are ≥ 55 % action; the whole film ≥ 40 %.
+- **Explosions belong to the ground.** A shell bursts *where it lands*: a burst behind a man is behind him and smaller; a burst near the camera covers the men behind it. Earth columns, not cartoon stars; the camera jolts on each one.
+- **Hits are a tip-over, never gore.** A man is hit, falls back with a shocked face and lies still. Fallen men never walk or run. Death is shown by stillness, an empty helmet, crosses, silhouettes at dusk, grey tint.
+- **Carried means carried.** Two bearers walk; the stretcher is at their hands; the man on it lies still in it, head between them.
+- **Weapons fire where they point.** The flash sits at the muzzle (rifle tip, gun barrel), automatic fire flickers, a gun kicks back and smokes. Rifles appear in the hands only when the hands reach them.
+- **Stagger and cut.** Starts 0.2–0.3 s apart, falls spread over seconds, wide → group → face → wide every 2.5–5 s.
+- **Numbers on the action.** A casualty counter runs over the men it counts; charts only for comparisons.
+
 ## 5. Maps
 - **Clean old paper.**
   - Tan land with a faint stipple texture, flat slate-blue sea, thin dark borders.

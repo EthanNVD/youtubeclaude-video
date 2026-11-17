@@ -14,6 +14,8 @@ Mục tiêu: kịch bản kể đúng nội dung cuốn sách đã chọn, đún
 - Dùng WebSearch ở chế độ standard trước, extended khi cần chi tiết hiếm (ngày của một buổi đối thoại, người hỏi). Truy vấn bằng tiếng Anh cho văn bản gốc, tiếng Việt cho tên bản dịch và cách người xem gọi khái niệm.
 - Mẫu truy vấn: `"<tên sách>" Krishnamurti contents`, `site:jkrishnamurti.org <khái niệm> <năm>`, `Krishnamurti Bohm 1980 Ojai dialogue <chủ đề>`, `"<câu trích tiếng Anh>" Krishnamurti`, `Krishnamurti <tên sách> bản dịch tiếng Việt`.
 - Đọc trang gốc bằng WebFetch. Nếu bị chặn hay trang dựng bằng JavaScript, mở bằng trình duyệt trong app (`get_page_text`).
+- Đã gặp ngày 17/11/2026: jkrishnamurti.org và kfa.org trả về trang xác minh chống bot cho cả WebFetch và trình duyệt trong app. Không tìm cách vượt qua; nhờ người dùng tự mở trang trong khung trình duyệt để qua bước xác minh, rồi đọc tiếp bằng `get_page_text`. kfoundation.org và kinfonet.org vẫn đọc được.
+- Nếu WebSearch hoặc WebFetch lỗi, đọc Wikipedia bằng `curl -s "https://en.wikipedia.org/w/index.php?title=<Trang>&action=raw"` (để định hướng và lấy năm, biên tập, URL nguồn), và dùng `yt_research.py` cho tín hiệu YouTube.
 - Gửi các truy vấn độc lập trong cùng một lượt. Thường cần 15–30 lượt cho một kịch bản.
 - Nếu toàn văn cuốn sách không có ở nguồn chính thức: dựng Bản đồ sách từ mục lục chính thức, rồi lấy nội dung từ **các bài nói gốc** mà cuốn sách tuyển lại (jkrishnamurti.org thường có cùng bài nói theo ngày và nơi). Ghi rõ trong bible là đang dùng bài nói gốc.
 - Không tải hay dùng file sách lậu.

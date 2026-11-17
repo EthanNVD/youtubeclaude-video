@@ -22,7 +22,7 @@ SET_AMB = {
     "cabinet": "amb_room", "conference": "amb_room", "warroom": "amb_room", "bunker": "amb_basement",
     "codebreak": "amb_basement", "classroom": "amb_room", "kitchen": "amb_room", "home": "amb_room",
     "factory": "amb_factory", "rally": "amb_crowd", "podium": "amb_crowd", "city": "amb_wind", "street": "amb_wind",
-    "ruins": "amb_fire", "trench": "amb_battle", "jungle": "amb_jungle", "railway": "amb_wind", "station": "amb_wind",
+    "ruins": "amb_fire", "trench": "amb_battle", "nomansland": "amb_battle", "jungle": "amb_jungle", "railway": "amb_wind", "station": "amb_wind",
     # detailed acting sets
     "deck": "amb_sea", "flightdeck": "amb_sea", "bridge": "amb_sea", "hangar": "amb_factory", "radio": "amb_basement",
     "tent": "amb_wind", "airfield": "amb_wind", "corridor": "amb_room", "garden": "amb_wind", "parliament": "amb_crowd",
@@ -126,8 +126,12 @@ def auto_cues(scene):
         if k == "actor":
             cues.extend(_actor_cues(scene, el, tin))
             continue
-        if k == "vehicle" and el.get("keys") and el.get("type") in ("tank", "truck", "car", "jeep", "train", "locomotive"):
-            sid = "tank_engine" if el.get("type") == "tank" else "train" if el.get("type") in ("train", "locomotive") else "truck"
+        if k == "vehicle" and el.get("fireAt"):
+            # guns that fire on screen: artillery boom for field guns, cannon crack for tanks and ships
+            sid = "artillery" if el.get("type") in ("artillery", "gun") else "cannon"
+            cues.extend((float(q), sid, 0) for q in el["fireAt"])
+        if k == "vehicle" and el.get("keys") and el.get("type") in ("tank", "markiv", "renault", "truck", "car", "jeep", "train", "locomotive"):
+            sid = "tank_engine" if el.get("type") in ("tank", "markiv", "renault") else "train" if el.get("type") in ("train", "locomotive") else "truck"
             last = max(kk.get("t", 0) for kk in el["keys"])
             cues.append((tin, sid, round(max(0.5, last - tin), 2), 0))
             continue
@@ -135,7 +139,7 @@ def auto_cues(scene):
             cues.append((tin + 0.15, "stamp", 0))
         elif k == "burst":
             cues.append((tin, "explosion_big" if (el.get("size") or 0.5) >= 0.8 else "explosion", 0))
-        elif k == "fx" and el.get("type") in ("explosion", "impact"):
+        elif k == "fx" and el.get("type") in ("explosion", "impact", "shellburst"):
             cues.append((tin, "explosion", 0))
         elif k == "fx" and el.get("type") == "splash":
             cues.append((tin, "splash", 0))

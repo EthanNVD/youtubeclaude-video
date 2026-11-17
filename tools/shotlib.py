@@ -456,3 +456,140 @@ def vehicle_arrives(start, vtype="panther", nation="GER", who="ss_soldier", park
 
 TEMPLATES.update({"desk_read": desk_read, "ots_dialogue": ots_dialogue, "desk_insert": desk_insert, "walk_to_camera": walk_to_camera,
                   "walk_away": walk_away, "vehicle_arrives": vehicle_arrives})
+
+
+# ------------------------------------------------------------------ ACTION RECIPES (battle chapters; references/action.md)
+# Element builders for people DOING things in a battle. They are meant for a scene with `world` (depth model: people,
+# vehicles, ground bursts and props are sized from their ground y and drawn far -> near). Use WORLD below unless the set
+# needs another horizon. Combine them freely inside one scene, and put `impacts` (camera jolts) on the scene for the bursts.
+WORLD = {"scale": 1.0, "y": 900}   # a man standing at y 900 is scale 1.0; the set's horizon (nomansland 560) is scale 0
+
+
+def person_scale(y, horizon=560, world=WORLD):
+    """scale of a man whose feet are at screen y (mirror of src/lib/depth.ts personScaleAt)"""
+    return max(0.03, world["scale"] * (y - horizon) / max(1, world["y"] - horizon))
+
+
+def man_path(id_, who, pts, pose="port", expr="determined", fall=None, fall_dir=-1, holds="rifle", **kw):
+    """A man following timed points [(t, x, y), ...] (the first is where he stands at t) at a steady pace.
+    fall=t: he is hit there - stops at the point he had reached, tips over (no gore) and lies still; fall_dir -1 = backwards/left."""
+    t0, x0, y0 = pts[0]
+    keys = [(t0, {"x": x0, "y": y0})] if t0 > 0 else []
+    for (ta, xa, ya), (tb, xb, yb) in zip(pts, pts[1:]):
+        if fall is not None and fall < tb:
+            k = max(0.0, (fall - ta) / max(0.01, tb - ta))
+            keys.append((round(fall, 2), {"x": round(xa + (xb - xa) * k), "y": round(ya + (yb - ya) * k), "ease": "linear", "expr": "shocked"}))
+            break
+        keys.append((tb, {"x": xb, "y": yb, "ease": "linear"}))
+    d = AID(id_, who, x0, y0, None, pose, expr, keys=K(*keys), holds=holds, **kw)
+    if fall is not None:
+        d["fallAt"] = round(fall, 2)
+        d["fallDir"] = fall_dir
+    return d
+
+
+def assault(prefix, who, rows, falls=None, view="back", climb=False, pose="port", run=False):
+    """OVER_TOP / WAVE: a line advancing in DEPTH - staggered rows, never several men on one horizontal line.
+    rows: [(y_start, y_end, [x, ...], t_start, t_end)] - near row first. Each man drifts 28 % toward the centre line.
+    climb=True: the near row rises from behind the parapet (put fg "sandbags" on the set) before walking.
+    falls: {index: t} - men hit at those times (index counts across rows). view="back" = walking away into the fire;
+    view=None + run=True + rows that move in x = a wave crossing the frame."""
+    falls, out, n = falls or {}, [], 0
+    first = len(rows[0][2]) if rows else 0
+    for ys, ye, xs, ta, tb in rows:
+        for j, x in enumerate(xs):
+            dt = (j % 3) * 0.22
+            xe = x + (960 - x) * 0.28
+            pts = [(ta + dt, x, ys + 260), (ta + dt + 0.7, x, ys), (tb, xe, ye)] if climb and n < first else [(0, x, ys), (tb, xe, ye)]
+            out.append(man_path(f"{prefix}{n}", who, pts, pose=pose, fall=falls.get(n), fall_dir=-1 if n % 2 else 1, view=view, run=True if run else None))
+            n += 1
+    return out
+
+
+def shells(times_xy, size=2.0, kind="shellburst"):
+    """Shell bursts [(t, x, y)] on the ground (y = where it lands; depth-sorted and depth-sized in a world scene).
+    size 2.0 = a column of earth about 2.5 men tall at that depth. Returns (elements, impacts): put impacts on the scene."""
+    return [FX(kind, x, y, size=size, **{"in": t}) for t, x, y in times_xy], [t for t, _, _ in times_xy]
+
+
+def gun_crew(prefix, who, gun_x, gun_y, fire, nation, loader_from=-300, heavy=1.0):
+    """GUN_CREW: a gun firing at `fire` times (recoil, flash, smoke, boom are automatic from fireAt), a loader carrying a
+    shell in from `loader_from` and loading it after the first shot, a layer who covers his ears on every shot.
+    heavy > 1 enlarges the gun (heavy howitzer; the validator flags the size - that is intended)."""
+    gun = {"id": f"{prefix}g", "kind": "vehicle", "type": "artillery", "nation": nation, "x": gun_x, "y": gun_y, "fireAt": list(fire)}
+    if heavy != 1.0:
+        gun["depthScale"] = heavy
+    s = person_scale(gun_y)
+    load_at = fire[0] + 0.9
+    loader = AID(f"{prefix}ld", who, loader_from, gun_y + 10, None, "carry", "determined", holds="shell", holdsScale=0.8,
+                 keys=K((load_at, {"x": gun_x - 340 * s}), (load_at + 0.5, {"pose": "reach"}), (load_at + 1.0, {"holds": "", "pose": "idle"})))
+    lk = sorted([(q - 0.25, {"pose": "head"}) for q in fire] + [(q + 0.9, {"pose": "point"}) for q in fire], key=lambda p: p[0])
+    layer = AID(f"{prefix}c", who, gun_x + 330 * s, gun_y + 25, None, "idle", "determined", turn=-0.4, keys=K(*lk))
+    return [gun, loader, layer]
+
+
+def stretcher_team(prefix, who, x0, x1, y, t1, t0=0.0, horizon=560, world=WORLD, scale=None, silhouette=False, patient=None):
+    """Two bearers carrying a man on a stretcher from x0 to x1 (centre of the stretcher; bearers' feet at y), steady pace.
+    The patient is `lying` (never walks while carried); stretcher and patient ride at the bearers' hand height and are
+    drawn at the bearers' depth (`depthY`). scale=None: sized by the depth model from y (world scene); give scale otherwise."""
+    ps = scale if scale is not None else person_scale(y, horizon, world)
+    sp = ps * 1.4                        # stretcher prop scale (poles 300 units long -> 420 man-units: room for the man between the bearers)
+    half = 150 * sp                      # handle half-length on screen
+    hand_y = y - 128 * ps                # 'carry' hands are 128 units above the feet
+    sil = {"silhouette": True} if silhouette else {}
+
+    def mv_(dx0):
+        k = [(t1, {"x": round(x1 + dx0), "ease": "linear"})]
+        return K((t0, {"x": round(x0 + dx0)}), *k) if t0 > 0 else K(*k)
+    rear = {**AID(f"{prefix}r", who, round(x0 - half + 12 * ps), y, scale, "carry", "tired", keys=mv_(-half + 12 * ps), turn=0.5), **sil}
+    front = {**AID(f"{prefix}f", who, round(x0 + half - 12 * ps), y, scale, "carry", "tired", keys=mv_(half - 12 * ps), turn=0.5), **sil}
+    for e in (rear, front):
+        if scale is None:
+            e.pop("scale", None)
+    pole = {**PROP("stretcher", x0, round(hand_y + 6 * ps), round(sp, 3)), "id": f"{prefix}s", "keys": mv_(0), "enter": "none", "depthY": y + 2, **sil}
+    body = 270 * ps * 0.9
+    # the man lies ON the canvas: his feet line sits a little above the poles, and the near pole + canvas edge are drawn
+    # over his lower half (seen from the side), so he reads as lying in the stretcher, head between the bearers
+    man = {**AID(f"{prefix}p", patient or who, round(x0 - body / 2), round(hand_y - 22 * ps), round(ps * 0.9, 3), "idle", "tired", keys=mv_(-body / 2)),
+           "lying": True, "fallDir": 1, "depthY": y + 1, **sil}
+    rear["depthY"], front["depthY"] = y, y + 3
+    return [rear, man, pole, front]
+
+
+def mg_nest(prefix, who, xs, y, scale, fire=(0.0, 6.0), flip=True, spotter=True):
+    """MG_NEST: men aiming over sandbags (set fg "sandbags"; feet low enough for the bags to hide the legs, y ~ 1150-1200)
+    firing automatic bursts (muzzle flash at each rifle tip, period 0.125 s); an optional spotter pointing, then with
+    binoculars. Add an sfx {"id": "machinegun", "dur": ...}. No world needed (explicit scale)."""
+    out = [AID(f"{prefix}{i}", who, x, y + (i % 2) * 20, scale, "aim", "determined", holds="rifle", flip=flip, turn=0.3,
+               fire=[fire[0] + i * 0.3, fire[1], 0.125]) for i, x in enumerate(xs)]
+    if spotter:
+        out.append(AID(f"{prefix}sp", who, xs[-1] + (420 if flip else -420), y + 10, round(scale * 0.97, 3), "point", "shout", flip=flip, turn=0.3,
+                       keys=K((1.3, {"pose": "binoculars"}))))
+    return out
+
+
+def fallen(prefix, who, spots, helmets=True):
+    """AFTERMATH: men lying where they fell [(x, y)] (lying, no gore), a helmet beside every other one."""
+    out = []
+    for i, (x, y) in enumerate(spots):
+        out.append({**AID(f"{prefix}{i}", who, x, y, None, "idle", "tired"), "lying": True, "fallDir": -1 if i % 2 else 1})
+        if helmets and i % 2 == 0:
+            out.append(PROP("helmet", x + 160 * person_scale(y), y + 10, round(0.7 * person_scale(y), 3)))
+    return out
+
+
+def hit_and_help(prefix, who, x0, x1, y, hit_t, dur, helper_from=-150):
+    """HIT: a man advancing from x0 to x1 is hit at hit_t (falls backwards, lies still); a comrade runs in from
+    helper_from and kneels by his head, crying. Cut to a close-up of the comrade (id prefix+"k") after he kneels."""
+    s = person_scale(y)
+    man = man_path(f"{prefix}h", who, [(0, x0, y), (dur, x1, y)], fall=hit_t, fall_dir=-1)
+    xh = x0 + (x1 - x0) * min(1.0, hit_t / dur)       # where his feet stopped
+    arrive = hit_t + 1.25
+    helper = man_path(f"{prefix}k", who, [(hit_t + 0.1, helper_from, y + 40), (arrive, round(xh - 300 * s), y + 40)],
+                      pose="charge", expr="shocked", holds="", run=True)
+    helper["keys"].append({"t": round(arrive + 0.05, 2), "kneel": True, "pose": "reach", "expr": "cry"})
+    return [man, helper]
+
+
+TEMPLATES.update({"assault": assault, "shells": shells, "gun_crew": gun_crew, "stretcher_team": stretcher_team, "mg_nest": mg_nest,
+                  "fallen": fallen, "hit_and_help": hit_and_help, "man_path": man_path})

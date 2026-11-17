@@ -47,6 +47,8 @@ export type CharState = {
   view?: 'front' | 'back';
   seated?: boolean;
   kneel?: boolean;
+  /** seconds since the held rifle last fired (a muzzle flash shows for ~0.07 s); undefined = not firing */
+  muzzle?: number;
   headMove?: string; // nod | shake | tilt
   /** 3/4 view of the face: -1 (turned to screen-left) .. 1 (turned to screen-right); 0 = full front */
   turn?: number;
@@ -344,7 +346,9 @@ export const Character: React.FC<{ spec: CharSpec; state: CharState; t: number; 
   }
 
   // long arms: the rifle hangs from the right hand at the pose angle; two-handed poses put the left hand on the handguard
-  const rifleOn = !!held?.grips && !!pose.rifle && kRaw > 0.35;
+  // the rifle shows once the hands are close to the grip: early when coming from another rifle pose, late when the hands
+  // were elsewhere (hands on the head → aim: no rifle floating across the face mid-move)
+  const rifleOn = !!held?.grips && !!pose.rifle && kRaw > (prev.rifle ? 0.35 : 0.8);
   const rAng = ((pose.rifleAng ?? 0) * Math.PI) / 180;
   if (rifleOn && held?.grips && pose.rifle === 'two') {
     const len = (held.grips[1] - held.grips[0]) * (held.scale ?? 0.6);
@@ -484,7 +488,16 @@ export const Character: React.FC<{ spec: CharSpec; state: CharState; t: number; 
   ) : null;
 
   const heldNode = held && rifleOn && held.grips ? (
-    <g transform={`translate(${R.hx} ${R.hy}) rotate(${(rAng * 180) / Math.PI}) scale(${held.scale ?? 0.6}) translate(${-held.grips[0]} 0)`}>{held.node}</g>
+    <g transform={`translate(${R.hx} ${R.hy}) rotate(${(rAng * 180) / Math.PI}) scale(${held.scale ?? 0.6}) translate(${-held.grips[0]} 0)`}>
+      {held.node}
+      {state.muzzle !== undefined && state.muzzle >= 0 && state.muzzle < 0.08 ? (
+        <g transform="translate(172 -6)" opacity={1 - state.muzzle / 0.08}>
+          <path d="M0 0 L60 -26 L120 0 L60 26 Z" fill="#ffe28a" />
+          <path d="M0 0 L34 -40 L48 0 L34 40 Z" fill="#ffb347" />
+          <circle r={24} fill="#fff6c8" />
+        </g>
+      ) : null}
+    </g>
   ) : held ? (() => {
     const two = held.both ?? (poseName === 'hold' || poseName === 'holdUp' || poseName === 'carry' || poseName === 'binoculars');
     // one hand on a flat prop: hold it by its inner edge so the hand never covers the writing

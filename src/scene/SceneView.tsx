@@ -6,7 +6,7 @@ import { Foreground } from '../sets/Rich';
 import { MapLayer, makeProjection, PaperOverlay } from '../map/MapLayer';
 import { ElementView, type Ctx } from './Elements';
 import { DateBadge } from '../overlays/Overlays';
-import { resolveWorld, personScaleAt, vehicleScaleFor, VEH, PERSON_H, type WorldCtx } from '../lib/depth';
+import { resolveWorld, personScaleAt, vehicleScaleFor, VEH, PERSON_H, GROUND_FX, type WorldCtx } from '../lib/depth';
 import type { ElementBase } from '../types';
 import { FONT, INK, C } from '../theme';
 
@@ -146,7 +146,9 @@ export const SceneView: React.FC<{ scene: Scene; t: number; cast?: Record<string
       : drift
       ? { x: 960 + (scene.set?.driftX as number ?? 0) * (t / Math.max(1, dur)), y: 540, zoom: 1 + dz * (t / Math.max(1, dur)), rotate: 0, shake: 0 }
       : cameraAt(scene.camera, t, { x: 960, y: 540, zoom: 1, rotate: 0, shake: 0 });
-    const sh = cam.shake ?? 0;
+    // impacts: `scene.impacts: [t, ...]` -> a short decaying camera jolt after each explosion
+    const impulse = ((scene as { impacts?: number[] }).impacts ?? []).reduce((acc, ti) => (t >= ti && t - ti < 1.2 ? acc + 16 * Math.exp(-(t - ti) * 5) : acc), 0);
+    const sh = (cam.shake ?? 0) + impulse;
     const jx = sh ? smoothNoise(t, 1.3) * sh : 0;
     const jy = sh ? smoothNoise(t, 4.1) * sh * 0.8 : 0;
     camT = `translate(${960 + jx} ${540 + jy}) scale(${cam.zoom}) rotate(${cam.rotate ?? 0}) translate(${-cam.x} ${-cam.y})`;
@@ -170,11 +172,19 @@ export const SceneView: React.FC<{ scene: Scene; t: number; cast?: Record<string
   // `front: true` = drawn after the set foreground (papers lying on a foreground desk, a hand reaching over it)
   const frontEls = els.map((el, i) => ({ el, i })).filter(({ el }) => !el.hud && !HUD_KINDS.has(el.kind) && !!el.front);
   // with a depth model, people and vehicles are drawn far → near (by their current ground y); other elements keep their slots
-  const DEPTH_KINDS = new Set(['actor', 'vehicle', 'crowd']);
-  const worldEls = ctx.world
+  // ground effects (a shell bursting, smoke from a gun) and props lying on the ground are part of that depth order too:
+  // a burst behind a man is drawn behind him, one in front of him covers him (never a far explosion over a near face)
+  const DEPTH_KINDS = new Set(['actor', 'vehicle', 'crowd', 'prop']);
+  const inDepth = (el: ElementBase) => (DEPTH_KINDS.has(el.kind) || (el.kind === 'fx' && GROUND_FX.has(el.type as string))) && !el.fixedLayer;
+  // without a world model only battle scenes are re-ordered (people, vehicles and ground bursts by their feet y), so a
+  // shell landing far behind a sentry never covers him; other scenes keep the authored order
+  const groundFx = (el: ElementBase) => el.kind === 'fx' && GROUND_FX.has(el.type as string);
+  const sortable = ctx.world ? inDepth : (el: ElementBase) => (groundFx(el) || el.kind === 'actor' || el.kind === 'vehicle' || el.kind === 'crowd') && !el.fixedLayer;
+  const worldEls = ctx.world || els.some(groundFx)
     ? (() => {
-        const slots = worldEls0.map((w, k) => (DEPTH_KINDS.has(w.el.kind) && !w.el.fixedLayer ? k : -1)).filter((k) => k >= 0);
-        const items = slots.map((k) => worldEls0[k]).map((w) => ({ w, y: ((resolveKeys(w.el, w.el.keys, t) as { y?: number }).y ?? 900) }));
+        const slots = worldEls0.map((w, k) => (sortable(w.el) ? k : -1)).filter((k) => k >= 0);
+        // `depthY` overrides the sort depth (a man carried on a stretcher sorts with his bearers, not by his raised y)
+        const items = slots.map((k) => worldEls0[k]).map((w) => ({ w, y: (w.el.depthY as number | undefined) ?? ((resolveKeys(w.el, w.el.keys, t) as { y?: number }).y ?? 900) }));
         items.sort((p, q) => p.y - q.y);
         const out = [...worldEls0];
         slots.forEach((k, j) => { out[k] = items[j].w; });
