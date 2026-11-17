@@ -1,0 +1,11 @@
+{
+ "title": "WW1 — Verdun to the first tanks (example chapter)",
+ "lang": "en",
+ "era": "ww1",
+ "sides": ["german", "french"],
+ "host_set": "station",
+ "cast": {
+  "falkenhayn": {"preset": "falkenhayn", "name": "General Erich von Falkenhayn", "role": "Chief of the German General Staff, 1914-16"},
+  "brusilov": {"preset": "brusilov", "name": "General Aleksei Brusilov", "role": "Russian South-Western Front"}
+ }
+}

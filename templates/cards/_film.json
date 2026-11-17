@@ -1,0 +1,12 @@
+{
+ "title": "WRITE THE VIDEO TITLE HERE",
+ "lang": "en",
+ "era": "ww2",
+ "sides": ["german", "british"],
+ "host_set": "study",
+ "cast": {
+  "example_general": {"preset": "german_officer", "name": "General Example Name", "role": "What he was, e.g. Chief of Staff, 1916"}
+ },
+ "places": {},
+ "_help": "era: ww1 | ww2 | napoleonic | ancient | vietnam | modern. sides: the two main sides, first = default 'side' of a card, second = default 'enemy'. cast: every named person who appears (preset from recipes/PEOPLE.md; name + role feed the name cards). places: extra map places {\"Name\": [longitude, latitude]} not in data/places.json. Delete example_general and this _help line."
+}

@@ -3,28 +3,27 @@
 | | |
 |---|---|
 | slug | `<slug>` |
-| SRT / voice | `input/script.srt` · `input/voice.wav` (duration …) |
-| language | en / vi |
+| inputs | srt: `input/….srt` / voice: `input/…` / (which ones the user gave) |
+| language | en |
+| era / sides | e.g. ww1 / german vs french |
 | started | YYYY-MM-DD |
-| state | outline · planning · reviewing · rendering · packaged · delivered |
+| state | prepared · understood · cards · compiled · reviewed · rendered · packaged · delivered |
 
 ## Decisions
-- Device:
+- Chapters: n (see understanding.md §5)
+- Device (if any):
 - Host usage:
-- Chapters: n (see `plan_src/outline.md`)
 
-## Progress
-- [ ] analyze + outline
-- [ ] plan written (scenes: …)
-- [ ] validate clean (0 errors, overlap/speed warnings fixed)
-- [ ] review sheets checked (all scenes)
-- [ ] audio (−14 LUFS, no sound warnings)
-- [ ] video rendered + muxed
-- [ ] spot-check frames + motion strips
-- [ ] thumbnails: prompts + drafts
-- [ ] package (titles, description, tags)
-- [ ] QUALITY.md checklist all ticked
-- [ ] committed + pushed
+## Progress (tick as you go; the next session continues from the first unticked box)
+- [ ] 1 prepare (`make.py … prepare`)
+- [ ] 2 understanding.md complete (all sections; §6 for every chapter)
+- [ ] 3 cards written: ch01 … chNN
+- [ ] 4 `make.py … cards` → "ok": true, warnings fixed, mix: action __ % / talk __ % / map __ % / device __ %
+- [ ] 5 review: every sheet checked (fixes made: __)
+- [ ] 6 audio (no sound_warnings)
+- [ ] 7 video + mux, frames of the final MP4 checked
+- [ ] 8 YouTube: prompts, drafts, package
+- [ ] 9 hand-over report given to the user
 
 ## Open issues / to verify
 -

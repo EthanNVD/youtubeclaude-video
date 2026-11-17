@@ -1,3 +1,25 @@
+# Studio: SRT/giọng đọc → video lịch sử quân sự hoạt hình (bản dành cho mọi model)
+
+Bản nâng cấp của repo `youtubeclaude` (giữ nguyên lịch sử git). Khác biệt chính: model **không viết JSON dựng hình nữa**, mà điền **thẻ cảnh**
+(chọn 1 trong 49 công thức đã kiểm thử + vài trường từ menu); trình biên dịch tự lo vị trí, chiều sâu, camera, chuyển động, âm thanh.
+Nhờ vậy model nhỏ hơn (Sonnet, Muse…) vẫn dựng được đúng nội dung, không lặp cảnh, chất lượng ngang bản dựng tay.
+
+- Hướng dẫn cho model: [AGENTS.md](AGENTS.md) → [playbook/](playbook/00-START-HERE.md) (từng bước, tiếng Anh).
+- Danh mục công thức cảnh có ảnh mẫu: [recipes/CATALOG.md](recipes/CATALOG.md).
+- Ví dụ hoàn chỉnh: [projects/example-ww1-verdun/](projects/example-ww1-verdun/) (understanding.md + cards → 70 % hành động).
+- Đầu vào linh hoạt: chỉ SRT, chỉ giọng đọc (tự tách SRT), hoặc cả hai.
+
+```bash
+python tools/make.py projects/<slug> prepare   # nhận SRT và/hoặc giọng -> words.json, reading.md, understanding.md
+python tools/make.py projects/<slug> check     # kiểm tra nhanh thẻ cảnh
+python tools/make.py projects/<slug> cards     # thẻ cảnh -> plan.json + kiểm tra engine + tỉ lệ hành động
+python tools/make.py projects/<slug> review    # ảnh từng cảnh
+python tools/make.py projects/<slug> audio | video | mux | prompts | thumbs | package
+python tools/catalog.py --previews             # sau khi sửa công thức: tạo lại danh mục + ảnh mẫu
+```
+
+---
+
 # SRT → Video lịch sử quân sự hoạt hình
 
 Từ **file SRT + file giọng đọc** → video hoạt hình giải thích lịch sử quân sự theo ngữ pháp của kênh *Two Sides of War*

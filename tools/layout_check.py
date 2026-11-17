@@ -278,6 +278,8 @@ def proportions(scene, tol=0.42):
     for j, v in enumerate(els):
         if v.get("kind") != "vehicle" or v.get("at") is not None or v.get("type") not in VEH:
             continue
+        if v.get("depthScale"):
+            continue  # deliberately bigger/smaller (heavy howitzer, giant ship in a symbolic shot)
         vy = v.get("y", 900)
         if v.get("type") in AIR and vy < hz + 40:
             continue  # in the sky

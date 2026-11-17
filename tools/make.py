@@ -1,6 +1,9 @@
 """One entry point for the whole pipeline.
 
-python tools/make.py <project> analyze     SRT + voice -> work/reading.md, stats.json (read before planning)
+python tools/make.py <project> prepare     inputs (SRT and/or voice) -> work/words.json, reading.md, understanding.md (step 1)
+python tools/make.py <project> check       check the cards only (fast)
+python tools/make.py <project> cards       cards/*.json -> plan.json + validate (step 4)
+python tools/make.py <project> analyze     SRT + voice -> work/reading.md, stats.json (old name, part of prepare)
 python tools/make.py <project> validate    merge plan -> work/plan.merged.json, check vocabulary/timing
 python tools/make.py <project> review      stills of every scene -> review/sheet_*.jpg (look at them!)
 python tools/make.py <project> audio       voice + ambience + SFX -> out/audio/mix.wav (+ stems)
@@ -39,6 +42,15 @@ def main():
     opt = lambda k: rest[rest.index("--" + k) + 1] if "--" + k in rest else None
     merged = proj / "work" / "plan.merged.json"
     slug = proj.name
+
+    def prepare():
+        run([PY, ROOT / "tools/prepare.py", proj, *[r for r in rest if r in ("--align",)]])
+
+    def cards():
+        run([PY, ROOT / "tools/cards.py", proj])
+
+    def check():
+        run([PY, ROOT / "tools/cards.py", proj, "--check"])
 
     def analyze():
         run([PY, ROOT / "tools/srt_tool.py", proj])
@@ -126,7 +138,7 @@ def main():
     def package():
         run([PY, ROOT / "tools/seo_check.py", proj])
 
-    steps = {"analyze": [analyze], "validate": [validate], "review": [review], "audio": [audio], "video": [video], "mux": [mux],
+    steps = {"prepare": [prepare], "cards": [cards], "check": [check], "analyze": [analyze], "validate": [validate], "review": [review], "audio": [audio], "video": [video], "mux": [mux],
              "thumbs": [thumbs], "prompts": [prompts], "package": [package], "all": [audio, video, mux, prompts, thumbs, package]}
     if step not in steps:
         sys.exit(__doc__)

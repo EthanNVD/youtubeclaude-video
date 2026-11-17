@@ -1,137 +1,55 @@
 ---
 name: srt-history-video
-description: Turn an SRT + the user's narration audio into a finished military-history animated explainer (chibi characters acting in detailed places, a recurring host, historical maps, a scored storytelling device, date badges, stamps, action SFX — the "Two Sides of War" grammar) rendered with this repo's Remotion engine, plus the YouTube package (3 titles, 3 detailed thumbnail prompts for image models + drafts, description with chapters, tags, hashtags). Use whenever the user drops an .srt (with or without a voice file) into projects/ or asks to make/re-make/fix a history video, its thumbnails or its metadata.
+description: Turn a narration (an .srt, a voice recording, or both) into a finished military-history animated explainer — chibi characters acting in detailed places, battles with real action, maps, a recurring host, date badges, SFX, "Two Sides of War" style — rendered with this repo's engine, plus the YouTube package (3 titles, thumbnail prompts + drafts, description with chapters, tags, hashtags). Planned as scene cards compiled by tools/make.py. Use whenever the user drops an .srt and/or a voice file into projects/ or asks to make, re-make or fix a history video, its thumbnails or its metadata.
 ---
 
-# SRT → military-history animated video
+# Narration → military-history animated video (studio edition)
 
-You are the director. The engine draws; you decide what the viewer must *see* for every clause of the narration.
-Read the whole pipeline once, then work through it without stopping for approval at each step.
-Talk to the user in their language (Vietnamese by default); on-screen text, titles and metadata follow the **SRT language**.
+You are the director. The engine draws. You decide what the viewer sees for every sentence, by writing **scene cards**.
 
-Fixed decisions (do not re-ask): topic = military history · the user supplies the voice file with the SRT ·
-**no music** — only ambience + action SFX · visuals drawn in code in the channel style · output 1920×1080 24 fps MP4 ·
-**acting first**: most shots are characters *doing things in real places* (decks, bridges, offices, corridors, trenches),
-not charts — like an animated film; maps and devices are the minority ([storytelling.md](references/storytelling.md) §Acting first) ·
-**action share**: ≥ 40 % of every chapter is *action* (people/vehicles moving, firing, falling, under fire), ≥ 55 % in battle chapters; talk ≤ 15 %, maps ≤ 15 %, devices ≤ 15 % — measured by `validate` (`mix`, `work/mix.json`); recipes in [action.md](references/action.md) ·
-**the host** (`who: "host"`, the channel's recurring narrator) opens the video, presents the device and closes it ·
-**thumbnails = detailed prompts** for an image model + engine drafts ([thumbnails.md](references/thumbnails.md)).
+**Follow `AGENTS.md`, then `playbook/00-START-HERE.md`, step by step.** This skill file only adds what a Claude session needs on top of them.
 
-## Before anything
-Read `ROADMAP.md` (what the engine can and cannot do yet, known issues) and `docs/STYLE_GUIDE.md` (what a good frame looks like).
-Copy `projects/_template/STATUS.md` to `projects/<slug>/STATUS.md` and keep it current (decisions, progress, open issues).
-A video is finished only when every box in `docs/QUALITY.md` is ticked.
+## The path (details in playbook/)
+1. `python tools/make.py projects/<slug> prepare`. It accepts an SRT only, a voice only, or both.
+2. Read **all** of `work/reading.md`. Then fill `understanding.md`: question and answer, people → presets, places, numbers (compare or alone), chapters, and the beats of each chapter with the recipe for each sentence.
+3. Write the cards:
+   - `cards/_film.json`: era, sides, cast with name and role, extra places.
+   - `cards/chNN.json`: one card per idea, 3–10 s. Each card has:
+     - `at`: the first words, copied exactly;
+     - `recipe`;
+     - `says`: the meaning in your own words;
+     - the recipe's fields.
 
-## 0. Set up the project
+   Choose recipes with `playbook/narration-to-picture.md`; the fields are in `recipes/<id>.md`.
+4. `python tools/make.py projects/<slug> cards`. Fix every error, which says what to change. Fix the warnings too:
+   - the same recipe twice in a row;
+   - chapter mix;
+   - card length;
+   - `says` copied from the narration.
 
-```
-projects/<slug>/input/<name>.srt     # required
-projects/<slug>/input/voice.(mp3|wav|m4a)   # the user's narration — the master clock
-```
-If only the voice is given, make the SRT from it:
-```
-python tools/transcribe.py <voice.wav> projects/<slug>/work/transcript.srt [--script <the text that was read>]
-```
-Copy the result to `input/script.srt`. With `--script`, names and numbers come from the script. `work/transcript.words.json` then gives word times; resolve scene starts from phrases instead of guessing them.
-If the voice is missing, ask for it; only for a timing preview may you run `python tools/guide_voice.py projects/<slug>` (robotic dev voice, never deliver it).
-First run on a machine: `npm ci` and `python tools/sfx_synth.py` (see README).
+   Targets: action ≥ 40 % for the film, ≥ 55 % in battle chapters; talk, maps and devices ≤ 15 % each.
+5. `review`. Open every `review/sheet_*.jpg` and answer the yes/no checklist in `playbook/05-review.md`.
+6. `audio` → `video` → `mux`. Run one render at a time. Then check frames of the final MP4.
+7. The YouTube package (`playbook/07-youtube.md`).
 
-## 1. Understand the whole script — `python tools/make.py projects/<slug> analyze`
+## Fixed choices (never ask)
+- Military history.
+- The narration comes from the user.
+- **No music**: ambience and SFX only.
+- All visuals are drawn by the engine.
+- 1920×1080, 24 fps.
 
-Read **all** of `work/reading.md` (in chunks if long). Never plan from the first minutes or from keywords. Then write `work/outline.md`:
+Talk to the user in their language (Vietnamese by default). On-screen text and metadata follow the narration's language. Never upload or publish anything.
 
-1. **The question** the video answers and its **verdict** (one line each).
-2. **The device** — one recurring, scored visual that carries the argument for the whole video
-   (see [storytelling.md](references/storytelling.md) §Device). Pick it from the script's logic, not from habit.
-3. **Chapters** (normally 8–14, each 1.5–4.5 min): start time (a sentence boundary), short evocative title, what changes in the device at its end.
-4. **Cast**: every person who appears → preset or custom spec ([cast.md](references/cast.md)). Recurring people keep one look. Always include `"host": {"preset": "host"}`.
-5. **Fact flags**: ASR errors in names/numbers/dates (fix them on screen, never in timing), claims shown as "debated".
+## When recipes are not enough (strong models)
+- **A recurring kind of sentence**: add a recipe in `tools/cardlib/recipes_*.py`. Then run `python tools/catalog.py --previews`, check its preview tiles, and add a row to `narration-to-picture.md` (`playbook/08-advanced.md` §B).
+- **A one-off moment**: use the `raw` recipe, which takes an engine scene. Schema: [references/plan-schema.md](references/plan-schema.md).
+- **A missing visual** (set, prop, vehicle, pose, fx): extend the engine in `src/`, then run `npx tsc --noEmit` and render a still. Follow the neighbouring code's style. Never fake a missing visual with a label.
 
-## 2. Turn narration into shots — [storytelling.md](references/storytelling.md)
-
-Work chapter by chapter. Group cues into **beats** (one idea, usually 8–20 s). Then split each beat into **scenes** (one place, usually 3–10 s), and each scene into **set-ups** inside the place (`scene.shots`: wide → medium → close/insert, 2–4 s each in action). Read [acting-camera.md](references/acting-camera.md) first: it covers reads, coverage, acting and motion. For every beat decide, before writing JSON:
-
-- **Which visual language**: *world* (people acting in places — who did what, who suffered: the default, ≥ 60 % of screen time), *map* (where, how far, encirclement, routes), *device/chart/document* (comparison, verdict, numbers, evidence), *host* (the narrator in his study / at the device for hooks, transitions, verdicts).
-- **Action first in battles** ([action.md](references/action.md)): ask "who or what is *doing* something in this frame?" for every shot. A general's decision gets 2–4 s, then cut to the men carrying it out (command → field). A number lands on a scene (HUD counter over the advancing line, over the stretcher bearers), a chart only for comparisons (≤ 7 s). A document ≤ 4 s. Maps ≤ 5 s inside a battle chapter. One symbolic consequence object per battle (crosses appearing, empty helmet, stretcher, life rings).
-- **The reads**: the ordered list of what a first-time viewer must understand. Show one read at a time; actions can be fast, meanings are held. The reads set the length of every set-up.
-- **The acting beat**: for every *world* shot write the physical action in one line:
-  - entrance (walk/run in);
-  - business (reads, types, looks through binoculars, carries, points at the map);
-  - reaction (pose + expression change on the key word);
-  - exit.
-  Characters change pose every 1.5–3 s; nobody stands frozen.
-- **The coverage**: which set-ups show those reads.
-  - A wide to place people.
-  - A medium for the hands.
-  - A close-up cut in **before** the reaction and held.
-  - An insert for the evidence.
-  - Over-the-shoulder for dialogue.
-  - Tracking or depth walks for arrivals.
-  One static set-up per scene is the main thing that makes a film feel dead.
-- **Before → action → after → reaction**: the visible change that proves the sentence. A label is not an action.
-- **What is revealed when**: an element appears on the word that names it (use cue times from `work/cues.json`).
-- **Text on screen**: date badge on place/time jumps, name card on first appearance of a person, 1–5-word labels/stamps. Never subtitles.
-
-Coverage is mandatory: scenes are contiguous from 0 to the end of the voice (validator enforces it).
-
-## 3. Write the plan — [plan-schema.md](references/plan-schema.md)
-
-- Short videos: `projects/<slug>/plan.json`.
-- Long videos (> 5 min): `plan/_meta.json` (`meta`, `cast`) + `plan/ch01.json`, `plan/ch02.json`… each `{ "scenes": [...] }`. Write one chapter, validate, continue.
-- Put `"chapter": "Title"` on the first scene of each chapter (drives YouTube chapters).
-- Start from the shot templates in `tools/shotlib.py` ([shots.md](references/shots.md)) and the `Plan` helper (tiles the timeline, fixes vehicle speeds); then tune every timing to the cue words.
-- Coverage templates: `desk_read`, `ots_dialogue`, `desk_insert`, `walk_to_camera`, `walk_away`, `vehicle_arrives`, plus `SHOT()` / `AID()`. Give every actor a set-up frames an `id`.
-- **Action recipes** (battle scenes, [action.md](references/action.md) §2): `assault` (over the top / wave in staggered depth rows, men falling), `shells` (bursts + `impacts`), `gun_crew`, `mg_nest`, `hit_and_help`, `stretcher_team`, `fallen`, `man_path` — all in `tools/shotlib.py`, all for scenes with `world=WORLD`. Never hand-place stretcher parts or fallen men: the builders compute hand heights, sort depth and stop the gait.
-- Battle depth rules: bursts get the y **where they land** (they are sorted and sized with the men around them); put their times in scene `impacts`; men who are hit (`fallAt`) or carried (`lying`) never walk; `run: true` only runs while the path moves.
-- Motion: let the engine's defaults work.
-  - Walking and driving profiles, distance-driven strides, slow pose changes.
-  - Nothing pops on a cut.
-  - Give walks time (≈ 2.5 s to cross half a room); don't use `ease: "out"` to rush someone in.
-- Letterbox (`letterbox`) only the dramatised acting moments — about one per chapter, never on maps or devices.
-- People and vehicles in one shot: use `world` (depth model) and leave their `scale` out — a man standing by a tank is about half its height; a man close to the camera may be as big as a truck further back. Stage the shot in depth (foreground / middle / background) like the depth templates in shots.md; the validator flags vehicles out of proportion.
-- Devices are physical objects: put bars/timeline/scale scenes in the `workshop` set, not on blank paper.
-- Maps: colour only the sides that matter, name only the rivers the story needs, key places as `tag` cities, a legend on every multi-side map, and movers (`route` + `icon` + `trail`, `map.follow`) whenever something travels.
-- Use only vocabulary the engine has (sets, props, vehicles, fx, poses, presets — listed in plan-schema.md; the validator reads them from `src/`). If something is truly missing, add it to the engine (see §8) rather than faking it with a label.
-
-`python tools/make.py projects/<slug> validate` → fix every error; read every warning.
-**Zero tolerance** for layout/motion warnings:
-- text overlapping text, a badge zone (date/place top-left, clock top-right, name card bottom-left) or a face;
-- vehicles faster than their type (`moves … u/s`);
-- people sprinting (`crosses … px`);
-- single set-ups held too long (`one set-up for …`);
-- chapter mix warnings (`chapter '…': action is …`, `talk is …`, `map held …`, `people standing with no business`) — fix by turning talk/chart/map beats into action, not by relabelling.
-
-The `coverage` block of the validate output must show:
-- an average set-up of ≤ 4 s;
-- close-ups in every chapter.
-If you generate the plan from Python, call `tools/layout_check.fix_speeds(plan)` before writing it (keeps each vehicle's destination, starts it closer).
-
-## 4. Look at it — `python tools/make.py projects/<slug> review`
-
-Open every `review/sheet_*.jpg` and judge as a viewer: does each frame show what the narration says at that moment? Check overlaps, text cut off, characters floating, empty frames, vehicles barely in frame, scenery that should scroll but stands still, repeated compositions, wrong flags/colours/dates. Count the shots: if world/acting shots are under ~60 %, replace charts/inserts with scenes of people doing the thing. Use `--scenes s012,s013 --at all` to inspect start/middle/end of a shot. Fix and re-review the changed scenes. Do this for the whole film, not a sample.
-In battle scenes also check: bursts behind the near men (never a far explosion over a near face), nobody lying and walking, stretchers reading (bearers, canvas, man on it), no rifle floating across a face, muzzle flashes at the rifle tips.
-Stills cannot show motion. After the render, check **frame strips** of the key motions (a walk-in, a vehicle arriving and braking, a pose change, a prop put down). Look for jumps, stops with no slowing, sliding feet, and things appearing from nothing ([acting-camera.md](references/acting-camera.md) §5).
-
-## 5. Sound — [sound.md](references/sound.md)
-
-The user supplies only the SRT and the narration — **all ambience and SFX are generated by the skill** (never ask for them). `python tools/make.py projects/<slug> audio` builds `out/audio/mix.wav` (voice + ambience beds + SFX, −14 LUFS) and stems, and prints `sound_warnings` (silent scenes, sets without a bed): fix them all.
-Ambience defaults from the set; SFX are placed automatically for stamps, explosions, documents, map arrows, flashes — add explicit `sfx` cues for every other on-screen contact (paper, phone, footsteps, guns that actually fire). Silence/low bed for grief beats.
-
-## 6. Render — `python tools/make.py projects/<slug> video` then `mux`
-
-Never run two render commands at the same time (stills, thumbs, prompts' reference sheet and video each start a headless Chrome; in parallel they time out). Full render ≈ 1–2× real time on this PC (check the first progress lines; partial: `--from 120 --to 180`). Result: `out/<slug>.mp4`. Spot-check the encoded file (a few frames + listen to a minute around a busy sequence) before calling it done.
-
-## 7. YouTube package — [thumbnails.md](references/thumbnails.md) + [metadata.md](references/metadata.md)
-
-1. Three **angles** from the same script (each a different curiosity: myth vs truth, decision/person, numbers/stakes…). Each angle = 1 title + 1 thumbnail + 1 hook line.
-2. **Thumbnail prompts (main deliverable)**: write `youtube/thumb_prompts.json` (layout, characters with expression/pose/placement, the one-moment background, symbol, labels, exact headline 1–5 words with accent, light, palette) → `python tools/make.py projects/<slug> prompts` → `out/youtube/thumb_prompts.md` (Full prompt · Clean plate · Midjourney for each thumbnail) + `out/thumbs/ref_characters.png` (to attach to the image model). Read the generated prompts once as the image model would.
-3. **Engine drafts**: `thumbs.json` with the same headlines → `python tools/make.py projects/<slug> thumbs` → layout preview, check at 25 % size. When the user brings AI images back as `input/thumb_N.png`, the same command composites the exact headline on them.
-4. `youtube/package.json` (titles, description with `{{CHAPTERS}}`, 20–29 tags, 3–4 hashtags) → `python tools/make.py projects/<slug> package` → `out/youtube/`.
-
-## 8. Extending the engine
-
-Missing set/prop/vehicle/pose/preset? Add it in `src/` (follow the neighbours' style: flat fill, `INK` 4 px outline, one shade), `npx tsc --noEmit`, render a still, then use it. Reusable cast goes in `src/char/presets.ts`. Keep additions generic so the next video benefits.
-
-## Deliver
-
-Report to the user: the MP4 path, duration, the 3 titles (★ recommended) with their thumbnail prompts (`out/youtube/thumb_prompts.md` — which variant for which model, the reference sheet to attach) and drafts, paths to description/tags/hashtags, and anything you could not verify (facts flagged, scenes you consider weak). Never upload or publish.
+## Reference material (for recipe and engine work)
+- [references/action.md](references/action.md): screen-time mix, battle depth rules, how to animate action.
+- [references/acting-camera.md](references/acting-camera.md): reads, coverage, acting and motion rules behind the recipes' camera work.
+- [references/plan-schema.md](references/plan-schema.md): the engine's scene and element schema (`raw` scenes, engine work).
+- [references/storytelling.md](references/storytelling.md): macro structure, the scored device, the host.
+- [references/sound.md](references/sound.md), [references/thumbnails.md](references/thumbnails.md), [references/metadata.md](references/metadata.md), [references/cast.md](references/cast.md).
+- `docs/STYLE_GUIDE.md` (what a good frame looks like) and `docs/QUALITY.md` (definition of done).

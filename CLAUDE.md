@@ -1,11 +1,10 @@
-# Project: SRT → military-history animated video + YouTube package
+# Project: narration → military-history animated video + YouTube package (studio edition)
 
-- When the user gives an SRT (+ voice) or asks for a video/thumbnails/metadata, follow `.claude/skills/srt-history-video/SKILL.md`.
-- Talk to the user in Vietnamese; on-screen text and YouTube metadata follow the SRT language.
-- Fixed choices: military history; user supplies the voice; NO music (ambience + SFX only); visuals drawn by the engine in `src/`; 1920×1080 24 fps.
-- Pipeline entry point: `python tools/make.py projects/<slug> <step>`. Always `validate` and look at `review/sheet_*.jpg` before a full render.
-- Extend the engine (`src/`) instead of faking missing visuals; run `npx tsc --noEmit` after changes.
-- Start every session by reading `ROADMAP.md` (milestones, known issues) and, for a video, its `projects/<slug>/STATUS.md`.
-  The look rules are in `docs/STYLE_GUIDE.md`; a video is done only when `docs/QUALITY.md` is fully ticked. Log changes in `CHANGELOG.md`.
-- Never run two renders (video/stills/thumbs/prompts) at the same time — each starts a headless Chrome and they time out.
-- Never upload/publish to YouTube. Don't commit media (`projects/*/out|review|work`, voice files, `assets/sfx/*.wav`).
+- **Read `AGENTS.md` first, every session.** It is the whole workflow in one page; `playbook/` has every step in detail.
+- Videos are planned as **scene cards** (`projects/<slug>/cards/*.json`) compiled by `python tools/make.py projects/<slug> cards`.
+  Pick recipes with `playbook/narration-to-picture.md` and `recipes/CATALOG.md`. Do not hand-write engine JSON unless a recipe truly cannot show the moment (`playbook/08-advanced.md`).
+- Talk to the user in Vietnamese; on-screen text and YouTube metadata follow the narration's language.
+- Fixed choices: military history; the user supplies the narration (SRT and/or voice); NO music (ambience + SFX only); visuals drawn by the engine in `src/`; 1920×1080 24 fps.
+- Start every session with `ROADMAP.md` (known issues) and, for a video, its `projects/<slug>/STATUS.md`. Done = `docs/QUALITY.md` ticked. Log changes in `CHANGELOG.md`.
+- After changing a recipe: `python tools/catalog.py --previews`. After changing the engine: `npx tsc --noEmit`.
+- Never run two renders (review/video/thumbs/prompts) at the same time. Never upload/publish to YouTube. Don't commit media (`projects/*/out|review|work`, voice files, `assets/sfx/*.wav`).

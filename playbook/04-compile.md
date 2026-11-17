@@ -1,0 +1,68 @@
+# 04 — Compile the cards and fix them
+
+```
+python tools/make.py projects/<slug> cards
+```
+
+This does three things:
+1. Checks every card.
+2. Builds `plan.json`.
+3. Runs the engine validator.
+
+It prints one JSON report:
+
+```json
+{
+ "ok": true,
+ "errors": [],
+ "warnings": [ "…" ],
+ "scenes": 28, "duration": 125.08,
+ "mix": {"action": 0.74, "talk": 0.09, "map": 0.1, "device": 0.08},
+ "engine_errors": [], "engine_warnings": [ "…" ],
+ "coverage": {"setups": 52, "avg_setup_s": 2.41, "close_shots": 17},
+ "next": "…"
+}
+```
+
+## The loop
+
+1. Run the command.
+2. If `"ok": false`:
+   - Read the first error.
+   - It names the file and the card (`ch03.json card #7`) and says exactly what to change.
+   - Change it, then go back to 1.
+   - Fix errors from the top; one fix often removes several errors.
+3. When `"ok": true`, read every warning and fix the ones you can. Most have a direct fix:
+
+| warning starts with… | fix |
+|---|---|
+| `same recipe '…' as the card before` | Change one of the two cards to the next thing that happens: the consequence, the other side, or a close detail. |
+| `chapter '…': action is 28 %` | Use [narration-to-picture.md §3](narration-to-picture.md#3-more-action-when-the-checker-says-a-chapter-has-too-little). |
+| `recipe '…' is used N times` | Swap some of them for other recipes that fit the same sentences. |
+| `talk is …`, `map is …`, `device is …` | Shorten those cards (start the next card earlier), or replace them with action. |
+| `only 1.2 s long` | Merge it with the card before (delete it) or after (move `at`). |
+| `13.5 s long` | Split it at a sentence start into 2–3 cards. |
+| `"says" copies the narration` | Rewrite `says` in your own words: who does what, and why it matters. |
+| `"at" matched approximately` | Copy the words exactly from `work/reading.md`. |
+| `No input/voice.*` | Fine if the user gave only an SRT. Mention it in the hand-over. |
+| engine: `crosses …px … sprint` | That recipe needs more time: make the card longer, or choose a calmer variant. |
+| engine: `too large next to the people` | Ignore it only for `gun_crew` (heavy guns are drawn big on purpose). |
+
+4. The `mix` line must meet the targets:
+   - action ≥ 0.40 for the film;
+   - action ≥ 0.55 in battle chapters, which the warnings report per chapter;
+   - talk, map and device ≤ 0.15 each.
+5. When the report is clean, go to [05-review.md](05-review.md).
+
+## Errors you may see
+
+| error | meaning | fix |
+|---|---|---|
+| `"at" … was not found in the narration after the previous card` | The words are wrong or out of order. | Copy them from the narration text shown in the error. |
+| `unknown recipe "attack"` | The recipe name is wrong. | Use one of the suggested names; all names are in `recipes/CATALOG.md`. |
+| `unknown field "where"` | The field does not exist for this recipe. | Use the allowed fields listed in the error. |
+| `"react" = "scared" is not allowed` | The value is not on the list. | Pick one of the listed values. |
+| `the phrase "…" is not in this card's narration` | An `…_on` field uses words from another card. | Copy words from this card's own narration, shown in the error. |
+| `place "Pless" is not in data/places.json` | A map place is missing. | Add it to `cards/_film.json` `"places"`. |
+| `is neither in cards/_film.json "cast" nor a preset` | A person is missing. | Add them to the cast with a preset. |
+| `is not valid JSON` | Broken JSON. | Fix the comma or quote at the line given ([03-cards §5](03-cards.md#5-json-rules-the-checker-is-strict)). |
