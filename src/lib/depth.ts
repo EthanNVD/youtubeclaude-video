@@ -57,9 +57,13 @@ export const VEH: Record<string, { h: number; L: number; by: 'h' | 'L'; target: 
 export const SET_HORIZON: Record<string, number> = {
   field: 600, countryside: 600, steppe: 600, snow: 600, desert: 600, mud: 600,
   polder: 620, heath: 600, airfield: 620, river: 470, beach: 520, sea: 560, ocean: 560,
-  harbor: 560, dock: 560, railway: 640, station: 640, trench: 420, jungle: 500,
+  harbor: 560, dock: 560, railway: 640, station: 640, trench: 420, nomansland: 560, jungle: 500,
   city: 760, street: 760, ruins: 760, archbridge: 560, garden: 600, hotel: 640,
 };
+
+/** effects that happen ON the ground at their y: in a `world` scene they are sorted with people (a burst behind a man
+ *  is drawn behind him) and sized by depth: native size at the world's reference y, smaller further back */
+export const GROUND_FX = new Set(['shellburst', 'explosion', 'impact', 'dust', 'smoke', 'fire', 'splash']);
 
 export type World = { horizon?: number; y?: number; scale?: number; vehicles?: number };
 export type WorldCtx = { horizon: number; y: number; scale: number; vehicles: number };

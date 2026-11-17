@@ -1,0 +1,4419 @@
+{
+ "meta": {
+  "title": "WW1 — sample action chapter (Verdun to the first tanks)",
+  "lang": "en",
+  "fps": 24,
+  "duration": 124.48,
+  "voice": "input/voice.wav",
+  "grain": 0.5
+ },
+ "cast": {
+  "falkenhayn": {
+   "preset": "falkenhayn"
+  },
+  "brusilov": {
+   "preset": "brusilov"
+  },
+  "ww1_german": {
+   "preset": "ww1_german"
+  },
+  "ww1_french": {
+   "preset": "ww1_french"
+  },
+  "ww1_british": {
+   "preset": "ww1_british"
+  },
+  "ww1_russian": {
+   "preset": "ww1_russian"
+  },
+  "ww1_austrian": {
+   "preset": "ww1_austrian"
+  }
+ },
+ "scenes": [
+  {
+   "start": 0.0,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 640,
+     "y": 1130,
+     "scale": 1.9,
+     "pose": "aim",
+     "expr": "worried",
+     "keys": [
+      {
+       "t": 1.75,
+       "pose": "cower",
+       "holds": ""
+      },
+      {
+       "t": 3.2,
+       "pose": "aim",
+       "holds": "rifle"
+      }
+     ],
+     "holds": "rifle",
+     "view": "back",
+     "id": "a"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 1380,
+     "y": 1150,
+     "scale": 2.0,
+     "pose": "port",
+     "expr": "nervous",
+     "keys": [
+      {
+       "t": 0.6,
+       "pose": "head",
+       "holds": ""
+      },
+      {
+       "t": 2.4,
+       "pose": "port",
+       "holds": "rifle"
+      }
+     ],
+     "holds": "rifle",
+     "view": "back",
+     "id": "b"
+    },
+    {
+     "kind": "fx",
+     "type": "shellburst",
+     "x": 1250,
+     "y": 700,
+     "size": 0.8,
+     "in": 0.5
+    },
+    {
+     "kind": "fx",
+     "type": "shellburst",
+     "x": 520,
+     "y": 760,
+     "size": 0.8,
+     "in": 1.7
+    },
+    {
+     "kind": "fx",
+     "type": "shellburst",
+     "x": 1500,
+     "y": 820,
+     "size": 0.8,
+     "in": 3.0
+    }
+   ],
+   "set": {
+    "kind": "nomansland",
+    "time": "dawn",
+    "fg": "sandbags"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.05
+    }
+   ],
+   "impacts": [
+    0.5,
+    1.7,
+    3.0
+   ],
+   "date": "END OF 1915",
+   "chapter": "Bleeding",
+   "beat": "",
+   "id": "s001",
+   "end": 4.44
+  },
+  {
+   "start": 4.44,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "falkenhayn",
+     "x": 1000,
+     "y": 1000,
+     "scale": 1.6,
+     "pose": "hold",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 1.94,
+       "pose": "head",
+       "holds": "",
+       "expr": "worried"
+      },
+      {
+       "t": 2.7,
+       "pose": "chin"
+      }
+     ],
+     "holds": "telegram",
+     "turn": -0.3,
+     "id": "f"
+    },
+    {
+     "kind": "namecard",
+     "name": "General Erich von Falkenhayn",
+     "role": "Chief of the German General Staff",
+     "in": 0.3
+    }
+   ],
+   "set": {
+    "kind": "warroom",
+    "fg": "officedesk"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "on": "f",
+     "size": "medium",
+     "frameX": -0.1
+    },
+    {
+     "t": 1.94,
+     "on": "f",
+     "size": "close",
+     "frameX": 0.12,
+     "push": 0.06
+    }
+   ],
+   "beat": "General Erich von Falkenhayn, had a problem with no obvious answer. Attacks on the",
+   "id": "s002",
+   "end": 8.66
+  },
+  {
+   "start": 8.66,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 330,
+     "y": 1390,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 0.2,
+       "x": 330,
+       "y": 1390
+      },
+      {
+       "t": 0.8999999999999999,
+       "x": 330,
+       "y": 1130,
+       "ease": "linear"
+      },
+      {
+       "t": 5.8,
+       "x": 506.4,
+       "y": 800,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "view": "back",
+     "id": "m0"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 960,
+     "y": 1390,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 0.42000000000000004,
+       "x": 960,
+       "y": 1390
+      },
+      {
+       "t": 1.12,
+       "x": 960,
+       "y": 1130,
+       "ease": "linear"
+      },
+      {
+       "t": 4.9,
+       "x": 960,
+       "y": 863,
+       "ease": "linear",
+       "expr": "shocked"
+      }
+     ],
+     "holds": "rifle",
+     "view": "back",
+     "id": "m1",
+     "fallAt": 4.9,
+     "fallDir": -1
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 1590,
+     "y": 1390,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 0.64,
+       "x": 1590,
+       "y": 1390
+      },
+      {
+       "t": 1.3399999999999999,
+       "x": 1590,
+       "y": 1130,
+       "ease": "linear"
+      },
+      {
+       "t": 5.8,
+       "x": 1413.6,
+       "y": 800,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "view": "back",
+     "id": "m2"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 150,
+     "y": 900,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 3.5,
+       "x": 287,
+       "y": 791,
+       "ease": "linear",
+       "expr": "shocked"
+      }
+     ],
+     "holds": "rifle",
+     "view": "back",
+     "id": "m3",
+     "fallAt": 3.5,
+     "fallDir": -1
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 640,
+     "y": 900,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 5.8,
+       "x": 729.6,
+       "y": 720,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "view": "back",
+     "id": "m4"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 1280,
+     "y": 900,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 4.2,
+       "x": 1215,
+       "y": 770,
+       "ease": "linear",
+       "expr": "shocked"
+      }
+     ],
+     "holds": "rifle",
+     "view": "back",
+     "id": "m5",
+     "fallAt": 4.2,
+     "fallDir": -1
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 1780,
+     "y": 900,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 5.8,
+       "x": 1550.4,
+       "y": 720,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "view": "back",
+     "id": "m6"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 420,
+     "y": 760,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 5.8,
+       "x": 571.2,
+       "y": 660,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "view": "back",
+     "id": "m7"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 1100,
+     "y": 760,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 3.8,
+       "x": 1074,
+       "y": 694,
+       "ease": "linear",
+       "expr": "shocked"
+      }
+     ],
+     "holds": "rifle",
+     "view": "back",
+     "id": "m8",
+     "fallAt": 3.8,
+     "fallDir": 1
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 1500,
+     "y": 760,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 5.8,
+       "x": 1348.8,
+       "y": 660,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "view": "back",
+     "id": "m9"
+    },
+    {
+     "kind": "fx",
+     "type": "shellburst",
+     "x": 1300,
+     "y": 650,
+     "size": 2.0,
+     "in": 1.2
+    },
+    {
+     "kind": "fx",
+     "type": "shellburst",
+     "x": 700,
+     "y": 690,
+     "size": 2.0,
+     "in": 2.3
+    },
+    {
+     "kind": "fx",
+     "type": "shellburst",
+     "x": 1000,
+     "y": 720,
+     "size": 2.0,
+     "in": 3.4
+    },
+    {
+     "kind": "fx",
+     "type": "shellburst",
+     "x": 1500,
+     "y": 700,
+     "size": 2.0,
+     "in": 4.5
+    },
+    {
+     "kind": "fx",
+     "type": "tracer",
+     "x": 1990,
+     "y": 640,
+     "dir": 172,
+     "in": 1.0
+    },
+    {
+     "kind": "fx",
+     "type": "tracer",
+     "x": 1990,
+     "y": 610,
+     "dir": 176,
+     "in": 1.6
+    }
+   ],
+   "set": {
+    "kind": "nomansland",
+    "fg": "sandbags"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.04
+    },
+    {
+     "t": 3.0,
+     "on": [
+      "m3",
+      "m4",
+      "m5"
+     ],
+     "size": "full",
+     "push": 0.05
+    }
+   ],
+   "world": {
+    "scale": 1.0,
+    "y": 900
+   },
+   "impacts": [
+    1.2,
+    2.3,
+    3.4,
+    4.5
+   ],
+   "sfx": [
+    {
+     "t": 1.0,
+     "id": "machinegun",
+     "dur": 4.0
+    }
+   ],
+   "beat": "Attacks on the Western Front gained almost nothing and cost enormous numbers of men.",
+   "id": "s003",
+   "end": 14.2
+  },
+  {
+   "start": 14.2,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "falkenhayn",
+     "x": 900,
+     "y": 1000,
+     "scale": 1.6,
+     "pose": "write",
+     "expr": "determined",
+     "holds": "pen",
+     "turn": 0.3,
+     "id": "f"
+    },
+    {
+     "kind": "prop",
+     "item": "candle",
+     "x": 1240,
+     "y": 880,
+     "scale": 0.9,
+     "in": 0.0,
+     "front": true
+    }
+   ],
+   "set": {
+    "kind": "warroom",
+    "fg": "officedesk",
+    "time": "night"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "on": "f",
+     "size": "medium",
+     "frameX": 0.1,
+     "push": 0.05
+    }
+   ],
+   "sfx": [
+    {
+     "t": 0.3,
+     "id": "pen",
+     "dur": 2.2
+    }
+   ],
+   "beat": "So he went looking for a different kind of battle. According to the memoirs",
+   "id": "s004",
+   "end": 16.8
+  },
+  {
+   "start": 16.8,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "panel",
+     "x": 960,
+     "y": 540,
+     "w": 2600,
+     "h": 1600,
+     "color": "#8a5a33",
+     "border": false,
+     "enter": "none"
+    },
+    {
+     "kind": "shape",
+     "shape": "rect",
+     "x": 960,
+     "y": 120,
+     "w": 2600,
+     "h": 3,
+     "fill": "#6f4626",
+     "stroke": "#6f4626",
+     "strokeWidth": 0,
+     "enter": "none",
+     "opacity": 0.5
+    },
+    {
+     "kind": "shape",
+     "shape": "rect",
+     "x": 960,
+     "y": 330,
+     "w": 2600,
+     "h": 3,
+     "fill": "#6f4626",
+     "stroke": "#6f4626",
+     "strokeWidth": 0,
+     "enter": "none",
+     "opacity": 0.5
+    },
+    {
+     "kind": "shape",
+     "shape": "rect",
+     "x": 960,
+     "y": 540,
+     "w": 2600,
+     "h": 3,
+     "fill": "#6f4626",
+     "stroke": "#6f4626",
+     "strokeWidth": 0,
+     "enter": "none",
+     "opacity": 0.5
+    },
+    {
+     "kind": "shape",
+     "shape": "rect",
+     "x": 960,
+     "y": 750,
+     "w": 2600,
+     "h": 3,
+     "fill": "#6f4626",
+     "stroke": "#6f4626",
+     "strokeWidth": 0,
+     "enter": "none",
+     "opacity": 0.5
+    },
+    {
+     "kind": "shape",
+     "shape": "rect",
+     "x": 960,
+     "y": 960,
+     "w": 2600,
+     "h": 3,
+     "fill": "#6f4626",
+     "stroke": "#6f4626",
+     "strokeWidth": 0,
+     "enter": "none",
+     "opacity": 0.5
+    },
+    {
+     "kind": "document",
+     "style": "letter",
+     "title": "FALKENHAYN — AS HE WROTE AFTER THE WAR",
+     "lines": [
+      "France can be beaten",
+      "without a breakthrough —",
+      "if the French army loses enough men."
+     ],
+     "x": 960,
+     "y": 540,
+     "w": 1000,
+     "h": 560,
+     "in": 0.2,
+     "speed": 30,
+     "size": null,
+     "stamp": null
+    }
+   ],
+   "set": {
+    "kind": "paper",
+    "dof": 0
+   },
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.07
+    }
+   ],
+   "beat": "According to the memoirs he wrote after the war, his idea was that France",
+   "id": "s005",
+   "end": 20.36
+  },
+  {
+   "start": 20.36,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "ww1_french",
+     "x": 520,
+     "y": 1000,
+     "scale": 1.45,
+     "pose": "aim",
+     "expr": "determined",
+     "holds": "rifle",
+     "id": "s0",
+     "fireAt": [
+      0.7,
+      2.0,
+      3.6
+     ]
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_french",
+     "x": 960,
+     "y": 1000,
+     "scale": 1.45,
+     "pose": "aim",
+     "expr": "determined",
+     "holds": "rifle",
+     "id": "s1",
+     "fireAt": [
+      1.2999999999999998,
+      2.5,
+      3.6
+     ]
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_french",
+     "x": 1400,
+     "y": 1000,
+     "scale": 1.45,
+     "pose": "aim",
+     "expr": "determined",
+     "holds": "rifle",
+     "id": "s2",
+     "fireAt": [
+      1.9,
+      3.0,
+      3.6
+     ]
+    },
+    {
+     "kind": "fx",
+     "type": "explosion",
+     "x": 1300,
+     "y": 400,
+     "in": 0.8
+    },
+    {
+     "kind": "fx",
+     "type": "dust",
+     "x": 1300,
+     "y": 460,
+     "in": 0.8500000000000001
+    },
+    {
+     "kind": "fx",
+     "type": "explosion",
+     "x": 600,
+     "y": 380,
+     "in": 2.6
+    },
+    {
+     "kind": "fx",
+     "type": "dust",
+     "x": 600,
+     "y": 440,
+     "in": 2.65
+    },
+    {
+     "kind": "label",
+     "text": "THE LINE HOLDS",
+     "x": 960,
+     "y": 170,
+     "style": "tag",
+     "size": 42,
+     "in": 2.66,
+     "hud": true
+    }
+   ],
+   "set": {
+    "kind": "trench"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "on": [
+      "s0",
+      "s1",
+      "s2"
+     ],
+     "size": "full",
+     "push": 0.04,
+     "shake": 0
+    },
+    {
+     "t": 2.2,
+     "on": "s1",
+     "size": "close",
+     "frameX": 0.12,
+     "push": 0.05,
+     "shake": 3
+    }
+   ],
+   "sfx": [
+    {
+     "t": 0.8,
+     "id": "explosion"
+    },
+    {
+     "t": 2.6,
+     "id": "explosion"
+    }
+   ],
+   "beat": "his idea was that France could still be beaten without a breakthrough, if the",
+   "impacts": [
+    0.8,
+    2.6
+   ],
+   "id": "s006",
+   "end": 24.98
+  },
+  {
+   "start": 24.98,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "ww1_french",
+     "x": -120,
+     "y": 930,
+     "pose": "shoulder",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 3.6,
+       "x": 900,
+       "y": 930,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "id": "c0"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_french",
+     "x": -310,
+     "y": 954,
+     "pose": "shoulder",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 3.6,
+       "x": 710,
+       "y": 954,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "id": "c1"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_french",
+     "x": -500,
+     "y": 930,
+     "pose": "shoulder",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 3.6,
+       "x": 520,
+       "y": 930,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "id": "c2"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_french",
+     "x": -690,
+     "y": 954,
+     "pose": "shoulder",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 3.6,
+       "x": 330,
+       "y": 954,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "id": "c3"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_french",
+     "x": -880,
+     "y": 930,
+     "pose": "shoulder",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 3.6,
+       "x": 140,
+       "y": 930,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "id": "c4"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_french",
+     "x": -1070,
+     "y": 954,
+     "pose": "shoulder",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 3.6,
+       "x": -50,
+       "y": 954,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "id": "c5"
+    },
+    {
+     "id": "tr",
+     "kind": "vehicle",
+     "type": "truck",
+     "nation": "FRA",
+     "x": 266.8,
+     "y": 700,
+     "keys": [
+      {
+       "t": 3.6,
+       "x": 1200
+      }
+     ]
+    },
+    {
+     "id": "tr2",
+     "kind": "vehicle",
+     "type": "truck",
+     "nation": "FRA",
+     "x": -333.2,
+     "y": 700,
+     "keys": [
+      {
+       "t": 3.6,
+       "x": 600
+      }
+     ]
+    },
+    {
+     "kind": "fx",
+     "type": "smoke",
+     "x": 1700,
+     "y": 640,
+     "size": 1.3
+    },
+    {
+     "kind": "fx",
+     "type": "smoke",
+     "x": 1880,
+     "y": 660,
+     "size": 1.0
+    }
+   ],
+   "set": {
+    "kind": "mud",
+    "time": "dusk",
+    "poles": false
+   },
+   "shots": [
+    {
+     "t": 0,
+     "size": "wide",
+     "zoom": 1.0,
+     "panX": 80,
+     "push": 0.03
+    }
+   ],
+   "world": {
+    "scale": 1.0,
+    "y": 900
+   },
+   "beat": "if the French army could be made to lose enough men. Pick a place",
+   "id": "s007",
+   "end": 28.44
+  },
+  {
+   "start": 28.44,
+   "type": "stage",
+   "elements": [
+    {
+     "id": "g1",
+     "kind": "vehicle",
+     "type": "artillery",
+     "nation": "GERI",
+     "x": 760,
+     "y": 1000,
+     "fireAt": [
+      1.1,
+      3.44
+     ]
+    },
+    {
+     "id": "g2",
+     "kind": "vehicle",
+     "type": "artillery",
+     "nation": "GERI",
+     "x": 1460,
+     "y": 760,
+     "fireAt": [
+      0.4,
+      2.3,
+      4.14
+     ]
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 120,
+     "y": 1010,
+     "pose": "carry",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 2.2,
+       "x": 420
+      },
+      {
+       "t": 2.7,
+       "pose": "reach"
+      },
+      {
+       "t": 3.2,
+       "holds": "",
+       "pose": "idle"
+      },
+      {
+       "t": 3.29,
+       "pose": "head"
+      }
+     ],
+     "holds": "shell",
+     "holdsScale": 0.8,
+     "id": "ld"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 1100,
+     "y": 1030,
+     "pose": "idle",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 0.8500000000000001,
+       "pose": "head"
+      },
+      {
+       "t": 2.0,
+       "pose": "point"
+      },
+      {
+       "t": 3.19,
+       "pose": "head",
+       "expr": "tired"
+      }
+     ],
+     "turn": -0.4,
+     "id": "c1"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 1700,
+     "y": 800,
+     "pose": "idle",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 0.2,
+       "pose": "head"
+      },
+      {
+       "t": 1.3,
+       "pose": "idle"
+      },
+      {
+       "t": 2.1,
+       "pose": "head"
+      },
+      {
+       "t": 3.2,
+       "pose": "idle"
+      }
+     ],
+     "id": "c2"
+    }
+   ],
+   "set": {
+    "kind": "nomansland",
+    "time": "dusk",
+    "wire": false,
+    "horizon": 600
+   },
+   "shots": [
+    {
+     "t": 0,
+     "size": "wide",
+     "zoom": 1.0,
+     "push": 0.03
+    },
+    {
+     "t": 2.1,
+     "on": "c1",
+     "size": "mediumclose",
+     "frameX": -0.12,
+     "push": 0.05
+    },
+    {
+     "t": 3.79,
+     "size": "wide",
+     "zoom": 1.12,
+     "x": 900,
+     "y": 620,
+     "push": 0.03
+    }
+   ],
+   "world": {
+    "scale": 1.0,
+    "y": 900,
+    "vehicles": 1.9
+   },
+   "impacts": [
+    1.1,
+    3.44
+   ],
+   "beat": "Pick a place the French could not afford to give up, and let German",
+   "id": "s008",
+   "end": 34.48
+  },
+  {
+   "start": 34.48,
+   "type": "map",
+   "elements": [
+    {
+     "kind": "city",
+     "name": "Verdun",
+     "at": [
+      5.38,
+      49.16
+     ],
+     "side": "right",
+     "in": 0.2,
+     "size": 28,
+     "tag": true
+    },
+    {
+     "kind": "arrow",
+     "path": [
+      [
+       5.75,
+       49.45
+      ],
+      [
+       5.45,
+       49.25
+      ]
+     ],
+     "color": "GERI",
+     "in": 1.0,
+     "dur": 2.0,
+     "width": 24
+    },
+    {
+     "kind": "front",
+     "path": [
+      [
+       5.1,
+       49.4
+      ],
+      [
+       5.6,
+       49.3
+      ],
+      [
+       5.7,
+       49.1
+      ]
+     ],
+     "color": "#7a2a22",
+     "in": 0.0,
+     "enter": "draw",
+     "dur": 1.6
+    },
+    {
+     "kind": "legend",
+     "x": 40,
+     "y": 860,
+     "hud": true,
+     "in": 0,
+     "enter": "fade",
+     "items": [
+      {
+       "nation": "GERI",
+       "label": "Germany"
+      },
+      {
+       "nation": "FRA",
+       "label": "France"
+      },
+      {
+       "nation": "UK",
+       "label": "Britain"
+      },
+      {
+       "nation": "BEL",
+       "label": "Belgium"
+      }
+     ]
+    }
+   ],
+   "map": {
+    "era": "1914",
+    "center": [
+     5.4,
+     49.2
+    ],
+    "span": 2.4,
+    "style": "paper",
+    "colors": {
+     "German Empire": "GERI",
+     "France": "#93ab6e",
+     "Belgium": "#cfa264",
+     "United Kingdom of Great Britain and Ireland": "#d99a8c",
+     "Luxembourg": "#cfa264"
+    },
+    "hatch": [
+     "German Empire"
+    ],
+    "rivers": [
+     "Meuse"
+    ]
+   },
+   "beat": "The place he picked was Verdun, a fortress town on the river Meuse. The",
+   "id": "s009",
+   "end": 39.06
+  },
+  {
+   "start": 39.06,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": -160,
+     "y": 760,
+     "pose": "charge",
+     "expr": "shout",
+     "keys": [
+      {
+       "t": 2.6,
+       "x": 1300,
+       "y": 760,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "run": true,
+     "id": "w0"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": -310,
+     "y": 830,
+     "pose": "charge",
+     "expr": "shout",
+     "keys": [
+      {
+       "t": 2.6,
+       "x": 1150,
+       "y": 830,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "run": true,
+     "id": "w1"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": -460,
+     "y": 900,
+     "pose": "charge",
+     "expr": "shout",
+     "keys": [
+      {
+       "t": 1.7,
+       "x": 495,
+       "y": 900,
+       "ease": "linear",
+       "expr": "shocked"
+      }
+     ],
+     "holds": "rifle",
+     "run": true,
+     "id": "w2",
+     "fallAt": 1.7,
+     "fallDir": -1
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": -610,
+     "y": 970,
+     "pose": "charge",
+     "expr": "shout",
+     "keys": [
+      {
+       "t": 2.6,
+       "x": 850,
+       "y": 970,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "run": true,
+     "id": "w3"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": -760,
+     "y": 760,
+     "pose": "charge",
+     "expr": "shout",
+     "keys": [
+      {
+       "t": 2.6,
+       "x": 700,
+       "y": 760,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "run": true,
+     "id": "w4"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": -910,
+     "y": 830,
+     "pose": "charge",
+     "expr": "shout",
+     "keys": [
+      {
+       "t": 2.6,
+       "x": 550,
+       "y": 830,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "run": true,
+     "id": "w5"
+    },
+    {
+     "kind": "fx",
+     "type": "shellburst",
+     "x": 1500,
+     "y": 720,
+     "size": 2.0,
+     "in": 0.3
+    },
+    {
+     "kind": "fx",
+     "type": "shellburst",
+     "x": 1200,
+     "y": 800,
+     "size": 2.0,
+     "in": 1.4
+    },
+    {
+     "kind": "fx",
+     "type": "shellburst",
+     "x": 1650,
+     "y": 860,
+     "size": 2.0,
+     "in": 2.2
+    },
+    {
+     "kind": "fx",
+     "type": "snow",
+     "x": 960,
+     "y": 540
+    }
+   ],
+   "set": {
+    "kind": "nomansland",
+    "time": "dawn",
+    "weather": "snow"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "size": "wide",
+     "zoom": 1.0,
+     "push": 0.03
+    },
+    {
+     "t": 1.2,
+     "on": "w0",
+     "size": "full",
+     "track": true,
+     "frameX": 0.12
+    }
+   ],
+   "world": {
+    "scale": 1.0,
+    "y": 900
+   },
+   "impacts": [
+    0.3,
+    1.4,
+    2.2
+   ],
+   "date": "21 FEBRUARY 1916",
+   "place": "VERDUN",
+   "beat": "The attack began in February 1916. It became the longest battle of the war,",
+   "id": "s010",
+   "end": 41.58
+  },
+  {
+   "start": 41.58,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "ww1_french",
+     "x": 560,
+     "y": 1060,
+     "scale": 1.7,
+     "pose": "cower",
+     "expr": "panic",
+     "keys": [
+      {
+       "t": 1.9,
+       "pose": "head"
+      },
+      {
+       "t": 3.4,
+       "pose": "port",
+       "holds": "rifle",
+       "expr": "determined"
+      }
+     ],
+     "turn": 0.4,
+     "id": "p1"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_french",
+     "x": 1300,
+     "y": 1080,
+     "scale": 1.8,
+     "pose": "head",
+     "expr": "shocked",
+     "keys": [
+      {
+       "t": 2.75,
+       "pose": "cower",
+       "expr": "panic"
+      }
+     ],
+     "turn": -0.4,
+     "id": "p2"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_french",
+     "x": 2050,
+     "y": 820,
+     "pose": "charge",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 0.8,
+       "x": 2050,
+       "y": 820
+      },
+      {
+       "t": 3.4,
+       "x": -150,
+       "y": 800,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "run": true,
+     "flip": true,
+     "id": "run"
+    },
+    {
+     "kind": "fx",
+     "type": "shellburst",
+     "x": 1500,
+     "y": 660,
+     "size": 2.0,
+     "in": 0.4
+    },
+    {
+     "kind": "fx",
+     "type": "shellburst",
+     "x": 400,
+     "y": 700,
+     "size": 2.0,
+     "in": 1.5
+    },
+    {
+     "kind": "fx",
+     "type": "shellburst",
+     "x": 1200,
+     "y": 760,
+     "size": 2.0,
+     "in": 2.7
+    },
+    {
+     "kind": "fx",
+     "type": "shellburst",
+     "x": 760,
+     "y": 720,
+     "size": 2.0,
+     "in": 3.6
+    },
+    {
+     "kind": "label",
+     "text": "≈ 300 DAYS",
+     "x": 1560,
+     "y": 170,
+     "style": "tag",
+     "size": 44,
+     "in": 3.32,
+     "hud": true
+    }
+   ],
+   "set": {
+    "kind": "nomansland",
+    "fg": "sandbags"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.04
+    },
+    {
+     "t": 2.5,
+     "on": "p1",
+     "size": "mediumclose",
+     "frameX": -0.15,
+     "push": 0.05
+    }
+   ],
+   "world": {
+    "scale": 1.0,
+    "y": 900
+   },
+   "impacts": [
+    0.4,
+    1.5,
+    2.7,
+    3.6
+   ],
+   "beat": "It became the longest battle of the war, lasting about three hundred days. And",
+   "id": "s011",
+   "end": 46.88
+  },
+  {
+   "start": 46.88,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 2080,
+     "y": 780,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 3.8,
+       "x": 500,
+       "y": 780,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "flip": true,
+     "id": "g0"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 2250,
+     "y": 860,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 1.5,
+       "x": 1626,
+       "y": 860,
+       "ease": "linear",
+       "expr": "shocked"
+      }
+     ],
+     "holds": "rifle",
+     "flip": true,
+     "id": "g1",
+     "fallAt": 1.5,
+     "fallDir": 1
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 2420,
+     "y": 940,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 3.8,
+       "x": 840,
+       "y": 940,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "flip": true,
+     "id": "g2"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 2590,
+     "y": 780,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 2.4,
+       "x": 1592,
+       "y": 780,
+       "ease": "linear",
+       "expr": "shocked"
+      }
+     ],
+     "holds": "rifle",
+     "flip": true,
+     "id": "g3",
+     "fallAt": 2.4,
+     "fallDir": 1
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 2760,
+     "y": 860,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 3.8,
+       "x": 1180,
+       "y": 860,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "flip": true,
+     "id": "g4"
+    },
+    {
+     "kind": "fx",
+     "type": "shellburst",
+     "x": 900,
+     "y": 760,
+     "size": 2.0,
+     "in": 0.9
+    },
+    {
+     "kind": "fx",
+     "type": "shellburst",
+     "x": 1400,
+     "y": 860,
+     "size": 2.0,
+     "in": 2.2
+    },
+    {
+     "kind": "fx",
+     "type": "tracer",
+     "x": -60,
+     "y": 700,
+     "dir": -6,
+     "in": 0.5
+    }
+   ],
+   "set": {
+    "kind": "nomansland",
+    "time": "day"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "size": "wide",
+     "zoom": 1.0,
+     "push": 0.03
+    },
+    {
+     "t": 2.2,
+     "on": [
+      "g2",
+      "g3"
+     ],
+     "size": "full",
+     "push": 0.05
+    }
+   ],
+   "world": {
+    "scale": 1.0,
+    "y": 900
+   },
+   "impacts": [
+    0.9,
+    2.2
+   ],
+   "sfx": [
+    {
+     "t": 0.5,
+     "id": "machinegun",
+     "dur": 2.5
+    }
+   ],
+   "beat": "And the arithmetic never worked the way the plan said it would. One modern",
+   "id": "s012",
+   "end": 50.62
+  },
+  {
+   "start": 50.62,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "bars",
+     "title": "VERDUN 1916 — FRENCH CASUALTIES (ONE ESTIMATE)",
+     "x": 1020,
+     "y": 400,
+     "width": 760,
+     "max": 400000,
+     "items": [
+      {
+       "label": "French",
+       "value": 377000,
+       "nation": "FRA",
+       "in": 1.72
+      }
+     ]
+    }
+   ],
+   "set": {
+    "kind": "workshop"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.05
+    }
+   ],
+   "ambience": "amb_battle",
+   "beat": "One modern calculation puts French casualties at around three hundred and seventy-seven thousand and",
+   "id": "s013",
+   "end": 56.9
+  },
+  {
+   "start": 56.9,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 928,
+     "y": 1000,
+     "scale": 1.5,
+     "pose": "carry",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 4.0,
+       "x": 1828,
+       "ease": "linear"
+      }
+     ],
+     "turn": 0.5,
+     "id": "str",
+     "depthY": 1000
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 1043,
+     "y": 775,
+     "scale": 1.35,
+     "pose": "idle",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 4.0,
+       "x": 1943,
+       "ease": "linear"
+      }
+     ],
+     "id": "stp",
+     "lying": true,
+     "fallDir": 1,
+     "depthY": 1001
+    },
+    {
+     "kind": "prop",
+     "item": "stretcher",
+     "x": 1225,
+     "y": 817,
+     "scale": 2.1,
+     "in": 0.0,
+     "id": "sts",
+     "keys": [
+      {
+       "t": 4.0,
+       "x": 2125,
+       "ease": "linear"
+      }
+     ],
+     "enter": "none",
+     "depthY": 1002
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 1522,
+     "y": 1000,
+     "scale": 1.5,
+     "pose": "carry",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 4.0,
+       "x": 2422,
+       "ease": "linear"
+      }
+     ],
+     "turn": 0.5,
+     "id": "stf",
+     "depthY": 1003
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 420,
+     "y": 1000,
+     "scale": 1.55,
+     "pose": "cower",
+     "expr": "sad",
+     "turn": 0.4,
+     "id": "sd"
+    },
+    {
+     "kind": "counter",
+     "from": 0,
+     "to": 337000,
+     "x": 960,
+     "y": 150,
+     "in": 2.24,
+     "suffix": " GERMAN CASUALTIES",
+     "prefix": "≈ ",
+     "size": 60,
+     "dur": 1.4,
+     "hud": true
+    }
+   ],
+   "set": {
+    "kind": "trench",
+    "time": "day"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.04,
+     "panX": 80
+    }
+   ],
+   "beat": "and German casualties at around three hundred and thirty-seven thousand. That's roughly seventy thousand",
+   "id": "s014",
+   "end": 61.82
+  },
+  {
+   "start": 61.82,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "ww1_french",
+     "x": 73,
+     "y": 900,
+     "scale": 1.3,
+     "pose": "carry",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 5.6,
+       "x": 973,
+       "ease": "linear"
+      }
+     ],
+     "turn": 0.5,
+     "id": "b0r",
+     "silhouette": true,
+     "depthY": 900
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_french",
+     "x": 172,
+     "y": 705,
+     "scale": 1.17,
+     "pose": "idle",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 5.6,
+       "x": 1072,
+       "ease": "linear"
+      }
+     ],
+     "id": "b0p",
+     "lying": true,
+     "fallDir": 1,
+     "depthY": 901,
+     "silhouette": true
+    },
+    {
+     "kind": "prop",
+     "item": "stretcher",
+     "x": 330,
+     "y": 741,
+     "scale": 1.82,
+     "in": 0.0,
+     "id": "b0s",
+     "keys": [
+      {
+       "t": 5.6,
+       "x": 1230,
+       "ease": "linear"
+      }
+     ],
+     "enter": "none",
+     "depthY": 902,
+     "silhouette": true
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_french",
+     "x": 587,
+     "y": 900,
+     "scale": 1.3,
+     "pose": "carry",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 5.6,
+       "x": 1487,
+       "ease": "linear"
+      }
+     ],
+     "turn": 0.5,
+     "id": "b0f",
+     "silhouette": true,
+     "depthY": 903
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_french",
+     "x": -688,
+     "y": 905,
+     "scale": 1.1,
+     "pose": "carry",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 5.6,
+       "x": 162,
+       "ease": "linear"
+      }
+     ],
+     "turn": 0.5,
+     "id": "b1r",
+     "silhouette": true,
+     "depthY": 905
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_french",
+     "x": -604,
+     "y": 740,
+     "scale": 0.99,
+     "pose": "idle",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 5.6,
+       "x": 246,
+       "ease": "linear"
+      }
+     ],
+     "id": "b1p",
+     "lying": true,
+     "fallDir": 1,
+     "depthY": 906,
+     "silhouette": true
+    },
+    {
+     "kind": "prop",
+     "item": "stretcher",
+     "x": -470,
+     "y": 771,
+     "scale": 1.54,
+     "in": 0.0,
+     "id": "b1s",
+     "keys": [
+      {
+       "t": 5.6,
+       "x": 380,
+       "ease": "linear"
+      }
+     ],
+     "enter": "none",
+     "depthY": 907,
+     "silhouette": true
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_french",
+     "x": -252,
+     "y": 905,
+     "scale": 1.1,
+     "pose": "carry",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 5.6,
+       "x": 598,
+       "ease": "linear"
+      }
+     ],
+     "turn": 0.5,
+     "id": "b1f",
+     "silhouette": true,
+     "depthY": 908
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_french",
+     "x": 2000,
+     "y": 880,
+     "pose": "shoulder",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 5.6,
+       "x": 1300,
+       "y": 880,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "flip": true,
+     "silhouette": true,
+     "id": "r0",
+     "scale": 0.72
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_french",
+     "x": 2120,
+     "y": 880,
+     "pose": "shoulder",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 5.6,
+       "x": 1420,
+       "y": 880,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "flip": true,
+     "silhouette": true,
+     "id": "r1",
+     "scale": 0.72
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_french",
+     "x": 2240,
+     "y": 880,
+     "pose": "shoulder",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 5.6,
+       "x": 1540,
+       "y": 880,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "flip": true,
+     "silhouette": true,
+     "id": "r2",
+     "scale": 0.72
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_french",
+     "x": 2360,
+     "y": 880,
+     "pose": "shoulder",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 5.6,
+       "x": 1660,
+       "y": 880,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "flip": true,
+     "silhouette": true,
+     "id": "r3",
+     "scale": 0.72
+    },
+    {
+     "kind": "prop",
+     "item": "cross",
+     "x": 180,
+     "y": 1090,
+     "scale": 1.1,
+     "in": 0.4,
+     "enter": "place",
+     "silhouette": true
+    },
+    {
+     "kind": "prop",
+     "item": "cross",
+     "x": 440,
+     "y": 1120,
+     "scale": 1.1,
+     "in": 1.1,
+     "enter": "place",
+     "silhouette": true
+    },
+    {
+     "kind": "prop",
+     "item": "cross",
+     "x": 700,
+     "y": 1090,
+     "scale": 1.1,
+     "in": 1.7999999999999998,
+     "enter": "place",
+     "silhouette": true
+    },
+    {
+     "kind": "prop",
+     "item": "cross",
+     "x": 960,
+     "y": 1120,
+     "scale": 1.1,
+     "in": 2.4999999999999996,
+     "enter": "place",
+     "silhouette": true
+    },
+    {
+     "kind": "prop",
+     "item": "cross",
+     "x": 1220,
+     "y": 1090,
+     "scale": 1.1,
+     "in": 3.1999999999999997,
+     "enter": "place",
+     "silhouette": true
+    },
+    {
+     "kind": "prop",
+     "item": "cross",
+     "x": 1480,
+     "y": 1120,
+     "scale": 1.1,
+     "in": 3.9,
+     "enter": "place",
+     "silhouette": true
+    },
+    {
+     "kind": "prop",
+     "item": "cross",
+     "x": 1740,
+     "y": 1090,
+     "scale": 1.1,
+     "in": 4.6,
+     "enter": "place",
+     "silhouette": true
+    },
+    {
+     "kind": "label",
+     "text": "≈ 70,000 MEN A MONTH",
+     "x": 960,
+     "y": 160,
+     "style": "tag",
+     "size": 46,
+     "in": 0.74,
+     "hud": true
+    }
+   ],
+   "set": {
+    "kind": "nomansland",
+    "time": "dusk",
+    "wire": false,
+    "horizon": 880
+   },
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.04,
+     "panX": -60
+    }
+   ],
+   "tint": "warm",
+   "beat": "That's roughly seventy thousand men a month, for most of a year, on the",
+   "id": "s015",
+   "end": 67.42
+  },
+  {
+   "start": 67.42,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 380,
+     "y": 960,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 1.6,
+       "x": 764,
+       "y": 960,
+       "ease": "linear",
+       "expr": "shocked"
+      }
+     ],
+     "holds": "rifle",
+     "id": "xh",
+     "fallAt": 1.6,
+     "fallDir": -1
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": -150,
+     "y": 1000,
+     "pose": "charge",
+     "expr": "shocked",
+     "keys": [
+      {
+       "t": 1.7000000000000002,
+       "x": -150,
+       "y": 1000
+      },
+      {
+       "t": 2.85,
+       "x": 411,
+       "y": 1000,
+       "ease": "linear"
+      },
+      {
+       "t": 2.9,
+       "kneel": true,
+       "pose": "reach",
+       "expr": "cry"
+      }
+     ],
+     "holds": "",
+     "run": true,
+     "id": "xk"
+    },
+    {
+     "kind": "fx",
+     "type": "shellburst",
+     "x": 1500,
+     "y": 740,
+     "size": 2.0,
+     "in": 1.55
+    }
+   ],
+   "set": {
+    "kind": "nomansland",
+    "time": "day"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "on": "xh",
+     "size": "full",
+     "track": true,
+     "frameX": 0.1
+    },
+    {
+     "t": 2.95,
+     "on": "xk",
+     "size": "close",
+     "frameX": 0.15,
+     "push": 0.05
+    }
+   ],
+   "world": {
+    "scale": 1.0,
+    "y": 900
+   },
+   "impacts": [
+    1.55
+   ],
+   "beat": "The army that was supposed to bleed was the German army, too. And while",
+   "id": "s016",
+   "end": 71.34
+  },
+  {
+   "start": 71.34,
+   "type": "map",
+   "elements": [
+    {
+     "kind": "front",
+     "path": [
+      [
+       21.3,
+       57.2
+      ],
+      [
+       24.2,
+       56.6
+      ],
+      [
+       26.2,
+       55.3
+      ],
+      [
+       26.6,
+       53.5
+      ],
+      [
+       25.8,
+       51.6
+      ],
+      [
+       25.3,
+       50.0
+      ],
+      [
+       25.9,
+       48.3
+      ],
+      [
+       26.4,
+       47.8
+      ]
+     ],
+     "color": "#7a2a22",
+     "in": 0.0,
+     "enter": "draw",
+     "dur": 1.6
+    },
+    {
+     "kind": "arrow",
+     "path": [
+      [
+       26.2,
+       50.6
+      ],
+      [
+       24.0,
+       50.0
+      ]
+     ],
+     "color": "RUS",
+     "in": 0.6,
+     "dur": 1.4,
+     "width": 24,
+     "label": "BRUSILOV"
+    },
+    {
+     "kind": "arrow",
+     "path": [
+      [
+       1.6,
+       49.9
+      ],
+      [
+       2.9,
+       50.0
+      ]
+     ],
+     "color": "UK",
+     "in": 1.6,
+     "dur": 1.2,
+     "width": 24,
+     "label": "SOMME"
+    },
+    {
+     "kind": "legend",
+     "x": 40,
+     "y": 860,
+     "hud": true,
+     "in": 0,
+     "enter": "fade",
+     "items": [
+      {
+       "nation": "GERI",
+       "label": "Central Powers"
+      },
+      {
+       "nation": "FRA",
+       "label": "France"
+      },
+      {
+       "nation": "UK",
+       "label": "Britain"
+      },
+      {
+       "nation": "RUS",
+       "label": "Russia"
+      }
+     ]
+    }
+   ],
+   "map": {
+    "era": "1914",
+    "center": [
+     13.5,
+     50.3
+    ],
+    "span": 31,
+    "style": "paper",
+    "colors": {
+     "German Empire": "GERI",
+     "Austro-Hungarian Empire": "#9b9a8c",
+     "France": "#93ab6e",
+     "Russian Empire": "#c98a6a",
+     "United Kingdom of Great Britain and Ireland": "#d99a8c",
+     "Belgium": "#cfa264",
+     "Serbia": "#93ab6e"
+    },
+    "hatch": [
+     "German Empire"
+    ]
+   },
+   "date": "SUMMER 1916",
+   "beat": "And while Verdun went on, the other side opened two more doors. In June,",
+   "id": "s017",
+   "end": 75.12
+  },
+  {
+   "start": 75.12,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "brusilov",
+     "x": 1150,
+     "y": 1000,
+     "scale": 1.7,
+     "pose": "point",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 1.6,
+       "pose": "fist"
+      },
+      {
+       "t": 2.9,
+       "pose": "point"
+      }
+     ],
+     "turn": -0.3,
+     "id": "b"
+    },
+    {
+     "kind": "namecard",
+     "name": "General Aleksei Brusilov",
+     "role": "Russian South-Western Front",
+     "in": 0.4
+    }
+   ],
+   "set": {
+    "kind": "tent"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "on": "b",
+     "size": "mediumclose",
+     "frameX": 0.12,
+     "push": 0.05
+    }
+   ],
+   "date": "JUNE 1916",
+   "beat": "In June, the Russian general Aleksei Brusilov attacked on a wide front in the",
+   "id": "s018",
+   "end": 79.18
+  },
+  {
+   "start": 79.18,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "ww1_russian",
+     "x": -220,
+     "y": 760,
+     "pose": "charge",
+     "expr": "shout",
+     "keys": [
+      {
+       "t": 4.86,
+       "x": 1050,
+       "y": 760,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "run": true,
+     "id": "r0"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_russian",
+     "x": -390,
+     "y": 840,
+     "pose": "charge",
+     "expr": "shout",
+     "keys": [
+      {
+       "t": 4.86,
+       "x": 880,
+       "y": 840,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "run": true,
+     "id": "r1"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_russian",
+     "x": -560,
+     "y": 920,
+     "pose": "charge",
+     "expr": "shout",
+     "keys": [
+      {
+       "t": 4.86,
+       "x": 710,
+       "y": 920,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "run": true,
+     "id": "r2"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_russian",
+     "x": -730,
+     "y": 1000,
+     "pose": "charge",
+     "expr": "shout",
+     "keys": [
+      {
+       "t": 4.86,
+       "x": 540,
+       "y": 1000,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "run": true,
+     "id": "r3"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_russian",
+     "x": -900,
+     "y": 760,
+     "pose": "charge",
+     "expr": "shout",
+     "keys": [
+      {
+       "t": 4.86,
+       "x": 370,
+       "y": 760,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "run": true,
+     "id": "r4"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_russian",
+     "x": -1070,
+     "y": 840,
+     "pose": "charge",
+     "expr": "shout",
+     "keys": [
+      {
+       "t": 4.86,
+       "x": 200,
+       "y": 840,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "run": true,
+     "id": "r5"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_russian",
+     "x": -1240,
+     "y": 920,
+     "pose": "charge",
+     "expr": "shout",
+     "keys": [
+      {
+       "t": 4.86,
+       "x": 30,
+       "y": 920,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "run": true,
+     "id": "r6"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_austrian",
+     "x": 1450,
+     "y": 780,
+     "pose": "aim",
+     "expr": "nervous",
+     "keys": [
+      {
+       "t": 2.8600000000000003,
+       "pose": "surrender",
+       "holds": "",
+       "expr": "shocked"
+      }
+     ],
+     "holds": "rifle",
+     "fireAt": [
+      0.3,
+      1.4
+     ],
+     "flip": true,
+     "id": "a0"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_austrian",
+     "x": 1600,
+     "y": 870,
+     "pose": "aim",
+     "expr": "nervous",
+     "keys": [
+      {
+       "t": 3.1100000000000003,
+       "pose": "port",
+       "holds": "rifle",
+       "expr": "panic"
+      },
+      {
+       "t": 3.7600000000000002,
+       "flip": false,
+       "pose": "charge",
+       "run": true
+      },
+      {
+       "t": 6.0600000000000005,
+       "x": 2450,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "fireAt": [
+      0.6499999999999999,
+      1.7
+     ],
+     "flip": true,
+     "id": "a1"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_austrian",
+     "x": 1750,
+     "y": 960,
+     "pose": "aim",
+     "expr": "nervous",
+     "keys": [
+      {
+       "t": 3.3600000000000003,
+       "pose": "surrender",
+       "holds": "",
+       "expr": "sad"
+      }
+     ],
+     "holds": "rifle",
+     "fireAt": [
+      1.0,
+      2.0
+     ],
+     "flip": true,
+     "id": "a2"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_austrian",
+     "x": 1900,
+     "y": 780,
+     "pose": "aim",
+     "expr": "nervous",
+     "keys": [
+      {
+       "t": 3.6100000000000003,
+       "pose": "head",
+       "holds": "rifle",
+       "expr": "panic"
+      },
+      {
+       "t": 4.16,
+       "flip": false,
+       "pose": "charge",
+       "run": true
+      },
+      {
+       "t": 6.460000000000001,
+       "x": 2750,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "fireAt": [
+      1.3499999999999999,
+      2.3
+     ],
+     "flip": true,
+     "id": "a3"
+    },
+    {
+     "kind": "fx",
+     "type": "shellburst",
+     "x": 1500,
+     "y": 760,
+     "size": 2.0,
+     "in": 0.4
+    },
+    {
+     "kind": "fx",
+     "type": "shellburst",
+     "x": 1750,
+     "y": 840,
+     "size": 2.0,
+     "in": 1.3
+    },
+    {
+     "kind": "fx",
+     "type": "shellburst",
+     "x": 1600,
+     "y": 900,
+     "size": 2.0,
+     "in": 2.3600000000000003
+    }
+   ],
+   "set": {
+    "kind": "steppe",
+    "poles": false,
+    "houses": false,
+    "road": false
+   },
+   "shots": [
+    {
+     "t": 0,
+     "size": "wide",
+     "zoom": 1.0,
+     "push": 0.03
+    },
+    {
+     "t": 3.2600000000000002,
+     "on": [
+      "a0",
+      "a1",
+      "a2"
+     ],
+     "size": "full",
+     "push": 0.05
+    }
+   ],
+   "world": {
+    "scale": 1.0,
+    "y": 900
+   },
+   "impacts": [
+    0.4,
+    1.3,
+    2.3600000000000003
+   ],
+   "beat": "attacked on a wide front in the east and smashed the Austro-Hungarian armies, inflicting",
+   "id": "s019",
+   "end": 86.92
+  },
+  {
+   "start": 86.92,
+   "type": "stage",
+   "elements": [
+    {
+     "id": "tc0",
+     "kind": "vehicle",
+     "type": "locomotive",
+     "nation": "GERI",
+     "x": 1500,
+     "y": 740,
+     "keys": [
+      {
+       "t": 0.8,
+       "x": 1500
+      },
+      {
+       "t": 3.7,
+       "x": 2300,
+       "ease": "smooth"
+      }
+     ]
+    },
+    {
+     "id": "tc1",
+     "kind": "vehicle",
+     "type": "traincar",
+     "nation": "GERI",
+     "x": 1200,
+     "y": 740,
+     "keys": [
+      {
+       "t": 0.8,
+       "x": 1200
+      },
+      {
+       "t": 3.7,
+       "x": 2000,
+       "ease": "smooth"
+      }
+     ]
+    },
+    {
+     "id": "tc2",
+     "kind": "vehicle",
+     "type": "traincar",
+     "nation": "GERI",
+     "x": 900,
+     "y": 740,
+     "keys": [
+      {
+       "t": 0.8,
+       "x": 900
+      },
+      {
+       "t": 3.7,
+       "x": 1700,
+       "ease": "smooth"
+      }
+     ]
+    },
+    {
+     "id": "tc3",
+     "kind": "vehicle",
+     "type": "traincar",
+     "nation": "GERI",
+     "x": 600,
+     "y": 740,
+     "keys": [
+      {
+       "t": 0.8,
+       "x": 600
+      },
+      {
+       "t": 3.7,
+       "x": 1400,
+       "ease": "smooth"
+      }
+     ]
+    },
+    {
+     "id": "tc4",
+     "kind": "vehicle",
+     "type": "traincar",
+     "nation": "GERI",
+     "x": 300,
+     "y": 740,
+     "keys": [
+      {
+       "t": 0.8,
+       "x": 300
+      },
+      {
+       "t": 3.7,
+       "x": 1100,
+       "ease": "smooth"
+      }
+     ]
+    },
+    {
+     "kind": "fx",
+     "type": "smoke",
+     "x": 1560,
+     "y": 640,
+     "size": 0.6,
+     "keys": [
+      {
+       "t": 0.8,
+       "x": 1560
+      },
+      {
+       "t": 3.7,
+       "x": 2360,
+       "ease": "smooth"
+      }
+     ]
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": -150,
+     "y": 1000,
+     "pose": "shoulder",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 3.6,
+       "x": 700,
+       "y": 800,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "id": "s0"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": -360,
+     "y": 1050,
+     "pose": "shoulder",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 3.6,
+       "x": 490,
+       "y": 820,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "id": "s1"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": -570,
+     "y": 1000,
+     "pose": "shoulder",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 3.6,
+       "x": 280,
+       "y": 800,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "id": "s2"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": -780,
+     "y": 1050,
+     "pose": "shoulder",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 3.6,
+       "x": 70,
+       "y": 820,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "id": "s3"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": -990,
+     "y": 1000,
+     "pose": "shoulder",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 3.6,
+       "x": -140,
+       "y": 800,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "id": "s4"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 1450,
+     "y": 1040,
+     "pose": "wave",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 1.6,
+       "pose": "point"
+      }
+     ],
+     "turn": -0.4,
+     "id": "of"
+    }
+   ],
+   "set": {
+    "kind": "railway"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "size": "wide",
+     "zoom": 1.0,
+     "push": 0.03,
+     "panX": 120
+    }
+   ],
+   "world": {
+    "scale": 1.0,
+    "y": 900
+   },
+   "sfx": [
+    {
+     "t": 0.8,
+     "id": "train",
+     "dur": 3.0
+    }
+   ],
+   "beat": "Germany had to send divisions east to hold its ally up, and Romania was",
+   "id": "s020",
+   "end": 90.54
+  },
+  {
+   "start": 90.54,
+   "type": "map",
+   "elements": [
+    {
+     "kind": "region",
+     "polygon": [
+      [
+       22.4,
+       48.2
+      ],
+      [
+       26.6,
+       48.2
+      ],
+      [
+       29.6,
+       45.2
+      ],
+      [
+       28.6,
+       43.8
+      ],
+      [
+       22.7,
+       44.0
+      ],
+      [
+       21.0,
+       46.0
+      ]
+     ],
+     "color": "#93ab6e",
+     "fillOpacity": 0.6,
+     "in": 0.4
+    },
+    {
+     "kind": "label",
+     "text": "ROMANIA JOINS THE ALLIES",
+     "x": 1300,
+     "y": 860,
+     "style": "tag",
+     "size": 34,
+     "in": 0.9
+    },
+    {
+     "kind": "legend",
+     "x": 40,
+     "y": 860,
+     "hud": true,
+     "in": 0,
+     "enter": "fade",
+     "items": [
+      {
+       "nation": "GERI",
+       "label": "Central Powers"
+      },
+      {
+       "nation": "FRA",
+       "label": "France"
+      },
+      {
+       "nation": "UK",
+       "label": "Britain"
+      },
+      {
+       "nation": "RUS",
+       "label": "Russia"
+      }
+     ]
+    }
+   ],
+   "map": {
+    "era": "1914",
+    "center": [
+     20.0,
+     47.5
+    ],
+    "span": 18,
+    "style": "paper",
+    "colors": {
+     "German Empire": "GERI",
+     "Austro-Hungarian Empire": "#9b9a8c",
+     "France": "#93ab6e",
+     "Russian Empire": "#c98a6a",
+     "United Kingdom of Great Britain and Ireland": "#d99a8c",
+     "Belgium": "#cfa264",
+     "Serbia": "#93ab6e"
+    },
+    "hatch": [
+     "German Empire"
+    ]
+   },
+   "beat": "and Romania was encouraged to join the war on the Allied side. Then, on",
+   "id": "s021",
+   "end": 94.22
+  },
+  {
+   "start": 94.22,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 1560,
+     "y": 1080,
+     "scale": 2.1,
+     "pose": "pointUp",
+     "expr": "shout",
+     "keys": [
+      {
+       "t": 1.0,
+       "pose": "charge",
+       "expr": "determined"
+      }
+     ],
+     "turn": -0.4,
+     "id": "of",
+     "front": true
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 300,
+     "y": 1380,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 1.3,
+       "x": 300,
+       "y": 1380
+      },
+      {
+       "t": 2.0,
+       "x": 300,
+       "y": 1120,
+       "ease": "linear"
+      },
+      {
+       "t": 3.4,
+       "x": 484.8,
+       "y": 820,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "view": "back",
+     "id": "u0"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 760,
+     "y": 1380,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 1.52,
+       "x": 760,
+       "y": 1380
+      },
+      {
+       "t": 2.2199999999999998,
+       "x": 760,
+       "y": 1120,
+       "ease": "linear"
+      },
+      {
+       "t": 3.4,
+       "x": 816.0,
+       "y": 820,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "view": "back",
+     "id": "u1"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 1200,
+     "y": 1380,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 1.74,
+       "x": 1200,
+       "y": 1380
+      },
+      {
+       "t": 2.44,
+       "x": 1200,
+       "y": 1120,
+       "ease": "linear"
+      },
+      {
+       "t": 3.4,
+       "x": 1132.8,
+       "y": 820,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "view": "back",
+     "id": "u2"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 520,
+     "y": 900,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 3.4,
+       "x": 643.2,
+       "y": 760,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "view": "back",
+     "id": "u3",
+     "in": 1.3
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 980,
+     "y": 900,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 3.4,
+       "x": 974.4,
+       "y": 760,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "view": "back",
+     "id": "u4",
+     "in": 1.3
+    }
+   ],
+   "set": {
+    "kind": "nomansland",
+    "time": "dawn",
+    "fg": "sandbags"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "on": "of",
+     "size": "mediumclose",
+     "frameX": 0.1,
+     "push": 0.05
+    },
+    {
+     "t": 1.25,
+     "zoom": 1.0,
+     "push": 0.04
+    }
+   ],
+   "world": {
+    "scale": 1.0,
+    "y": 900
+   },
+   "date": "1 JULY 1916",
+   "place": "THE SOMME",
+   "sfx": [
+    {
+     "t": 0.4,
+     "id": "bell"
+    }
+   ],
+   "beat": "Then, on the 1st of July, the British and French attacked on the Somme.",
+   "id": "s022",
+   "end": 99.24
+  },
+  {
+   "start": 99.24,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 300,
+     "y": 1090,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 5.4,
+       "x": 443,
+       "y": 928,
+       "ease": "linear",
+       "expr": "shocked"
+      }
+     ],
+     "holds": "rifle",
+     "view": "back",
+     "id": "l0",
+     "fallAt": 5.4,
+     "fallDir": 1
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 960,
+     "y": 1090,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 3.1,
+       "x": 960,
+       "y": 997,
+       "ease": "linear",
+       "expr": "shocked"
+      }
+     ],
+     "holds": "rifle",
+     "view": "back",
+     "id": "l1",
+     "fallAt": 3.1,
+     "fallDir": -1
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 1600,
+     "y": 1090,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 7.0,
+       "x": 1420.8,
+       "y": 880,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "view": "back",
+     "id": "l2"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 130,
+     "y": 900,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 2.8,
+       "x": 223,
+       "y": 844,
+       "ease": "linear",
+       "expr": "shocked"
+      }
+     ],
+     "holds": "rifle",
+     "view": "back",
+     "id": "l3",
+     "fallAt": 2.8,
+     "fallDir": -1
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 620,
+     "y": 900,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 1.4,
+       "x": 639,
+       "y": 872,
+       "ease": "linear",
+       "expr": "shocked"
+      }
+     ],
+     "holds": "rifle",
+     "view": "back",
+     "id": "l4",
+     "fallAt": 1.4,
+     "fallDir": 1
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 1240,
+     "y": 900,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 7.0,
+       "x": 1161.6,
+       "y": 760,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "view": "back",
+     "id": "l5"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 1760,
+     "y": 900,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 2.2,
+       "x": 1690,
+       "y": 856,
+       "ease": "linear",
+       "expr": "shocked"
+      }
+     ],
+     "holds": "rifle",
+     "view": "back",
+     "id": "l6",
+     "fallAt": 2.2,
+     "fallDir": 1
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 380,
+     "y": 760,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 7.0,
+       "x": 542.4,
+       "y": 680,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "view": "back",
+     "id": "l7"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 860,
+     "y": 760,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 4.0,
+       "x": 876,
+       "y": 714,
+       "ease": "linear",
+       "expr": "shocked"
+      }
+     ],
+     "holds": "rifle",
+     "view": "back",
+     "id": "l8",
+     "fallAt": 4.0,
+     "fallDir": 1
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 1120,
+     "y": 760,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 4.6,
+       "x": 1091,
+       "y": 707,
+       "ease": "linear",
+       "expr": "shocked"
+      }
+     ],
+     "holds": "rifle",
+     "view": "back",
+     "id": "l9",
+     "fallAt": 4.6,
+     "fallDir": -1
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 1480,
+     "y": 760,
+     "pose": "port",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 7.0,
+       "x": 1334.4,
+       "y": 680,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "view": "back",
+     "id": "l10"
+    },
+    {
+     "kind": "fx",
+     "type": "tracer",
+     "x": 1990,
+     "y": 640,
+     "dir": 172,
+     "in": 0.6
+    },
+    {
+     "kind": "fx",
+     "type": "tracer",
+     "x": 1990,
+     "y": 600,
+     "dir": 178,
+     "in": 1.1
+    },
+    {
+     "kind": "fx",
+     "type": "tracer",
+     "x": -60,
+     "y": 620,
+     "dir": 4,
+     "in": 1.5
+    },
+    {
+     "kind": "fx",
+     "type": "shellburst",
+     "x": 1400,
+     "y": 680,
+     "size": 2.0,
+     "in": 0.8
+    },
+    {
+     "kind": "fx",
+     "type": "shellburst",
+     "x": 600,
+     "y": 700,
+     "size": 2.0,
+     "in": 2.6
+    },
+    {
+     "kind": "counter",
+     "from": 0,
+     "to": 57470,
+     "x": 960,
+     "y": 150,
+     "in": 2.62,
+     "suffix": " CASUALTIES",
+     "prefix": "",
+     "size": 70,
+     "dur": 2.4,
+     "hud": true
+    }
+   ],
+   "set": {
+    "kind": "nomansland",
+    "time": "day"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.05
+    },
+    {
+     "t": 3.3,
+     "on": [
+      "l0",
+      "l1",
+      "l2"
+     ],
+     "size": "full",
+     "push": 0.05
+    }
+   ],
+   "world": {
+    "scale": 1.0,
+    "y": 900
+   },
+   "impacts": [
+    0.8,
+    2.6
+   ],
+   "sfx": [
+    {
+     "t": 0.5,
+     "id": "machinegun",
+     "dur": 6.0
+    }
+   ],
+   "beat": "On its first day, the British army suffered fifty-seven thousand four hundred and seventy",
+   "id": "s023",
+   "end": 105.82
+  },
+  {
+   "start": 105.82,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 380,
+     "y": 1170,
+     "scale": 1.9,
+     "pose": "aim",
+     "expr": "determined",
+     "holds": "rifle",
+     "flip": true,
+     "turn": 0.3,
+     "fire": [
+      0.0,
+      6.0,
+      0.125
+     ],
+     "id": "mg0"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 860,
+     "y": 1190,
+     "scale": 1.9,
+     "pose": "aim",
+     "expr": "determined",
+     "holds": "rifle",
+     "flip": true,
+     "turn": 0.3,
+     "fire": [
+      0.3,
+      6.0,
+      0.125
+     ],
+     "id": "mg1"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 1280,
+     "y": 1180,
+     "scale": 1.843,
+     "pose": "point",
+     "expr": "shout",
+     "keys": [
+      {
+       "t": 1.3,
+       "pose": "binoculars"
+      }
+     ],
+     "flip": true,
+     "turn": 0.3,
+     "id": "mgsp"
+    },
+    {
+     "kind": "counter",
+     "from": 0,
+     "to": 19240,
+     "x": 960,
+     "y": 150,
+     "in": 0.3,
+     "suffix": " KILLED",
+     "prefix": "",
+     "size": 70,
+     "dur": 1.6,
+     "color": "#f08070",
+     "hud": true
+    }
+   ],
+   "set": {
+    "kind": "nomansland",
+    "fg": "sandbags",
+    "time": "day"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "on": [
+      "mg0",
+      "mg1",
+      "mgsp"
+     ],
+     "size": "medium",
+     "push": 0.04,
+     "shake": 2
+    },
+    {
+     "t": 2.3,
+     "on": "mg0",
+     "size": "mediumclose",
+     "frameX": -0.2,
+     "shake": 3
+    }
+   ],
+   "sfx": [
+    {
+     "t": 0.0,
+     "id": "machinegun",
+     "dur": 4.0
+    }
+   ],
+   "beat": "including nineteen thousand two hundred and forty killed. It's still the worst day in",
+   "id": "s024",
+   "end": 109.88
+  },
+  {
+   "start": 109.88,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 260,
+     "y": 820,
+     "pose": "idle",
+     "expr": "tired",
+     "id": "d0",
+     "lying": true,
+     "fallDir": 1
+    },
+    {
+     "kind": "prop",
+     "item": "helmet",
+     "x": 382.3529411764706,
+     "y": 830,
+     "scale": 0.535,
+     "in": 0.0
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 590,
+     "y": 910,
+     "pose": "idle",
+     "expr": "tired",
+     "id": "d1",
+     "lying": true,
+     "fallDir": -1
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 920,
+     "y": 1000,
+     "pose": "idle",
+     "expr": "tired",
+     "id": "d2",
+     "lying": true,
+     "fallDir": 1
+    },
+    {
+     "kind": "prop",
+     "item": "helmet",
+     "x": 1127.0588235294117,
+     "y": 1010,
+     "scale": 0.906,
+     "in": 0.0
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 1250,
+     "y": 820,
+     "pose": "idle",
+     "expr": "tired",
+     "id": "d3",
+     "lying": true,
+     "fallDir": -1
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 1580,
+     "y": 910,
+     "pose": "idle",
+     "expr": "tired",
+     "id": "d4",
+     "lying": true,
+     "fallDir": 1
+    },
+    {
+     "kind": "prop",
+     "item": "helmet",
+     "x": 1744.7058823529412,
+     "y": 920,
+     "scale": 0.721,
+     "in": 0.0
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 1500,
+     "y": 1000,
+     "pose": "idle",
+     "expr": "cry",
+     "keys": [
+      {
+       "t": 3.3,
+       "x": 700,
+       "y": 1080,
+       "ease": "linear"
+      }
+     ],
+     "holds": "",
+     "flip": true,
+     "id": "sv"
+    },
+    {
+     "kind": "label",
+     "text": "WORST DAY IN BRITISH ARMY HISTORY",
+     "x": 960,
+     "y": 170,
+     "style": "tag",
+     "size": 40,
+     "in": 0.5,
+     "hud": true
+    }
+   ],
+   "set": {
+    "kind": "nomansland",
+    "time": "dusk"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.05
+    },
+    {
+     "t": 1.9,
+     "on": "sv",
+     "size": "medium",
+     "frameX": 0.12
+    }
+   ],
+   "world": {
+    "scale": 1.0,
+    "y": 900
+   },
+   "tint": "grey",
+   "beat": "It's still the worst day in the history of the British Army. But the",
+   "id": "s025",
+   "end": 113.28
+  },
+  {
+   "start": 113.28,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 200,
+     "y": 900,
+     "pose": "shoulder",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 3.0,
+       "x": 360,
+       "y": 900,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "id": "t0"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 500,
+     "y": 970,
+     "pose": "shoulder",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 3.0,
+       "x": 660,
+       "y": 970,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "id": "t1"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 800,
+     "y": 900,
+     "pose": "shoulder",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 3.0,
+       "x": 960,
+       "y": 900,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "id": "t2"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 1100,
+     "y": 970,
+     "pose": "shoulder",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 3.0,
+       "x": 1260,
+       "y": 970,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "id": "t3"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_british",
+     "x": 1400,
+     "y": 900,
+     "pose": "shoulder",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 3.0,
+       "x": 1560,
+       "y": 900,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "id": "t4"
+    },
+    {
+     "kind": "fx",
+     "type": "rain",
+     "x": 960,
+     "y": 540
+    },
+    {
+     "kind": "label",
+     "text": "141 DAYS",
+     "x": 1560,
+     "y": 170,
+     "style": "tag",
+     "size": 44,
+     "in": 1.26,
+     "hud": true
+    }
+   ],
+   "set": {
+    "kind": "nomansland",
+    "time": "day",
+    "wire": false
+   },
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.04
+    },
+    {
+     "t": 1.6,
+     "on": "t2",
+     "size": "medium",
+     "track": true
+    }
+   ],
+   "world": {
+    "scale": 1.0,
+    "y": 900
+   },
+   "sfx": [
+    {
+     "t": 0,
+     "id": "amb_rain",
+     "dur": 3.0
+    }
+   ],
+   "beat": "But the battle went on for a hundred and forty-one days, and the Germans",
+   "id": "s026",
+   "end": 116.28
+  },
+  {
+   "start": 116.28,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 480,
+     "y": 1000,
+     "scale": 1.45,
+     "pose": "cower",
+     "expr": "panic",
+     "keys": [
+      {
+       "t": 1.0,
+       "pose": "head",
+       "holds": ""
+      }
+     ],
+     "turn": 0.4,
+     "id": "s0"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 960,
+     "y": 1018,
+     "scale": 1.3699999999999999,
+     "pose": "head",
+     "expr": "panic",
+     "keys": [
+      {
+       "t": 1.55,
+       "pose": "cower",
+       "holds": ""
+      }
+     ],
+     "turn": -0.2,
+     "id": "s1"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 1440,
+     "y": 1000,
+     "scale": 1.45,
+     "pose": "port",
+     "expr": "shocked",
+     "keys": [
+      {
+       "t": 2.1,
+       "pose": "cower",
+       "holds": ""
+      }
+     ],
+     "holds": "rifle",
+     "turn": -0.5,
+     "id": "s2"
+    },
+    {
+     "kind": "fx",
+     "type": "explosion",
+     "x": 1300,
+     "y": 400,
+     "in": 0.3
+    },
+    {
+     "kind": "fx",
+     "type": "dust",
+     "x": 1300,
+     "y": 460,
+     "in": 0.35
+    },
+    {
+     "kind": "fx",
+     "type": "explosion",
+     "x": 500,
+     "y": 380,
+     "in": 1.2
+    },
+    {
+     "kind": "fx",
+     "type": "dust",
+     "x": 500,
+     "y": 440,
+     "in": 1.25
+    },
+    {
+     "kind": "fx",
+     "type": "explosion",
+     "x": 1000,
+     "y": 420,
+     "in": 2.0
+    },
+    {
+     "kind": "fx",
+     "type": "dust",
+     "x": 1000,
+     "y": 480,
+     "in": 2.05
+    }
+   ],
+   "set": {
+    "kind": "trench"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "on": [
+      "s0",
+      "s1",
+      "s2"
+     ],
+     "size": "full",
+     "push": 0.04,
+     "shake": 0
+    },
+    {
+     "t": 1.5,
+     "on": "s1",
+     "size": "close",
+     "frameX": 0.12,
+     "push": 0.05,
+     "shake": 3
+    }
+   ],
+   "sfx": [
+    {
+     "t": 0.3,
+     "id": "explosion"
+    },
+    {
+     "t": 1.2,
+     "id": "explosion"
+    },
+    {
+     "t": 2.0,
+     "id": "explosion"
+    }
+   ],
+   "beat": "and the Germans facing it bled as well. In September, the first tanks in",
+   "impacts": [
+    0.3,
+    1.2,
+    2.0
+   ],
+   "id": "s027",
+   "end": 119.0
+  },
+  {
+   "start": 119.0,
+   "type": "stage",
+   "elements": [
+    {
+     "id": "tk",
+     "kind": "vehicle",
+     "type": "markiv",
+     "nation": "UK",
+     "x": 120,
+     "y": 880,
+     "keys": [
+      {
+       "t": 5.0,
+       "x": 720
+      }
+     ],
+     "fireAt": [
+      1.8
+     ]
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 1350,
+     "y": 860,
+     "pose": "charge",
+     "expr": "panic",
+     "keys": [
+      {
+       "t": 0.6,
+       "x": 1350,
+       "y": 860
+      },
+      {
+       "t": 3.4,
+       "x": 2300,
+       "y": 860,
+       "ease": "linear"
+      }
+     ],
+     "holds": "",
+     "run": true,
+     "id": "f0"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 1510,
+     "y": 930,
+     "pose": "charge",
+     "expr": "panic",
+     "keys": [
+      {
+       "t": 0.85,
+       "x": 1510,
+       "y": 930
+      },
+      {
+       "t": 3.4,
+       "x": 2460,
+       "y": 930,
+       "ease": "linear"
+      }
+     ],
+     "holds": "",
+     "run": true,
+     "id": "f1"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 1670,
+     "y": 860,
+     "pose": "charge",
+     "expr": "panic",
+     "keys": [
+      {
+       "t": 1.1,
+       "x": 1670,
+       "y": 860
+      },
+      {
+       "t": 3.4,
+       "x": 2620,
+       "y": 860,
+       "ease": "linear"
+      }
+     ],
+     "holds": "",
+     "run": true,
+     "id": "f2"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 1500,
+     "y": 1060,
+     "pose": "aim",
+     "expr": "shocked",
+     "keys": [
+      {
+       "t": 3.6,
+       "pose": "cower",
+       "holds": "",
+       "expr": "panic"
+      }
+     ],
+     "holds": "rifle",
+     "flip": true,
+     "fireAt": [
+      0.7,
+      1.4,
+      2.2,
+      2.9
+     ],
+     "id": "st"
+    },
+    {
+     "kind": "fx",
+     "type": "dust",
+     "x": 300,
+     "y": 900,
+     "size": 1.2
+    }
+   ],
+   "set": {
+    "kind": "nomansland",
+    "time": "day"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "size": "wide",
+     "zoom": 1.0,
+     "push": 0.03
+    },
+    {
+     "t": 3.3,
+     "on": "st",
+     "size": "mediumclose",
+     "frameX": -0.12,
+     "push": 0.05
+    }
+   ],
+   "world": {
+    "scale": 1.0,
+    "y": 900
+   },
+   "date": "SEPTEMBER 1916",
+   "impacts": [
+    1.8
+   ],
+   "beat": "In September, the first tanks in history crawled into action there.",
+   "id": "s028",
+   "end": 124.48
+  }
+ ]
+}

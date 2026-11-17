@@ -2,6 +2,31 @@
 
 Newest first. One entry per change that matters to the look, the pipeline or the docs.
 
+## 2026-11-17 — Action: screen-time mix, battle recipes, depth for effects
+Why: the WW1 film was 22 % action (talk 25 %, maps 18 %): generals talking and charts where the reference animates battles.
+The user asked for more action and natural combat animation. A 2-minute sample chapter (`projects/ww1-action-test`, WW1 599–723 s)
+reached 74 % action. Review of that sample found explosions drawn over men in front of them, fallen and carried men still walking,
+and an unreadable stretcher. All are fixed in the engine.
+- Engine (`src/`):
+  - actor `fallAt`/`fallDir` (tip over, small bounce, lie still), `lying`, `silhouette` (any element);
+  - rifle `fireAt` (single shots) and `fire: [from, to, period]` (machine gun): muzzle flash at the rifle tip;
+  - vehicle `fireAt` (flash, smoke puff, recoil; per-type barrel tip, `muzzle` override);
+  - scene `impacts` (decaying camera jolt);
+  - set `nomansland`, fx `shellburst`, prop `stretcher`.
+- Depth: in `world` scenes ground effects (`shellburst explosion impact dust smoke fire splash`) and props are sorted far→near with
+  people and vehicles, and ground effects are sized by depth; battle scenes without a world still sort people/vehicles/bursts by y.
+  `depthY` overrides an element's sort depth.
+- Gait: men who are down (`fallAt` passed, `lying`) never walk; `run: true` runs only while the path moves.
+  A rifle appears only at 80 % of the pose blend when the previous pose had no rifle.
+- Audio: guns that fire (`fireAt`) get artillery/cannon cues; `shellburst` gets explosion cues; `markiv`/`renault` get tank engine.
+- `tools/shotlib.py` ACTION RECIPES: `assault`, `shells`, `gun_crew`, `mg_nest`, `hit_and_help`, `stretcher_team`, `fallen`,
+  `man_path`, `person_scale`, `WORLD`.
+- `tools/validate_plan.py`: `classify()` (action/talk/map/device/host), `mix` in the output and `work/mix.json` per chapter;
+  warnings for chapters under target, maps > 12 s, people standing > 6 s with no business, bursts next to unscaled people
+  without a world.
+- Docs: new `references/action.md` (mix targets, recipes, depth rules, how to animate action, battle checklist); SKILL.md,
+  plan-schema.md, storytelling.md, STYLE_GUIDE §4c, QUALITY, ROADMAP K1–K10.
+
 ## 2026-11-17 — WW1 Turning Point film + voice-only input
 Why: the user supplied only a narration WAV for "What Was The REAL Turning Point of WW1".
 - `tools/transcribe.py`: voice → SRT with faster-whisper (CPU, int8, word timestamps). With `--script`, the recognised words are aligned to the written script, so names and numbers are spelled as written (95.5 % matched on this film).

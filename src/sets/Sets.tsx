@@ -570,6 +570,79 @@ const BaseSet: React.FC<SetProps> = (p) => {
         </g>
       );
     }
+    case 'nomansland': {
+      // WW1 no man's land: churned grey-brown earth, water-filled craters, shattered stumps, wire pickets,
+      // smoke columns drifting on the horizon. horizon: ground line height (lower it, e.g. 820, for figures against the sky)
+      const snow = p.weather === 'snow';
+      const hz = (p.horizon as number) ?? 560;
+      const g1 = snow ? '#d9dcd8' : '#7a6650';
+      const g2 = snow ? '#c4c8c2' : '#665440';
+      const pit = snow ? '#9aa09a' : '#4a3c2e';
+      const water = time === 'dusk' || time === 'dawn' ? '#d9a27a' : night ? '#2a3550' : '#8c9aa4';
+      const dark = time === 'dusk' || time === 'dawn' || night;
+      return (
+        <g>
+          <Sky time={time === 'day' ? (snow ? 'snow' : 'storm') : time} id="skyn" horizon={hz} />
+          {time === 'dusk' || time === 'dawn' ? <circle cx={1380} cy={hz - 60} r={120} fill="#ffd9a0" opacity={0.85} /> : null}
+          {/* smoke columns on the horizon (slow drift) */}
+          {Array.from({ length: 5 }, (_, i) => {
+            const x = X0 + 260 + i * 470 + rnd('nsx', i) * 120;
+            return (
+              <g key={i} opacity={dark ? 0.35 : 0.55}>
+                {[0, 1, 2, 3].map((k) => (
+                  <circle key={k} cx={x + k * 26 + Math.sin(t * 0.4 + i + k) * 10 + t * 4 * k} cy={hz + 10 - k * 70 - ((t * 6) % 30)} r={40 + k * 22} fill={dark ? '#6a5a5a' : '#8f8a84'} />
+                ))}
+              </g>
+            );
+          })}
+          <Hills y={hz + 20} color={dark ? '#4a3c38' : snow ? '#b9bcb6' : '#6c604e'} amp={30} seed="nml" />
+          <rect x={X0} y={hz + 20} width={W} height={Y0 + H - hz - 20} fill={dark ? '#4a3a2c' : g2} />
+          <path d={`M${X0} ${hz + 40} Q500 ${hz + 10} 1100 ${hz + 46} T${X0 + W} ${hz + 30} V${Y0 + H} H${X0} Z`} fill={dark ? '#5a4634' : g1} />
+          {/* craters, far small -> near big */}
+          {Array.from({ length: 14 }, (_, i) => {
+            const d = rnd('ncy', i);
+            const y = hz + 60 + d * d * (Y0 + H - hz - 120);
+            const r = 40 + d * 170;
+            const x = X0 + rnd('ncx', i) * W;
+            return (
+              <g key={i}>
+                <ellipse cx={x} cy={y - r * 0.05} rx={r * 1.08} ry={r * 0.26} fill={snow ? '#e8ebe8' : '#8a7458'} opacity={dark ? 0.5 : 1} />
+                <ellipse cx={x} cy={y} rx={r} ry={r * 0.22} fill={pit} />
+                {i % 3 === 0 ? <ellipse cx={x + r * 0.1} cy={y + r * 0.04} rx={r * 0.6} ry={r * 0.1} fill={water} opacity={0.75} /> : null}
+              </g>
+            );
+          })}
+          {/* shattered stumps */}
+          {Array.from({ length: 7 }, (_, i) => {
+            const d = rnd('nsy', i);
+            const y = hz + 30 + d * 300;
+            const s = 0.5 + d * 1.2;
+            const x = X0 + 100 + rnd('nsx2', i) * (W - 200);
+            return (
+              <g key={i} transform={`translate(${x} ${y}) scale(${s})`}>
+                <path d="M-14 0 L-10 -150 L-2 -170 L4 -140 L10 -160 L14 0 Z" fill={dark ? '#2e2420' : '#4a3a2e'} stroke={INK} strokeWidth={3} strokeLinejoin="round" />
+                {i % 2 ? <path d="M-6 -100 L-46 -130" stroke={dark ? '#2e2420' : '#4a3a2e'} strokeWidth={8} strokeLinecap="round" /> : null}
+              </g>
+            );
+          })}
+          {/* wire pickets */}
+          {p.wire !== false
+            ? Array.from({ length: 9 }, (_, i) => {
+                const x = X0 + 120 + i * 270;
+                const y = hz + 130 + (i % 2) * 14;
+                return (
+                  <g key={i} stroke={dark ? '#20201e' : '#3a3530'} fill="none">
+                    <line x1={x} y1={y} x2={x} y2={y - 64} strokeWidth={6} />
+                    <path d={`M${x} ${y - 56} q60 22 120 -2 t150 4 M${x} ${y - 30} q70 -18 140 4 t130 -6`} strokeWidth={2} />
+                  </g>
+                );
+              })
+            : null}
+          {snow ? Array.from({ length: 30 }, (_, i) => <ellipse key={i} cx={X0 + rnd('sn', i) * W} cy={hz + 60 + rnd('sny', i) * 700} rx={30 + rnd('snr', i) * 60} ry={6} fill="#f2f4f2" opacity={0.7} />) : null}
+          {dark ? <rect x={X0} y={hz + 20} width={W} height={Y0 + H - hz} fill="#1a1020" opacity={0.18} /> : null}
+        </g>
+      );
+    }
     case 'trench': {
       return (
         <g>

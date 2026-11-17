@@ -410,6 +410,15 @@ export const Prop: React.FC<{ item: string; t: number; color?: string; text?: st
           <circle cx={16} cy={-42} r={11} fill={INK} />
         </g>
       );
+    case 'stretcher':
+      // canvas stretcher: two poles with handles, sagging canvas; carried at hand height by two bearers
+      return (
+        <g>
+          <path d="M-150 0 H150" stroke="#6b4e30" strokeWidth={10} strokeLinecap="round" />
+          <path d="M-120 0 Q0 22 120 0 Z" fill="#c9bb94" stroke={INK} strokeWidth={3} strokeLinejoin="round" />
+          <path d="M-150 -6 H150" stroke={INK} strokeWidth={2} opacity={0.5} />
+        </g>
+      );
     case 'cross':
     case 'grave':
       return (

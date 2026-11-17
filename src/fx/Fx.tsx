@@ -36,6 +36,32 @@ export const Fx: React.FC<{ kind: string; a: number; t: number; seed: string; si
         </g>
       );
     }
+    case 'shellburst': {
+      // WW1 shell landing in soft ground: a flash, then a tall column of earth that rises, spreads and falls back
+      if (a < 0 || a > 2.6) return null;
+      const up = clamp(a / 0.45);
+      const fall = clamp((a - 0.6) / 1.6);
+      const hgt = 420 * (1 - Math.pow(1 - up, 3)) * (1 - fall * 0.55);
+      return (
+        <g transform={`scale(${size})`}>
+          {a < 0.1 ? <circle r={200} fill="#fff4c0" opacity={1 - a / 0.1} /> : null}
+          {a < 0.3 ? <ellipse cy={-20} rx={120} ry={70} fill="#ffb347" opacity={1 - a / 0.3} /> : null}
+          <path d={`M-70 0 Q-60 ${-hgt * 0.6} ${-110 - fall * 60} ${-hgt} Q0 ${-hgt - 60} ${110 + fall * 60} ${-hgt} Q60 ${-hgt * 0.6} 70 0 Z`} fill="#4a3a2c" opacity={clamp(1 - fall)} />
+          {Array.from({ length: 14 }, (_, i) => {
+            const ang = -Math.PI / 2 + (rnd(seed, i) - 0.5) * 1.6;
+            const v = 500 + rnd(seed, i, 'v') * 400;
+            const x = Math.cos(ang) * v * a;
+            const y = Math.sin(ang) * v * a + 900 * a * a;
+            return y < 20 ? <circle key={i} cx={x} cy={y} r={8 + rnd(seed, i, 'r') * 14} fill="#3a2e24" /> : null;
+          })}
+          <g opacity={clamp(a / 0.4) * clamp(1 - (a - 0.8) / 1.8) * 0.7}>
+            {Array.from({ length: 6 }, (_, i) => (
+              <circle key={'s' + i} cx={(rnd(seed, i, 'sx') - 0.5) * 220 + a * 30} cy={-hgt * 0.7 - a * 60 - i * 20} r={(50 + i * 12) * (0.4 + a * 0.5)} fill="#5e554c" />
+            ))}
+          </g>
+        </g>
+      );
+    }
     case 'explosion':
     case 'impact': {
       if (a < 0 || a > 2.2) return null;

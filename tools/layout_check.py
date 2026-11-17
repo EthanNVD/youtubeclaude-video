@@ -220,7 +220,7 @@ VEH = {  # type: (native height, native length, match by, target size in person 
 SET_HORIZON = {
     "field": 600, "countryside": 600, "steppe": 600, "snow": 600, "desert": 600, "mud": 600, "polder": 620, "heath": 600,
     "airfield": 620, "river": 470, "beach": 520, "sea": 560, "ocean": 560, "harbor": 560, "dock": 560, "railway": 640,
-    "station": 640, "trench": 420, "jungle": 500, "city": 760, "street": 760, "ruins": 760, "archbridge": 560, "garden": 600, "hotel": 640,
+    "station": 640, "trench": 420, "nomansland": 560, "jungle": 500, "city": 760, "street": 760, "ruins": 760, "archbridge": 560, "garden": 600, "hotel": 640,
 }
 
 

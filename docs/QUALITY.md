@@ -13,6 +13,8 @@ A video is **done** only when every box below is ticked. Copy this list into `pr
   - [ ] vehicles move at believable speeds and ease in and out;
   - [ ] a shot is never fully static: there is camera drift or an actor gesture;
   - [ ] ≥ 60 % acting shots, ≤ 20 % charts and documents, maps 15–25 %;
+  - [ ] validate `mix` / `work/mix.json`: action ≥ 40 % per chapter (≥ 55 % in battle chapters), talk ≤ 15 %, maps ≤ 15 %, devices ≤ 15 %; no chapter-mix warnings;
+  - [ ] battle scenes: bursts drawn behind the near men, nobody lying and walking, stretchers read, muzzle flashes at rifle tips, `impacts` on bursts (`.claude/skills/srt-history-video/references/action.md` §5);
   - [ ] validate `coverage`: average set-up ≤ 4 s, close-ups in every chapter, no `one set-up for …` or `crosses … px` (sprint) warnings;
   - [ ] every acting scene has a reaction close-up or an over-the-shoulder shot; evidence is shown as an insert, not a label;
   - [ ] each idea on screen appears on the word that names it.

@@ -70,3 +70,6 @@ Rules when adapting a template:
 - Keep vehicles inside the frame for most of the shot.
 - Cap text at about 2 labels at a time, never in the badge corners.
 - Have every actor change pose or expression every 1.5–3 s.
+
+## Action recipes (battle scenes)
+See [action.md](action.md) §2: `assault`, `shells`, `gun_crew`, `mg_nest`, `hit_and_help`, `stretcher_team`, `fallen`, `man_path` (all in `tools/shotlib.py`, for scenes with `world=WORLD`). Worked example: `projects/ww1-action-test/plan_src/build.py`.

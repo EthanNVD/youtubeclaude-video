@@ -87,6 +87,18 @@ Goal: a frame from our video can sit next to a frame from the reference channel 
 - [x] H9 Voice-only input: `tools/transcribe.py` (faster-whisper + alignment to the script)
 - [ ] H7 Back-port coverage to Market Garden (validate reports 254 set-ups at 8 s, 0 close-ups) — only if it is re-rendered
 
+**Action (battle chapters)** — approved on `projects/ww1-action-test` (WW1 Verdun→tanks: action 43 % → 74 %)
+- [x] K1 Screen-time mix measured by validate (`mix`, `work/mix.json`, per-chapter warnings: action ≥ 40 %, ≥ 55 % in battle chapters)
+- [x] K2 Hit reaction (`fallAt`/`fallDir`), lying men (`lying`), silhouettes (`silhouette`)
+- [x] K3 Firing: vehicles/guns `fireAt` (flash, smoke, recoil, auto SFX); rifles `fireAt` and machine guns `fire`
+- [x] K4 Camera jolts on bursts (`scene.impacts`); `shellburst` fx; `nomansland` set; `stretcher` prop
+- [x] K5 Depth for effects: ground fx and props sorted far→near with people and sized by depth; `depthY` for riders
+- [x] K6 Action recipes in shotlib: assault, shells, gun_crew, mg_nest, hit_and_help, stretcher_team, fallen, man_path
+- [ ] K7 Kneeling/prone firing pose and a real machine-gun prop (MG08 / Vickers on a tripod) instead of aiming rifles
+- [ ] K8 WW1 battleship + biplanes; life rings / wreckage props for naval losses
+- [ ] K9 Crowd waves: a `crowd` that advances in depth rows with falls, for 20+ men without 20 elements
+- [ ] K10 Back-port the action mix to the WW1 film (validate: 22 % action) — only if it is re-rendered
+
 ### M3 — Faster, safer production
 - [x] F1 Scene library: reusable shot templates (office decision, map advance, convoy, river crossing, cockpit…) so a 30-min plan is assembled from proven pieces
 - [ ] F2 Partial re-render: re-render only changed scenes and splice them into the film
@@ -106,3 +118,8 @@ Goal: a frame from our video can sit next to a frame from the reference channel 
 - [x] Rally/podium banners looked like Nazi banners (fixed 2026-11-16: national flags)
 - [x] Mixer ran out of memory on 34-min voice (fixed 2026-11-16: chunked)
 - [ ] `sky` set with `below: land` leaves a black band at the bottom (use `polder`/`field` until fixed)
+- [x] Explosion smoke drawn over the men in front of it (ground fx were not depth-sorted) — fixed 2026-11-17 (K5)
+- [x] Fallen / carried men kept walking or running (`run: true` forced the gait; carried men had x keys) — fixed 2026-11-17
+- [x] Stretcher read as a stick at a bearer's knee, patient covering it — fixed 2026-11-17 (`stretcher_team` computes the geometry)
+- [x] Rifle floated across the face when going from hands-on-head to aim — fixed 2026-11-17 (rifle appears at 80 % of the pose blend)
+- [ ] Bearers and runners are front-facing chibis walking sideways (turn 0.5 helps); a true side-view walk would read better
