@@ -24,7 +24,10 @@ Cột "Góc mạnh" gợi ý nỗi đau người xem mà cuốn sách trả lờ
 | The Ending of Time (với David Bohm) | 1985 | Chuỗi đối thoại năm 1980 ở Ojai và Brockwood Park: thời gian tâm lý, cái tôi, nền tảng, đột biến tế bào não, cái chết | Vì sao cố trở thành người tốt hơn lại giam ta; "đi về phương Bắc" |
 | The Limits of Thought (với Bohm) | 1999 (kiểm) | Giới hạn của tư duy, chân lý và thực tại | Overthinking, tin vào lý trí |
 | Truth and Actuality | 1977 | Đối thoại với Bohm và các buổi nói về chân lý và thực tại | Phân biệt sự thật và điều ta nghĩ về nó |
-| Exploration into Insight | 1979 | Đối thoại về tuệ giác | Thay đổi tức thì hay từ từ |
+| Exploration into Insight (với Pupul Jayakar và những người khác) | 1979 (kiểm; có bản 1991) | Đối thoại về tuệ giác | Thay đổi tức thì hay từ từ |
+| Can Humanity Change? (với Walpola Rahula, Irmgard Schloegl…) | 2003, Shambhala | Đối thoại với các học giả Phật giáo (kiểm nơi, năm) | Krishnamurti và Phật giáo, tu tập, vô ngã |
+| Krishnamurti at Los Alamos 1984 | 1984, KFA | Nói chuyện và đối thoại với các nhà khoa học Los Alamos | Khoa học, chiến tranh, máy móc và sáng tạo |
+| Questioning Krishnamurti | 1996 | Đối thoại với Jonas Salk, Iris Murdoch, Bohm, Rahula, Huston Smith, Chögyam Trungpa… | Nhiều người đối thoại nổi tiếng |
 | The Awakening of Intelligence | 1973 | Bài nói và đối thoại (có Bohm, Jacob Needleman, Alain Naudé…) | Trí thông minh khác trí năng |
 | Fire in the Mind (với Pupul Jayakar) | (kiểm) | Đối thoại ở Ấn Độ | Truyền thống, thầy, tâm linh Ấn |
 
@@ -55,11 +58,16 @@ Cột "Góc mạnh" gợi ý nỗi đau người xem mà cuốn sách trả lờ
 | Krishnamurti's Journal | 1982 | Nhật ký 1973–1975 (kiểm) |
 | The Only Revolution | 1970 | Đoản văn ở Ấn Độ, California, châu Âu |
 
+### Thời trẻ, trước năm 1929 (cho đề tài kể đời)
+| Sách | Năm | Góc mạnh |
+|---|---|---|
+| At the Feet of the Master | 1910, ký tên Alcyone (bút danh Leadbeater đặt) | Cậu bé được chuẩn bị làm "Đấng Giáo Chủ Thế Giới"; đối chiếu với bài nói giải tán năm 1929 (bản Việt: Dưới Chân Thầy) |
+
 ### Giáo dục và người trẻ
 | Sách | Năm | Góc mạnh |
 |---|---|---|
 | Education and the Significance of Life | 1953 | Bằng cấp, áp lực học hành, cha mẹ và con cái |
-| Think on These Things (This Matter of Culture) | 1964 | Học sinh hỏi về sợ hãi, tham vọng, tự do |
+| This Matter of Culture (Anh, 1964), tái bản ở Mỹ là Think on These Things (1970) | 1964 | Học sinh hỏi về sợ hãi, tham vọng, tự do (bản Việt đang lưu hành: Đôi Điều Cần Suy Ngẫm, kiểm dịch giả) |
 | Life Ahead | 1963 | Học sinh và giáo viên |
 | Letters to the Schools | 1981, 1985 | Thư gửi các trường |
 
