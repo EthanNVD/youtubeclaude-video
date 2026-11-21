@@ -28,7 +28,10 @@ Scene `start`/`end` are absolute seconds on the voice clock.
 | `shots` | **coverage inside the place** (stage): `[{t, on, size, frameX?, frameY?, push?, panX?, panY?, track?, dx?, dy?, shake?, x?, y?, zoom?}]`, joined by hard cuts at each `t`.<br>• `on`: an element `id` (or index), or a list of them for a group.<br>• `size`: `wide` `full` `medium` `mediumclose` `close` `ecu`.<br>• `frameX`/`frameY`: subject off-centre (fraction of the frame).<br>• `push`: zoom gain over the set-up (default 0.04).<br>• `panX`/`panY`: px of drift.<br>• `track`: follow a walking subject (with a little lag).<br>• Raw `x,y,zoom` for wides and inserts.<br>Takes precedence over `camera`. |
 | `camera` | keys `{t, x, y, zoom, rotate, shake, ease}` (stage; x,y = point at screen centre) or `{t, center:[lon,lat], zoom, span}` (map). Shake is smooth noise. Prefer `shots` for stage scenes. |
 | `date` | paper badge top-left ("27 MAY 1940"); `clock` badge top-right ("10:22 AM"); `place` second badge |
-| `transition` | `cut` (default) · `fade` · `dip` (through black: time/place jump) · `wipe` · `flash` (impact) |
+| `transition` | `cut` (default in raw plans; cards default to `fade`) · `fade` (0.6 s cross-dissolve, the reference grammar) · `dip` (through black: time/place jump) · `wipe` · `flash` (impact) |
+| `transitionDur` | scene transition length in s (default 0.6) |
+| `shotDissolve` | `true` = every change of set-up in `shots` dissolves from the previous framing over 0.6 s instead of cutting (cards set it by default) |
+| `tag`, `tagIn` | documentary place/time tag top-left ("Spa, Belgium · 29 September 1918", small wooden plank); `tagIn` = when it slides in (s), negative = already there (carried over from the previous scene) |
 | `world` | **depth model** for stage scenes with people and vehicles: `{horizon?, y?, scale?, vehicles?}` — actors/vehicles/crowds **without** `scale` are sized from their ground y (`scale` = person scale at `y`, default 1.45 at 900; `horizon` defaults per set). Vehicles get the size they should have next to a person at the same depth; far → near draw order is automatic (people, vehicles, props **and ground effects** `shellburst explosion impact dust smoke fire splash` — a burst behind a man is drawn behind him); ground effects are also sized by depth — native size at the world's reference `y`, smaller further back (`depth: false` opts out). Keying `y` makes things grow toward the camera. `depthScale` on an element nudges one item; `depthY` overrides its sort depth (a man carried on a stretcher sorts with the bearers). Without `world`, scenes with ground effects still sort people/vehicles/bursts by y. Use it for every outdoor action scene — see action.md. |
 | `impacts` | `[t, …]` — a camera jolt (decaying shake, ~1 s) at each time: put the burst times of shells landing near the subject here. Works with `shots`, `camera` and drift. |
 | `letterbox` | cinema bars for **dramatised** moments only (a handful per film): `true` or the caption for the bottom bar, e.g. `"DRAMATISED — ARNHEM, 19 SEPTEMBER 1944"`; it replaces the date/place badges |
@@ -143,7 +146,7 @@ Motion: key `x` (or `at`); the default `drive` profile accelerates and brakes, w
 **fx** — `type`: `shellburst` (a shell landing in soft ground: flash, a column of earth that rises and falls back, clods; WW1/WW2 artillery) `smoke fire explosion impact muzzle flash tracer searchlight rain snow sparks dust splash wake fireworks speedlines question exclaim`; `dir` (deg), `count`, `color`. Explosions play once from `in`.
 **burst** — explosion at `x,y` / `at` (`size` 0.4–1).
 
-**label** — `text` (use `\n` for 2 lines), `style`: `tag` (paper) · `red` · `dark` · `green` · `yellow` · `plain` (hand-written, no box) · `map` (spaced caps); `size`, `tx`,`ty` (leader line to a point, same coordinates), `tilt`.
+**label** — `text` (use `\n` for 2 lines), `style`: `tag` (paper) · `red` · `dark` · `green` · `yellow` · `plain` (hand-written, no box) · `map` (spaced caps) · `chalk` (hand-written, light, no halo: writing on a blackboard); `size`, `tx`,`ty` (leader line to a point, same coordinates), `tilt`.
 **stamp** — `text` (MYTH, VERDICT, FAKE, CANCELLED, 1–2 words), `color`, `size`, `tilt`; use `enter: "stamp"`.
 **bubble** — speech `text` at the speaker's mouth (`x`,`y` = tail tip), `thought`, `side` (1 right / −1 left). Only for short quoted words.
 **headline** / **text** — big outlined words (`size`, `color`, `accent` word in yellow, `font: "hand"`).
@@ -192,3 +195,15 @@ Map-oriented (work on stage too with `screen: true` + px coordinates):
 - glasses `round pince sun`; extra `cigar pipe cigarette medals armband epaulettes tie redtie bowtie monocle wrinkles jowls blush thickbrows star ironcross`
 - eyes `dot lid big`; build 0.85–1.35; age 0–1 (≥0.55 wrinkles, ≥0.7 grey hair)
 Presets (src/char/presets.ts): hitler, hitler_uniform, goering, himmler, rommel, guderian, manstein, paulus, halder, goebbels, german_officer/soldier/tanker/pilot, uboat_captain, stalin, zhukov, molotov, beria, khrushchev, soviet_officer/soldier/winter, churchill, chamberlain, halifax, montgomery, british_soldier, raf_pilot, roosevelt, truman, eisenhower, macarthur, patton, nimitz, american_soldier/sailor/pilot, us_navy_officer, hirohito, tojo, yamamoto, nagumo, japanese_officer/soldier/pilot/sailor, de_gaulle, petain, gamelin, french_soldier, mussolini, italian_soldier, mannerheim, finnish_soldier, chiang, polish_soldier, kaiser, ww1_german/british/french, napoleon, wellington, kutuzov, hannibal, roman_legionary, caesar, vn_soldier, vn_peasant, civilian_man/woman, worker, diplomat, reporter, narrator_archivist, narrator_accountant.
+
+### Documentary text and views (HUD elements, screen coordinates)
+- **caption**: the film's big questions as words that appear while they are spoken.
+  - Fields: `words: [{w, t, accent}]` (`t` = seconds from the scene start), `y` (default 968), `size` (40), `capOut`.
+  - Accent words are amber; a soft dark band sits under the text.
+- **stat**: an engraved statistic over a mood picture.
+  - Fields: `text` (big capitals), `sub` (italic book serif), `top` (small line above), `y` (default 820), `align` (`center`/`left`), `statOut`.
+- **note**: a paper note typed line by line.
+  - Fields: `lines[]`, `kicker`, `accentLast` (last line red), `x`, `y` (default top-right), `speed` (chars/s).
+- **binoculars**: a black frame with two round lenses over the scene (a point-of-view shot); slight sway.
+
+Cards produce these through `caption`, `stat`, `paper_note` and the `binocular_view` recipe.

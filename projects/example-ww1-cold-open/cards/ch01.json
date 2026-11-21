@@ -1,0 +1,71 @@
+{
+ "chapter": "Two Hours",
+ "cards": [
+  {"at": "On the 29th of September", "recipe": "establish",
+   "says": "At dawn the two men running Germany's war arrive at headquarters to see the Kaiser.",
+   "setting": "hotel", "arrive": "car", "who": ["hindenburg", "ludendorff"], "side": "german", "time": "dawn",
+   "place_id": "spa_hq", "tag": "Spa, Belgium · 29 September 1918", "tag_on": "1918"},
+
+  {"at": "Field Marshal Paul von Hindenburg", "recipe": "approach",
+   "says": "Hindenburg and Ludendorff stride down the corridor toward the Kaiser.",
+   "who": ["hindenburg", "ludendorff"], "setting": "corridor", "carry": "folder", "side": "german", "name_card": "hindenburg",
+   "place_id": "spa_corridor", "tag": "Spa, Belgium · 29 September 1918"},
+
+  {"at": "told Kaiser Wilhelm", "recipe": "interrupt",
+   "says": "They tell the Kaiser, who is busy writing, that the front can no longer be held.",
+   "who": "kaiser_wilhelm", "speakers": ["ludendorff", "hindenburg"], "business": "write", "look_up_on": "Kaiser Wilhelm",
+   "react_on": "could no longer", "react": "shocked", "setting": "office", "flag": "german", "name_card": "kaiser_wilhelm",
+   "place_id": "kaiser_study", "tag": "Spa, Belgium · 29 September 1918"},
+
+  {"at": "Not for weeks.", "recipe": "watch_front",
+   "says": "At the front the line could break within hours as enemy tanks roll forward.",
+   "side": "german", "enemy": "british", "threat": "tanks", "business": "watch", "react_on": "For two hours", "react": "panic", "time": "dawn",
+   "tag": "The Western Front · 29 September 1918"},
+
+  {"at": "Germany needed an armistice,", "recipe": "confront",
+   "says": "Ludendorff insists that Germany must ask for an armistice at once.",
+   "a": "ludendorff", "b": "kaiser_wilhelm", "hit_on": "immediately", "gesture": "slam", "flag": "german", "place_id": "kaiser_study"},
+
+  {"at": "The Kaiser could hardly", "recipe": "contemplate",
+   "says": "The Kaiser is left alone, unable to believe the war is lost.",
+   "who": "kaiser_wilhelm", "action": "window", "time": "dusk", "tint": "cold", "place_id": "kaiser_study"},
+
+  {"at": "Six months earlier,", "recipe": "wave",
+   "says": "In spring 1918 the German army had broken through further than anyone since 1914.",
+   "side": "german", "count": 7, "falls": 0, "shells": 3, "time": "dawn", "tag": "The Western Front · March 1918"},
+
+  {"at": "on the Western Front since", "recipe": "map_front",
+   "says": "On the map the German line bulged far toward Paris.",
+   "side": "german", "enemy": "french",
+   "line": ["Nieuport", "Ypres", "Arras", "St Quentin", "Soissons", "Reims", "Verdun"],
+   "to_line": ["Nieuport", "Ypres", "Amiens", "Compiègne", "Château-Thierry", "Reims", "Verdun"],
+   "move_on": "since 1914", "show": ["Paris"]},
+
+  {"at": "In early June,", "recipe": "vista",
+   "says": "By June German soldiers stood within sight of Paris.",
+   "side": "german", "goal": "PARIS", "goal_on": "leading troops", "action": "binoculars", "time": "dusk", "tint": "warm",
+   "place_id": "marne_ridge", "tag": "The Marne · June 1918"},
+
+  {"at": "about fifty-six kilometres", "recipe": "binocular_view",
+   "says": "Through binoculars the soldiers could make out the city they had come for.",
+   "setting": "city", "time": "dusk", "tint": "warm", "tag": "The Marne · June 1918"},
+
+  {"at": "So how does an army", "recipe": "vista",
+   "says": "The film asks how that army fell from Paris's gates to collapse in one summer.",
+   "side": "german", "action": "turn_back", "time": "dusk", "tint": "warm", "place_id": "marne_ridge",
+   "caption": {"from": "So how does", "to": "summer?", "accent": ["Paris", "collapse"]}},
+
+  {"at": "Or had the war really", "recipe": "retreat",
+   "says": "Or perhaps the war had been lost long before that summer.",
+   "side": "german", "direction": "left", "shells": 0, "weather": "rain", "tint": "cold", "variant": "A",
+   "caption": {"from": "Or had the war", "to": "even started?", "accent": ["lost"]}},
+
+  {"at": "Ask around and", "recipe": "lecture",
+   "says": "Historians name many different moments as the true turning point.",
+   "items": ["1914?", "1916?", "1917?", "1918?"], "who": "historian", "tag": "Today"},
+
+  {"at": "The Marne, in 1914,", "recipe": "wave",
+   "says": "The first candidate is the Marne in 1914, when the French stopped the German advance.",
+   "side": "french", "era": "ww1", "count": 6, "falls": 1, "shells": 3, "setting": "field", "tag": "The Marne · September 1914"}
+ ]
+}

@@ -268,7 +268,8 @@ def bombing(c):
     if c.p("civilians"):
         els += [{**man_path(f"c{i}", ["civilian_man", "civilian_woman"][i % 2], [(0.3, 1700 + i * 150, 980 + (i % 2) * 40), (T, 300 + i * 150, 980 + (i % 2) * 40)],
                             pose="head", expr="panic", holds="", run=True), "flip": True} for i in range(3)]
-    shots = ([SHOT(0, None, None, zoom=1.0, push=0.03), SHOT(T * 0.6, "c0", "mediumclose", track=True)] if c.variant == "A" or not c.p("civilians") else
+    shots = ([SHOT(0, None, None, zoom=1.0, push=0.03), SHOT(T * 0.6, "b0", "medium", track=True)] if not c.p("civilians") else
+             [SHOT(0, None, None, zoom=1.0, push=0.03), SHOT(T * 0.6, "c0", "mediumclose", track=True)] if c.variant == "A" else
              [SHOT(0, "c0", "mediumclose"), SHOT(1.2, None, None, zoom=1.0, push=0.03)])
     return stage(c, {"kind": "city", "ruined": True}, [e for e in els if e], [q for q in shots if q["t"] < c.dur - 0.4], world={"scale": 0.9, "y": 900, "horizon": 700},
                  impacts=imp, sfx=[{"t": 0, "id": "plane_engine", "dur": T}])

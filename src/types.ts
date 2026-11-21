@@ -57,6 +57,13 @@ export type Scene = {
   end: number;
   /** what the narration says here (for review only) */
   beat?: string;
+  /** documentary place/time tag top-left ("SPA, BELGIUM · 29 SEPTEMBER 1918"); tagIn = when it slides in (negative = already there, carried over) */
+  tag?: string;
+  tagIn?: number;
+  /** changes of set-up inside the scene dissolve (0.6 s) instead of cutting */
+  shotDissolve?: boolean;
+  /** scene transition length in seconds (default 0.6) */
+  transitionDur?: number;
   type: 'stage' | 'map' | 'title' | 'chapter';
   set?: SetSpec;
   map?: MapSpec;

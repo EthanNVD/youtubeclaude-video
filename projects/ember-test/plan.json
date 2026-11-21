@@ -1,0 +1,1940 @@
+{
+ "meta": {
+  "title": "Ember-style test — WW1 cold open",
+  "lang": "en",
+  "fps": 24,
+  "duration": 60.6,
+  "voice": "input/voice.wav",
+  "grain": 0.5
+ },
+ "cast": {
+  "kaiser_wilhelm": {
+   "preset": "kaiser_wilhelm"
+  },
+  "hindenburg": {
+   "preset": "hindenburg"
+  },
+  "ludendorff": {
+   "preset": "ludendorff"
+  },
+  "ww1_german": {
+   "preset": "ww1_german"
+  },
+  "ww1_french_1914": {
+   "preset": "ww1_french_1914"
+  },
+  "civilian_man": {
+   "preset": "civilian_man"
+  },
+  "ww1_german__officer": {
+   "preset": "ww1_german",
+   "hat": "peaked"
+  },
+  "ww1_french_1914__officer": {
+   "preset": "ww1_french_1914",
+   "hat": "peaked"
+  }
+ },
+ "scenes": [
+  {
+   "start": 0.0,
+   "type": "stage",
+   "set": {
+    "kind": "hotel",
+    "time": "dawn",
+    "drift": 0
+   },
+   "elements": [
+    {
+     "id": "car",
+     "kind": "vehicle",
+     "type": "car",
+     "nation": "GERI",
+     "x": -300,
+     "y": 930,
+     "keys": [
+      {
+       "t": 3.2,
+       "x": 640
+      }
+     ]
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 1500,
+     "y": 905,
+     "pose": "port",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 3.0,
+       "pose": "salute",
+       "holds": ""
+      }
+     ],
+     "holds": "rifle",
+     "turn": -0.4,
+     "id": "sentry"
+    },
+    {
+     "kind": "actor",
+     "who": "hindenburg",
+     "x": 600,
+     "y": 940,
+     "pose": "idle",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 3.6,
+       "x": 600,
+       "y": 940
+      },
+      {
+       "t": 6.9,
+       "x": 1060,
+       "y": 900,
+       "ease": "linear"
+      }
+     ],
+     "holds": "",
+     "id": "hin",
+     "in": 3.4
+    },
+    {
+     "kind": "actor",
+     "who": "ludendorff",
+     "x": 700,
+     "y": 950,
+     "pose": "hold",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 3.9,
+       "x": 700,
+       "y": 950
+      },
+      {
+       "t": 6.9,
+       "x": 1180,
+       "y": 905,
+       "ease": "linear"
+      }
+     ],
+     "holds": "folder",
+     "id": "lud",
+     "in": 3.7
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.05
+    },
+    {
+     "t": 4.2,
+     "on": [
+      "hin",
+      "lud",
+      "sentry"
+     ],
+     "size": "full",
+     "track": true,
+     "push": 0.03
+    }
+   ],
+   "shotDissolve": true,
+   "transition": "cut",
+   "world": {
+    "scale": 1.05,
+    "y": 940
+   },
+   "tag": "Spa, Belgium · 29 September 1918",
+   "tagIn": 1.75,
+   "id": "s001",
+   "end": 6.9
+  },
+  {
+   "start": 6.9,
+   "type": "stage",
+   "set": {
+    "kind": "corridor",
+    "doors": [
+     "",
+     ""
+    ]
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "hindenburg",
+     "x": 900,
+     "y": 640,
+     "pose": "idle",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 4.0,
+       "x": 840,
+       "y": 1010,
+       "ease": "linear"
+      }
+     ],
+     "holds": "",
+     "id": "hin"
+    },
+    {
+     "kind": "actor",
+     "who": "ludendorff",
+     "x": 1040,
+     "y": 650,
+     "pose": "hold",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 4.0,
+       "x": 1110,
+       "y": 1020,
+       "ease": "linear"
+      }
+     ],
+     "holds": "folder",
+     "id": "lud"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german__officer",
+     "x": 1420,
+     "y": 760,
+     "pose": "idle",
+     "expr": "nervous",
+     "keys": [
+      {
+       "t": 1.2,
+       "pose": "salute"
+      }
+     ],
+     "turn": -0.5,
+     "id": "aide"
+    },
+    {
+     "kind": "namecard",
+     "name": "Paul von Hindenburg",
+     "role": "Field Marshal, Chief of the General Staff",
+     "in": 0.4,
+     "out": 2.1199999999999988
+    },
+    {
+     "kind": "namecard",
+     "name": "Erich Ludendorff",
+     "role": "General, First Quartermaster-General",
+     "in": 2.7600000000000007
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.05
+    }
+   ],
+   "shotDissolve": true,
+   "transition": "fade",
+   "world": {
+    "scale": 1.3,
+    "y": 900,
+    "horizon": 500
+   },
+   "tag": "Spa, Belgium · 29 September 1918",
+   "tagIn": -1,
+   "id": "s002",
+   "end": 10.94
+  },
+  {
+   "start": 10.94,
+   "type": "stage",
+   "set": {
+    "kind": "office",
+    "flag": "GERI",
+    "portrait": true,
+    "fg": "officedesk",
+    "desk": false
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "kaiser_wilhelm",
+     "x": 1250,
+     "y": 1000,
+     "scale": 1.6,
+     "pose": "write",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 0.7000000000000004,
+       "pose": "idle",
+       "holds": "",
+       "turn": -0.6,
+       "expr": "neutral"
+      },
+      {
+       "t": 3.0799999999999996,
+       "expr": "shocked",
+       "pose": "hold",
+       "holds": "pen"
+      }
+     ],
+     "holds": "pen",
+     "turn": -0.3,
+     "id": "kaiser"
+    },
+    {
+     "kind": "actor",
+     "who": "ludendorff",
+     "x": 640,
+     "y": 1000,
+     "scale": 1.6,
+     "pose": "explain",
+     "expr": "worried",
+     "keys": [
+      {
+       "t": 3.4800000000000004,
+       "pose": "talk2"
+      }
+     ],
+     "talk": true,
+     "turn": 0.5,
+     "id": "lud"
+    },
+    {
+     "kind": "actor",
+     "who": "hindenburg",
+     "x": 380,
+     "y": 1010,
+     "scale": 1.55,
+     "pose": "idle",
+     "expr": "sad",
+     "keys": [
+      {
+       "t": 1.4,
+       "pose": "chin"
+      }
+     ],
+     "turn": 0.5,
+     "id": "hin"
+    },
+    {
+     "kind": "namecard",
+     "name": "Kaiser Wilhelm II",
+     "role": "German Emperor",
+     "in": 0.9000000000000004
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "on": [
+      "lud",
+      "kaiser"
+     ],
+     "size": "full",
+     "push": 0.03
+    },
+    {
+     "t": 2.4799999999999995,
+     "on": "kaiser",
+     "size": "mediumclose",
+     "frameX": 0.12,
+     "push": 0.05
+    }
+   ],
+   "shotDissolve": true,
+   "transition": "fade",
+   "tag": "Spa, Belgium · 29 September 1918",
+   "tagIn": -1,
+   "id": "s003",
+   "end": 16.38
+  },
+  {
+   "start": 16.38,
+   "type": "stage",
+   "set": {
+    "kind": "nomansland",
+    "time": "dawn",
+    "fg": "sandbags"
+   },
+   "elements": [
+    {
+     "id": "tk0",
+     "kind": "vehicle",
+     "type": "markiv",
+     "nation": "UK",
+     "x": 500,
+     "y": 640,
+     "keys": [
+      {
+       "t": 3.4,
+       "x": 560
+      }
+     ],
+     "moving": true
+    },
+    {
+     "id": "tk1",
+     "kind": "vehicle",
+     "type": "markiv",
+     "nation": "UK",
+     "x": 1020,
+     "y": 658,
+     "keys": [
+      {
+       "t": 3.4,
+       "x": 1080
+      }
+     ],
+     "moving": true
+    },
+    {
+     "id": "tk2",
+     "kind": "vehicle",
+     "type": "markiv",
+     "nation": "UK",
+     "x": 1540,
+     "y": 676,
+     "keys": [
+      {
+       "t": 3.4,
+       "x": 1600
+      }
+     ],
+     "moving": true
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german__officer",
+     "x": 760,
+     "y": 1150,
+     "scale": 2.0,
+     "pose": "hold",
+     "expr": "worried",
+     "keys": [
+      {
+       "t": 2.1000000000000014,
+       "expr": "panic",
+       "pose": "head",
+       "holds": ""
+      }
+     ],
+     "holds": "stopwatch",
+     "holdsScale": 0.22,
+     "turn": 0.4,
+     "id": "off"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 1380,
+     "y": 1170,
+     "scale": 1.95,
+     "pose": "aim",
+     "expr": "nervous",
+     "holds": "rifle",
+     "turn": -0.2,
+     "fireAt": [
+      0.9,
+      2.2
+     ],
+     "id": "sold"
+    },
+    {
+     "kind": "fx",
+     "type": "shellburst",
+     "x": 1200,
+     "y": 700,
+     "size": 1.6,
+     "in": 1.4
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "on": [
+      "off",
+      "sold"
+     ],
+     "size": "medium",
+     "push": 0.04
+    },
+    {
+     "t": 1.8000000000000014,
+     "on": "off",
+     "size": "close",
+     "frameX": -0.12,
+     "push": 0.05
+    }
+   ],
+   "shotDissolve": true,
+   "transition": "fade",
+   "world": {
+    "scale": 1.0,
+    "y": 900
+   },
+   "impacts": [
+    1.4
+   ],
+   "tag": "The Western Front · 29 September 1918",
+   "tagIn": 0.3,
+   "sfx": [
+    {
+     "t": 0,
+     "id": "tank_engine",
+     "dur": 3.0
+    }
+   ],
+   "id": "s004",
+   "end": 19.64
+  },
+  {
+   "start": 19.64,
+   "type": "stage",
+   "set": {
+    "kind": "office",
+    "flag": "GERI",
+    "portrait": true,
+    "fg": "officedesk",
+    "desk": false
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "ludendorff",
+     "x": 760,
+     "y": 1000,
+     "scale": 1.6,
+     "pose": "explain",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 2.1599999999999993,
+       "pose": "slam",
+       "expr": "angry"
+      }
+     ],
+     "talk": true,
+     "turn": 0.4,
+     "id": "lud"
+    },
+    {
+     "kind": "actor",
+     "who": "kaiser_wilhelm",
+     "x": 1250,
+     "y": 1000,
+     "scale": 1.6,
+     "pose": "idle",
+     "expr": "worried",
+     "keys": [
+      {
+       "t": 2.5599999999999996,
+       "pose": "stop",
+       "expr": "shocked"
+      }
+     ],
+     "turn": -0.5,
+     "id": "kaiser"
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "on": [
+      "lud",
+      "kaiser"
+     ],
+     "size": "full",
+     "push": 0.04
+    },
+    {
+     "t": 1.9599999999999995,
+     "on": "lud",
+     "size": "mediumclose",
+     "frameX": -0.12
+    }
+   ],
+   "shotDissolve": true,
+   "transition": "fade",
+   "tag": "Spa, Belgium · 29 September 1918",
+   "tagIn": -1,
+   "sfx": [
+    {
+     "t": 2.3099999999999996,
+     "id": "thud"
+    }
+   ],
+   "id": "s005",
+   "end": 23.08
+  },
+  {
+   "start": 23.08,
+   "type": "stage",
+   "set": {
+    "kind": "office",
+    "flag": "GERI",
+    "portrait": true,
+    "desk": false,
+    "time": "dusk"
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "kaiser_wilhelm",
+     "x": 900,
+     "y": 1000,
+     "scale": 1.6,
+     "pose": "idle",
+     "expr": "sad",
+     "id": "kaiser",
+     "keys": [
+      {
+       "t": 1.6,
+       "x": 1250,
+       "y": 990
+      },
+      {
+       "t": 1.75,
+       "view": "back",
+       "pose": "behind"
+      }
+     ]
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "on": "kaiser",
+     "size": "full",
+     "track": true,
+     "push": 0.04
+    }
+   ],
+   "shotDissolve": true,
+   "transition": "fade",
+   "tag": "Spa, Belgium · 29 September 1918",
+   "tagIn": -1,
+   "tint": "cold",
+   "id": "s006",
+   "end": 25.62
+  },
+  {
+   "start": 25.62,
+   "type": "stage",
+   "set": {
+    "kind": "nomansland",
+    "time": "dawn"
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": -160,
+     "y": 700,
+     "pose": "charge",
+     "expr": "shout",
+     "keys": [
+      {
+       "t": 0.2,
+       "x": -160,
+       "y": 700
+      },
+      {
+       "t": 6.2,
+       "x": 1400,
+       "y": 700,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "run": true,
+     "id": "w0"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": -330,
+     "y": 745,
+     "pose": "charge",
+     "expr": "shout",
+     "keys": [
+      {
+       "t": 0.4,
+       "x": -330,
+       "y": 745
+      },
+      {
+       "t": 6.2,
+       "x": 1230,
+       "y": 745,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "run": true,
+     "id": "w1"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": -500,
+     "y": 790,
+     "pose": "charge",
+     "expr": "shout",
+     "keys": [
+      {
+       "t": 0.6000000000000001,
+       "x": -500,
+       "y": 790
+      },
+      {
+       "t": 6.2,
+       "x": 1060,
+       "y": 790,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "run": true,
+     "id": "w2"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": -670,
+     "y": 835,
+     "pose": "charge",
+     "expr": "shout",
+     "keys": [
+      {
+       "t": 0.2,
+       "x": -670,
+       "y": 835
+      },
+      {
+       "t": 6.2,
+       "x": 890,
+       "y": 835,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "run": true,
+     "id": "w3"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": -840,
+     "y": 700,
+     "pose": "charge",
+     "expr": "shout",
+     "keys": [
+      {
+       "t": 0.4,
+       "x": -840,
+       "y": 700
+      },
+      {
+       "t": 6.2,
+       "x": 720,
+       "y": 700,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "run": true,
+     "id": "w4"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": -1010,
+     "y": 745,
+     "pose": "charge",
+     "expr": "shout",
+     "keys": [
+      {
+       "t": 0.6000000000000001,
+       "x": -1010,
+       "y": 745
+      },
+      {
+       "t": 6.2,
+       "x": 550,
+       "y": 745,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "run": true,
+     "id": "w5"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": -1180,
+     "y": 790,
+     "pose": "charge",
+     "expr": "shout",
+     "keys": [
+      {
+       "t": 0.2,
+       "x": -1180,
+       "y": 790
+      },
+      {
+       "t": 6.2,
+       "x": 380,
+       "y": 790,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "run": true,
+     "id": "w6"
+    },
+    {
+     "kind": "fx",
+     "type": "smoke",
+     "x": 400,
+     "y": 720,
+     "size": 1.4
+    },
+    {
+     "kind": "fx",
+     "type": "smoke",
+     "x": 1100,
+     "y": 680,
+     "size": 1.4
+    },
+    {
+     "kind": "fx",
+     "type": "smoke",
+     "x": 1700,
+     "y": 740,
+     "size": 1.4
+    },
+    {
+     "kind": "fx",
+     "type": "shellburst",
+     "x": 1600,
+     "y": 700,
+     "size": 2.0,
+     "in": 0.6
+    },
+    {
+     "kind": "fx",
+     "type": "shellburst",
+     "x": 1300,
+     "y": 780,
+     "size": 2.0,
+     "in": 2.0
+    },
+    {
+     "kind": "fx",
+     "type": "shellburst",
+     "x": 1750,
+     "y": 860,
+     "size": 2.0,
+     "in": 3.3
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "size": "wide",
+     "zoom": 1.0,
+     "push": 0.03
+    },
+    {
+     "t": 2.6,
+     "on": [
+      "w1",
+      "w2",
+      "w3"
+     ],
+     "size": "full",
+     "track": true
+    }
+   ],
+   "shotDissolve": true,
+   "transition": "fade",
+   "world": {
+    "scale": 1.0,
+    "y": 900
+   },
+   "impacts": [
+    0.6,
+    2.0,
+    3.3
+   ],
+   "tag": "The Western Front · March 1918",
+   "tagIn": 0.4,
+   "id": "s007",
+   "end": 31.22
+  },
+  {
+   "start": 31.22,
+   "type": "map",
+   "transition": "fade",
+   "map": {
+    "era": "1914",
+    "center": [
+     3.8,
+     49.7
+    ],
+    "span": 7.5,
+    "style": "paper",
+    "colors": {
+     "German Empire": "GERI",
+     "France": "#93ab6e",
+     "Belgium": "#cfa264"
+    },
+    "hatch": [
+     "German Empire"
+    ],
+    "rivers": [
+     "Marne"
+    ]
+   },
+   "camera": [
+    {
+     "t": 0,
+     "center": [
+      4.3,
+      50.0
+     ],
+     "span": 8.5
+    },
+    {
+     "t": 3.5,
+     "center": [
+      3.3,
+      49.4
+     ],
+     "span": 6.0
+    }
+   ],
+   "elements": [
+    {
+     "kind": "front",
+     "path": [
+      [
+       2.75,
+       51.13
+      ],
+      [
+       2.88,
+       50.85
+      ],
+      [
+       2.8,
+       50.35
+      ],
+      [
+       2.95,
+       49.65
+      ],
+      [
+       3.3,
+       49.42
+      ],
+      [
+       4.0,
+       49.3
+      ],
+      [
+       5.38,
+       49.22
+      ],
+      [
+       5.65,
+       48.9
+      ],
+      [
+       6.5,
+       48.6
+      ],
+      [
+       7.1,
+       47.6
+      ]
+     ],
+     "path2": [
+      [
+       2.75,
+       51.13
+      ],
+      [
+       2.75,
+       50.75
+      ],
+      [
+       2.6,
+       50.3
+      ],
+      [
+       2.45,
+       49.85
+      ],
+      [
+       2.57,
+       49.62
+      ],
+      [
+       3.0,
+       49.4
+      ],
+      [
+       3.4,
+       49.05
+      ],
+      [
+       3.95,
+       49.1
+      ],
+      [
+       4.1,
+       49.25
+      ],
+      [
+       5.38,
+       49.22
+      ],
+      [
+       5.65,
+       48.9
+      ],
+      [
+       6.5,
+       48.6
+      ],
+      [
+       7.1,
+       47.6
+      ]
+     ],
+     "morph": 0,
+     "keys": [
+      {
+       "t": 0.2,
+       "morph": 0
+      },
+      {
+       "t": 1.8,
+       "morph": 1
+      }
+     ],
+     "color": "#7a2a22",
+     "enter": "none",
+     "width": 10
+    },
+    {
+     "kind": "city",
+     "name": "Paris",
+     "at": [
+      2.35,
+      48.86
+     ],
+     "in": 0.3,
+     "tag": true,
+     "side": "right"
+    }
+   ],
+   "tag": "The Western Front · Spring 1918",
+   "tagIn": -1,
+   "id": "s008",
+   "end": 34.32
+  },
+  {
+   "start": 34.32,
+   "type": "stage",
+   "set": {
+    "kind": "nomansland",
+    "time": "dusk",
+    "wire": false,
+    "horizon": 860
+   },
+   "elements": [
+    {
+     "kind": "glow",
+     "x": 1500,
+     "y": 840,
+     "r": 260,
+     "color": "#ffd9a0",
+     "strength": 0.55
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 520,
+     "y": 866,
+     "scale": 0.62,
+     "pose": "idle",
+     "expr": "neutral",
+     "view": "back",
+     "holds": "",
+     "id": "g0",
+     "silhouette": true
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 640,
+     "y": 870,
+     "scale": 0.57,
+     "pose": "port",
+     "expr": "neutral",
+     "view": "back",
+     "holds": "rifle",
+     "id": "g1",
+     "silhouette": true
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 760,
+     "y": 866,
+     "scale": 0.62,
+     "pose": "idle",
+     "expr": "neutral",
+     "view": "back",
+     "holds": "",
+     "id": "g2",
+     "silhouette": true
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 880,
+     "y": 870,
+     "scale": 0.57,
+     "pose": "port",
+     "expr": "neutral",
+     "view": "back",
+     "holds": "rifle",
+     "id": "g3",
+     "silhouette": true
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german__officer",
+     "x": 1250,
+     "y": 1080,
+     "scale": 1.9,
+     "pose": "idle",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 1.0,
+       "pose": "binoculars",
+       "holds": "binoculars"
+      }
+     ],
+     "turn": 0.3,
+     "id": "off"
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.04,
+     "panX": 60
+    },
+    {
+     "t": 1.6,
+     "on": "off",
+     "size": "mediumclose",
+     "frameX": -0.15
+    }
+   ],
+   "shotDissolve": true,
+   "transition": "fade",
+   "tag": "The Marne · June 1918",
+   "tagIn": 0.5,
+   "tint": "warm",
+   "id": "s009",
+   "end": 36.78
+  },
+  {
+   "start": 36.78,
+   "type": "stage",
+   "set": {
+    "kind": "city",
+    "time": "dusk"
+   },
+   "elements": [
+    {
+     "kind": "binoculars",
+     "in": 0
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.15,
+     "x": 960,
+     "y": 500,
+     "push": 0.04,
+     "panX": -40
+    }
+   ],
+   "shotDissolve": true,
+   "transition": "fade",
+   "tag": "The Marne · June 1918",
+   "tagIn": -1,
+   "tint": "warm",
+   "id": "s010",
+   "end": 39.32
+  },
+  {
+   "start": 39.32,
+   "type": "stage",
+   "set": {
+    "kind": "nomansland",
+    "time": "dusk",
+    "wire": false,
+    "horizon": 860
+   },
+   "elements": [
+    {
+     "kind": "glow",
+     "x": 1500,
+     "y": 840,
+     "r": 260,
+     "color": "#ffd9a0",
+     "strength": 0.35
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 520,
+     "y": 866,
+     "pose": "idle",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 0.6,
+       "x": 520,
+       "y": 866
+      },
+      {
+       "t": 6.2,
+       "x": 60,
+       "y": 866,
+       "ease": "linear"
+      }
+     ],
+     "holds": "",
+     "id": "g0",
+     "silhouette": true,
+     "flip": true,
+     "scale": 0.62
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 640,
+     "y": 870,
+     "pose": "port",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 0.8999999999999999,
+       "x": 640,
+       "y": 870
+      },
+      {
+       "t": 6.2,
+       "x": 150,
+       "y": 870,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "id": "g1",
+     "silhouette": true,
+     "flip": true,
+     "scale": 0.57
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 760,
+     "y": 866,
+     "pose": "idle",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 1.2,
+       "x": 760,
+       "y": 866
+      },
+      {
+       "t": 6.2,
+       "x": 240,
+       "y": 866,
+       "ease": "linear"
+      }
+     ],
+     "holds": "",
+     "id": "g2",
+     "silhouette": true,
+     "flip": true,
+     "scale": 0.62
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 880,
+     "y": 870,
+     "pose": "port",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 1.5,
+       "x": 880,
+       "y": 870
+      },
+      {
+       "t": 6.2,
+       "x": 330,
+       "y": 870,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "id": "g3",
+     "silhouette": true,
+     "flip": true,
+     "scale": 0.57
+    },
+    {
+     "kind": "caption",
+     "words": [
+      {
+       "w": "So",
+       "t": 0.05,
+       "accent": false
+      },
+      {
+       "w": "how",
+       "t": 0.29,
+       "accent": false
+      },
+      {
+       "w": "does",
+       "t": 0.55,
+       "accent": false
+      },
+      {
+       "w": "an",
+       "t": 0.73,
+       "accent": false
+      },
+      {
+       "w": "army",
+       "t": 0.87,
+       "accent": false
+      },
+      {
+       "w": "go",
+       "t": 1.21,
+       "accent": false
+      },
+      {
+       "w": "from",
+       "t": 1.49,
+       "accent": false
+      },
+      {
+       "w": "the",
+       "t": 1.69,
+       "accent": false
+      },
+      {
+       "w": "outskirts",
+       "t": 1.83,
+       "accent": false
+      },
+      {
+       "w": "of",
+       "t": 2.31,
+       "accent": false
+      },
+      {
+       "w": "Paris",
+       "t": 2.49,
+       "accent": true
+      },
+      {
+       "w": "to",
+       "t": 2.87,
+       "accent": false
+      },
+      {
+       "w": "two",
+       "t": 3.25,
+       "accent": false
+      },
+      {
+       "w": "hours",
+       "t": 3.61,
+       "accent": false
+      },
+      {
+       "w": "from",
+       "t": 4.05,
+       "accent": false
+      },
+      {
+       "w": "collapse",
+       "t": 4.35,
+       "accent": true
+      },
+      {
+       "w": "in",
+       "t": 4.77,
+       "accent": false
+      },
+      {
+       "w": "a",
+       "t": 5.13,
+       "accent": false
+      },
+      {
+       "w": "single",
+       "t": 5.25,
+       "accent": false
+      },
+      {
+       "w": "summer?",
+       "t": 5.57,
+       "accent": false
+      }
+     ]
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.04,
+     "push": 0.04
+    }
+   ],
+   "shotDissolve": true,
+   "transition": "fade",
+   "tag": "The Marne · June 1918",
+   "tagIn": -1,
+   "tint": "warm",
+   "id": "s011",
+   "end": 45.64
+  },
+  {
+   "start": 45.64,
+   "type": "stage",
+   "set": {
+    "kind": "nomansland",
+    "time": "day",
+    "weather": "rain",
+    "wire": false
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 1500,
+     "y": 900,
+     "pose": "idle",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 5.0,
+       "x": 700,
+       "y": 900,
+       "ease": "linear"
+      }
+     ],
+     "holds": "",
+     "id": "r0",
+     "flip": true
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 1670,
+     "y": 960,
+     "pose": "shoulder",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 5.0,
+       "x": 870,
+       "y": 960,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "id": "r1",
+     "flip": true
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 1840,
+     "y": 1020,
+     "pose": "idle",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 5.0,
+       "x": 1040,
+       "y": 1020,
+       "ease": "linear"
+      }
+     ],
+     "holds": "",
+     "id": "r2",
+     "flip": true
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 2010,
+     "y": 900,
+     "pose": "shoulder",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 5.0,
+       "x": 1210,
+       "y": 900,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "id": "r3",
+     "flip": true
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_german",
+     "x": 2180,
+     "y": 960,
+     "pose": "idle",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 5.0,
+       "x": 1380,
+       "y": 960,
+       "ease": "linear"
+      }
+     ],
+     "holds": "",
+     "id": "r4",
+     "flip": true
+    },
+    {
+     "kind": "caption",
+     "words": [
+      {
+       "w": "Or",
+       "t": 0.05,
+       "accent": false
+      },
+      {
+       "w": "had",
+       "t": 0.33,
+       "accent": false
+      },
+      {
+       "w": "the",
+       "t": 0.51,
+       "accent": false
+      },
+      {
+       "w": "war",
+       "t": 0.69,
+       "accent": false
+      },
+      {
+       "w": "really",
+       "t": 1.01,
+       "accent": false
+      },
+      {
+       "w": "been",
+       "t": 1.45,
+       "accent": false
+      },
+      {
+       "w": "lost",
+       "t": 1.69,
+       "accent": true
+      },
+      {
+       "w": "long",
+       "t": 2.05,
+       "accent": false
+      },
+      {
+       "w": "before",
+       "t": 2.41,
+       "accent": false
+      },
+      {
+       "w": "that",
+       "t": 2.75,
+       "accent": false
+      },
+      {
+       "w": "summer",
+       "t": 2.97,
+       "accent": false
+      },
+      {
+       "w": "even",
+       "t": 3.31,
+       "accent": false
+      }
+     ]
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.04
+    },
+    {
+     "t": 2.4,
+     "on": "r1",
+     "size": "medium",
+     "track": true
+    }
+   ],
+   "shotDissolve": true,
+   "transition": "fade",
+   "world": {
+    "scale": 1.0,
+    "y": 900
+   },
+   "tag": "The Western Front · Summer 1918",
+   "tagIn": 0.4,
+   "tint": "cold",
+   "id": "s012",
+   "end": 50.24
+  },
+  {
+   "start": 50.24,
+   "type": "stage",
+   "set": {
+    "kind": "classroom",
+    "desk": false
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "civilian_man",
+     "x": 1250,
+     "y": 1000,
+     "scale": 1.55,
+     "pose": "reach",
+     "expr": "smile",
+     "keys": [
+      {
+       "t": 1.4,
+       "view": "front",
+       "pose": "pointL",
+       "turn": -0.4,
+       "talk": true
+      }
+     ],
+     "view": "back",
+     "look_": {
+      "age": 0.8,
+      "glasses": "round"
+     },
+     "id": "prof"
+    },
+    {
+     "kind": "label",
+     "text": "1914?",
+     "x": 760,
+     "y": 480,
+     "style": "chalk",
+     "size": 58,
+     "in": 0.3
+    },
+    {
+     "kind": "label",
+     "text": "1916?",
+     "x": 1090,
+     "y": 480,
+     "style": "chalk",
+     "size": 58,
+     "in": 0.75
+    },
+    {
+     "kind": "label",
+     "text": "1917?",
+     "x": 760,
+     "y": 580,
+     "style": "chalk",
+     "size": 58,
+     "in": 1.2
+    },
+    {
+     "kind": "label",
+     "text": "1918?",
+     "x": 1090,
+     "y": 580,
+     "style": "chalk",
+     "size": 58,
+     "in": 1.6500000000000001
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "on": "prof",
+     "size": "full",
+     "push": 0.04
+    }
+   ],
+   "shotDissolve": true,
+   "transition": "fade",
+   "tag": "Today",
+   "tagIn": 0.3,
+   "sfx": [
+    {
+     "t": 0.3,
+     "id": "chalk",
+     "dur": 1.8
+    }
+   ],
+   "id": "s013",
+   "end": 52.8
+  },
+  {
+   "start": 52.8,
+   "type": "stage",
+   "set": {
+    "kind": "field",
+    "time": "day",
+    "poles": false,
+    "houses": true,
+    "road": false
+   },
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "ww1_french_1914",
+     "x": 260,
+     "y": 780,
+     "pose": "charge",
+     "expr": "shout",
+     "keys": [
+      {
+       "t": 7.0,
+       "x": 1500,
+       "y": 780,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "run": true,
+     "id": "f0"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_french_1914",
+     "x": 110,
+     "y": 850,
+     "pose": "charge",
+     "expr": "shout",
+     "keys": [
+      {
+       "t": 7.0,
+       "x": 1350,
+       "y": 850,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "run": true,
+     "id": "f1"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_french_1914",
+     "x": -40,
+     "y": 920,
+     "pose": "charge",
+     "expr": "shout",
+     "keys": [
+      {
+       "t": 7.0,
+       "x": 1200,
+       "y": 920,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "run": true,
+     "id": "f2"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_french_1914",
+     "x": -190,
+     "y": 990,
+     "pose": "charge",
+     "expr": "shout",
+     "keys": [
+      {
+       "t": 7.0,
+       "x": 1050,
+       "y": 990,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "run": true,
+     "id": "f3"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_french_1914",
+     "x": -340,
+     "y": 780,
+     "pose": "charge",
+     "expr": "shout",
+     "keys": [
+      {
+       "t": 7.0,
+       "x": 900,
+       "y": 780,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "run": true,
+     "id": "f4"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_french_1914",
+     "x": -490,
+     "y": 850,
+     "pose": "charge",
+     "expr": "shout",
+     "keys": [
+      {
+       "t": 7.0,
+       "x": 750,
+       "y": 850,
+       "ease": "linear"
+      }
+     ],
+     "holds": "rifle",
+     "run": true,
+     "id": "f5"
+    },
+    {
+     "kind": "actor",
+     "who": "ww1_french_1914__officer",
+     "x": 1500,
+     "y": 1040,
+     "pose": "wave",
+     "expr": "shout",
+     "keys": [
+      {
+       "t": 1.2,
+       "pose": "pointL"
+      },
+      {
+       "t": 2.6,
+       "pose": "wave"
+      }
+     ],
+     "turn": -0.3,
+     "id": "cap"
+    },
+    {
+     "kind": "fx",
+     "type": "shellburst",
+     "x": 1500,
+     "y": 720,
+     "size": 2.0,
+     "in": 0.6
+    },
+    {
+     "kind": "fx",
+     "type": "shellburst",
+     "x": 1200,
+     "y": 800,
+     "size": 2.0,
+     "in": 1.9
+    },
+    {
+     "kind": "fx",
+     "type": "shellburst",
+     "x": 1650,
+     "y": 860,
+     "size": 2.0,
+     "in": 3.4
+    }
+   ],
+   "shots": [
+    {
+     "t": 0,
+     "size": "wide",
+     "zoom": 1.0,
+     "push": 0.03
+    },
+    {
+     "t": 2.8,
+     "on": "cap",
+     "size": "medium",
+     "frameX": 0.12
+    },
+    {
+     "t": 4.6,
+     "on": [
+      "f1",
+      "f2",
+      "f3"
+     ],
+     "size": "full",
+     "track": true
+    }
+   ],
+   "shotDissolve": true,
+   "transition": "fade",
+   "world": {
+    "scale": 1.0,
+    "y": 900
+   },
+   "impacts": [
+    0.6,
+    1.9,
+    3.4
+   ],
+   "tag": "The Marne · September 1914",
+   "tagIn": 0.4,
+   "id": "s014",
+   "end": 60.6
+  }
+ ]
+}

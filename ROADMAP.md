@@ -99,6 +99,16 @@ Goal: a frame from our video can sit next to a frame from the reference channel 
 - [ ] K9 Crowd waves: a `crowd` that advances in depth rows with falls, for 20+ men without 20 elements
 - [ ] K10 Back-port the action mix to the WW1 film (validate: 22 % action) — only if it is re-rendered
 
+**Story grammar (tell it like an animated film)**: approved on `projects/ember-test`, rebuilt from cards in `projects/example-ww1-cold-open`
+- [x] S1 Measured the reference grammar (dissolves, push-ins, shot lengths, text timing): `references/storytelling-film.md`
+- [x] S2 Engine: shot and scene dissolves, place/time tag, word-by-word caption, stat card, paper note, binocular POV, chalk
+- [x] S3 Cards: `place_id` continuity, `tag`/`tag_on`, `caption`/`stat`/`paper_note`, dissolves by default; 10 story recipes
+- [x] S4 Targets: acted ≥ 75 %, maps ≤ 10 % (≤ 5 s), documents ≤ 10 %; the five-question picture-writing method in the playbook
+- [ ] S5 Map → scene dissolve at the same place (the map zooms into the street it shows)
+- [ ] S6 Split-screen echo (1918 | 1940) and timeline-irony recipe
+- [ ] S7 Period cities (Paris 1918, Berlin 1945 skylines) for `binocular_view` / `establish`: the `city` set is modern blocks
+- [ ] S8 A side-view walk for people crossing the frame (chibis walk front-facing today)
+
 ### M3 — Faster, safer production
 - [x] F1 Scene library: reusable shot templates (office decision, map advance, convoy, river crossing, cockpit…) so a 30-min plan is assembled from proven pieces
 - [ ] F2 Partial re-render: re-render only changed scenes and splice them into the film

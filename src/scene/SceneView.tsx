@@ -5,12 +5,12 @@ import { SetBackground } from '../sets/Sets';
 import { Foreground } from '../sets/Rich';
 import { MapLayer, makeProjection, PaperOverlay } from '../map/MapLayer';
 import { ElementView, type Ctx } from './Elements';
-import { DateBadge } from '../overlays/Overlays';
+import { DateBadge, PlaceTag } from '../overlays/Overlays';
 import { resolveWorld, personScaleAt, vehicleScaleFor, VEH, PERSON_H, GROUND_FX, type WorldCtx } from '../lib/depth';
 import type { ElementBase } from '../types';
 import { FONT, INK, C } from '../theme';
 
-const HUD_KINDS = new Set(['date', 'namecard']);
+const HUD_KINDS = new Set(['date', 'namecard', 'caption', 'stat', 'note', 'binoculars']);
 
 export const cameraAt = (keys: CameraKey[] | undefined, t: number, base: Record<string, unknown>) =>
   resolveKeys(base, (keys ?? []) as never, t) as { x: number; y: number; zoom: number; rotate?: number; center?: LonLat; shake?: number; span?: number };
@@ -58,10 +58,12 @@ const subjectAt = (els: ElementBase[], ref: string | number, t: number, world?: 
   const centred = !(el.kind === 'actor' || el.kind === 'vehicle' || el.kind === 'crowd');
   return { x, y: centred ? y + H / 2 : y, H, W };
 };
-export const shotCamera = (shots: Shot[], els: ElementBase[], t: number, dur: number, world?: WorldCtx) => {
+export const shotCamera = (shots: Shot[], els: ElementBase[], t: number, dur: number, world?: WorldCtx, pick?: number) => {
   const sorted = [...shots].sort((a, b) => a.t - b.t);
   let i = 0;
   for (let j = 0; j < sorted.length; j++) if (sorted[j].t <= t) i = j;
+  // a shot dissolve renders the outgoing shot (pick) under the incoming one for ~0.6 s
+  if (pick !== undefined && pick >= 0 && pick < sorted.length) i = pick;
   const sh = sorted[i];
   const tEnd = sorted[i + 1]?.t ?? dur;
   const p = clamp((t - sh.t) / Math.max(0.1, tEnd - sh.t));
@@ -108,7 +110,7 @@ export const shotCamera = (shots: Shot[], els: ElementBase[], t: number, dur: nu
 };
 
 /** One scene rendered at scene-local time t (seconds). Draws into a 1920x1080 SVG. */
-export const SceneView: React.FC<{ scene: Scene; t: number; cast?: Record<string, CastMember> }> = ({ scene, t, cast }) => {
+export const SceneView: React.FC<{ scene: Scene; t: number; cast?: Record<string, CastMember>; shotPick?: number; noHud?: boolean }> = ({ scene, t, cast, shotPick, noHud }) => {
   const dur = scene.end - scene.start;
   const els = scene.elements ?? [];
   let proj: Ctx['proj'];
@@ -142,7 +144,7 @@ export const SceneView: React.FC<{ scene: Scene; t: number; cast?: Record<string
     const drift = !shots && !scene.camera && scene.set?.kind !== 'paper' && scene.set?.kind !== 'studio' && (scene.set?.drift as number) !== 0;
     const dz = (scene.set?.drift as number) ?? 0.045;
     const cam = shots?.length
-      ? shotCamera(shots, els, t, dur, resolveWorld(scene.world, scene.set as never))
+      ? shotCamera(shots, els, t, dur, resolveWorld(scene.world, scene.set as never), shotPick)
       : drift
       ? { x: 960 + (scene.set?.driftX as number ?? 0) * (t / Math.max(1, dur)), y: 540, zoom: 1 + dz * (t / Math.max(1, dur)), rotate: 0, shake: 0 }
       : cameraAt(scene.camera, t, { x: 960, y: 540, zoom: 1, rotate: 0, shake: 0 });
@@ -191,7 +193,7 @@ export const SceneView: React.FC<{ scene: Scene; t: number; cast?: Record<string
         return out;
       })()
     : worldEls0;
-  const hudEls = els.map((el, i) => ({ el, i })).filter(({ el }) => el.hud || HUD_KINDS.has(el.kind));
+  const hudEls = noHud ? [] : els.map((el, i) => ({ el, i })).filter(({ el }) => el.hud || HUD_KINDS.has(el.kind));
   const weather = scene.set?.weather as string | undefined;
 
   const lbRaw = scene.letterbox;
@@ -223,7 +225,8 @@ export const SceneView: React.FC<{ scene: Scene; t: number; cast?: Record<string
         </g>
       ) : null}
       {hudEls.map(({ el, i }) => <ElementView key={'h' + i} el={el} ctx={ctx} index={i} />)}
-      {lb ? (
+      {!noHud && scene.tag ? <PlaceTag text={scene.tag as string} a={((scene.tagIn as number) ?? 0.3) < 0 ? 99 : t - ((scene.tagIn as number) ?? 0.3)} /> : null}
+      {noHud ? null : lb ? (
         // cinema bars for dramatised moments; the caption replaces the date/place badges
         <g>
           <rect x={0} y={-10} width={1920} height={10 + lbH} fill="#0b0a09" />

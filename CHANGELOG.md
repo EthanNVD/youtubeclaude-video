@@ -2,6 +2,56 @@
 
 Newest first. One entry per change that matters to the look, the pipeline or the docs.
 
+## 2026-11-21 — Story grammar: tell it like an animated film (every clause one acted picture)
+Why: the user wanted films that tell the story with pictures the way Ember History does — characters acting in places that follow
+the narration, not numbers and paper on screen. Two Ember films were measured frame by frame (projects/ember-test/ANALYSIS.md):
+- ~88 % of transitions are 0.6 s dissolves;
+- ~80 % of shots push in slowly (~1.5 %/s);
+- shots last 4.6 s (median);
+- text lands ~0.25 s after its word;
+- stories enter through one person in one place, places return changed by time, and loss is shown by absence.
+
+A 60 s WW1 test was approved, then rebuilt from cards only (`projects/example-ww1-cold-open`): 95 % acted, 3 s of map, no stat/paper cards.
+- **Engine:**
+  - `scene.shotDissolve`: set-up changes dissolve over 0.6 s;
+  - scene dissolves 0.6 s (`transitionDur`);
+  - place/time tag `scene.tag`/`tagIn` (carried over without re-animating);
+  - HUD elements `caption` (word-by-word big questions, amber accents), `stat` (engraved statistic), `note` (typed paper note), `binoculars` (POV lenses);
+  - label style `chalk`;
+  - fonts Cinzel (`FONT.title`) and Cormorant Garamond (`FONT.book`).
+- **Cards:**
+  - Every scene dissolves by default; inside a place every reframing dissolves.
+  - New common fields:
+    - `place_id`: a story place keeps its setting and tag; a different setting under the same id warns;
+    - `tag` / `tag_on`: an unchanged tag stays put;
+    - `caption` / `stat` / `paper_note`.
+  - Auto-coverage frames moving groups (never one giant running face).
+- **10 story recipes** (`tools/cardlib/recipes_story.py`): `establish`, `approach`, `interrupt`, `confront`, `contemplate`, `watch_front`,
+  `binocular_view`, `vista`, `lecture`, `absence`. `wave`/`retreat` reframed for groups; `lecture` keeps the board in frame.
+- **Targets (replace "action ≥ 55 %"):**
+  - acted cards (action + talk) ≥ 75 % per chapter;
+  - maps ≤ 10 % and ≤ 5 s each;
+  - documents/charts ≤ 10 %;
+  - host ≤ 8 %;
+  - ≤ 1 stat card per ~2 min;
+  - captions only on acted cards.
+
+  Applied in the compiler and the validator.
+- **Docs:**
+  - `playbook/narration-to-picture.md` rewritten: the five-question picture-writing method (WHO / DOES WHAT / WHERE / WHEN / recipe), the lookup table, ten film patterns, targets;
+  - understanding template with story arcs, story places, symbols and big questions, and beats written as WHO · ACTION · WHERE · WHEN;
+  - 02-understand, 03-cards (story and text fields), 04-compile (new warnings), 05-review (sound-off test);
+  - AGENTS rules; SKILL.md;
+  - new `references/storytelling-film.md`;
+  - plan-schema (new fields), STYLE_GUIDE §2a, QUALITY;
+  - worked example `projects/example-ww1-cold-open`; the study `projects/ember-test`.
+- No music, as before: ambience and SFX only.
+
+## 2026-11-21 — Fix: `bombing` without civilians framed a missing element
+Why: `bombing` with `"civilians": false` cut to a close shot of `c0`, a civilian that is only drawn when civilians are on, so the
+engine validator failed ("frames 'c0' — no element has that id"). Found while building `projects/fall-of-singapore`.
+- `tools/cardlib/recipes_other.py` `bombing`: with no civilians, the second shot now follows the lead bomber `b0` (medium).
+
 ## 2026-11-17 — Studio edition: scene cards, recipe catalog, step-by-step playbook
 Why: weaker models (Sonnet, Muse) building from the old skill repeated the same scenes and missed the meaning, because they had
 to write raw engine JSON (coordinates, depth, camera, timing) and nothing forced them to understand the script first.

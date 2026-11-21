@@ -140,6 +140,13 @@ COMMON = {
     "sfx": Param("list", doc="extra sounds [{\"on\": \"phrase\", \"id\": \"explosion\"}]"),
     "note": Param("str", doc="free note for humans; ignored"),
     "era": Param("enum", values=["ww1", "ww2", "napoleonic", "ancient", "vietnam", "modern"], doc="rarely needed: this card is in another era than the film (a flashback)"),
+    # ---- story continuity and documentary text (playbook/narration-to-picture.md §Storytelling)
+    "place_id": Param("str", doc="a short name for a story place that comes back, e.g. \"kaiser_study\". Every card with the same place_id reuses the same setting and place/time tag; change only time/weather to show time passing"),
+    "tag": Param("str", doc="place/time tag top-left, e.g. \"Spa, Belgium · 29 September 1918\". Set it on the first card of a place; cards with the same place_id inherit it; it stays put (no re-animation) while the tag does not change"),
+    "tag_on": Param("phrase", doc="word(s) where the tag slides in (the date or the place name); default: at the start"),
+    "caption": Param("dict", doc="the film's BIG QUESTIONS only (opening, verdict): {\"from\": \"first words\", \"to\": \"last words\", \"accent\": [\"Paris\", \"collapse\"]} -> the words appear as they are spoken at the bottom, accent words in amber. Always on an acted scene"),
+    "stat": Param("dict", doc="rarely: one number that must be read, as engraved capitals over the scene: {\"text\": \"About 56 km from Paris\", \"sub\": \"the closest since 1914\", \"top\": \"June 1918\", \"on\": \"fifty-six\"} (at most one every ~2 minutes)"),
+    "paper_note": Param("dict", doc="rarely: the exact words of a quote/order typed on a paper note: {\"lines\": [\"Fight on.\", \"Never surrender.\"], \"kicker\": \"Orders, 1944\", \"on\": \"phrase\", \"accent_last\": true}"),
 }
 
 
@@ -237,6 +244,33 @@ def apply_common(c: Card, s: dict):
     for k in ("date", "place", "tint", "letterbox", "transition"):
         if raw.get(k):
             s[k] = raw[k]
+    # documentary film grammar (measured on the reference films): every scene comes in with a 0.6 s cross-dissolve and
+    # every change of set-up inside a place dissolves too; hard cuts only when a card asks for "transition": "cut"
+    s.setdefault("transition", "fade")
+    if s.get("type") == "stage":
+        s.setdefault("shotDissolve", True)
+    if raw.get("tag"):
+        s["tag"] = raw["tag"]
+        s["tagIn"] = c.t(raw.get("tag_on"), 0.05, 0.3) + (0.25 if raw.get("tag_on") else 0)
+    cap = raw.get("caption")
+    if cap:
+        try:
+            i, _, _ = c.W.find(cap["from"], c.i0, c.i1 + 2)
+            _, j, _ = c.W.find(cap["to"], i, c.i1 + 40)
+        except (KeyError, TypeError):
+            raise CardError(f"{_where(c.raw)}: \"caption\" needs \"from\" and \"to\" = words copied from this card's narration: \"{c.text}\".")
+        acc = [a.lower() for a in cap.get("accent", [])]
+        words = [{"w": w["w"].strip(), "t": round(w["start"] + 0.05 - c.start, 2),
+                  "accent": any(a in w["w"].lower() for a in acc)} for w in c.W.words[i:j + 1]]
+        s.setdefault("elements", []).append({"kind": "caption", "words": words})
+    st = raw.get("stat")
+    if st:
+        s.setdefault("elements", []).append({"kind": "stat", "text": st["text"], "sub": st.get("sub"), "top": st.get("top"),
+                                             "in": c.t(st.get("on"), 0.3) + 0.25, "y": st.get("y", 330)})
+    pn = raw.get("paper_note")
+    if pn:
+        s.setdefault("elements", []).append({"kind": "note", "lines": pn["lines"], "kicker": pn.get("kicker"), "accentLast": bool(pn.get("accent_last")),
+                                             "in": c.t(pn.get("on"), 0.3) + 0.25, "x": pn.get("x", 1380), "y": pn.get("y", 120), "speed": pn.get("speed", 26)})
     if s.get("type") == "stage" and s.get("set"):
         if raw.get("time"):
             s["set"]["time"] = raw["time"]
@@ -313,9 +347,14 @@ def auto_coverage(scenes, end, max_gap=6.0):
                         new = SHOT(t, [e["id"] for e in actors[:3]], "medium" if len(actors) > 1 else "full", push=0.03)
                     else:
                         vis = [e for e in active if -60 < x_at(e, t) < 1980] or active
-                        tgt = vis[len(shots) % len(vis)]
-                        new = SHOT(t, tgt["id"], "close" if prev.get("size") != "medium" else "mediumclose",
-                                   frameX=0.14 if tgt.get("x", 960) < 960 else -0.14, push=0.04)
+                        movers = [e for e in vis if any("x" in k for k in (e.get("keys") or []))]
+                        if len(movers) >= 2:
+                            # people on the move (a charge, a column): frame the group, never one giant running face
+                            new = SHOT(t, [e["id"] for e in movers[:3]], "full", track=True, push=0.03)
+                        else:
+                            tgt = vis[len(shots) % len(vis)]
+                            new = SHOT(t, tgt["id"], "close" if prev.get("size") != "medium" else "mediumclose",
+                                       frameX=0.14 if tgt.get("x", 960) < 960 else -0.14, push=0.04)
                     shots.append(new)
                     added += 1
                     changed = True

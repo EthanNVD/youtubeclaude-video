@@ -7,6 +7,17 @@ Proven on `projects/ww1-action-test/` (WW1 599–723 s: Verdun → the first tan
 
 ## 1. The mix (what the screen shows, per chapter)
 
+> **Superseded targets (2026-11-21).** The film is now told like an animated documentary ([storytelling-film.md](storytelling-film.md)).
+> The rule is no longer "action ≥ 55 %". It is:
+>
+> - every clause gets one concrete picture of what it says;
+> - acted cards (action + talk) ≥ 75 % of every chapter;
+> - maps ≤ 10 %;
+> - documents/charts ≤ 10 %.
+>
+> Battle chapters still use the recipes below when the narration describes fighting.
+> The classes and the per-chapter report described here still apply.
+
 `validate` measures it.
 - It prints `mix` for the film.
 - It writes `work/mix.json` per chapter.

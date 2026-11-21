@@ -17,6 +17,20 @@ Every plan and every engine change is judged against them.
 - **Two-shots.** Characters are big at the frame edges facing each other, with the background blurred between them.
 - **Moving subjects.** On maps the camera follows the ship or column it is talking about.
 
+## 2a. Film grammar (measured on the reference channel)
+- **Dissolve, don't cut.** About 88 % of transitions are 0.6 s dissolves. They apply between scenes and when the framing changes inside a place. Hard cuts are for shocks only.
+- **Always drifting.** About 80 % of shots push in slowly (~1.5 % per second); about half also pan gently.
+- **One clause, one picture.** Every clause gets one concrete, literal picture of what it says, acted by people in a place.
+- **Anecdotes and places.** Big history is told through one person in one room on one day. A place returns, changed by time (dusk, rain, night, emptiness).
+- **Text is rare and quiet.**
+  - A small wooden place/time tag, top left. It slides in on the date and stays while we stay.
+  - Quiet name cards.
+  - The film's questions as word-by-word captions.
+  - At most one engraved stat card every few minutes.
+  - A paper note for an exact quote.
+- **Loss by absence.** An empty chair, a helmet on a rifle, an empty ravine. Never gore.
+- See `.claude/skills/srt-history-video/references/storytelling-film.md`.
+
 ## 2b. Coverage (several set-ups per place)
 - A place is filmed as **wide → medium → close-up on the reaction → insert on the evidence**, joined by hard cuts:
   - 2–4 s per set-up in action;

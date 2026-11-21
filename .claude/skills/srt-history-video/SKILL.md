@@ -1,17 +1,26 @@
 ---
 name: srt-history-video
-description: Turn a narration (an .srt, a voice recording, or both) into a finished military-history animated explainer — chibi characters acting in detailed places, battles with real action, maps, a recurring host, date badges, SFX, "Two Sides of War" style — rendered with this repo's engine, plus the YouTube package (3 titles, thumbnail prompts + drafts, description with chapters, tags, hashtags). Planned as scene cards compiled by tools/make.py. Use whenever the user drops an .srt and/or a voice file into projects/ or asks to make, re-make or fix a history video, its thumbnails or its metadata.
+description: Turn a narration (an .srt, a voice recording, or both) into a finished military-history animated documentary told like a film — every clause one concrete acted picture, chibi characters acting in detailed story places, dissolves and slow camera moves, place/time tags, big-question captions, battles, maps as short bridges, ambience and SFX (no music) — rendered with this repo's engine, plus the YouTube package (3 titles, thumbnail prompts + drafts, description with chapters, tags, hashtags). Planned as scene cards compiled by tools/make.py. Use whenever the user drops an .srt and/or a voice file into projects/ or asks to make, re-make or fix a history video, its thumbnails or its metadata.
 ---
 
 # Narration → military-history animated video (studio edition)
 
-You are the director. The engine draws. You decide what the viewer sees for every sentence, by writing **scene cards**.
+You are the director. The engine draws. You decide what the viewer sees for every clause, by writing **scene cards**.
+The film is told like an animated movie: one clause → one concrete picture of exactly what it says, acted by people in a real place; text and maps are rare bridges ([references/storytelling-film.md](references/storytelling-film.md), measured on the reference channel).
 
 **Follow `AGENTS.md`, then `playbook/00-START-HERE.md`, step by step.** This skill file only adds what a Claude session needs on top of them.
 
 ## The path (details in playbook/)
 1. `python tools/make.py projects/<slug> prepare`. It accepts an SRT only, a voice only, or both.
-2. Read **all** of `work/reading.md`. Then fill `understanding.md`: question and answer, people → presets, places, numbers (compare or alone), chapters, and the beats of each chapter with the recipe for each sentence.
+2. Read **all** of `work/reading.md`. Then fill `understanding.md`:
+   - question and answer;
+   - people → presets;
+   - **story arcs** (anecdotes);
+   - **story places** (`place_id`, tag text, how they change);
+   - symbols and **big questions**;
+   - numbers (spoken / stat / chart);
+   - chapters;
+   - for every clause: WHO · DOES WHAT · WHERE · WHEN · recipe (`playbook/narration-to-picture.md` §1).
 3. Write the cards:
    - `cards/_film.json`: era, sides, cast with name and role, extra places.
    - `cards/chNN.json`: one card per idea, 3–10 s. Each card has:
@@ -21,13 +30,19 @@ You are the director. The engine draws. You decide what the viewer sees for ever
      - the recipe's fields.
 
    Choose recipes with `playbook/narration-to-picture.md`; the fields are in `recipes/<id>.md`.
+   Use the story fields on every film:
+   - `place_id` (a returning place keeps its setting and tag);
+   - `tag` + `tag_on` (place/time tag on each new place);
+   - `name_card`;
+   - `caption` (big questions only, over acted cards).
+   Use `stat` and `paper_note` rarely.
 4. `python tools/make.py projects/<slug> cards`. Fix every error, which says what to change. Fix the warnings too:
    - the same recipe twice in a row;
    - chapter mix;
    - card length;
    - `says` copied from the narration.
 
-   Targets: action ≥ 40 % for the film, ≥ 55 % in battle chapters; talk, maps and devices ≤ 15 % each.
+   Targets: acted cards (action + talk recipes) ≥ 75 % of every chapter; maps ≤ 10 % (≤ 5 s each); documents/charts ≤ 10 %; host ≤ 8 %.
 5. `review`. Open every `review/sheet_*.jpg` and answer the yes/no checklist in `playbook/05-review.md`.
 6. `audio` → `video` → `mux`. Run one render at a time. Then check frames of the final MP4.
 7. The YouTube package (`playbook/07-youtube.md`).
@@ -47,7 +62,8 @@ Talk to the user in their language (Vietnamese by default). On-screen text and m
 - **A missing visual** (set, prop, vehicle, pose, fx): extend the engine in `src/`, then run `npx tsc --noEmit` and render a still. Follow the neighbouring code's style. Never fake a missing visual with a label.
 
 ## Reference material (for recipe and engine work)
-- [references/action.md](references/action.md): screen-time mix, battle depth rules, how to animate action.
+- [references/storytelling-film.md](references/storytelling-film.md): the film grammar measured on the reference channel (dissolves, push-ins, tags, captions, anecdotes, places revisited, absence).
+- [references/action.md](references/action.md): battle recipes, depth rules, how to animate fighting.
 - [references/acting-camera.md](references/acting-camera.md): reads, coverage, acting and motion rules behind the recipes' camera work.
 - [references/plan-schema.md](references/plan-schema.md): the engine's scene and element schema (`raw` scenes, engine work).
 - [references/storytelling.md](references/storytelling.md): macro structure, the scored device, the host.

@@ -32,13 +32,14 @@ the "Two Sides of War" style, plus its YouTube package. You are the **director**
    - Every card has a `says` field: what the narration MEANS, in your own words.
 2. **One card = one scene = one idea**, usually 3–10 seconds.
    - The card starts where that idea starts in the narration (`at` = the first words, copied exactly).
-3. **Show, don't label.**
-   - Each card shows people or machines DOING what the sentence says.
-   - Pick the recipe from `playbook/narration-to-picture.md`, never by habit.
-4. **Action first.**
-   - In every chapter, at least 40 % of the screen time is action recipes; in battle chapters at least 55 %.
-   - Talk, maps and charts are short bridges between action scenes.
-5. **Never the same recipe twice in a row.**
+3. **Tell it like an animated film: one clause, one concrete picture.**
+   - For every clause answer WHO, DOES WHAT (a visible action), WHERE, WHEN, then pick the recipe (`playbook/narration-to-picture.md` §1–2).
+   - The picture shows exactly what the clause says, acted by people in a real place. Never pick by keyword or habit.
+4. **People in places, not text.**
+   - At least 75 % of every chapter is acted (people doing the thing); maps ≤ 10 % (≤ 5 s each); documents/charts ≤ 10 %.
+   - Follow the anecdotes: the same people in the same places (`place_id`), revisited as time passes.
+   - Text is rare: a place/time `tag`, name cards, the 2–4 big questions as `caption`, one `stat` per ~2 minutes at most.
+5. **Never the same recipe twice in a row** (unless it is the same place revisited).
    - After a decision, show its consequence.
    - After an attack, show the other side or the cost.
 6. **Fix every error the tools print.**

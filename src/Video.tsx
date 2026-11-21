@@ -6,7 +6,7 @@ import { clamp, easeFn } from './lib/anim';
 
 export type VideoProps = { plan: Plan };
 
-const TD = 0.5; // transition duration (s)
+const TD = 0.6; // scene transition duration (s); a scene may set transitionDur
 
 const findScene = (scenes: Scene[], T: number) => {
   let lo = 0, hi = scenes.length - 1, ans = 0;
@@ -20,11 +20,32 @@ const findScene = (scenes: Scene[], T: number) => {
   return ans;
 };
 
-const Layer: React.FC<{ scene: Scene; t: number; plan: Plan; style?: React.CSSProperties }> = ({ scene, t, plan, style }) => (
+const SD = 0.6; // shot dissolve duration (s) — the reference films reframe inside a place with 0.4-0.9 s dissolves, not hard cuts
+
+const SceneLayer: React.FC<{ scene: Scene; t: number; plan: Plan; shotPick?: number; noHud?: boolean; style?: React.CSSProperties }> = ({ scene, t, plan, shotPick, noHud, style }) => (
   <AbsoluteFill style={{ filter: scene.tint ? TINTS[scene.tint] : undefined, ...style }}>
-    <SceneView scene={scene} t={t} cast={plan.cast} />
+    <SceneView scene={scene} t={t} cast={plan.cast} shotPick={shotPick} noHud={noHud} />
   </AbsoluteFill>
 );
+
+/** A scene; when `scene.shotDissolve` is set, each change of set-up dissolves from the previous framing over SD seconds. */
+const Layer: React.FC<{ scene: Scene; t: number; plan: Plan; style?: React.CSSProperties }> = ({ scene, t, plan, style }) => {
+  const shots = ((scene as { shots?: { t: number }[] }).shots ?? []).map((q) => q.t).sort((a, b) => a - b);
+  if ((scene as { shotDissolve?: boolean }).shotDissolve && shots.length > 1) {
+    for (let j = 1; j < shots.length; j++) {
+      const a = t - shots[j];
+      if (a >= 0 && a < SD) {
+        return (
+          <AbsoluteFill style={style}>
+            <SceneLayer scene={scene} t={t} plan={plan} shotPick={j - 1} noHud />
+            <SceneLayer scene={scene} t={t} plan={plan} style={{ opacity: easeFn('inOut', a / SD) }} />
+          </AbsoluteFill>
+        );
+      }
+    }
+  }
+  return <SceneLayer scene={scene} t={t} plan={plan} style={style} />;
+};
 
 export const Video: React.FC<VideoProps> = ({ plan }) => {
   const frame = useCurrentFrame();
@@ -37,8 +58,9 @@ export const Video: React.FC<VideoProps> = ({ plan }) => {
   const t = T - sc.start;
   const prev = i > 0 ? scenes[i - 1] : null;
   const tr = sc.transition ?? 'cut';
-  const inTr = prev && tr !== 'cut' && t < TD;
-  const k = clamp(t / TD);
+  const td = ((sc as { transitionDur?: number }).transitionDur ?? TD);
+  const inTr = prev && tr !== 'cut' && t < td;
+  const k = clamp(t / td);
   const grain = plan.meta.grain ?? 0.5;
 
   let content: React.ReactNode;

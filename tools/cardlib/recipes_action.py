@@ -198,7 +198,7 @@ def wave(c):
     falls = dict(zip([2, 5, 1][:nf], _hit_times(c, nf, th)))
     els = []
     for i in range(n):
-        y = 760 + (i % 4) * 70
+        y = 705 + (i % 4) * 48
         x0 = (-160 - i * 150) if d > 0 else (2080 + i * 150)
         x1 = x0 + d * 1460
         els.append({**man_path(f"w{i}", sd.soldier, [(0, x0, y), (T, x1, y)], pose="charge", expr="shout", fall=falls.get(i), fall_dir=-d, run=True), "flip": d < 0})
@@ -214,9 +214,9 @@ def wave(c):
             els.append({**AID(f"e{i}", es.soldier, x, 800 + i * 50, None, "aim", "nervous", holds="rifle", fireAt=[0.4 + i * 0.3, 1.3 + i * 0.3],
                               keys=K((tb + i * 0.2, {"pose": "surrender" if i % 2 == 0 else "charge", "holds": "" if i % 2 == 0 else "rifle", "expr": "panic"}))), "flip": d > 0})
     if c.variant == "A":
-        shots = [SHOT(0, None, "wide", zoom=1.0, push=0.03), SHOT(min(1.3, T * 0.4), "w0", "full", track=True, frameX=0.12 * d)]
+        shots = [SHOT(0, None, "wide", zoom=1.0, push=0.03), SHOT(min(1.8, T * 0.45), ["w0", "w1", "w2"], "full", track=True)]
     else:
-        shots = [SHOT(0, "w0", "mediumclose", track=True, frameX=0.1 * d), SHOT(min(1.4, T * 0.4), None, "wide", zoom=1.0, push=0.03)]
+        shots = [SHOT(0, ["w0", "w1"], "full", track=True), SHOT(min(1.6, T * 0.4), None, "wide", zoom=1.0, push=0.03)]
     return stage(c, {"kind": c.p("setting"), "drift": 0, "road": False, "houses": False, "poles": False}, els, [q for q in shots if q["t"] < c.dur - 0.4], world=W, impacts=imp)
 
 
@@ -464,7 +464,7 @@ def retreat(c):
             y = 780 + (i % 3) * 90
             x0 = (1900 + i * 160) if d < 0 else (20 - i * 160)
             els.append({**man_path(f"r{i}", sd.soldier, [(0, x0, y), (T, x0 + d * 1500, y)], pose="charge", expr="panic", holds="" if i % 2 else "rifle", run=True, look=-d), "flip": d < 0})
-        shots = [SHOT(0, None, "wide", zoom=1.0, push=0.03), SHOT(T * 0.5, "r1", "close", track=True, frameX=0.1 * d)]
+        shots = [SHOT(0, None, "wide", zoom=1.0, push=0.03), SHOT(T * 0.5, ["r1", "r2"], "full", track=True)]
     bur, imp = _bursts(c, max(0, min(5, c.p("shells"))), ys=(700, 800), xs=(1300, 1800) if d < 0 else (120, 620))
     return stage(c, {"kind": "nomansland"}, els + bur, [q for q in shots if q["t"] < c.dur - 0.4], world=W, impacts=imp)
 

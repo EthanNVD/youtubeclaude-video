@@ -8,7 +8,9 @@ from pathlib import Path
 from . import sides as SIDES
 from .core import (RECIPES, Card, CardError, _where, apply_common, auto_coverage, check_card, load_cards, load_words)
 
-TARGET = {"action": 0.40, "battle_action": 0.55, "talk": 0.15, "map": 0.15, "device": 0.15, "host": 0.08}
+# story grammar targets (projects/ember-test/ANALYSIS.md, playbook/narration-to-picture.md): most of the film is ACTED
+# (people doing what the sentence says, in a real place: action + talk recipes); maps and documents/charts are short bridges
+TARGET = {"acted": 0.75, "map": 0.10, "device": 0.10, "host": 0.08}
 
 
 def _voice_file(proj: Path):
@@ -82,6 +84,7 @@ def compile_project(proj: Path, write=True):
 
     # 2. build scenes
     history, scenes = {}, []
+    places = {}          # place_id -> {"setting": ..., "tag": ..., "first": card}: a story place keeps its look and tag
     cast = json.loads(json.dumps(film.get("cast", {})))
     for k, raw in enumerate(cards):
         i0 = starts[k][0]
@@ -91,6 +94,20 @@ def compile_project(proj: Path, write=True):
         if note:
             warns.append(f"{_where(raw)}: {note}")
         history.setdefault(raw["recipe"], []).append(variant)
+        pid = raw.get("place_id")
+        if pid:
+            known = places.get(pid)
+            rp = RECIPES[raw["recipe"]].params
+            if known:
+                if "setting" in rp and "setting" not in raw and known.get("setting"):
+                    raw["setting"] = known["setting"]
+                elif "setting" in rp and raw.get("setting") and known.get("setting") and raw["setting"] != known["setting"]:
+                    warns.append(f"{_where(raw)}: place_id \"{pid}\" was \"{known['setting']}\" in {_where(known['first'])}; here it is \"{raw['setting']}\". "
+                                 f"A story place keeps its setting (change time/weather to show time passing) — or give this place another place_id.")
+                if not raw.get("tag") and known.get("tag"):
+                    raw["tag"] = known["tag"]
+            else:
+                places[pid] = {"setting": raw.get("setting"), "tag": raw.get("tag"), "first": raw}
         c = Card(raw, film, W, i0, i1, t_start[k], end, variant, k)
         try:
             s = RECIPES[raw["recipe"]].fn(c)
@@ -125,7 +142,12 @@ def compile_project(proj: Path, write=True):
     if errors:
         return {"ok": False, "errors": errors, "warnings": warns}
 
-    # 4. tile, ids, coverage safety net
+    # 4. tile, ids, coverage safety net; a tag that does not change stays put (no slide-in) across scenes
+    for k, s in enumerate(scenes):
+        if k == 0:
+            s["transition"] = "cut"
+        if k and s.get("tag") and s.get("tag") == scenes[k - 1].get("tag"):
+            s["tagIn"] = -1
     for k, s in enumerate(scenes):
         s["id"] = f"s{k + 1:03d}"
         s["end"] = scenes[k + 1]["start"] if k + 1 < len(scenes) else end_time
@@ -186,19 +208,25 @@ def film_checks(scenes):
             if n >= 6 and m / n > 0.3 and RECIPES[rid].cls != "map":
                 w.append(f"chapter '{c['title']}': recipe '{rid}' is used {m} times in {n} cards. Use at most ~30 % per recipe; pick other recipes for some of them.")
         shares = mix_of(c["scenes"])
-        battle = sum(1 for s in c["scenes"] if s["_raw"]["recipe"] in BATTLE) >= max(2, n // 4)
-        need = TARGET["battle_action"] if battle else TARGET["action"]
-        if dur >= 45 and shares.get("action", 0) < need - 0.05:
-            w.append(f"chapter '{c['title']}': action is {shares.get('action', 0):.0%} of the time (target ≥ {need:.0%}{', battle chapter' if battle else ''}). "
-                     f"Turn talk/document/chart/map cards into action recipes (playbook/narration-to-picture.md §More action).")
-        for cls in ("talk", "map", "device"):
-            if dur >= 45 and shares.get(cls, 0) > TARGET[cls] + 0.07:
-                w.append(f"chapter '{c['title']}': {cls} is {shares[cls]:.0%} of the time (keep ≤ {TARGET[cls]:.0%}).")
+        acted = shares.get("action", 0) + shares.get("talk", 0)
+        if dur >= 45 and acted < TARGET["acted"] - 0.05:
+            w.append(f"chapter '{c['title']}': only {acted:.0%} of the time shows people acting in a place (target ≥ {TARGET['acted']:.0%}). "
+                     f"Replace map/document/chart cards by the scene the sentence describes (playbook/narration-to-picture.md §3).")
+        for cls in ("map", "device", "host"):
+            if dur >= 45 and shares.get(cls, 0) > TARGET[cls] + 0.04:
+                w.append(f"chapter '{c['title']}': {cls} is {shares[cls]:.0%} of the time (keep ≤ {TARGET[cls]:.0%}); show the moment itself instead.")
+        stats = sum(1 for s in c["scenes"] if s["_raw"].get("stat"))
+        if stats > max(1, dur / 120):
+            w.append(f"chapter '{c['title']}': {stats} stat cards. Use at most one every ~2 minutes; let the scene and the voice carry numbers.")
     for s in scenes:
         raw = s["_raw"]
         d = s["end"] - s["start"]
         if d < 1.8:
             w.append(f"{_where(raw)}: only {d:.1f} s long. Merge it with the card before or after (scenes under 2 s flash by).")
+        if RECIPES[raw["recipe"]].cls == "map" and d > 6.5:
+            w.append(f"{_where(raw)}: a {d:.1f} s map. Keep maps ≤ 5 s: start the next card (the people in that place) earlier.")
+        if raw.get("caption") and RECIPES[raw["recipe"]].cls in ("map", "device"):
+            w.append(f"{_where(raw)}: a caption on a {RECIPES[raw['recipe']].cls} card. Big-question captions run over an ACTED scene.")
         if d > 12 and RECIPES[raw["recipe"]].cls != "host":
             w.append(f"{_where(raw)}: {d:.1f} s long. Split it into 2-3 cards at sentence starts (one idea per card, 3-10 s).")
         says = raw.get("says", "")

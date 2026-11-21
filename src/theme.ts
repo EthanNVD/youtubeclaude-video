@@ -3,6 +3,8 @@ import { loadFont as loadAnton } from '@remotion/google-fonts/Anton';
 import { loadFont as loadOswald } from '@remotion/google-fonts/Oswald';
 import { loadFont as loadMono } from '@remotion/google-fonts/IBMPlexMono';
 import { loadFont as loadSerif } from '@remotion/google-fonts/PlayfairDisplay';
+import { loadFont as loadCinzel } from '@remotion/google-fonts/Cinzel';
+import { loadFont as loadBook } from '@remotion/google-fonts/CormorantGaramond';
 import { loadFont as loadBangers } from '@remotion/google-fonts/Bangers';
 import { loadFont as loadBaloo } from '@remotion/google-fonts/Baloo2';
 
@@ -15,6 +17,10 @@ export const FONT = {
   serif: loadSerif('normal', { weights: ['700', '900'], subsets }).fontFamily,
   comic: loadBangers('normal', { weights: ['400'], subsets }).fontFamily,
   round: loadBaloo('normal', { weights: ['800'], subsets }).fontFamily,
+  /** documentary titles and statistics (engraved capitals) */
+  title: loadCinzel('normal', { weights: ['500', '700'], subsets: ['latin'] }).fontFamily,
+  /** small book serif for sub-lines and notes */
+  book: loadBook('normal', { weights: ['500', '600', '700'], subsets: ['latin'] }).fontFamily,
 };
 
 export const INK = '#2a2622';

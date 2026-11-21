@@ -121,13 +121,13 @@ def mix_report(scenes, warn):
         for k, v in c["t"].items():
             film[k] = film.get(k, 0.0) + v
         battle = c["battle"] / dur >= 0.25
-        need = 0.55 if battle else 0.4
-        if c["dur"] >= 45 and sh.get("action", 0) < need - 0.05:
-            warn.append(f"chapter '{c['title']}' ({c['start']:.0f}s): action is {sh.get('action', 0):.0%} of the time"
-                        f" (target >= {need:.0%}{' — battle chapter' if battle else ''}); turn talk/chart/map beats into people doing the thing")
-        for k, lim in (("talk", 0.2), ("map", 0.2), ("device", 0.2)):
+        acted = sh.get("action", 0) + sh.get("talk", 0)
+        if c["dur"] >= 45 and acted < 0.70:
+            warn.append(f"chapter '{c['title']}' ({c['start']:.0f}s): people act in a place only {acted:.0%} of the time (target >= 75 %);"
+                        f" show what each sentence describes instead of maps/documents/charts")
+        for k, lim in (("map", 0.14), ("device", 0.14)):
             if c["dur"] >= 45 and sh.get(k, 0) > lim:
-                warn.append(f"chapter '{c['title']}' ({c['start']:.0f}s): {k} is {sh[k]:.0%} of the time (keep it <= 15 %)")
+                warn.append(f"chapter '{c['title']}' ({c['start']:.0f}s): {k} is {sh[k]:.0%} of the time (keep it <= 10 %)")
         out.append({"chapter": c["title"], "start": round(c["start"], 1), "battle": battle, "mix": sh})
     tot = max(1e-6, sum(film.values()))
     return {k: round(v / tot, 2) for k, v in sorted(film.items())}, out

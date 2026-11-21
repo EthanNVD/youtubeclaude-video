@@ -1,12 +1,13 @@
 # Studio: SRT/giọng đọc → video lịch sử quân sự hoạt hình (bản dành cho mọi model)
 
 Bản nâng cấp của repo `youtubeclaude` (giữ nguyên lịch sử git). Khác biệt chính: model **không viết JSON dựng hình nữa**, mà điền **thẻ cảnh**
-(chọn 1 trong 49 công thức đã kiểm thử + vài trường từ menu); trình biên dịch tự lo vị trí, chiều sâu, camera, chuyển động, âm thanh.
+(chọn 1 trong 59 công thức đã kiểm thử + vài trường từ menu); trình biên dịch tự lo vị trí, chiều sâu, camera, chuyển động, âm thanh.
 Nhờ vậy model nhỏ hơn (Sonnet, Muse…) vẫn dựng được đúng nội dung, không lặp cảnh, chất lượng ngang bản dựng tay.
 
 - Hướng dẫn cho model: [AGENTS.md](AGENTS.md) → [playbook/](playbook/00-START-HERE.md) (từng bước, tiếng Anh).
 - Danh mục công thức cảnh có ảnh mẫu: [recipes/CATALOG.md](recipes/CATALOG.md).
-- Ví dụ hoàn chỉnh: [projects/example-ww1-verdun/](projects/example-ww1-verdun/) (understanding.md + cards → 70 % hành động).
+- Kể chuyện như phim hoạt hình: mỗi vế câu một hình cụ thể do nhân vật diễn trong bối cảnh, nơi chốn quay lại theo thời gian, hoà tan 0,6 s, thẻ địa điểm·thời gian, câu hỏi lớn hiện từng chữ; không nhạc nền. Đo trên kênh mẫu: [references/storytelling-film.md](.claude/skills/srt-history-video/references/storytelling-film.md).
+- Ví dụ hoàn chỉnh: [projects/example-ww1-cold-open/](projects/example-ww1-cold-open/) (60 s, 95 % cảnh diễn) và [projects/example-ww1-verdun/](projects/example-ww1-verdun/) (2 phút cảnh trận).
 - Đầu vào linh hoạt: chỉ SRT, chỉ giọng đọc (tự tách SRT), hoặc cả hai.
 
 ```bash

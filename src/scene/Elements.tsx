@@ -7,7 +7,7 @@ import { resolveCast } from '../char/presets';
 import { Prop, Flag } from '../props/Props';
 import { Vehicle } from '../props/Vehicles';
 import { Fx } from '../fx/Fx';
-import { Label, Stamp, Bubble, Headline, Counter, Document, NameCard, DateBadge } from '../overlays/Overlays';
+import { Label, Stamp, Bubble, Headline, Counter, Document, NameCard, DateBadge, KineticCaption, StatCard, NoteCard, BinocularView } from '../overlays/Overlays';
 import { ScaleDevice, MeterDevice, BarsDevice, ScoreDevice, RoadDevice, RankingDevice, TimelineDevice, LedgerDevice } from '../devices/Devices';
 import { C, INK, FONT, col, nation, uiColor } from '../theme';
 import { type WorldCtx, personScaleAt, vehicleScaleFor, GROUND_FX } from '../lib/depth';
@@ -410,6 +410,14 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
     case 'text':
       body = <Headline text={String(e.text ?? '')} size={e.size as number} color={e.color as string} accent={e.accent as string} a={a} font={e.font as string} />;
       break;
+    case 'binoculars':
+      return <BinocularView a={a} t={t} />;
+    case 'caption':
+      return <g opacity={op}><KineticCaption words={(e.words as { w: string; t: number; accent?: boolean }[]) ?? []} a={t} out={e.capOut as number} y={e.y as number} size={e.size as number} /></g>;
+    case 'stat':
+      return <g opacity={op}><StatCard top={e.top as string} title={String(e.text ?? '')} sub={e.sub as string} a={a} out={e.statOut !== undefined ? (e.statOut as number) - (el.in ?? 0) : undefined} y={e.y as number} align={e.align as 'center' | 'left'} /></g>;
+    case 'note':
+      return <g opacity={op}><NoteCard kicker={e.kicker as string} lines={(e.lines as string[]) ?? []} a={a} speed={e.speed as number} x={e.x as number} y={e.y as number} accentLast={!!e.accentLast} /></g>;
     case 'counter':
       body = <Counter from={e.from as number} to={(e.to as number) ?? 0} a={a} dur={e.dur as number} size={e.size as number} prefix={e.prefix as string} suffix={e.suffix as string} color={e.color as string} decimals={e.decimals as number} />;
       break;

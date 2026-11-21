@@ -1,0 +1,13 @@
+{
+ "title": "What Was The REAL Turning Point of WW1? (cold open, example)",
+ "lang": "en",
+ "era": "ww1",
+ "sides": ["german", "british"],
+ "host_set": "station",
+ "cast": {
+  "kaiser_wilhelm": {"preset": "kaiser_wilhelm", "name": "Kaiser Wilhelm II", "role": "German Emperor"},
+  "hindenburg": {"preset": "hindenburg", "name": "Paul von Hindenburg", "role": "Field Marshal, Chief of the General Staff"},
+  "ludendorff": {"preset": "ludendorff", "name": "Erich Ludendorff", "role": "General, First Quartermaster-General"},
+  "historian": {"preset": "civilian_man", "glasses": "round", "age": 0.8}
+ }
+}

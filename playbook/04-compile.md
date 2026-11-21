@@ -37,9 +37,13 @@ It prints one JSON report:
 | warning starts with… | fix |
 |---|---|
 | `same recipe '…' as the card before` | Change one of the two cards to the next thing that happens: the consequence, the other side, or a close detail. |
-| `chapter '…': action is 28 %` | Use [narration-to-picture.md §3](narration-to-picture.md#3-more-action-when-the-checker-says-a-chapter-has-too-little). |
+| `chapter '…': only 60 % of the time shows people acting` | Replace map, document and chart cards with the scene the clause describes. Ask the five questions in [narration-to-picture.md §1](narration-to-picture.md#1-the-picture-writing-method-do-this-for-every-clause). |
+| `map is …`, `device is …`, `host is …` | Shorten those cards (start the next card earlier), or replace them with acted cards. |
+| `a 9.0 s map` | Keep maps ≤ 5 s: move the next card's `at` earlier, to where the narration returns to people. |
+| `a caption on a map card` | Move the `caption` to an acted card (big questions run over people, not over maps). |
+| `N stat cards` | Keep one `stat` per ~2 minutes; let the voice carry the other numbers. |
+| `place_id "…" was "office" … here it is "corridor"` | A `place_id` is one setting. Give the new room its own `place_id`, and repeat the `tag` text if it is the same building. |
 | `recipe '…' is used N times` | Swap some of them for other recipes that fit the same sentences. |
-| `talk is …`, `map is …`, `device is …` | Shorten those cards (start the next card earlier), or replace them with action. |
 | `only 1.2 s long` | Merge it with the card before (delete it) or after (move `at`). |
 | `13.5 s long` | Split it at a sentence start into 2–3 cards. |
 | `"says" copies the narration` | Rewrite `says` in your own words: who does what, and why it matters. |
@@ -49,9 +53,10 @@ It prints one JSON report:
 | engine: `too large next to the people` | Ignore it only for `gun_crew` (heavy guns are drawn big on purpose). |
 
 4. The `mix` line must meet the targets:
-   - action ≥ 0.40 for the film;
-   - action ≥ 0.55 in battle chapters, which the warnings report per chapter;
-   - talk, map and device ≤ 0.15 each.
+   - action + talk (acted recipes) ≥ 0.75 in every chapter;
+   - map ≤ 0.10;
+   - device (documents, charts, devices) ≤ 0.10;
+   - host ≤ 0.08.
 5. When the report is clean, go to [05-review.md](05-review.md).
 
 ## Errors you may see

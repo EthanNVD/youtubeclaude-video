@@ -1,116 +1,176 @@
-# Narration → picture: which recipe for which sentence
+# Narration → picture: tell the story like an animated film
 
-Use this page for every card:
-1. Find the row that matches what the sentence SAYS.
-2. Check the row's "then (next card)" column so the following card shows something new.
-3. Open `recipes/<recipe>.md` for the recipe's fields.
+This is the most important page of the playbook. Read it fully before writing the first card of a film, and look things up in it for every card.
 
-## 1. Lookup table
+The reference channel (Ember History; measurements in `.claude/skills/srt-history-video/references/storytelling-film.md`) does not illustrate a narration with charts and labels. It **films a story**:
+- every clause of the narration gets **one concrete picture of exactly what the clause says**;
+- that picture is almost always **people doing something in a real place**;
+- the camera drifts slowly and pictures **dissolve** into each other.
 
-### People decide, learn, speak
-| the narration says… | recipe | key fields | then (next card) |
+Text appears rarely, as a small tag, a big question, or one number.
+
+You write cards; the compiler handles the camera, dissolves and timing. Your job is to choose, for every clause, **what the camera would see if it had been there**.
+
+---
+
+## 1. The picture-writing method (do this for every clause)
+
+Take one clause of the narration (one idea, usually 3–8 seconds) and answer five questions in `understanding.md` §6.
+
+1. **WHO** is in it? A named person, a group (soldiers, workers, a crowd, a fleet), or "nobody". If the clause is abstract ("the war was lost"), find the people it happens to: the men who retreat, the general who realises, the family who waits.
+2. **DOES WHAT?** Turn the verb into a **visible action**:
+
+   | the clause says | the camera sees |
+   |---|---|
+   | told / informed | X speaks; the listener stops what he was doing |
+   | decided | he stands up / slams the desk / points at the map |
+   | could hardly believe it | he walks to the window and turns his back |
+   | was 56 km from Paris | men on a ridge look at a city on the horizon |
+   | the war was lost | exhausted men walking back through the rain |
+   | was dismissed | he walks out of the building carrying a suitcase |
+   | grew stronger | factories, men drilling, columns marching |
+   | starved | a mother puts a turnip on an empty plate |
+   | died | an empty chair, a helmet on a rifle (`absence`) |
+
+3. **WHERE?** A real place (an office, a corridor, a hotel front, a trench, a ridge, a classroom, a deck), not a blank background. If we were already there, **stay** (same `place_id`).
+4. **WHEN?** The time of day and weather that carry the mood: dawn for beginnings, dusk for endings and losses, night for fear, rain for defeat. Use the same place at a new time to show **time passing**.
+5. **WHICH RECIPE?** Look the action up in §2. Pick the recipe that shows the action; never pick by keyword alone.
+
+### Rules for the picture
+- **Literal and concrete.** "The fighting spread across Europe, Asia and Africa" is shown as a map that fills in as each continent is named. "They were conquered by horsemen" is horsemen riding. A label saying "CONQUEST" is never the picture.
+- **One clause, one picture.** A long sentence with three ideas becomes three cards, each one a different picture of 2–4 s (a montage). A sentence that stays with one idea stays in one place for 6–10 s; the camera reframes inside it.
+- **Acted, not shown.** Somebody must DO something on the key word: look up, slam, turn, raise binoculars, fall back, write. Their pose or expression changes exactly on that word (`react_on`, `hit_on`, `look_up_on`…).
+- **People in places.** Find the anecdote: the one person in the one room on the one day (the Kaiser at Spa, Onoda in the jungle, Wang Yirong in his study). Big history is told through that person; come back to them.
+- **Text is rare.**
+  - **Allowed:**
+    - the place/time `tag` on every new place;
+    - name cards on first appearance;
+    - the film's 2–4 **big questions** as a `caption` over an acted scene;
+    - one `stat` every ~2 minutes when a number must be read;
+    - one `paper_note` for an exact quote or order.
+  - **Not allowed:** paper, cards or charts standing in for something that happened.
+
+---
+
+## 2. Lookup table: what the narration says → recipe
+
+### A. A story place and its people (the backbone of every chapter)
+| the narration says… | recipe | key fields | usually followed by |
 |---|---|---|---|
-| X decided / ordered / planned / realised / had a problem | `decision` | `who`, `react`, `react_on`, `then` | the consequence in the field (an action recipe) |
-| news reached X / X was told / a telegram arrived | `report` | `who`, `react`, `react_on` | what the news was about, or X's decision |
-| X told Y / argued / refused / persuaded | `dialogue` | `a`, `b`, `b_on` | the result |
-| the generals / cabinet / council met, agreed | `meeting` | `people`, `speaker`, `slam_on` | the plan carried out |
-| X said "…" / wrote "…" (a quote) | `quote` | `who`, `text` (≤ 15 words) | back to the action |
-| X told the nation / declared / gave a speech | `speech` | `who`, `audience`, `cheer_on` | crowd, enlistment, or the war itself |
-| X phoned / radioed | `phone` | `who`, `react` | — |
-| they signed a treaty / armistice / surrender | `signing` | `who`, `witnesses` | the war's result (crowd, memorial) |
-| X arrived / took command / was dismissed / left | `arrival` | `who`, `direction` | his first decision, or the one who replaces him |
+| a date / a new day / we arrive somewhere ("On 29 September 1918…", "In Berlin…") | `establish` | `setting`, `arrive`, `who`, `tag`, `tag_on`, `place_id` | `approach` or `interrupt` |
+| people go to something important ("went to see the emperor", "were summoned") | `approach` | `who`, `setting`, `carry`, `name_card` | `interrupt` / `meeting` / `dialogue` |
+| X is told something while busy ("they told the Kaiser that…") | `interrupt` | `who`, `speakers`, `business`, `look_up_on`, `react_on` | the consequence, or `contemplate` |
+| a demand, a refusal, a blow-up ("needed an armistice, immediately") | `confront` | `a`, `b`, `hit_on`, `gesture` | `contemplate` / the field |
+| X alone with it ("could hardly believe it", "knew it was over") | `contemplate` | `who`, `action` (window/sit/stare/walk_away) | a map or the past (flashback) |
+| X decides / realises (no visitors) | `decision` | `who`, `react`, `react_on`, `then` | the order carried out in the field |
+| news arrives on paper ("a telegram reached…") | `report` | `who`, `react_on` | what the news was about |
+| two people argue / persuade | `dialogue` | `a`, `b`, `b_on` | the result |
+| a council / cabinet / staff meeting | `meeting` | `people`, `speaker`, `slam_on` | the plan carried out |
+| X arrives to take over / is dismissed and leaves | `arrival` | `who`, `direction` | his first decision |
+| someone's exact words matter ("he said…") | `quote` (bubble) or any acted card + `paper_note` | `text` / `lines` | back to the story |
+| a speech to the nation / parliament / troops | `speech` | `who`, `audience`, `cheer_on` | crowds / enlistment |
+| the debate among historians ("some say…, others…", "you'll get a list") | `lecture` | `items` | each candidate shown as its own scene |
 
-### Soldiers, battles, machines (ACTION — most of a battle chapter)
+### B. Soldiers and the front
 | the narration says… | recipe | key fields |
 |---|---|---|
-| they attacked / went over the top / the offensive began (slow, into fire) | `assault` | `side`, `falls`, `hit_on` |
-| they stormed / charged / broke through / counter-attacked (fast) | `wave` | `side`, `direction`, `enemy` |
-| the battle went on / they held / under bombardment / endurance | `under_fire` | `side`, `setting` |
-| the guns opened fire / barrage / bombardment from the gunners' side | `gun_crew` | `side`, `fire_on` |
-| machine guns cut them down / the defenders fired | `mg_nest` | `side`, `direction` |
-| one man's death stands for many / "X's army bled too" | `hit` | `side`, `hit_on` |
-| the wounded / casualties mounted / a number of casualties | `stretcher` (+ `counter`) | `side` |
-| the dead / the day after / the worst day | `aftermath` | `side` |
-| they surrendered / were captured / the army collapsed | `surrender` | `side`, `captors` |
-| they retreated / fled / the front broke | `retreat` | `side`, `direction` |
-| tanks attacked / broke through | `tank_attack` | `side`, `enemy` |
-| troops marched / reinforcements went to | `march` | `side`, `direction`, `vehicles` |
-| tanks / trucks / columns drove | `convoy` | `side`, `vehicle` |
-| stalemate / waiting / months in the trenches | `trench_wait` | `side`, `business` |
-| sent by train / divisions moved east | `rail` | `side` |
-| crossed a river under fire | `river_crossing` | `side` |
-| paratroopers / gliders landed | `para_drop` | `side` |
-| fleets fought / battleships exchanged fire | `naval_battle` | `side`, `enemy` |
-| a ship was sunk | `sinking` | `side`, `ship` |
-| U-boats / submarines sank ships | `submarine_attack` | `side`, `target` |
-| fighters / dogfight / air battle | `air_battle` | `side`, `enemy` |
-| bombers struck a city | `bombing` | `side` |
-| pilots scrambled / took off | `airfield` | `side` |
+| the front is about to break / the enemy is coming / "could not hold for two hours" | `watch_front` | `threat`, `business` (watch/binoculars/aim), `react_on` |
+| what someone sees far away (after binoculars) | `binocular_view` | `setting`, `movers` |
+| men within sight of a goal / looking back at a lost one / marching past at dusk | `vista` | `action` (look/binoculars/turn_back/march_past), `goal` |
+| an attack on foot into fire | `assault` | `falls`, `hit_on`, `climb` |
+| a charge / breakthrough / counter-attack | `wave` | `direction`, `enemy` |
+| holding on under shelling | `under_fire` | `setting` |
+| guns firing / a barrage | `gun_crew` | `fire_on` |
+| machine guns mowing down an attack | `mg_nest` | `direction` |
+| one man's death stands for many | `hit` | `hit_on` |
+| the wounded carried back | `stretcher` | — |
+| the field after the battle | `aftermath` | — |
+| surrender / prisoners | `surrender` | `captors` |
+| retreat / collapse / fleeing | `retreat` | `direction` |
+| tanks breaking in | `tank_attack` | `enemy` |
+| marching, reinforcements | `march` | `direction`, `vehicles` |
+| columns of vehicles | `convoy` | `vehicle` |
+| waiting, stalemate, trench routine | `trench_wait` | `business` |
+| troops by train | `rail` | — |
+| a river crossed under fire | `river_crossing` | — |
+| paratroops | `para_drop` | — |
 
-### Home front and mood
+### C. Sea, air, home front
 | the narration says… | recipe |
 |---|---|
-| hunger, rationing, a death telegram, queues, letters home | `home_front` (`beat`) |
-| factories, production, women working | `factory` |
-| crowds celebrated / protested / enlisted / mourned | `crowd` (`mood`) |
-| a huge number of dead over a long time; "a whole generation" | `silhouette` |
-| remembrance, the human cost, the end | `memorial` |
+| fleets fight | `naval_battle` |
+| a ship is sunk | `sinking` |
+| submarines | `submarine_attack` |
+| dogfights | `air_battle` |
+| bombing a city | `bombing` |
+| pilots scrambling | `airfield` |
+| hunger, a death telegram, queues, letters | `home_front` (`beat`) |
+| war production | `factory` |
+| crowds celebrate, protest, enlist, mourn | `crowd` (`mood`) |
+| loss, the dead, "a generation" | `absence` (`object`) or `silhouette` |
+| remembrance at the end | `memorial` |
 
-### Where, what it said, how many (keep SHORT)
-| the narration says… | recipe | max length |
+### D. Bridges (short, rare)
+| the narration says… | recipe | limit |
 |---|---|---|
-| where a move went: "toward Paris", "east", "to the coast" | `map_move` | 5 s in battle chapters, 8 s otherwise |
-| the front line formed / moved | `map_front` | 8 s |
-| long journeys: convoys, shipping troops | `map_route` | 8 s |
-| where a place is; who joined which side | `map_locate` | 5 s |
-| the words of an order / telegram / memo matter | `document` | 4 s |
-| the papers called it… | `newspaper` | 4 s |
-| two or more numbers compared | `chart` | 7 s |
-| photos / evidence examined | `photo_evidence` | 5 s |
-| the narrator asks the viewer / opens / closes / gives a verdict | `host` | 4–10 s |
-| the film's scored device is updated | `device` | 5–8 s |
+| where a move went | `map_move` | ≤ 5 s, then back to the people in that place |
+| the front line formed / moved | `map_front` | ≤ 5 s |
+| a long journey | `map_route` | ≤ 6 s |
+| where a place is / who joined | `map_locate` | ≤ 4 s |
+| the exact words of an order / treaty clause | `document` | ≤ 4 s (prefer an acted card + `paper_note`) |
+| numbers COMPARED (two sides' losses) | `chart` | ≤ 6 s; a single number goes on an acted scene as `stat` or is just spoken |
+| the narrator addresses the viewer | `host` | chapter edges only |
 
-## 2. Sequences that work (copy these patterns)
+---
 
-- **Command → field.** `decision` (2–4 s) → the action it causes. Example: Falkenhayn decides to "let the guns do the killing" → `gun_crew`.
-- **Number on the action.**
-  - A single number goes on an action card as `counter`:
-    - "57,470 casualties" → `stretcher` with a counter;
-    - "19,240 killed" → `mg_nest` with a counter.
-  - Use `chart` only when numbers are compared.
-- **Both sides.** "The Germans bled too" → show German soldiers in the same situation (`hit`, `stretcher`, `under_fire`), not a label.
-- **Cause → cost → symbol.** `assault` → `mg_nest` (counter) → `aftermath` (grey) or `silhouette`, with crosses appearing.
-- **Map as a bridge only.** `map_move` for at most 5 s, then straight back to people in the place it showed.
-- **Arrive → act.** `arrival` (the new commander comes in) → `decision` → the field.
+## 3. Patterns that make it a film (copy them)
 
-## 3. More action (when the checker says a chapter has too little)
+1. **Arrive → approach → interrupt → react → alone.** A crisis meeting in five cards:
+   - `establish` (the building at dawn, the car arrives, tag slides in on the date);
+   - `approach` (the corridor, name cards);
+   - `interrupt` (the man at his desk stops writing when they speak);
+   - `confront` (the demand lands with a fist);
+   - `contemplate` (he walks to the window).
 
-Turn talk, document, chart and map cards into action:
+   Examples: `projects/example-ww1-cold-open/cards/ch01.json` cards 1–6.
+2. **Command → field.** A decision (≤ 4 s) is followed by the men who carry it out.
+3. **The threat, felt.** Do not say "the front collapsed" with an arrow. Show `watch_front`: an officer checks his watch while tanks roll out of the mist, and his face breaks on the key words.
+4. **Look → see.** `vista` (action binoculars) → `binocular_view` of what he sees.
+5. **Same place, time passing.** Re-use a `place_id` with a new `time`/`weather`. Example: the ridge at dusk (look at Paris) → the same ridge, the men turn back (`turn_back`) → the same men retreating in the rain.
+6. **The question over the story.** The film's opening question runs as a `caption` over an acted scene (the men turning back), never over a blank card.
+7. **The debate as a scene.** "Ask around and you'll get a list" → `lecture`: a historian chalks the years on a board. Then each candidate is its own story place.
+8. **Loss by absence.** After the fighting, show what is left: `absence` (helmet on a rifle at dusk, an empty chair), `silhouette`, `aftermath`. No gore.
+9. **Both sides.** The channel's promise is "two sides". When the narration allows, cut from one side's room to the other's (Berlin → London), or show the same moment from the other side of the wire.
+10. **Map as a bridge.** At most 5 s; it dissolves into the people in that place.
 
-| you wrote | change it to |
-|---|---|
-| `decision` that is 8 s long | `decision` 3 s + the action it causes, 5 s |
-| `chart` with ONE number | the action card the number describes + `counter` |
-| `document` read aloud for 8 s | `document` 3 s + what the document caused |
-| `map_move` 10 s | `map_move` 4 s + `march` / `convoy` / `wave` in that place |
-| `meeting` while the narration describes a battle | the battle |
-| `host` in the middle of a battle chapter | remove it; keep the host for chapter edges |
+---
 
-## 4. Variety rules
+## 4. Screen-time targets (checked by the compiler)
 
-The checker enforces these:
-- Never the same recipe twice in a row.
-- No recipe above about 30 % of a chapter's cards.
+| class | target | what counts |
+|---|---|---|
+| **acted** (action + talk recipes) | **≥ 75 %** of every chapter | people doing what the clause says, in a place |
+| maps | ≤ 10 % (each ≤ 5 s) | `map_*` |
+| documents / charts / devices | ≤ 10 % | `document`, `chart`, `newspaper`, `device`, `photo_evidence`… |
+| host | ≤ 8 %, at chapter edges | `host` |
+| stat cards | ≤ 1 every ~2 min | `stat` field |
 
-Also do these yourself:
-- Change the place: trench → open field → town → sea → office → map.
-- Change the time of day across a chapter: `dawn` attack, `day` battle, `dusk` grief, `night` guns.
-- Alternate the sides when the narration allows. The channel shows **both sides**.
-- Keep each side's direction consistent. Use `direction`: if side A always moves right, side B moves left.
+There is **no background music**, ever: ambience and sound effects only (added automatically from the cards).
 
-## 5. If nothing fits
+---
 
-1. Re-read the sentence. Ask: who or what would a camera see if it were there?
-2. Choose the closest action recipe and use its fields (side, setting, time) to make it fit.
-3. Only if the moment truly cannot be shown with recipes, a strong model may use `raw` (see [08-advanced.md](08-advanced.md)).
-4. Never use a label or a chart as a substitute for something that happened.
+## 5. Variety (also checked)
+
+- Never the same recipe twice in a row, unless it is a deliberate revisit of the same place (`place_id`, e.g. `vista` look → `vista` turn_back).
+- Vary the shot sizes across a sequence: wide (establish) → full (approach) → medium/close (interrupt, confront).
+- Vary the light across a chapter: dawn, day, dusk, night, rain.
+- Introduce each important person **once** with a name card, then let us recognise them. Keep their look (cast) the same all film.
+
+---
+
+## 6. If nothing fits
+
+1. Re-read the clause and answer the five questions again: who, does what, where, when.
+2. Choose the closest acted recipe, then adapt it with its fields: `setting`, `side`, `time`, `weather`, `business`, `action`.
+3. If the moment truly cannot be shown with recipes, a strong model may use `raw` ([08-advanced.md](08-advanced.md)), or add a recipe (§B there).
+4. **Never** replace an event with a label, a stat or a chart.

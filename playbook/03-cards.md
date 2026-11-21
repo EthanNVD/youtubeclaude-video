@@ -55,39 +55,53 @@ Write one file per chapter, in narration order:
 ## 3. One card, field by field
 
 ```json
-{"at": "Attacks on the Western Front", "recipe": "assault",
- "says": "Frontal attacks won almost no ground and killed huge numbers of men.",
- "side": "british", "falls": 3, "hit_on": "cost enormous", "shells": 4}
+{"at": "told Kaiser Wilhelm", "recipe": "interrupt",
+ "says": "They tell the Kaiser, who is busy writing, that the front can no longer be held.",
+ "who": "kaiser_wilhelm", "speakers": ["ludendorff", "hindenburg"], "business": "write",
+ "look_up_on": "Kaiser Wilhelm", "react_on": "could no longer", "react": "shocked",
+ "setting": "office", "flag": "german", "name_card": "kaiser_wilhelm",
+ "place_id": "kaiser_study", "tag": "Spa, Belgium · 29 September 1918"}
 ```
 
 | field | required | how to fill it |
 |---|---|---|
 | `at` | yes | The first 3–6 words of the narration where this scene starts, **copied exactly** from `work/reading.md`. Spelling must match. Punctuation and capital letters do not matter. |
-| `recipe` | yes | The kind of scene. Choose it with [narration-to-picture.md](narration-to-picture.md), then open `recipes/<recipe>.md` to see its fields. |
+| `recipe` | yes | The kind of scene. Choose it with [narration-to-picture.md](narration-to-picture.md) (the five questions, then the lookup table), then open `recipes/<recipe>.md` to see its fields. |
 | `says` | yes | One sentence, in your own words, saying what this part of the narration MEANS: who does what, and why it matters. Do not copy the narration. This proves you understood it. It never appears on screen. |
 | recipe fields | depends | Only the fields listed in `recipes/<recipe>.md`. Fields marked **yes** in its "required" column must be there. |
 | `variant` | no | Leave it out. The compiler rotates compositions (A, B, C) so scenes never look the same. Set it only to fix a scene that looked wrong in review. |
-| common fields | no | `date`, `place`, `name_card`, `label`, `counter`, `stamp`, `time`, `weather`, `tint` (see below). |
+| common fields | no | See the two tables below. |
 
 ### Fields that take narration words (`…_on`, `on`)
-- Fields like `react_on`, `hit_on`, `fire_on`, and `"on"` inside `label` or `counter` take **words from this card's narration**.
-- The event happens when those words are spoken: the man falls on "cost", the counter starts on "fifty-seven".
+- Fields like `react_on`, `hit_on`, `look_up_on`, `goal_on`, `tag_on`, and `"on"` inside `stat` or `paper_note` take **words from this card's narration**.
+- The event happens when those words are spoken: the Kaiser looks up on his name; the fist lands on "immediately".
 - Copy 1–4 words exactly. Leave the field out to let the recipe choose a good moment.
 
-### Common fields (any card)
+### Story fields (use them on every film)
 
-| field | example | use it |
+| field | example | what it does |
 |---|---|---|
-| `date` | `"21 FEBRUARY 1916"` | on every jump in time (badge, top left) |
-| `place` | `"VERDUN"` | the place badge under the date |
-| `name_card` | `"falkenhayn"` | the first time a named person appears (cast id) |
-| `label` | `{"text": "≈ 300 DAYS", "on": "three hundred days"}` | a 1–5 word tag at the top, on the words |
-| `counter` | `{"to": 57470, "suffix": " CASUALTIES", "on": "fifty-seven thousand"}` | a number counting up **over the action** |
-| `stamp` | `{"text": "FAILED", "on": "failed"}` | a stamp slammed on screen (verdicts, myths) |
-| `time` | `"dusk"` | `day dusk dawn night`: mood and silhouettes |
-| `weather` | `"snow"` | `rain snow` |
-| `tint` | `"grey"` | grief (`grey`), memory or myth (`sepia`), `cold`, `warm` |
-| `letterbox` | `"DRAMATISED"` | cinema bars, about once per chapter, for a dramatised moment |
+| `place_id` | `"kaiser_study"` | Names a story place. Every card with the same `place_id` keeps the same setting and tag. To show time passing in the same place, change only `time`, `weather` or `tint`. A new room or a new outside is a new `place_id`. |
+| `tag` | `"Spa, Belgium · 29 September 1918"` | The place/time tag (small wooden plank, top left). Put it on the first card of every place, or every time jump. Cards with the same `place_id` inherit it. A tag that stays the same from one card to the next does not re-animate. |
+| `tag_on` | `"1918"` | The word where the tag slides in (the date or the place name). The default is the start of the scene. |
+| `name_card` | `"kaiser_wilhelm"` | The first time a named person appears (cast id); the name and role come from `cards/_film.json`. |
+| `time`, `weather`, `tint` | `"dusk"`, `"rain"`, `"cold"` | Light and mood: dawn for beginnings, dusk for endings, night for fear, rain for defeat, grey for grief. |
+
+### Text fields (rare; most of the film has no text at all)
+
+| field | example | use it only for |
+|---|---|---|
+| `caption` | `{"from": "So how does", "to": "summer?", "accent": ["Paris", "collapse"]}` | The film's 2–4 **big questions**. The words appear as they are spoken; accent words are amber. Put it on an **acted** card, not on a map or document. |
+| `stat` | `{"text": "About 56 km from Paris", "sub": "the closest since 1914", "top": "June 1918", "on": "fifty-six"}` | One number that must be read, at most one every ~2 minutes. Usually the voice says the number and the picture shows the thing. |
+| `paper_note` | `{"lines": ["Fight on.", "Never surrender."], "kicker": "Orders, 1944", "on": "Fight", "accent_last": true}` | The exact words of an order or quote, typed on a small paper note over an acted scene. |
+| `date`, `place` | `"21 FEBRUARY 1916"`, `"VERDUN"` | The older paper badges. Prefer `tag`. |
+| `label`, `counter`, `stamp` | | Short tags, a running number, a verdict stamp. Use them sparingly (battle chapters, verdicts). |
+| `letterbox` | `"DRAMATISED"` | Cinema bars for a dramatised moment, about once per chapter. |
+
+### What the compiler adds for you (do not write these)
+- **Transitions**: every scene comes in with a 0.6 s dissolve, and every change of camera set-up inside a place dissolves too. The first scene of the film starts on a cut. Use `"transition": "cut"` only for a deliberate shock.
+- **Camera**: a slow push-in on almost every set-up, close-ups timed on the `…_on` words, and an extra reframing in any set-up longer than 6 s.
+- **Sound**: ambience from the place, and sound effects from what happens (footsteps, guns, a fist on a desk). There is **never music**.
 
 ## 4. How long is a card?
 
@@ -106,7 +120,9 @@ Write one file per chapter, in narration order:
 
 ## 6. Worked example
 
-`projects/example-ww1-verdun/cards/ch01.json` covers 2 minutes of narration in 28 cards: 70 % action, 8 % talk, 10 % maps, 12 % documents and charts. Read it before writing your first chapter.
+Read both examples before writing your first chapter:
+- `projects/example-ww1-cold-open/cards/ch01.json`: 60 s, 14 cards, told as a film. It has story places, an arrival, an interruption, a confrontation, the front, a ridge looking at Paris, the big questions and a historian at a blackboard. About 95 % of it is acted.
+- `projects/example-ww1-verdun/cards/ch01.json`: 2 minutes of battle narration, 28 cards.
 
 ## 7. After each chapter
 

@@ -34,8 +34,9 @@ export const NameCard: React.FC<{ name: string; role?: string; a: number; x?: nu
 /** Label tag; optional leader line to (tx,ty) in the same coordinate space. */
 export const Label: React.FC<{ text: string; style?: string; size?: number; color?: string; tx?: number; ty?: number; dx?: number; dy?: number; rotate?: number; maxW?: number }> = ({ text, style = 'tag', size = 40, color, tx, ty, rotate = 0 }) => {
   const lines = String(text).split('\n');
-  const font = style === 'plain' || style === 'map' ? FONT.hand : FONT.cond;
-  const wgt = style === 'plain' || style === 'map' ? 400 : 700;
+  const bare = style === 'plain' || style === 'map' || style === 'chalk';
+  const font = bare ? FONT.hand : FONT.cond;
+  const wgt = bare ? 400 : 700;
   const cw = font === FONT.cond ? 0.52 : 0.5;
   const w = Math.max(...lines.map((l) => l.length)) * size * cw + 36;
   const h = lines.length * size * 1.12 + 22;
@@ -49,10 +50,10 @@ export const Label: React.FC<{ text: string; style?: string; size?: number; colo
           <circle cx={tx} cy={ty} r={7} fill={INK} />
         </g>
       ) : null}
-      <g transform={`rotate(${rotate})`} style={style === 'plain' || style === 'map' ? undefined : shadow}>
-        {style === 'plain' || style === 'map' ? null : <rect x={-w / 2} y={0} width={w} height={h} rx={4} fill={bg} stroke={INK} strokeWidth={3.5} />}
+      <g transform={`rotate(${rotate})`} style={bare ? undefined : shadow}>
+        {bare ? null : <rect x={-w / 2} y={0} width={w} height={h} rx={4} fill={bg} stroke={INK} strokeWidth={3.5} />}
         {lines.map((l, i) => (
-          <text key={i} x={0} y={size * 0.98 + 8 + i * size * 1.12} textAnchor="middle" fontFamily={font} fontWeight={wgt} fontSize={size} fill={style === 'map' ? INK : fg}
+          <text key={i} x={0} y={size * 0.98 + 8 + i * size * 1.12} textAnchor="middle" fontFamily={font} fontWeight={wgt} fontSize={size} fill={style === 'map' ? INK : style === 'chalk' ? (color ? col(color) : '#eef3ea') : fg} opacity={style === 'chalk' ? 0.9 : undefined}
             stroke={style === 'plain' || style === 'map' ? '#fbf8f0' : undefined} strokeWidth={style === 'plain' || style === 'map' ? size / 7 : undefined} paintOrder="stroke" letterSpacing={style === 'map' ? 2 : 0.5}>
             {style === 'map' ? l.toUpperCase() : l}
           </text>
@@ -160,6 +161,137 @@ export const Document: React.FC<{ style?: string; title?: string; lines?: string
         })}
         {stamp && a * speed > total + 8 ? <g transform={`translate(${w / 2 - 170} ${h / 2 - 90})`}><Stamp text={stamp} size={56} /></g> : null}
       </g>
+    </g>
+  );
+};
+
+
+/** Documentary place/time tag (top-left wooden plank): "SPA, BELGIUM · 29 SEPTEMBER 1918". `a` = seconds since it appeared
+ *  (negative = not yet); a tag carried over from the previous scene is passed a large `a` so it does not re-animate. */
+export const PlaceTag: React.FC<{ text: string; a: number }> = ({ text, a }) => {
+  if (a < 0) return null;
+  const k = easeFn('out', clamp(a / 0.5));
+  const w = text.length * 15.5 + 96;
+  return (
+    <g transform={`translate(${34 - (1 - k) * 40} 34)`} opacity={k}>
+      <rect x={0} y={0} width={w} height={44} rx={3} fill="#5b3b22" stroke="#2c1b0e" strokeWidth={3} />
+      <rect x={4} y={4} width={w - 8} height={36} rx={2} fill="none" stroke="#c8a067" strokeOpacity={0.45} strokeWidth={1.5} />
+      <circle cx={22} cy={22} r={5} fill="#c8a067" />
+      <text x={40} y={30} fontFamily={FONT.title} fontWeight={700} fontSize={21} letterSpacing={2.2} fill="#f0dfbd">{text.toUpperCase()}</text>
+    </g>
+  );
+};
+
+type CapWord = { w: string; t: number; accent?: boolean };
+/** Kinetic caption for the film's key questions: words appear as they are spoken (0.2 s fade), accent words in amber. */
+export const KineticCaption: React.FC<{ words: CapWord[]; a: number; out?: number; y?: number; size?: number }> = ({ words, a, out, y = 968, size = 40 }) => {
+  const vis = words.filter((w) => a >= w.t);
+  if (!vis.length) return null;
+  const fade = out !== undefined ? clamp(1 - (a - out) / 0.4) : 1;
+  if (fade <= 0) return null;
+  // wrap into lines of ~44 characters (all words, so lines never jump as words arrive)
+  const lines: CapWord[][] = [[]];
+  let len = 0;
+  for (const w of words) {
+    if (len + w.w.length > 44 && lines[lines.length - 1].length) { lines.push([]); len = 0; }
+    lines[lines.length - 1].push(w);
+    len += w.w.length + 1;
+  }
+  return (
+    <g opacity={fade}>
+      <defs>
+        <linearGradient id="capfade" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stopColor="#000" stopOpacity={0} />
+          <stop offset="1" stopColor="#000" stopOpacity={0.62} />
+        </linearGradient>
+      </defs>
+      <rect x={0} y={y - 150 - (lines.length - 1) * size * 1.2} width={1920} height={1080 - y + 150 + (lines.length - 1) * size * 1.2} fill="url(#capfade)" />
+      {lines.map((ln, li) => {
+        const yy = y - (lines.length - 1 - li) * size * 1.2;
+        // the whole line is laid out once (all words), unspoken words are transparent: nothing shifts as words arrive
+        return (
+          <text key={li} x={960} y={yy} textAnchor="middle" fontFamily={FONT.cond} fontWeight={700} fontSize={size} letterSpacing={1}
+                style={{ paintOrder: 'stroke' }} stroke="#000" strokeOpacity={0.25} strokeWidth={3}>
+            {ln.map((w, wi) => (
+              <tspan key={wi} fill={w.accent ? '#f0a838' : '#f6efe2'} fillOpacity={clamp((a - w.t) / 0.2)} strokeOpacity={0.25 * clamp((a - w.t) / 0.2)}>
+                {(wi ? ' ' : '') + w.w.toUpperCase()}
+              </tspan>
+            ))}
+          </text>
+        );
+      })}
+    </g>
+  );
+};
+
+/** Statistic / fact card: small top line, big engraved capitals, a book-serif sub-line ("70–85 MILLION DEAD / most of them civilians"). */
+export const StatCard: React.FC<{ top?: string; title: string; sub?: string; a: number; out?: number; y?: number; align?: 'center' | 'left' }> = ({ top, title, sub, a, out, y = 820, align = 'center' }) => {
+  if (a < 0) return null;
+  const k = easeFn('out', clamp(a / 0.6));
+  const fade = out !== undefined ? clamp(1 - (a - out) / 0.4) : 1;
+  const x = align === 'center' ? 960 : 90;
+  const anchor = align === 'center' ? 'middle' : 'start';
+  return (
+    <g opacity={k * fade} transform={`translate(0 ${(1 - k) * 12})`}>
+      {align === 'center' ? (
+        <rect x={0} y={y - 150} width={1920} height={300} fill="url(#statfade)" />
+      ) : null}
+      <defs>
+        <radialGradient id="statfade" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0" stopColor="#000" stopOpacity={0.45} />
+          <stop offset="1" stopColor="#000" stopOpacity={0} />
+        </radialGradient>
+      </defs>
+      {top ? <text x={x} y={y - 72} textAnchor={anchor} fontFamily={FONT.title} fontWeight={700} fontSize={20} letterSpacing={4} fill="#f3e6c8" opacity={0.9}>{top.toUpperCase()}</text> : null}
+      <text x={x} y={y} textAnchor={anchor} fontFamily={FONT.title} fontWeight={700} fontSize={68} letterSpacing={3} fill="#fbf2dc">{title.toUpperCase()}</text>
+      {sub ? <text x={x} y={y + 44} textAnchor={anchor} fontFamily={FONT.book} fontWeight={600} fontStyle="italic" fontSize={30} fill="#efe2c4" opacity={0.92}>{sub}</text> : null}
+    </g>
+  );
+};
+
+/** Paper note pinned top-right: a quote or the key line of a document, typed line by line ("FIGHT ON. NEVER SURRENDER."). */
+export const NoteCard: React.FC<{ kicker?: string; lines: string[]; a: number; speed?: number; x?: number; y?: number; accentLast?: boolean }> = ({ kicker, lines, a, speed = 28, x = 1380, y = 120, accentLast }) => {
+  if (a < 0) return null;
+  const k = easeFn('out', clamp(a / 0.35));
+  const w = Math.max(360, Math.max(...lines.map((l) => l.length)) * 17 + 60);
+  const h = 70 + lines.length * 38;
+  let budget = Math.max(0, (a - 0.25) * speed);
+  return (
+    <g transform={`translate(${Math.min(x, 1880 - w)} ${y}) rotate(1.2) scale(${0.96 + 0.04 * k})`} opacity={k}>
+      <rect x={6} y={8} width={w} height={h} fill="#000" opacity={0.25} />
+      <rect x={0} y={0} width={w} height={h} fill="#f2ead6" stroke="#6b5d48" strokeWidth={2} />
+      {kicker ? <text x={24} y={34} fontFamily={FONT.title} fontWeight={700} fontSize={15} letterSpacing={2.5} fill="#7d6a52">{kicker.toUpperCase()}</text> : null}
+      {lines.map((l, i) => {
+        const n = Math.min(l.length, Math.floor(budget));
+        budget -= l.length;
+        const red = accentLast && i === lines.length - 1;
+        return n > 0 ? <text key={i} x={24} y={(kicker ? 70 : 48) + i * 38} fontFamily={FONT.cond} fontWeight={700} fontSize={28} fill={red ? '#b03a2e' : '#2a2622'}>{l.slice(0, n).toUpperCase()}</text> : null;
+      })}
+    </g>
+  );
+};
+
+
+/** Looking through binoculars: black frame with two round lenses (the scene shows through), slight sway. */
+export const BinocularView: React.FC<{ a: number; t: number }> = ({ a, t }) => {
+  const k = clamp(a / 0.4);
+  const sx = Math.sin(t * 0.9) * 6, sy = Math.cos(t * 0.7) * 4;
+  return (
+    <g opacity={k}>
+      <defs>
+        <mask id="binomask">
+          <rect x={0} y={0} width={1920} height={1080} fill="#fff" />
+          <circle cx={700 + sx} cy={540 + sy} r={430} fill="#000" />
+          <circle cx={1220 + sx} cy={540 + sy} r={430} fill="#000" />
+        </mask>
+        <radialGradient id="binovig" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0.75" stopColor="#000" stopOpacity={0} />
+          <stop offset="1" stopColor="#000" stopOpacity={0.7} />
+        </radialGradient>
+      </defs>
+      <circle cx={700 + sx} cy={540 + sy} r={430} fill="url(#binovig)" />
+      <circle cx={1220 + sx} cy={540 + sy} r={430} fill="url(#binovig)" />
+      <rect x={-20} y={-20} width={1960} height={1120} fill="#050505" mask="url(#binomask)" />
     </g>
   );
 };
