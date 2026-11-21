@@ -1,0 +1,3489 @@
+{
+ "meta": {
+  "title": "How Countries Teach Hitler — classroom two, Austria (creative-scene test 2)",
+  "lang": "en",
+  "fps": 24,
+  "duration": 65.2,
+  "grain": 0.5,
+  "grade": "warm",
+  "voice": "input/voice.wav"
+ },
+ "cast": {
+  "teacher": {
+   "preset": "host"
+  },
+  "caretaker": {
+   "preset": "worker",
+   "color": "#5a5a62",
+   "hat": "flatcap",
+   "age": 0.75,
+   "facial": "walrus"
+  },
+  "official": {
+   "preset": "diplomat",
+   "age": 0.6
+  },
+  "official2": {
+   "preset": "civilian_man",
+   "outfit": "suit",
+   "glasses": "round",
+   "age": 0.7,
+   "facial": "walrus"
+  },
+  "official3": {
+   "preset": "civilian_man",
+   "outfit": "suit",
+   "color": "#4a4a52",
+   "age": 0.5
+  },
+  "researcher": {
+   "preset": "civilian_woman",
+   "glasses": "round",
+   "age": 0.4,
+   "color": "#7a4a3a"
+  },
+  "teacher60s": {
+   "preset": "civilian_woman",
+   "age": 0.55,
+   "glasses": "round",
+   "color": "#4a5a6a",
+   "hair": "bun"
+  },
+  "pupil_a": {
+   "preset": "civilian_man",
+   "age": 0,
+   "build": 0.85,
+   "facial": "none",
+   "hat": "none",
+   "color": "#6a7a5a",
+   "size": 0.72
+  },
+  "pupil_b": {
+   "preset": "civilian_woman",
+   "age": 0,
+   "build": 0.85,
+   "hair": "bun",
+   "color": "#8a5a4a",
+   "size": 0.7
+  },
+  "pupil_c": {
+   "preset": "civilian_man",
+   "age": 0,
+   "build": 0.85,
+   "facial": "none",
+   "hat": "none",
+   "hair": "part",
+   "color": "#5a6a8a",
+   "size": 0.72
+  },
+  "newsboy": {
+   "preset": "civilian_man",
+   "age": 0,
+   "build": 0.9,
+   "hat": "flatcap",
+   "facial": "none",
+   "color": "#7a5a3c",
+   "size": 0.82
+  },
+  "waldheim": {
+   "preset": "diplomat",
+   "age": 0.7,
+   "glasses": "none"
+  },
+  "vranitzky": {
+   "preset": "civilian_man",
+   "outfit": "suit",
+   "color": "#2f3440",
+   "age": 0.45,
+   "hair": "side",
+   "facial": "none"
+  },
+  "mp_a": {
+   "preset": "civilian_man",
+   "outfit": "suit",
+   "color": "#3b3a3f",
+   "age": 0.6,
+   "glasses": "round"
+  },
+  "mp_b": {
+   "preset": "civilian_woman",
+   "color": "#5a4a6a",
+   "age": 0.5
+  },
+  "reporter": {
+   "preset": "reporter"
+  }
+ },
+ "scenes": [
+  {
+   "start": 0.0,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "teacher",
+     "x": -230,
+     "y": 915,
+     "pose": "idle",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 0.0
+      },
+      {
+       "t": 3.39,
+       "x": 720,
+       "y": 915,
+       "ease": "arrive"
+      },
+      {
+       "t": 3.54,
+       "flip": false,
+       "turn": 0.38
+      },
+      {
+       "t": 4.62,
+       "pose": "show",
+       "holds": "declaration_half",
+       "holdsDrawing": [
+        {
+         "rect": [
+          -72,
+          -100,
+          144,
+          200
+         ],
+         "fill": "#f4ecd8"
+        },
+        {
+         "text": "MOSCOW · 1943",
+         "at": [
+          0,
+          -72
+         ],
+         "size": 17
+        },
+        {
+         "line": [
+          [
+           -58,
+           -50
+          ],
+          [
+           58,
+           -50
+          ]
+         ],
+         "width": 5
+        },
+        {
+         "line": [
+          [
+           -58,
+           -36
+          ],
+          [
+           58,
+           -36
+          ]
+         ],
+         "width": 5
+        },
+        {
+         "line": [
+          [
+           -58,
+           -22
+          ],
+          [
+           58,
+           -22
+          ]
+         ],
+         "width": 5
+        },
+        {
+         "line": [
+          [
+           -58,
+           -8
+          ],
+          [
+           20,
+           -8
+          ]
+         ],
+         "width": 5
+        },
+        {
+         "line": [
+          [
+           -58,
+           22
+          ],
+          [
+           58,
+           22
+          ]
+         ],
+         "width": 5,
+         "opacity": 0.15
+        },
+        {
+         "line": [
+          [
+           -58,
+           36
+          ],
+          [
+           58,
+           36
+          ]
+         ],
+         "width": 5,
+         "opacity": 0.15
+        },
+        {
+         "line": [
+          [
+           -58,
+           50
+          ],
+          [
+           58,
+           50
+          ]
+         ],
+         "width": 5,
+         "opacity": 0.15
+        },
+        {
+         "line": [
+          [
+           -58,
+           64
+          ],
+          [
+           10,
+           64
+          ]
+         ],
+         "width": 5,
+         "opacity": 0.15
+        }
+       ]
+      }
+     ],
+     "id": "teacher",
+     "turn": 0.3,
+     "holds": "declaration_half",
+     "holdsDrawing": [
+      {
+       "rect": [
+        -72,
+        -100,
+        144,
+        200
+       ],
+       "fill": "#f4ecd8"
+      },
+      {
+       "text": "MOSCOW · 1943",
+       "at": [
+        0,
+        -72
+       ],
+       "size": 17
+      },
+      {
+       "line": [
+        [
+         -58,
+         -50
+        ],
+        [
+         58,
+         -50
+        ]
+       ],
+       "width": 5
+      },
+      {
+       "line": [
+        [
+         -58,
+         -36
+        ],
+        [
+         58,
+         -36
+        ]
+       ],
+       "width": 5
+      },
+      {
+       "line": [
+        [
+         -58,
+         -22
+        ],
+        [
+         58,
+         -22
+        ]
+       ],
+       "width": 5
+      },
+      {
+       "line": [
+        [
+         -58,
+         -8
+        ],
+        [
+         20,
+         -8
+        ]
+       ],
+       "width": 5
+      },
+      {
+       "line": [
+        [
+         -58,
+         22
+        ],
+        [
+         58,
+         22
+        ]
+       ],
+       "width": 5,
+       "opacity": 0.15
+      },
+      {
+       "line": [
+        [
+         -58,
+         36
+        ],
+        [
+         58,
+         36
+        ]
+       ],
+       "width": 5,
+       "opacity": 0.15
+      },
+      {
+       "line": [
+        [
+         -58,
+         50
+        ],
+        [
+         58,
+         50
+        ]
+       ],
+       "width": 5,
+       "opacity": 0.15
+      },
+      {
+       "line": [
+        [
+         -58,
+         64
+        ],
+        [
+         10,
+         64
+        ]
+       ],
+       "width": 5,
+       "opacity": 0.15
+      }
+     ]
+    },
+    {
+     "kind": "actor",
+     "who": "caretaker",
+     "x": 1450,
+     "y": 860,
+     "pose": "hold",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 1.32,
+       "pose": "wait"
+      },
+      {
+       "t": 3.14,
+       "x": 1450,
+       "y": 860,
+       "flip": true,
+       "turn": 0.3,
+       "view": "front",
+       "pose": "hold"
+      },
+      {
+       "t": 5.04,
+       "x": 1200,
+       "y": 860,
+       "ease": "smooth"
+      }
+     ],
+     "id": "caretaker",
+     "flip": true,
+     "turn": 0.38,
+     "holds": "broom",
+     "holdsDrawing": [
+      {
+       "line": [
+        [
+         0,
+         -150
+        ],
+        [
+         0,
+         196
+        ]
+       ],
+       "width": 11,
+       "stroke": "#7a5232"
+      },
+      {
+       "poly": [
+        [
+         -46,
+         196
+        ],
+        [
+         46,
+         196
+        ],
+        [
+         60,
+         264
+        ],
+        [
+         -60,
+         264
+        ]
+       ],
+       "fill": "#c9a24a"
+      },
+      {
+       "rect": [
+        -50,
+        186,
+        100,
+        18
+       ],
+       "r": 5,
+       "fill": "#5a3e2a"
+      },
+      {
+       "line": [
+        [
+         -30,
+         210
+        ],
+        [
+         -38,
+         258
+        ]
+       ],
+       "width": 3,
+       "stroke": "#8a6a2a"
+      },
+      {
+       "line": [
+        [
+         0,
+         210
+        ],
+        [
+         0,
+         258
+        ]
+       ],
+       "width": 3,
+       "stroke": "#8a6a2a"
+      },
+      {
+       "line": [
+        [
+         30,
+         210
+        ],
+        [
+         38,
+         258
+        ]
+       ],
+       "width": 3,
+       "stroke": "#8a6a2a"
+      }
+     ],
+     "walkStyle": "shuffle"
+    }
+   ],
+   "set": {
+    "kind": "room",
+    "style": "classroom",
+    "seed": 1991,
+    "items": [
+     "map",
+     {
+      "item": "blackboard",
+      "text": "1943"
+     },
+     "crucifix",
+     "window:street",
+     "clock"
+    ],
+    "time": "day"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.05
+    },
+    {
+     "t": 4.62,
+     "on": "teacher",
+     "size": "medium",
+     "push": 0.05,
+     "frameX": 0.12,
+     "frameY": 0.05,
+     "track": true
+    }
+   ],
+   "world": {
+    "scale": 1.7,
+    "y": 915,
+    "horizon": 520
+   },
+   "ambience": "room",
+   "sfx": [
+    {
+     "t": 0.0,
+     "id": "footsteps",
+     "vol": 0.35,
+     "dur": 3.39
+    },
+    {
+     "t": 3.14,
+     "id": "footsteps",
+     "vol": 0.35,
+     "dur": 1.9
+    }
+   ],
+   "transition": "cut",
+   "shotDissolve": true,
+   "tag": "Classroom two · Austria",
+   "tagIn": 0.34,
+   "beat": "Classroom two sits a short drive away, in Hitler's birthplace, and it's where our half-read declaration lives.",
+   "card": "ch01.json#1:scene/A",
+   "chapter": "Classroom Two: Austria",
+   "id": "s001",
+   "end": 6.86
+  },
+  {
+   "start": 6.86,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "official",
+     "x": 960,
+     "y": 860,
+     "pose": "read",
+     "expr": "smug",
+     "keys": [
+      {
+       "t": 0.0,
+       "holdsDrawing": [
+        {
+         "rect": [
+          -72,
+          -100,
+          144,
+          200
+         ],
+         "fill": "#f4ecd8"
+        },
+        {
+         "text": "MOSCOW · 1943",
+         "at": [
+          0,
+          -72
+         ],
+         "size": 17
+        },
+        {
+         "line": [
+          [
+           -58,
+           -50
+          ],
+          [
+           58,
+           -50
+          ]
+         ],
+         "width": 5
+        },
+        {
+         "line": [
+          [
+           -58,
+           -36
+          ],
+          [
+           58,
+           -36
+          ]
+         ],
+         "width": 5
+        },
+        {
+         "line": [
+          [
+           -58,
+           -22
+          ],
+          [
+           58,
+           -22
+          ]
+         ],
+         "width": 5
+        },
+        {
+         "line": [
+          [
+           -58,
+           -8
+          ],
+          [
+           20,
+           -8
+          ]
+         ],
+         "width": 5
+        },
+        {
+         "line": [
+          [
+           -58,
+           22
+          ],
+          [
+           58,
+           22
+          ]
+         ],
+         "width": 5,
+         "opacity": 0.15
+        },
+        {
+         "line": [
+          [
+           -58,
+           36
+          ],
+          [
+           58,
+           36
+          ]
+         ],
+         "width": 5,
+         "opacity": 0.15
+        },
+        {
+         "line": [
+          [
+           -58,
+           50
+          ],
+          [
+           58,
+           50
+          ]
+         ],
+         "width": 5,
+         "opacity": 0.15
+        },
+        {
+         "line": [
+          [
+           -58,
+           64
+          ],
+          [
+           10,
+           64
+          ]
+         ],
+         "width": 5,
+         "opacity": 0.15
+        }
+       ]
+      },
+      {
+       "t": 1.98,
+       "talk": true
+      },
+      {
+       "t": 4.35,
+       "talk": false
+      }
+     ],
+     "id": "official",
+     "turn": 0.38,
+     "holds": "declaration_half",
+     "holdsDrawing": [
+      {
+       "rect": [
+        -72,
+        -100,
+        144,
+        200
+       ],
+       "fill": "#f4ecd8"
+      },
+      {
+       "text": "MOSCOW · 1943",
+       "at": [
+        0,
+        -72
+       ],
+       "size": 17
+      },
+      {
+       "line": [
+        [
+         -58,
+         -50
+        ],
+        [
+         58,
+         -50
+        ]
+       ],
+       "width": 5
+      },
+      {
+       "line": [
+        [
+         -58,
+         -36
+        ],
+        [
+         58,
+         -36
+        ]
+       ],
+       "width": 5
+      },
+      {
+       "line": [
+        [
+         -58,
+         -22
+        ],
+        [
+         58,
+         -22
+        ]
+       ],
+       "width": 5
+      },
+      {
+       "line": [
+        [
+         -58,
+         -8
+        ],
+        [
+         20,
+         -8
+        ]
+       ],
+       "width": 5
+      },
+      {
+       "line": [
+        [
+         -58,
+         22
+        ],
+        [
+         58,
+         22
+        ]
+       ],
+       "width": 5,
+       "opacity": 0.15
+      },
+      {
+       "line": [
+        [
+         -58,
+         36
+        ],
+        [
+         58,
+         36
+        ]
+       ],
+       "width": 5,
+       "opacity": 0.15
+      },
+      {
+       "line": [
+        [
+         -58,
+         50
+        ],
+        [
+         58,
+         50
+        ]
+       ],
+       "width": 5,
+       "opacity": 0.15
+      },
+      {
+       "line": [
+        [
+         -58,
+         64
+        ],
+        [
+         10,
+         64
+        ]
+       ],
+       "width": 5,
+       "opacity": 0.15
+      }
+     ]
+    },
+    {
+     "kind": "actor",
+     "who": "official2",
+     "x": 470,
+     "y": 965,
+     "pose": "idle",
+     "expr": "neutral",
+     "id": "official2",
+     "turn": 0.38
+    },
+    {
+     "kind": "actor",
+     "who": "official3",
+     "x": 1450,
+     "y": 965,
+     "pose": "idle",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 1.27,
+       "look": -0.36
+      },
+      {
+       "t": 3.32,
+       "headMove": "nod"
+      },
+      {
+       "t": 4.42,
+       "headMove": ""
+      }
+     ],
+     "id": "official3",
+     "flip": true,
+     "turn": 0.38
+    }
+   ],
+   "set": {
+    "kind": "room",
+    "style": "ministry",
+    "seed": 1991,
+    "items": [
+     "window:tall",
+     "portrait",
+     "flag:AUS",
+     "window:tall"
+    ],
+    "time": "day"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.14
+    }
+   ],
+   "world": {
+    "scale": 1.7,
+    "y": 915,
+    "horizon": 520
+   },
+   "ambience": "office",
+   "sfx": [
+    {
+     "t": 0.35,
+     "id": "paper",
+     "vol": 0.4
+    }
+   ],
+   "transition": "fade",
+   "shotDissolve": true,
+   "tag": "Vienna · 1945",
+   "tagIn": 0.3,
+   "beat": "After 1945, Austria's official memory rested on paragraph one:",
+   "card": "ch01.json#2:scene/A",
+   "id": "s002",
+   "end": 11.36
+  },
+  {
+   "start": 11.36,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "official",
+     "x": 960,
+     "y": 860,
+     "pose": "show",
+     "expr": "smug",
+     "keys": [
+      {
+       "t": 0.0,
+       "holdsDrawing": [
+        {
+         "rect": [
+          -72,
+          -100,
+          144,
+          200
+         ],
+         "fill": "#f4ecd8"
+        },
+        {
+         "text": "MOSCOW · 1943",
+         "at": [
+          0,
+          -72
+         ],
+         "size": 17
+        },
+        {
+         "line": [
+          [
+           -58,
+           -50
+          ],
+          [
+           58,
+           -50
+          ]
+         ],
+         "width": 5
+        },
+        {
+         "line": [
+          [
+           -58,
+           -36
+          ],
+          [
+           58,
+           -36
+          ]
+         ],
+         "width": 5
+        },
+        {
+         "line": [
+          [
+           -58,
+           -22
+          ],
+          [
+           58,
+           -22
+          ]
+         ],
+         "width": 5
+        },
+        {
+         "line": [
+          [
+           -58,
+           -8
+          ],
+          [
+           20,
+           -8
+          ]
+         ],
+         "width": 5
+        },
+        {
+         "line": [
+          [
+           -58,
+           22
+          ],
+          [
+           58,
+           22
+          ]
+         ],
+         "width": 5,
+         "opacity": 0.15
+        },
+        {
+         "line": [
+          [
+           -58,
+           36
+          ],
+          [
+           58,
+           36
+          ]
+         ],
+         "width": 5,
+         "opacity": 0.15
+        },
+        {
+         "line": [
+          [
+           -58,
+           50
+          ],
+          [
+           58,
+           50
+          ]
+         ],
+         "width": 5,
+         "opacity": 0.15
+        },
+        {
+         "line": [
+          [
+           -58,
+           64
+          ],
+          [
+           10,
+           64
+          ]
+         ],
+         "width": 5,
+         "opacity": 0.15
+        }
+       ]
+      }
+     ],
+     "id": "official",
+     "turn": 0.12,
+     "holds": "declaration_half",
+     "holdsDrawing": [
+      {
+       "rect": [
+        -72,
+        -100,
+        144,
+        200
+       ],
+       "fill": "#f4ecd8"
+      },
+      {
+       "text": "MOSCOW · 1943",
+       "at": [
+        0,
+        -72
+       ],
+       "size": 17
+      },
+      {
+       "line": [
+        [
+         -58,
+         -50
+        ],
+        [
+         58,
+         -50
+        ]
+       ],
+       "width": 5
+      },
+      {
+       "line": [
+        [
+         -58,
+         -36
+        ],
+        [
+         58,
+         -36
+        ]
+       ],
+       "width": 5
+      },
+      {
+       "line": [
+        [
+         -58,
+         -22
+        ],
+        [
+         58,
+         -22
+        ]
+       ],
+       "width": 5
+      },
+      {
+       "line": [
+        [
+         -58,
+         -8
+        ],
+        [
+         20,
+         -8
+        ]
+       ],
+       "width": 5
+      },
+      {
+       "line": [
+        [
+         -58,
+         22
+        ],
+        [
+         58,
+         22
+        ]
+       ],
+       "width": 5,
+       "opacity": 0.15
+      },
+      {
+       "line": [
+        [
+         -58,
+         36
+        ],
+        [
+         58,
+         36
+        ]
+       ],
+       "width": 5,
+       "opacity": 0.15
+      },
+      {
+       "line": [
+        [
+         -58,
+         50
+        ],
+        [
+         58,
+         50
+        ]
+       ],
+       "width": 5,
+       "opacity": 0.15
+      },
+      {
+       "line": [
+        [
+         -58,
+         64
+        ],
+        [
+         10,
+         64
+        ]
+       ],
+       "width": 5,
+       "opacity": 0.15
+      }
+     ]
+    }
+   ],
+   "set": {
+    "kind": "room",
+    "style": "ministry",
+    "seed": 1991,
+    "items": [
+     "window:tall",
+     "portrait",
+     "flag:AUS",
+     "window:tall"
+    ],
+    "time": "day"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "on": "official",
+     "size": "medium",
+     "push": 0.05,
+     "frameX": -0.12,
+     "frameY": 0.05
+    }
+   ],
+   "world": {
+    "scale": 1.7,
+    "y": 915,
+    "horizon": 520
+   },
+   "ambience": "office",
+   "transition": "fade",
+   "shotDissolve": true,
+   "tag": "Vienna · 1945",
+   "tagIn": -1,
+   "beat": "annexed, not complicit.",
+   "card": "ch01.json#3:scene/A",
+   "id": "s003",
+   "end": 13.46
+  },
+  {
+   "start": 13.46,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "researcher",
+     "x": 1200,
+     "y": 915,
+     "pose": "read",
+     "expr": "worried",
+     "keys": [
+      {
+       "t": 0.0,
+       "holdsDrawing": null
+      },
+      {
+       "t": 3.06,
+       "pose": "pointdown"
+      },
+      {
+       "t": 5.12,
+       "pose": "read",
+       "holds": "book",
+       "holdsDrawing": null
+      },
+      {
+       "t": 5.48,
+       "headMove": "shake"
+      },
+      {
+       "t": 6.58,
+       "headMove": ""
+      }
+     ],
+     "id": "researcher",
+     "flip": true,
+     "turn": 0.23,
+     "holds": "book"
+    },
+    {
+     "kind": "prop",
+     "item": "table",
+     "x": 720,
+     "y": 965,
+     "scale": 1.915,
+     "in": 0.0,
+     "id": "table"
+    },
+    {
+     "kind": "prop",
+     "item": "book",
+     "x": 509,
+     "y": 735,
+     "scale": 0.766,
+     "in": 0.0,
+     "id": "book",
+     "depthY": 965.51
+    },
+    {
+     "kind": "prop",
+     "item": "book",
+     "x": 605,
+     "y": 735,
+     "scale": 0.766,
+     "in": 0.0,
+     "id": "book_3",
+     "depthY": 965.52
+    },
+    {
+     "kind": "prop",
+     "item": "book",
+     "x": 835,
+     "y": 735,
+     "scale": 0.766,
+     "in": 0.0,
+     "id": "book_4",
+     "depthY": 965.53
+    },
+    {
+     "kind": "prop",
+     "item": "ledger",
+     "x": 950,
+     "y": 735,
+     "scale": 0.517,
+     "in": 0.0,
+     "id": "ledger",
+     "depthY": 965.54
+    }
+   ],
+   "set": {
+    "kind": "room",
+    "style": "office",
+    "seed": 1991,
+    "items": [
+     "drawers",
+     "window",
+     {
+      "item": "shelf",
+      "arg": "books"
+     },
+     "cabinet"
+    ]
+   },
+   "shots": [
+    {
+     "t": 0,
+     "on": "researcher",
+     "size": "medium",
+     "push": 0.03,
+     "frameY": 0.05
+    },
+    {
+     "t": 3.46,
+     "zoom": 1.0,
+     "push": 0.04
+    }
+   ],
+   "world": {
+    "scale": 1.7,
+    "y": 915,
+    "horizon": 520
+   },
+   "ambience": "office",
+   "sfx": [
+    {
+     "t": 0.35,
+     "id": "paper",
+     "vol": 0.4
+    },
+    {
+     "t": 5.47,
+     "id": "paper",
+     "vol": 0.4
+    }
+   ],
+   "transition": "fade",
+   "shotDissolve": true,
+   "tag": "Textbook research",
+   "tagIn": 0.36,
+   "beat": "Studies of Austrian textbooks report that, until the 1970s, the Holocaust hardly appeared in them,",
+   "card": "ch01.json#4:scene/A",
+   "id": "s004",
+   "end": 20.66
+  },
+  {
+   "start": 20.66,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "teacher60s",
+     "x": 960,
+     "y": 860,
+     "pose": "behind",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 0.36,
+       "talk": true
+      },
+      {
+       "t": 1.95,
+       "pose": "explain"
+      },
+      {
+       "t": 3.44,
+       "pose": "point",
+       "flip": true,
+       "turn": 0.38
+      },
+      {
+       "t": 4.85,
+       "talk": false
+      }
+     ],
+     "id": "teacher60s",
+     "turn": 0.38
+    },
+    {
+     "kind": "actor",
+     "who": "pupil_a",
+     "x": 470,
+     "y": 965,
+     "pose": "idle",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 1.26,
+       "headMove": "nod"
+      },
+      {
+       "t": 2.16,
+       "headMove": ""
+      }
+     ],
+     "id": "pupil_a",
+     "turn": 0.38,
+     "seated": true,
+     "depthScale": 0.72
+    },
+    {
+     "kind": "actor",
+     "who": "pupil_b",
+     "x": 1200,
+     "y": 965,
+     "pose": "idle",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 0.98,
+       "headMove": "nod"
+      },
+      {
+       "t": 1.88,
+       "headMove": ""
+      }
+     ],
+     "id": "pupil_b",
+     "flip": true,
+     "turn": 0.38,
+     "seated": true,
+     "depthScale": 0.7
+    },
+    {
+     "kind": "actor",
+     "who": "pupil_c",
+     "x": 1450,
+     "y": 965,
+     "pose": "idle",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 1.09,
+       "pose": "cross"
+      },
+      {
+       "t": 4.32,
+       "flip": true,
+       "turn": 0.38,
+       "look": 0.6,
+       "view": "front"
+      }
+     ],
+     "id": "pupil_c",
+     "flip": true,
+     "turn": 0.38,
+     "seated": true,
+     "depthScale": 0.72
+    },
+    {
+     "kind": "drawing",
+     "id": "school_desk",
+     "x": 470,
+     "y": 1015,
+     "scale": 1.811,
+     "in": 0.0,
+     "parts": [
+      {
+       "line": [
+        [
+         -96,
+         0
+        ],
+        [
+         -96,
+         -96
+        ]
+       ],
+       "width": 11,
+       "stroke": "#4a3424"
+      },
+      {
+       "line": [
+        [
+         96,
+         0
+        ],
+        [
+         96,
+         -96
+        ]
+       ],
+       "width": 11,
+       "stroke": "#4a3424"
+      },
+      {
+       "rect": [
+        -104,
+        -98,
+        208,
+        48
+       ],
+       "fill": "#7a5232"
+      },
+      {
+       "poly": [
+        [
+         -114,
+         -98
+        ],
+        [
+         114,
+         -98
+        ],
+        [
+         114,
+         -114
+        ],
+        [
+         -114,
+         -126
+        ]
+       ],
+       "fill": "#9a6a3a"
+      },
+      {
+       "circle": [
+        84,
+        -120,
+        8
+       ],
+       "fill": "#2a2a3a",
+       "width": 3
+      }
+     ]
+    },
+    {
+     "kind": "drawing",
+     "id": "school_desk_2",
+     "x": 1200,
+     "y": 1015,
+     "scale": 1.811,
+     "in": 0.0,
+     "parts": [
+      {
+       "line": [
+        [
+         -96,
+         0
+        ],
+        [
+         -96,
+         -96
+        ]
+       ],
+       "width": 11,
+       "stroke": "#4a3424"
+      },
+      {
+       "line": [
+        [
+         96,
+         0
+        ],
+        [
+         96,
+         -96
+        ]
+       ],
+       "width": 11,
+       "stroke": "#4a3424"
+      },
+      {
+       "rect": [
+        -104,
+        -98,
+        208,
+        48
+       ],
+       "fill": "#7a5232"
+      },
+      {
+       "poly": [
+        [
+         -114,
+         -98
+        ],
+        [
+         114,
+         -98
+        ],
+        [
+         114,
+         -114
+        ],
+        [
+         -114,
+         -126
+        ]
+       ],
+       "fill": "#9a6a3a"
+      },
+      {
+       "circle": [
+        84,
+        -120,
+        8
+       ],
+       "fill": "#2a2a3a",
+       "width": 3
+      }
+     ]
+    },
+    {
+     "kind": "drawing",
+     "id": "school_desk_3",
+     "x": 1450,
+     "y": 1015,
+     "scale": 1.811,
+     "in": 0.0,
+     "parts": [
+      {
+       "line": [
+        [
+         -96,
+         0
+        ],
+        [
+         -96,
+         -96
+        ]
+       ],
+       "width": 11,
+       "stroke": "#4a3424"
+      },
+      {
+       "line": [
+        [
+         96,
+         0
+        ],
+        [
+         96,
+         -96
+        ]
+       ],
+       "width": 11,
+       "stroke": "#4a3424"
+      },
+      {
+       "rect": [
+        -104,
+        -98,
+        208,
+        48
+       ],
+       "fill": "#7a5232"
+      },
+      {
+       "poly": [
+        [
+         -114,
+         -98
+        ],
+        [
+         114,
+         -98
+        ],
+        [
+         114,
+         -114
+        ],
+        [
+         -114,
+         -126
+        ]
+       ],
+       "fill": "#9a6a3a"
+      },
+      {
+       "circle": [
+        84,
+        -120,
+        8
+       ],
+       "fill": "#2a2a3a",
+       "width": 3
+      }
+     ]
+    },
+    {
+     "kind": "prop",
+     "item": "chair",
+     "x": 470,
+     "y": 963,
+     "scale": 1.379,
+     "in": 0.0,
+     "id": "seat_pupil_a"
+    },
+    {
+     "kind": "prop",
+     "item": "chair",
+     "x": 1200,
+     "y": 963,
+     "scale": 1.341,
+     "in": 0.0,
+     "id": "seat_pupil_b"
+    },
+    {
+     "kind": "prop",
+     "item": "chair",
+     "x": 1450,
+     "y": 963,
+     "scale": 1.379,
+     "in": 0.0,
+     "id": "seat_pupil_c"
+    }
+   ],
+   "set": {
+    "kind": "room",
+    "style": "classroom",
+    "seed": 1991,
+    "items": [
+     "window:street",
+     {
+      "item": "blackboard",
+      "text": "1938"
+     },
+     "map",
+     "crucifix"
+    ],
+    "light": "window",
+    "time": "day"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.05
+    },
+    {
+     "t": 3.44,
+     "on": "teacher60s",
+     "size": "medium",
+     "push": 0.05,
+     "frameX": -0.12,
+     "frameY": 0.05
+    }
+   ],
+   "world": {
+    "scale": 1.7,
+    "y": 915,
+    "horizon": 520
+   },
+   "ambience": "room",
+   "transition": "fade",
+   "shotDissolve": true,
+   "tag": "An Austrian school · 1960s",
+   "tagIn": 0.3,
+   "beat": "and when it did, it could look like Hitler's private crime, brought in from Germany.",
+   "card": "ch01.json#5:scene/A",
+   "id": "s005",
+   "end": 25.66
+  },
+  {
+   "start": 25.66,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "teacher",
+     "x": 720,
+     "y": 915,
+     "pose": "idle",
+     "expr": "shocked",
+     "keys": [
+      {
+       "t": 0.12,
+       "pose": "stop",
+       "talk": true
+      },
+      {
+       "t": 1.85,
+       "talk": false
+      }
+     ],
+     "id": "teacher",
+     "turn": 0.38
+    },
+    {
+     "kind": "actor",
+     "who": "caretaker",
+     "x": 1200,
+     "y": 915,
+     "pose": "hold",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 1.36,
+       "expr": "neutral",
+       "pose": "idle",
+       "turn": 0.0,
+       "look": 0
+      }
+     ],
+     "id": "caretaker",
+     "flip": true,
+     "turn": 0.38,
+     "holds": "broom",
+     "holdsDrawing": [
+      {
+       "line": [
+        [
+         0,
+         -150
+        ],
+        [
+         0,
+         196
+        ]
+       ],
+       "width": 11,
+       "stroke": "#7a5232"
+      },
+      {
+       "poly": [
+        [
+         -46,
+         196
+        ],
+        [
+         46,
+         196
+        ],
+        [
+         60,
+         264
+        ],
+        [
+         -60,
+         264
+        ]
+       ],
+       "fill": "#c9a24a"
+      },
+      {
+       "rect": [
+        -50,
+        186,
+        100,
+        18
+       ],
+       "r": 5,
+       "fill": "#5a3e2a"
+      },
+      {
+       "line": [
+        [
+         -30,
+         210
+        ],
+        [
+         -38,
+         258
+        ]
+       ],
+       "width": 3,
+       "stroke": "#8a6a2a"
+      },
+      {
+       "line": [
+        [
+         0,
+         210
+        ],
+        [
+         0,
+         258
+        ]
+       ],
+       "width": 3,
+       "stroke": "#8a6a2a"
+      },
+      {
+       "line": [
+        [
+         30,
+         210
+        ],
+        [
+         38,
+         258
+        ]
+       ],
+       "width": 3,
+       "stroke": "#8a6a2a"
+      }
+     ]
+    }
+   ],
+   "set": {
+    "kind": "room",
+    "style": "classroom",
+    "seed": 1991,
+    "items": [
+     "map",
+     {
+      "item": "blackboard",
+      "text": "1943"
+     },
+     "crucifix",
+     "window:street",
+     "clock"
+    ]
+   },
+   "shots": [
+    {
+     "t": 0,
+     "on": [
+      "teacher",
+      "caretaker"
+     ],
+     "size": "full",
+     "push": 0.05
+    }
+   ],
+   "world": {
+    "scale": 1.7,
+    "y": 915,
+    "horizon": 520
+   },
+   "ambience": "room",
+   "transition": "fade",
+   "shotDissolve": true,
+   "tag": "Classroom two · Austria",
+   "tagIn": 0.3,
+   "beat": "Hang on. Hitler was born in Austria.",
+   "card": "ch01.json#6:scene/A",
+   "id": "s006",
+   "end": 27.66
+  },
+  {
+   "start": 27.66,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "caretaker",
+     "x": 1200,
+     "y": 915,
+     "pose": "hips",
+     "expr": "smug",
+     "keys": [
+      {
+       "t": 0.0
+      },
+      {
+       "t": 0.12,
+       "talk": true
+      },
+      {
+       "t": 1.46,
+       "pose": "palms"
+      },
+      {
+       "t": 2.65,
+       "pose": "present"
+      },
+      {
+       "t": 4.5,
+       "pose": "shrug"
+      },
+      {
+       "t": 5.42,
+       "pose": "point",
+       "flip": false,
+       "turn": 0.38
+      },
+      {
+       "t": 7.01,
+       "talk": false
+      }
+     ],
+     "id": "caretaker",
+     "flip": true,
+     "turn": 0.38
+    },
+    {
+     "kind": "actor",
+     "who": "teacher",
+     "x": 800,
+     "y": 1055,
+     "pose": "cross",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 0.74,
+       "pose": "behind"
+      },
+      {
+       "t": 5.73,
+       "pose": "idle"
+      }
+     ],
+     "id": "teacher",
+     "turn": 0.38,
+     "view": "back"
+    },
+    {
+     "kind": "drawing",
+     "id": "broom",
+     "x": 1330,
+     "y": 637,
+     "scale": 1.054,
+     "in": 0.0,
+     "parts": [
+      {
+       "line": [
+        [
+         0,
+         -150
+        ],
+        [
+         0,
+         196
+        ]
+       ],
+       "width": 11,
+       "stroke": "#7a5232"
+      },
+      {
+       "poly": [
+        [
+         -46,
+         196
+        ],
+        [
+         46,
+         196
+        ],
+        [
+         60,
+         264
+        ],
+        [
+         -60,
+         264
+        ]
+       ],
+       "fill": "#c9a24a"
+      },
+      {
+       "rect": [
+        -50,
+        186,
+        100,
+        18
+       ],
+       "r": 5,
+       "fill": "#5a3e2a"
+      },
+      {
+       "line": [
+        [
+         -30,
+         210
+        ],
+        [
+         -38,
+         258
+        ]
+       ],
+       "width": 3,
+       "stroke": "#8a6a2a"
+      },
+      {
+       "line": [
+        [
+         0,
+         210
+        ],
+        [
+         0,
+         258
+        ]
+       ],
+       "width": 3,
+       "stroke": "#8a6a2a"
+      },
+      {
+       "line": [
+        [
+         30,
+         210
+        ],
+        [
+         38,
+         258
+        ]
+       ],
+       "width": 3,
+       "stroke": "#8a6a2a"
+      }
+     ],
+     "depthY": 915
+    }
+   ],
+   "set": {
+    "kind": "room",
+    "style": "classroom",
+    "seed": 1991,
+    "items": [
+     "map",
+     {
+      "item": "blackboard",
+      "text": "1943"
+     },
+     "crucifix",
+     "window:street",
+     "clock"
+    ]
+   },
+   "shots": [
+    {
+     "t": 0,
+     "on": "caretaker",
+     "size": "medium",
+     "push": 0.04,
+     "frameX": 0.1,
+     "frameY": 0.05
+    },
+    {
+     "t": 3.58,
+     "on": [
+      "caretaker",
+      "teacher"
+     ],
+     "size": "full",
+     "push": 0.04
+    }
+   ],
+   "world": {
+    "scale": 1.7,
+    "y": 915,
+    "horizon": 520
+   },
+   "ambience": "room",
+   "transition": "fade",
+   "shotDissolve": true,
+   "tag": "Classroom two · Austria",
+   "tagIn": -1,
+   "beat": "Not according to those textbooks, teacher. According to those, he just moved away and came back with an army.",
+   "card": "ch01.json#7:scene/A",
+   "id": "s007",
+   "end": 34.82
+  },
+  {
+   "start": 34.82,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "newsboy",
+     "x": 960,
+     "y": 965,
+     "pose": "holdUp",
+     "expr": "happy",
+     "keys": [
+      {
+       "t": 0.0,
+       "holdsDrawing": [
+        {
+         "rect": [
+          -90,
+          -64,
+          180,
+          128
+         ],
+         "fill": "#f2ede0"
+        },
+        {
+         "rect": [
+          -80,
+          -56,
+          160,
+          22
+         ],
+         "fill": "#2a2a2a",
+         "stroke": false
+        },
+        {
+         "text": "WALDHEIM",
+         "at": [
+          0,
+          -16
+         ],
+         "size": 30,
+         "font": "title"
+        },
+        {
+         "line": [
+          [
+           -76,
+           4
+          ],
+          [
+           76,
+           4
+          ]
+         ],
+         "width": 4
+        },
+        {
+         "line": [
+          [
+           -76,
+           18
+          ],
+          [
+           40,
+           18
+          ]
+         ],
+         "width": 4
+        },
+        {
+         "rect": [
+          -76,
+          28,
+          60,
+          30
+         ],
+         "fill": "#9a9a9a",
+         "width": 2
+        },
+        {
+         "line": [
+          [
+           -8,
+           36
+          ],
+          [
+           76,
+           36
+          ]
+         ],
+         "width": 4
+        },
+        {
+         "line": [
+          [
+           -8,
+           50
+          ],
+          [
+           60,
+           50
+          ]
+         ],
+         "width": 4
+        }
+       ]
+      },
+      {
+       "t": 0.6,
+       "expr": "shout",
+       "pose": "point",
+       "talk": true
+      },
+      {
+       "t": 1.9,
+       "talk": false
+      }
+     ],
+     "id": "newsboy",
+     "turn": 0.12,
+     "holds": "newspaper_1986",
+     "holdsDrawing": [
+      {
+       "rect": [
+        -90,
+        -64,
+        180,
+        128
+       ],
+       "fill": "#f2ede0"
+      },
+      {
+       "rect": [
+        -80,
+        -56,
+        160,
+        22
+       ],
+       "fill": "#2a2a2a",
+       "stroke": false
+      },
+      {
+       "text": "WALDHEIM",
+       "at": [
+        0,
+        -16
+       ],
+       "size": 30,
+       "font": "title"
+      },
+      {
+       "line": [
+        [
+         -76,
+         4
+        ],
+        [
+         76,
+         4
+        ]
+       ],
+       "width": 4
+      },
+      {
+       "line": [
+        [
+         -76,
+         18
+        ],
+        [
+         40,
+         18
+        ]
+       ],
+       "width": 4
+      },
+      {
+       "rect": [
+        -76,
+        28,
+        60,
+        30
+       ],
+       "fill": "#9a9a9a",
+       "width": 2
+      },
+      {
+       "line": [
+        [
+         -8,
+         36
+        ],
+        [
+         76,
+         36
+        ]
+       ],
+       "width": 4
+      },
+      {
+       "line": [
+        [
+         -8,
+         50
+        ],
+        [
+         60,
+         50
+        ]
+       ],
+       "width": 4
+      }
+     ],
+     "depthScale": 0.82
+    },
+    {
+     "kind": "actor",
+     "who": "civilian_man",
+     "x": -200,
+     "y": 820,
+     "pose": "sack",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 0.0
+      },
+      {
+       "t": 2.2,
+       "x": 105,
+       "y": 820,
+       "ease": "linear"
+      }
+     ],
+     "id": "c0_0",
+     "holds": "sack"
+    },
+    {
+     "kind": "actor",
+     "who": "civilian_woman",
+     "x": -200,
+     "y": 940,
+     "pose": "cross",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 0.0
+      },
+      {
+       "t": 2.2,
+       "x": 204,
+       "y": 940,
+       "ease": "linear"
+      }
+     ],
+     "id": "c0_1"
+    },
+    {
+     "kind": "actor",
+     "who": "civilian_man",
+     "x": 2120,
+     "y": 940,
+     "pose": "behind",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 0.0
+      },
+      {
+       "t": 2.2,
+       "x": 1679,
+       "y": 940,
+       "ease": "linear"
+      }
+     ],
+     "id": "c0_2",
+     "flip": true
+    }
+   ],
+   "set": {
+    "kind": "town",
+    "style": "austrian",
+    "seed": 1991,
+    "buildings": [
+     "tenement",
+     {
+      "item": "shop:cafe"
+     },
+     "tenement",
+     "house"
+    ],
+    "items": [
+     {
+      "item": "poster",
+      "text": "WALDHEIM",
+      "x": 330
+     },
+     {
+      "item": "lamppost",
+      "x": 1290
+     },
+     {
+      "item": "poster",
+      "text": "WALDHEIM",
+      "x": 1080
+     },
+     {
+      "item": "tree",
+      "x": 1760
+     }
+    ],
+    "time": "day"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.06
+    }
+   ],
+   "world": {
+    "scale": 1.0,
+    "y": 915,
+    "horizon": 560
+   },
+   "ambience": "crowd",
+   "transition": "fade",
+   "shotDissolve": true,
+   "tag": "Vienna · 1986",
+   "tagIn": 0.3,
+   "beat": "The story broke apart in 1986,",
+   "card": "ch01.json#8:scene/A",
+   "id": "s008",
+   "end": 37.02
+  },
+  {
+   "start": 37.02,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "waldheim",
+     "x": 960,
+     "y": 860,
+     "pose": "wring",
+     "expr": "nervous",
+     "keys": [
+      {
+       "t": 1.62,
+       "talk": true
+      },
+      {
+       "t": 2.98,
+       "pose": "palms"
+      },
+      {
+       "t": 5.58,
+       "pose": "wipe",
+       "expr": "tired"
+      },
+      {
+       "t": 6.69,
+       "talk": false
+      }
+     ],
+     "id": "waldheim",
+     "turn": -0.12
+    },
+    {
+     "kind": "actor",
+     "who": "reporter",
+     "x": 159,
+     "y": 1215,
+     "scale": 1.75,
+     "pose": "idle",
+     "expr": "neutral",
+     "id": "c0_0",
+     "view": "back"
+    },
+    {
+     "kind": "actor",
+     "who": "civilian_man",
+     "x": 489,
+     "y": 1245,
+     "scale": 1.9,
+     "pose": "cross",
+     "expr": "neutral",
+     "id": "c0_1",
+     "view": "back"
+    },
+    {
+     "kind": "actor",
+     "who": "reporter",
+     "x": 1420,
+     "y": 1215,
+     "scale": 1.75,
+     "pose": "behind",
+     "expr": "neutral",
+     "id": "c0_2",
+     "view": "back"
+    },
+    {
+     "kind": "actor",
+     "who": "civilian_man",
+     "x": 1738,
+     "y": 1245,
+     "scale": 1.9,
+     "pose": "chin",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 2.52,
+       "pose": "behind"
+      },
+      {
+       "t": 5.95,
+       "pose": "idle"
+      }
+     ],
+     "id": "c0_3",
+     "view": "back"
+    },
+    {
+     "kind": "prop",
+     "item": "table",
+     "x": 960,
+     "y": 915,
+     "scale": 1.7,
+     "in": 0.0,
+     "id": "table"
+    },
+    {
+     "kind": "prop",
+     "item": "microphone",
+     "x": 858,
+     "y": 711,
+     "scale": 1.02,
+     "in": 0.0,
+     "id": "microphone",
+     "depthY": 915.51
+    },
+    {
+     "kind": "prop",
+     "item": "microphone",
+     "x": 1062,
+     "y": 711,
+     "scale": 1.02,
+     "in": 0.0,
+     "id": "microphone_3",
+     "depthY": 915.52
+    },
+    {
+     "kind": "fx",
+     "type": "flash",
+     "x": 470,
+     "y": 1015,
+     "size": 1.0,
+     "in": 2.04
+    },
+    {
+     "kind": "fx",
+     "type": "flash",
+     "x": 1450,
+     "y": 1015,
+     "size": 1.0,
+     "in": 4.2
+    },
+    {
+     "kind": "namecard",
+     "name": "Kurt Waldheim",
+     "role": "Presidential candidate, 1986",
+     "in": 0.4
+    }
+   ],
+   "set": {
+    "kind": "room",
+    "style": "ministry",
+    "seed": 1991,
+    "items": [
+     "window:tall",
+     "portrait",
+     "window:tall"
+    ]
+   },
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.05
+    },
+    {
+     "t": 4.2,
+     "on": "waldheim",
+     "size": "medium",
+     "push": 0.05,
+     "frameX": -0.12,
+     "frameY": 0.05
+    }
+   ],
+   "world": {
+    "scale": 1.7,
+    "y": 915,
+    "horizon": 520
+   },
+   "ambience": "office",
+   "transition": "fade",
+   "shotDissolve": true,
+   "tag": "Vienna · 1986",
+   "tagIn": -1,
+   "beat": "when an international row erupted over the hidden war service of Kurt Waldheim, then running for president.",
+   "card": "ch01.json#9:scene/A",
+   "id": "s009",
+   "end": 43.86
+  },
+  {
+   "start": 43.86,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "vranitzky",
+     "x": 1450,
+     "y": 860,
+     "pose": "behind",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 3.46,
+       "seated": false
+      },
+      {
+       "t": 3.96,
+       "x": 1450,
+       "y": 860,
+       "flip": true,
+       "turn": 0.3,
+       "view": "front",
+       "pose": "idle"
+      },
+      {
+       "t": 6.22,
+       "pose": "read",
+       "holds": "paper",
+       "holdsDrawing": null
+      },
+      {
+       "t": 7.02,
+       "x": 960,
+       "y": 860,
+       "ease": "smooth"
+      }
+     ],
+     "id": "vranitzky",
+     "flip": true,
+     "turn": 0.23,
+     "seated": true
+    },
+    {
+     "kind": "actor",
+     "who": "mp_a",
+     "x": 152,
+     "y": 1215,
+     "scale": 1.75,
+     "pose": "idle",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 1.88,
+       "look": -0.1
+      }
+     ],
+     "id": "c0_0",
+     "view": "back"
+    },
+    {
+     "kind": "actor",
+     "who": "mp_b",
+     "x": 504,
+     "y": 1245,
+     "scale": 1.9,
+     "pose": "cross",
+     "expr": "neutral",
+     "id": "c0_1",
+     "view": "back"
+    },
+    {
+     "kind": "actor",
+     "who": "civilian_man",
+     "x": 762,
+     "y": 1215,
+     "scale": 1.75,
+     "pose": "behind",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 2.28,
+       "look": 0.52
+      }
+     ],
+     "id": "c0_2",
+     "view": "back"
+    },
+    {
+     "kind": "actor",
+     "who": "mp_a",
+     "x": 1183,
+     "y": 1245,
+     "scale": 1.9,
+     "pose": "chin",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 2.07,
+       "look": 0.23
+      },
+      {
+       "t": 6.44,
+       "look": 0.52
+      }
+     ],
+     "id": "c0_3",
+     "view": "back"
+    },
+    {
+     "kind": "drawing",
+     "id": "lectern",
+     "x": 960,
+     "y": 915,
+     "scale": 1.15,
+     "in": 0.0,
+     "parts": [
+      {
+       "poly": [
+        [
+         -72,
+         0
+        ],
+        [
+         72,
+         0
+        ],
+        [
+         58,
+         -126
+        ],
+        [
+         -58,
+         -126
+        ]
+       ],
+       "fill": "#6a4428"
+      },
+      {
+       "poly": [
+        [
+         -86,
+         -126
+        ],
+        [
+         86,
+         -126
+        ],
+        [
+         78,
+         -150
+        ],
+        [
+         -78,
+         -142
+        ]
+       ],
+       "fill": "#8a5a32"
+      },
+      {
+       "rect": [
+        -40,
+        -100,
+        80,
+        54
+       ],
+       "fill": "none",
+       "stroke": "#2a1a10",
+       "width": 4,
+       "opacity": 0.4
+      }
+     ]
+    },
+    {
+     "kind": "prop",
+     "item": "chair",
+     "x": 1450,
+     "y": 858,
+     "scale": 0.972,
+     "in": 0.0,
+     "id": "seat_vranitzky"
+    },
+    {
+     "kind": "namecard",
+     "name": "Franz Vranitzky",
+     "role": "Chancellor of Austria",
+     "in": 0.4
+    }
+   ],
+   "set": {
+    "kind": "parliament"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.05
+    },
+    {
+     "t": 6.22,
+     "on": "vranitzky",
+     "size": "medium",
+     "push": 0.05,
+     "frameX": -0.12,
+     "frameY": 0.05,
+     "track": true
+    }
+   ],
+   "world": {
+    "scale": 1.15,
+    "y": 915
+   },
+   "sfx": [
+    {
+     "t": 3.96,
+     "id": "footsteps",
+     "vol": 0.35,
+     "dur": 3.06
+    },
+    {
+     "t": 6.57,
+     "id": "paper",
+     "vol": 0.4
+    }
+   ],
+   "transition": "fade",
+   "shotDissolve": true,
+   "tag": "Parliament, Vienna · July 1991",
+   "tagIn": 0.38,
+   "beat": "In July 1991, Chancellor Franz Vranitzky stood up in parliament and, in effect, read out paragraph two.",
+   "card": "ch01.json#10:scene/A",
+   "id": "s010",
+   "end": 51.36
+  },
+  {
+   "start": 51.36,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "vranitzky",
+     "x": 960,
+     "y": 860,
+     "pose": "wait",
+     "expr": "sad",
+     "keys": [
+      {
+       "t": 0.0,
+       "talk": true
+      },
+      {
+       "t": 2.22,
+       "pose": "heart"
+      },
+      {
+       "t": 2.45,
+       "talk": false
+      }
+     ],
+     "id": "vranitzky",
+     "turn": 0.12
+    },
+    {
+     "kind": "drawing",
+     "id": "lectern",
+     "x": 960,
+     "y": 915,
+     "scale": 1.15,
+     "in": 0.0,
+     "parts": [
+      {
+       "poly": [
+        [
+         -72,
+         0
+        ],
+        [
+         72,
+         0
+        ],
+        [
+         58,
+         -126
+        ],
+        [
+         -58,
+         -126
+        ]
+       ],
+       "fill": "#6a4428"
+      },
+      {
+       "poly": [
+        [
+         -86,
+         -126
+        ],
+        [
+         86,
+         -126
+        ],
+        [
+         78,
+         -150
+        ],
+        [
+         -78,
+         -142
+        ]
+       ],
+       "fill": "#8a5a32"
+      },
+      {
+       "rect": [
+        -40,
+        -100,
+        80,
+        54
+       ],
+       "fill": "none",
+       "stroke": "#2a1a10",
+       "width": 4,
+       "opacity": 0.4
+      }
+     ]
+    },
+    {
+     "kind": "note",
+     "lines": [
+      "“We acknowledge all the deeds",
+      "of our history…”"
+     ],
+     "kicker": "Franz Vranitzky · Parliament, July 1991",
+     "accentLast": false,
+     "in": 0.37,
+     "x": 1380,
+     "y": 120,
+     "speed": 26
+    }
+   ],
+   "set": {
+    "kind": "parliament"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "on": "vranitzky",
+     "size": "medium",
+     "push": 0.05,
+     "frameX": -0.12,
+     "frameY": 0.05
+    }
+   ],
+   "world": {
+    "scale": 1.15,
+    "y": 915
+   },
+   "transition": "fade",
+   "shotDissolve": true,
+   "tag": "Parliament, Vienna · July 1991",
+   "tagIn": -1,
+   "beat": "We acknowledge all the deeds of our history,",
+   "card": "ch01.json#11:scene/A",
+   "id": "s011",
+   "end": 53.96
+  },
+  {
+   "start": 53.96,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "mp_a",
+     "x": 720,
+     "y": 965,
+     "pose": "wait",
+     "expr": "sad",
+     "keys": [
+      {
+       "t": 1.36,
+       "headMove": "nod"
+      },
+      {
+       "t": 2.46,
+       "headMove": ""
+      }
+     ],
+     "id": "mp_a",
+     "turn": 0.38
+    },
+    {
+     "kind": "actor",
+     "who": "mp_b",
+     "x": 1200,
+     "y": 965,
+     "pose": "pray",
+     "expr": "sad",
+     "keys": [
+      {
+       "t": 2.31,
+       "look": 0.15
+      },
+      {
+       "t": 4.04,
+       "expr": "sad",
+       "pose": "wait"
+      }
+     ],
+     "id": "mp_b",
+     "flip": true,
+     "turn": 0.38
+    }
+   ],
+   "set": {
+    "kind": "parliament"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "on": [
+      "mp_a",
+      "mp_b"
+     ],
+     "size": "full",
+     "push": 0.05
+    }
+   ],
+   "world": {
+    "scale": 1.15,
+    "y": 915
+   },
+   "transition": "fade",
+   "shotDissolve": true,
+   "tag": "Parliament, Vienna · July 1991",
+   "tagIn": -1,
+   "beat": "and the deeds of all parts of our people, the good as well as the evil.",
+   "card": "ch01.json#12:scene/A",
+   "id": "s012",
+   "end": 58.2
+  },
+  {
+   "start": 58.2,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "teacher",
+     "x": 720,
+     "y": 915,
+     "pose": "behind",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 2.38,
+       "pose": "hips"
+      },
+      {
+       "t": 3.78,
+       "pose": "show",
+       "holds": "declaration_full",
+       "holdsDrawing": [
+        {
+         "rect": [
+          -72,
+          -100,
+          144,
+          200
+         ],
+         "fill": "#f4ecd8"
+        },
+        {
+         "text": "MOSCOW · 1943",
+         "at": [
+          0,
+          -72
+         ],
+         "size": 17
+        },
+        {
+         "line": [
+          [
+           -58,
+           -50
+          ],
+          [
+           58,
+           -50
+          ]
+         ],
+         "width": 5
+        },
+        {
+         "line": [
+          [
+           -58,
+           -36
+          ],
+          [
+           58,
+           -36
+          ]
+         ],
+         "width": 5
+        },
+        {
+         "line": [
+          [
+           -58,
+           -22
+          ],
+          [
+           58,
+           -22
+          ]
+         ],
+         "width": 5
+        },
+        {
+         "line": [
+          [
+           -58,
+           -8
+          ],
+          [
+           20,
+           -8
+          ]
+         ],
+         "width": 5
+        },
+        {
+         "line": [
+          [
+           -58,
+           22
+          ],
+          [
+           58,
+           22
+          ]
+         ],
+         "width": 5
+        },
+        {
+         "line": [
+          [
+           -58,
+           36
+          ],
+          [
+           58,
+           36
+          ]
+         ],
+         "width": 5
+        },
+        {
+         "line": [
+          [
+           -58,
+           50
+          ],
+          [
+           58,
+           50
+          ]
+         ],
+         "width": 5
+        },
+        {
+         "line": [
+          [
+           -58,
+           64
+          ],
+          [
+           10,
+           64
+          ]
+         ],
+         "width": 5
+        },
+        {
+         "line": [
+          [
+           -62,
+           74
+          ],
+          [
+           62,
+           74
+          ]
+         ],
+         "width": 4,
+         "stroke": "#b8392e"
+        }
+       ]
+      }
+     ],
+     "id": "teacher",
+     "turn": 0.38
+    },
+    {
+     "kind": "actor",
+     "who": "caretaker",
+     "x": 1200,
+     "y": 915,
+     "pose": "hold",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 1.59,
+       "look": -0.23
+      },
+      {
+       "t": 4.9,
+       "headMove": "nod"
+      },
+      {
+       "t": 6.0,
+       "headMove": ""
+      }
+     ],
+     "id": "caretaker",
+     "flip": true,
+     "turn": 0.38,
+     "holds": "broom",
+     "holdsDrawing": [
+      {
+       "line": [
+        [
+         0,
+         -150
+        ],
+        [
+         0,
+         196
+        ]
+       ],
+       "width": 11,
+       "stroke": "#7a5232"
+      },
+      {
+       "poly": [
+        [
+         -46,
+         196
+        ],
+        [
+         46,
+         196
+        ],
+        [
+         60,
+         264
+        ],
+        [
+         -60,
+         264
+        ]
+       ],
+       "fill": "#c9a24a"
+      },
+      {
+       "rect": [
+        -50,
+        186,
+        100,
+        18
+       ],
+       "r": 5,
+       "fill": "#5a3e2a"
+      },
+      {
+       "line": [
+        [
+         -30,
+         210
+        ],
+        [
+         -38,
+         258
+        ]
+       ],
+       "width": 3,
+       "stroke": "#8a6a2a"
+      },
+      {
+       "line": [
+        [
+         0,
+         210
+        ],
+        [
+         0,
+         258
+        ]
+       ],
+       "width": 3,
+       "stroke": "#8a6a2a"
+      },
+      {
+       "line": [
+        [
+         30,
+         210
+        ],
+        [
+         38,
+         258
+        ]
+       ],
+       "width": 3,
+       "stroke": "#8a6a2a"
+      }
+     ]
+    }
+   ],
+   "set": {
+    "kind": "room",
+    "style": "classroom",
+    "seed": 1991,
+    "items": [
+     "map",
+     {
+      "item": "blackboard",
+      "text": "1943"
+     },
+     "crucifix",
+     "window:street",
+     "clock"
+    ]
+   },
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.05
+    },
+    {
+     "t": 3.78,
+     "on": "teacher",
+     "size": "medium",
+     "push": 0.05,
+     "frameX": 0.12,
+     "frameY": 0.05
+    }
+   ],
+   "world": {
+    "scale": 1.7,
+    "y": 915,
+    "horizon": 520
+   },
+   "ambience": "room",
+   "transition": "fade",
+   "shotDissolve": true,
+   "tag": "Classroom two · Austria",
+   "tagIn": 0.35,
+   "beat": "And just as we claim the good ones for ourselves, we must apologise for the evil ones.",
+   "card": "ch01.json#13:scene/A",
+   "id": "s013",
+   "end": 65.2
+  }
+ ]
+}

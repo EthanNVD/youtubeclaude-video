@@ -1,0 +1,51 @@
+{
+ "title": "The Crack in the Glass — the blockade and the Turnip Winter (creative-scene test)",
+ "lang": "en",
+ "era": "ww1",
+ "sides": ["german", "british"],
+ "look": {"seed": 1916, "grade": "film"},
+ "places": {
+  "Western Approaches": [-12.0, 49.6],
+  "Dover Strait": [1.6, 50.95],
+  "Northern Patrol line": [2.0, 60.35]
+ },
+ "sets": {
+  "hamburg_quay": {"set": "harbor", "tag": "Hamburg · 1913"},
+  "hamburg_warehouse": {"room": "warehouse", "items": ["sacks", "crates:HAMBURG", "door:open", "barrels", "sacks"], "tag": "Hamburg · 1913"},
+  "kolonialwaren": {"room": "shop", "items": ["shelf:tins", {"item": "sign", "text": "KOLONIALWAREN"}, "shelf:jars", "sacks"], "tag": "Hamburg · 1913"},
+  "admiralty": {"room": "admiralty", "tag": "The Admiralty, London"},
+  "wilhelmshaven": {"set": "harbor", "tag": "Wilhelmshaven · 1914"},
+  "channel_bridge": {"set": "bridge", "tag": "The English Channel"},
+  "northern_sea": {"set": "sea", "tag": "Between Shetland and Norway"},
+  "scapa_shore": {"set": "beach", "tag": "Scapa Flow"},
+  "lerwick_pub": {"room": "tavern", "items": ["shelf:bottles", "barrels", {"item": "poster", "text": "ROYAL NAVY"}, "window:small:sea"], "tag": "Lerwick, Shetland · November 1914"},
+  "kirkwall_quay": {"town": "english", "buildings": [{"item": "office", "text": "CUSTOMS"}, "house", "tenement", "house"], "items": ["crates", "rope", "lamppost", "barrels"], "tag": "Kirkwall · 1915"},
+  "rotterdam_street": {"town": "dutch", "buildings": ["house", {"item": "shop:grocer", "text": "IMPORT · EXPORT", "goods": "tins"}, "house", "tenement", "house"], "items": ["crates", "lamppost", "barrels"], "tag": "Rotterdam · 1915"},
+  "rotten_field": {"set": "mud", "tag": "East Prussia · Autumn 1916"},
+  "mueller_kitchen": {"room": "kitchen", "items": ["shelf:empty", "window:snow_street", "clock", "hooks"], "light": "candle", "poor": true, "lightX": 760, "tag": "Berlin · Winter 1916–17"}
+ },
+ "cast": {
+  "foreman": {"preset": "worker", "facial": "walrus", "age": 0.6},
+  "docker": {"preset": "worker"},
+  "docker2": {"preset": "worker", "color": "#5a6a7a", "facial": "stubble"},
+  "clerk": {"preset": "civilian_man", "glasses": "round", "age": 0.6},
+  "grocer": {"preset": "civilian_man", "color": "#ece6d6", "facial": "walrus", "age": 0.5},
+  "housewife": {"preset": "civilian_woman"},
+  "admiral": {"preset": "jellicoe"},
+  "admiral2": {"preset": "jellicoe", "facial": "beard", "age": 0.85},
+  "staff_officer": {"preset": "jellicoe", "age": 0.2, "facial": "none"},
+  "rn_sailor": {"preset": "ww1_sailor_uk"},
+  "de_officer": {"preset": "scheer", "age": 0.3, "facial": "pencil"},
+  "de_sailor": {"preset": "ww1_sailor_de"},
+  "fisherman": {"preset": "worker", "hat": "flatcap", "facial": "beard", "age": 0.7},
+  "publican": {"preset": "civilian_man", "color": "#ece6d6", "facial": "handlebar"},
+  "captain": {"preset": "dutch_civilian", "hat": "navy", "facial": "beard", "color": "#2f3a4a"},
+  "merchant": {"preset": "dutch_civilian", "build": 1.2, "extra": ["vest"]},
+  "buyer": {"preset": "civilian_man", "hat": "fedora", "color": "#4a4a52", "facial": "pencil"},
+  "farmer": {"preset": "worker", "facial": "stubble", "age": 0.6},
+  "farmer_wife": {"preset": "civilian_woman", "extra": ["scarf"], "scarf": "#7a5a3a", "age": 0.5},
+  "mother": {"preset": "civilian_woman", "color": "#5a4a6a", "age": 0.3},
+  "girl": {"preset": "civilian_woman", "age": 0, "build": 0.85, "hair": "bun", "color": "#8a4a4a", "size": 0.74},
+  "boy": {"preset": "civilian_man", "age": 0, "build": 0.85, "facial": "none", "hat": "flatcap", "color": "#5a6a4a", "size": 0.7}
+ }
+}

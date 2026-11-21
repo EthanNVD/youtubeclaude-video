@@ -26,7 +26,7 @@ SET_AMB = {
     # detailed acting sets
     "deck": "amb_sea", "flightdeck": "amb_sea", "bridge": "amb_sea", "hangar": "amb_factory", "radio": "amb_basement",
     "tent": "amb_wind", "airfield": "amb_wind", "corridor": "amb_room", "garden": "amb_wind", "parliament": "amb_crowd",
-    "cell": "amb_basement", "train_interior": "amb_engine", "cockpit": "amb_engine",
+    "cell": "amb_basement", "train_interior": "amb_engine", "cockpit": "amb_engine", "room": "amb_room", "town": "amb_wind",
     "archbridge": "amb_wind", "river": "amb_wind", "polder": "amb_wind", "cabin": "amb_engine", "heath": "amb_wind", "hotel": "amb_wind",
 }
 # extra loop layered on top of the bed for some sets (id, gain dB)

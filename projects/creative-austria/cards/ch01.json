@@ -1,0 +1,127 @@
+{
+ "chapter": "Classroom Two: Austria",
+ "cards": [
+  {"at": "Classroom two sits a short drive away", "recipe": "scene",
+   "says": "The second classroom is in Austria, Hitler's birthplace, where the half-read declaration belongs.",
+   "idea": "The teacher walks into an Austrian classroom with the 1943 declaration and holds it up — only its first half is readable — while the caretaker sweeps at the back.",
+   "where": "classroom_two", "place_id": "classroom_two", "time": "day",
+   "people": [
+     {"who": "teacher", "at": "center_left", "holds": "declaration_half", "do": [{"act": "enter", "from": "left"}, {"act": "show", "with": "declaration_half", "on": "half-read"}]},
+     {"who": "caretaker", "at": "right", "depth": "back", "holds": "broom", "pose": "hold", "mood": "tired", "do": [{"act": "shuffle_to", "to": "center_right", "pose": "hold", "on": "birthplace"}]}],
+   "camera": "wide_then_close", "focus": "teacher", "close_on": "half-read"},
+
+  {"at": "After 1945, Austria's official memory", "recipe": "scene",
+   "says": "After the war Austria's state memory relied only on the first paragraph of the declaration.",
+   "idea": "In a Vienna ministry in 1945 an official reads the first paragraph of the declaration aloud to two colleagues, who nod with relief.",
+   "where": "vienna_ministry", "place_id": "vienna_ministry", "time": "day",
+   "people": [
+     {"who": "official", "at": "center", "depth": "back", "mood": "proud", "do": [{"act": "read", "with": "declaration_half"}, {"act": "say", "on": "official memory"}]},
+     {"who": "official2", "at": "left", "depth": "near", "mood": "neutral", "face": "official"},
+     {"who": "official3", "at": "right", "depth": "near", "mood": "neutral", "face": "official", "do": [{"act": "nod", "on": "paragraph one"}]}],
+   "camera": "push_in"},
+
+  {"at": "annexed, not complicit.", "recipe": "scene",
+   "says": "Austria presented itself as a victim that was taken over, not a partner in the crimes.",
+   "idea": "Close on the official: he lifts the paper like a certificate and smiles — annexed, not complicit.",
+   "where": "vienna_ministry", "place_id": "vienna_ministry", "time": "day",
+   "people": [{"who": "official", "at": "center", "depth": "back", "mood": "smug", "do": [{"act": "show", "with": "declaration_half"}]}],
+   "camera": "medium"},
+
+  {"at": "Studies of Austrian textbooks report", "recipe": "scene",
+   "says": "Research shows that for decades Austrian schoolbooks barely mentioned the Holocaust.",
+   "idea": "A researcher at a table piled with old schoolbooks leafs through one after another and shakes her head — page after page, nothing.",
+   "where": "textbook_archive", "place_id": "textbook_archive",
+   "people": [{"who": "researcher", "at": "center_right", "depth": "mid", "mood": "worried", "do": [{"act": "read", "with": "book"}, {"act": "point_down", "on": "until the"}, {"act": "read", "with": "book", "on": "Holocaust"}, {"act": "shake_head", "on": "hardly appeared"}]}],
+   "things": [{"what": "table", "at": "center_left", "depth": "near"}, {"what": "book", "on": "table", "dx": -110}, {"what": "book", "on": "table", "dx": -60}, {"what": "book", "on": "table", "dx": 60}, {"what": "ledger", "on": "table", "dx": 120, "scale": 0.6}],
+   "camera": "close_then_wide", "focus": "researcher", "wide_on": "1970s"},
+
+  {"at": "and when it did, it could look like", "recipe": "scene",
+   "says": "When textbooks did mention it, the Holocaust was blamed on Hitler alone and on Germany.",
+   "idea": "In a 1960s classroom a teacher at the blackboard points out of the window, toward Germany, while three pupils at their desks follow her finger — the crime came from somewhere else.",
+   "where": "classroom_1960s", "place_id": "classroom_1960s", "time": "day",
+   "people": [
+     {"who": "teacher60s", "at": "center", "depth": "back", "mood": "determined", "face": "right",
+      "do": [{"act": "say", "on": "when it did"}, {"act": "point", "to": "far_left", "on": "brought in"}]},
+     {"who": "pupil_a", "at": "left", "depth": "near", "seated": true, "face": "teacher60s"},
+     {"who": "pupil_b", "at": "center_right", "depth": "near", "seated": true, "face": "teacher60s"},
+     {"who": "pupil_c", "at": "right", "depth": "near", "seated": true, "face": "teacher60s", "do": [{"act": "look_at", "to": "far_left", "on": "Germany"}]}],
+   "things": [{"what": "school_desk", "at": "left", "depth": "front"}, {"what": "school_desk", "at": "center_right", "depth": "front"}, {"what": "school_desk", "at": "right", "depth": "front"}],
+   "camera": "wide_then_close", "focus": "teacher60s", "close_on": "brought in"},
+
+  {"at": "Hang on.", "recipe": "scene",
+   "says": "The teacher objects that Hitler was in fact born in Austria.",
+   "idea": "Back in classroom two the teacher raises a hand — hang on — and the caretaker stops sweeping and looks up.",
+   "where": "classroom_two", "place_id": "classroom_two",
+   "people": [
+     {"who": "teacher", "at": "center_left", "mood": "shocked", "face": "caretaker", "do": [{"act": "stop", "on": "Hang on"}, {"act": "say", "on": "Hang on"}]},
+     {"who": "caretaker", "at": "center_right", "holds": "broom", "pose": "hold", "face": "teacher", "do": [{"act": "look_up", "expr": "neutral", "on": "born"}]}],
+   "camera": "two_shot", "focus": "teacher", "partner": "caretaker"},
+
+  {"at": "Not according to those textbooks", "recipe": "scene",
+   "says": "The caretaker jokes that the old textbooks made Hitler a foreigner who came back with an army.",
+   "idea": "The caretaker, his broom leaning beside him, shrugs and explains the old textbook version, pointing out of the window on 'came back with an army'.",
+   "where": "classroom_two", "place_id": "classroom_two",
+   "people": [
+     {"who": "caretaker", "at": "center_right", "mood": "smug", "face": "teacher",
+      "do": [{"act": "say", "on": "Not according"}, {"act": "palms", "on": "textbooks"}, {"act": "shrug", "on": "moved away"}, {"act": "point", "to": "far_right", "on": "came back"}]},
+     {"who": "teacher", "at": "center_left", "mood": "neutral", "pose": "cross", "face": "caretaker"}],
+   "things": [{"what": "broom", "at": 1330, "depth": "mid", "lift": 264, "scale": 0.62}],
+   "camera": "over_shoulder", "focus": "caretaker", "partner": "teacher"},
+
+  {"at": "The story broke apart in 1986,", "recipe": "scene",
+   "says": "In 1986 that comfortable story began to collapse.",
+   "idea": "On a Vienna street a newsboy shouts and holds up a newspaper with WALDHEIM across it while passers-by turn their heads.",
+   "where": "vienna_street", "place_id": "vienna_street", "time": "day",
+   "people": [{"who": "newsboy", "at": "center", "depth": "near", "mood": "happy", "do": [{"act": "hold_up", "with": "newspaper_1986"}, {"act": "shout", "on": "broke apart"}]}],
+   "crowd": {"kind": "walkers", "n": 3, "who": ["civilian_man", "civilian_woman"], "depth": "back"},
+   "camera": "wide"},
+
+  {"at": "when an international row erupted", "recipe": "scene",
+   "says": "A worldwide scandal broke over the war service Kurt Waldheim had kept quiet while he ran for president.",
+   "idea": "Kurt Waldheim faces a wall of reporters at a press table; flashbulbs go off and he spreads his hands — he knew nothing.",
+   "where": "press_room", "place_id": "press_room",
+   "people": [{"who": "waldheim", "at": "center", "depth": "back", "mood": "nervous", "name_card": true,
+               "do": [{"act": "say", "on": "row erupted"}, {"act": "palms", "on": "hidden war service"}, {"act": "wipe_brow", "on": "running for"}]}],
+   "crowd": {"kind": "listeners", "n": 4, "who": ["reporter", "civilian_man"], "at": "center", "depth": "front", "view": "back"},
+   "things": [{"what": "table", "at": "center", "depth": "mid"}, {"what": "microphone", "on": "table", "dx": -60}, {"what": "microphone", "on": "table", "dx": 60}],
+   "effects": [{"fx": "flash", "at": "left", "depth": "front", "on": "erupted"}, {"fx": "flash", "at": "right", "depth": "front", "on": "Kurt Waldheim"}],
+   "camera": "wide_then_close", "focus": "waldheim", "close_on": "Kurt Waldheim"},
+
+  {"at": "In July 1991, Chancellor Franz Vranitzky", "recipe": "scene",
+   "says": "In 1991 the Chancellor admitted Austria's share of responsibility in parliament.",
+   "idea": "In parliament Chancellor Vranitzky rises from his bench, walks to the lectern in front of the deputies and begins to read.",
+   "where": "parliament", "place_id": "parliament",
+   "people": [{"who": "vranitzky", "at": "right", "depth": "back", "seated": true, "mood": "determined", "name_card": true,
+               "do": [{"act": "stand_up", "on": "stood up"}, {"act": "walk_to", "to": "center", "depth": "back", "on": "in parliament"}, {"act": "read", "with": "paper", "on": "read out"}]}],
+   "crowd": {"kind": "listeners", "n": 4, "who": ["mp_a", "mp_b", "civilian_man"], "at": "center", "depth": "front", "view": "back"},
+   "things": [{"what": "lectern", "at": "center", "depth": "mid"}],
+   "camera": "wide_then_close", "focus": "vranitzky", "close_on": "read out"},
+
+  {"at": "We acknowledge all the deeds of our history,", "recipe": "scene",
+   "says": "Vranitzky said Austria accepts its whole history, good and bad.",
+   "idea": "Close on Vranitzky at the lectern, hand on his heart as he speaks the words Austria had avoided for forty years.",
+   "where": "parliament", "place_id": "parliament",
+   "people": [{"who": "vranitzky", "at": "center", "depth": "back", "mood": "sad", "do": [{"act": "say"}, {"act": "hand_on_heart", "on": "our history"}]}],
+   "things": [{"what": "lectern", "at": "center", "depth": "mid"}],
+   "paper_note": {"lines": ["“We acknowledge all the deeds", "of our history…”"], "kicker": "Franz Vranitzky · Parliament, July 1991", "on": "We acknowledge"},
+   "camera": "medium", "focus": "vranitzky"},
+
+  {"at": "and the deeds of all parts of our people,", "recipe": "scene",
+   "says": "He included the crimes committed by Austrians themselves.",
+   "idea": "The deputies listen in silence: one nods slowly, another lowers her eyes at 'the evil'.",
+   "where": "parliament", "place_id": "parliament",
+   "people": [
+     {"who": "mp_a", "at": "center_left", "depth": "near", "mood": "sad", "face": "right", "do": [{"act": "nod", "on": "all parts"}]},
+     {"who": "mp_b", "at": "center_right", "depth": "near", "mood": "grief", "face": "left", "do": [{"act": "look_down", "on": "evil"}]}],
+   "camera": "two_shot", "focus": "mp_a", "partner": "mp_b"},
+
+  {"at": "And just as we claim the good ones", "recipe": "scene",
+   "says": "Austria finally apologised for its part in the crimes, reading the second paragraph at last.",
+   "idea": "Back in classroom two the teacher holds up the whole declaration, the second paragraph now plain and underlined, and the caretaker nods.",
+   "where": "classroom_two", "place_id": "classroom_two", "revisit": true,
+   "people": [
+     {"who": "teacher", "at": "center_left", "mood": "determined", "do": [{"act": "show", "with": "declaration_full", "on": "apologise"}]},
+     {"who": "caretaker", "at": "center_right", "holds": "broom", "pose": "hold", "face": "teacher", "do": [{"act": "nod", "on": "evil ones"}]}],
+   "camera": "wide_then_close", "focus": "teacher", "close_on": "apologise"}
+ ]
+}

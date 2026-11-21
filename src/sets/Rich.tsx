@@ -943,6 +943,7 @@ const LAMPLIT = new Set(['warroom', 'bunker', 'codebreak', 'classroom']);
 
 /** Soft light and shadow over the set (under the actors): corner falloff, window shafts with dust, lamp dust, floor contact. */
 export const Lighting: React.FC<P> = (p) => {
+  if (p.kind === 'room' || p.kind === 'town') return null; // the kit lights itself (src/sets/Kit.tsx)
   const t = p.t, g = (p.ground as number) ?? 900;
   const mode = (p.light as string) ?? (INTERIOR.has(p.kind) ? 'room' : 'out');
   if (mode === 'none') return null;

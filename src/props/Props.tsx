@@ -392,6 +392,151 @@ export const Prop: React.FC<{ item: string; t: number; color?: string; text?: st
           <path d="M-50 -70 V0 M50 -70 V0" />
         </g>
       );
+    // ---- everyday things for creative scenes (handheld ones are centred, floor ones stand on y = 0) ----
+    case 'bowl': {
+      const steam = on ? 0.45 + 0.2 * Math.sin(t * 3) : 0;
+      return (
+        <g>
+          <path d="M-62 -18 Q-58 34 0 38 Q58 34 62 -18 Z" fill={color ?? '#e9dcc2'} stroke={INK} strokeWidth={4} />
+          <ellipse cx={0} cy={-18} rx={62} ry={14} fill={value === 0 ? '#d8ccb4' : '#b99a62'} stroke={INK} strokeWidth={3} />
+          {steam ? <path d="M-20 -40 q-12 -20 4 -42 M16 -40 q10 -22 -4 -46" stroke="#fff" strokeWidth={5} opacity={steam} fill="none" strokeLinecap="round" /> : null}
+        </g>
+      );
+    }
+    case 'pot': {
+      const steam = on === false ? 0 : 0.4 + 0.2 * Math.sin(t * 2.6);
+      return (
+        <g transform="translate(0 -26)">
+          <path d="M-70 -70 H70 V0 Q70 26 44 26 H-44 Q-70 26 -70 0 Z" fill={color ?? '#4a4a50'} stroke={INK} strokeWidth={4} />
+          <ellipse cx={0} cy={-70} rx={74} ry={14} fill="#2a2a2e" stroke={INK} strokeWidth={3} />
+          <path d="M-70 -52 h-24 M70 -52 h24" stroke={INK} strokeWidth={9} strokeLinecap="round" />
+          {steam ? <path d={`M-24 -90 q-16 -30 6 -60 q14 -20 0 -44 M22 -92 q14 -26 -4 -52`} stroke="#fff" strokeWidth={7} opacity={steam} fill="none" strokeLinecap="round" /> : null}
+        </g>
+      );
+    }
+    case 'bread':
+      return (
+        <g>
+          <path d="M-64 0 Q-70 -46 -20 -50 Q0 -56 20 -50 Q70 -46 64 0 Z" fill={color ?? '#c98a42'} stroke={INK} strokeWidth={4} />
+          <path d="M-34 -36 l12 -10 M-6 -40 l12 -10 M22 -36 l12 -10" stroke="#8a5a2a" strokeWidth={4} strokeLinecap="round" />
+        </g>
+      );
+    case 'spoon':
+      return <g><line x1={0} y1={44} x2={0} y2={-12} stroke="#9a9a9a" strokeWidth={8} strokeLinecap="round" /><ellipse cx={0} cy={-26} rx={12} ry={17} fill="#b8b8b8" stroke={INK} strokeWidth={3} /></g>;
+    case 'plate':
+      return <g><ellipse cx={0} cy={-8} rx={64} ry={15} fill="#f2ede2" stroke={INK} strokeWidth={4} /><ellipse cx={0} cy={-9} rx={38} ry={8} fill="none" stroke="#6a8ab0" strokeWidth={2.5} /></g>;
+    case 'cup':
+      return <g><path d="M-26 0 V-56 H26 V0 Z" fill={color ?? '#f2ede2'} stroke={INK} strokeWidth={4} /><path d="M26 -44 q22 0 22 16 q0 16 -22 16" fill="none" stroke={INK} strokeWidth={5} /></g>;
+    case 'bottle':
+      return <path d="M-18 0 V-70 Q-18 -86 -7 -92 V-118 H7 V-92 Q18 -86 18 -70 V0 Z" fill={color ?? '#3f6a3a'} stroke={INK} strokeWidth={4} />;
+    case 'jug':
+      return <g><path d="M-40 0 Q-52 -60 -30 -100 L-34 -120 H30 L26 -100 Q52 -60 40 0 Z" fill={color ?? '#c9a27a'} stroke={INK} strokeWidth={4} /><path d="M36 -94 q34 10 20 50" fill="none" stroke={INK} strokeWidth={6} /></g>;
+    case 'sack':
+      return (
+        <g>
+          <path d="M-60 0 Q-74 -70 -46 -112 L-30 -124 Q0 -116 30 -124 L46 -112 Q74 -70 60 0 Z" fill={color ?? '#cdb892'} stroke={INK} strokeWidth={4} />
+          <path d="M-30 -124 Q0 -140 30 -124" stroke="#8a6a3a" strokeWidth={6} fill="none" />
+          {text ? <text x={0} y={-48} textAnchor="middle" fontFamily={FONT.cond} fontWeight={700} fontSize={text.length > 6 ? 20 : 26} fill="#5a3a1a">{text.toUpperCase()}</text> : null}
+        </g>
+      );
+    case 'bale':
+      return (
+        <g>
+          <rect x={-80} y={-120} width={160} height={120} rx={14} fill={color ?? '#efe9dc'} stroke={INK} strokeWidth={4} />
+          <path d="M-80 -84 H80 M-80 -36 H80" stroke="#6a4a2a" strokeWidth={6} />
+          {text ? <text x={0} y={-52} textAnchor="middle" fontFamily={FONT.cond} fontWeight={700} fontSize={text.length > 8 ? 18 : 24} fill="#5a3a1a">{text.toUpperCase()}</text> : null}
+        </g>
+      );
+    case 'ingots':
+      return <g>{[[-50, 0], [10, 0], [-20, -26], [40, -26]].map(([x, y], i) => <path key={i} d={`M${x - 36} ${y} L${x - 28} ${y - 24} H${x + 28} L${x + 36} ${y} Z`} fill={color ?? '#c8743a'} stroke={INK} strokeWidth={3} />)}</g>;
+    case 'basket':
+      return (
+        <g>
+          <path d="M-60 -10 Q-56 -60 0 -62 Q56 -60 60 -10" fill="none" stroke="#8a5a32" strokeWidth={8} />
+          {value ? [-30, 0, 30].map((x, i) => <circle key={i} cx={x} cy={-12 - (i % 2) * 8} r={20} fill="#efe6d6" stroke={INK} strokeWidth={3} />) : null}
+          <path d="M-62 -10 L-50 30 H50 L62 -10 Z" fill="#b88a52" stroke={INK} strokeWidth={4} />
+          <path d="M-56 2 H56 M-52 16 H52" stroke="#8a5a32" strokeWidth={3} />
+        </g>
+      );
+    case 'card':
+      return (
+        <g>
+          <rect x={-62} y={-86} width={124} height={172} fill={color ?? '#e9dfb8'} stroke={INK} strokeWidth={4} />
+          <rect x={-62} y={-86} width={124} height={36} fill="#8a3a2e" />
+          <text x={0} y={-61} textAnchor="middle" fontFamily={FONT.cond} fontWeight={700} fontSize={(text ?? 'BROTKARTE').length > 10 ? 14 : 18} fill="#fff">{(text ?? 'BROTKARTE').toUpperCase()}</text>
+          {Array.from({ length: 12 }, (_, i) => <rect key={i} x={-54 + (i % 3) * 37} y={-42 + Math.floor(i / 3) * 31} width={32} height={26} fill="none" stroke="#8a6a3a" strokeWidth={2} strokeDasharray="4 3" />)}
+        </g>
+      );
+    case 'letter':
+      return <g><rect x={-70} y={-46} width={140} height={92} fill={color ?? '#f2ead8'} stroke={INK} strokeWidth={4} /><path d="M-70 -46 L0 8 L70 -46" fill="none" stroke={INK} strokeWidth={3} /><rect x={36} y={-38} width={24} height={28} fill="#b8392e" /></g>;
+    case 'bucket':
+      return <g><path d="M-44 -90 L-36 0 H36 L44 -90 Z" fill={color ?? '#8a8a8a'} stroke={INK} strokeWidth={4} /><path d="M-44 -90 Q0 -150 44 -90" fill="none" stroke={INK} strokeWidth={4} /></g>;
+    case 'lantern': {
+      const fl = 0.8 + Math.sin(t * 11) * 0.1;
+      return (
+        <g>
+          <ellipse cx={0} cy={-10} rx={150} ry={150} fill="#ffcf6a" opacity={0.12 * fl} />
+          <path d="M-20 -70 Q0 -96 20 -70" fill="none" stroke={INK} strokeWidth={5} />
+          <rect x={-30} y={-70} width={60} height={86} rx={8} fill="#ffe49a" opacity={fl} stroke={INK} strokeWidth={4} />
+          <path d="M-30 -40 H30 M-10 -70 V16 M10 -70 V16" stroke={INK} strokeWidth={3} />
+          <rect x={-36} y={16} width={72} height={14} fill="#3a3a3a" stroke={INK} strokeWidth={3} />
+        </g>
+      );
+    }
+    case 'baby':
+      return <g><ellipse cx={0} cy={0} rx={62} ry={40} fill={color ?? '#e9e2d0'} stroke={INK} strokeWidth={4} /><circle cx={-34} cy={-8} r={24} fill="#f2c9a8" stroke={INK} strokeWidth={3} /><path d="M-40 -10 h4 M-30 -10 h4" stroke={INK} strokeWidth={2.5} /></g>;
+    case 'potatoes':
+      return <g>{Array.from({ length: Math.round(value ?? 6) }, (_, i) => <ellipse key={i} cx={-70 + (i % 4) * 46 + (Math.floor(i / 4) % 2) * 22} cy={-16 - Math.floor(i / 4) * 24} rx={26} ry={18} fill={color ?? '#b98a52'} stroke={INK} strokeWidth={3} />)}</g>;
+    case 'turnips':
+      return (
+        <g>
+          {Array.from({ length: Math.round(value ?? 5) }, (_, i) => {
+            const x = -80 + (i % 4) * 52 + (Math.floor(i / 4) % 2) * 26, y = -28 - Math.floor(i / 4) * 34;
+            return <g key={i} transform={`translate(${x} ${y}) scale(0.55)`}><path d="M0 -50 C-46 -50 -54 -6 -30 18 C-18 30 -6 34 0 52 C6 34 18 30 30 18 C54 -6 46 -50 0 -50 Z" fill="#efe6d6" stroke={INK} strokeWidth={6} /><path d="M-40 -24 C-30 -46 30 -46 40 -24 C24 -34 -24 -34 -40 -24 Z" fill="#9a5a9a" opacity={0.85} /></g>;
+          })}
+        </g>
+      );
+    case 'counter':
+      return (
+        <g>
+          <rect x={-290} y={-112} width={580} height={112} fill={color ?? '#8a5a32'} stroke={INK} strokeWidth={4} />
+          <rect x={-306} y={-126} width={612} height={20} fill="#b88a52" stroke={INK} strokeWidth={4} />
+          {[-190, 0, 190].map((x) => <rect key={x} x={x - 80} y={-92} width={160} height={74} fill="none" stroke="#000" opacity={0.18} strokeWidth={5} />)}
+          {text ? <text x={0} y={-44} textAnchor="middle" fontFamily={FONT.cond} fontWeight={700} fontSize={30} fill="#f2e6c8">{text.toUpperCase()}</text> : null}
+        </g>
+      );
+    case 'bench':
+      return <g fill={C.wood} stroke={INK} strokeWidth={4}><rect x={-150} y={-62} width={300} height={18} /><path d="M-130 -44 V0 M130 -44 V0" strokeWidth={12} /></g>;
+    case 'stool':
+      return <g fill={C.wood} stroke={INK} strokeWidth={4}><ellipse cx={0} cy={-72} rx={40} ry={10} /><path d="M-30 -66 L-38 0 M30 -66 L38 0 M0 -66 V0" strokeWidth={8} /></g>;
+    case 'stove': {
+      const glow = on === false ? 0 : 0.6 + 0.25 * Math.sin(t * 6.3);
+      return (
+        <g>
+          <rect x={40} y={-470} width={30} height={330} fill="#3a3a3a" stroke={INK} strokeWidth={4} />
+          <rect x={-90} y={-150} width={180} height={150} rx={8} fill="#3c3c40" stroke={INK} strokeWidth={5} />
+          <rect x={-98} y={-160} width={196} height={18} fill="#2a2a2e" stroke={INK} strokeWidth={4} />
+          <rect x={-54} y={-110} width={108} height={64} rx={6} fill={glow ? '#ff8a2a' : '#2a2a2a'} opacity={glow || 1} stroke={INK} strokeWidth={4} />
+          {glow ? <ellipse cx={0} cy={-60} rx={150} ry={80} fill="#ffb060" opacity={0.14 * glow} /> : null}
+          <path d="M-74 0 v14 M74 0 v14" stroke={INK} strokeWidth={8} />
+        </g>
+      );
+    }
+    case 'cart':
+      return (
+        <g>
+          <path d="M-130 -100 H130 L118 -48 H-118 Z" fill={color ?? '#8a5a32'} stroke={INK} strokeWidth={4} />
+          <path d="M130 -80 L240 -46" stroke="#5a3e2a" strokeWidth={10} strokeLinecap="round" />
+          {[-74, 74].map((x) => <g key={x}><circle cx={x} cy={-38} r={38} fill="none" stroke="#3a2a1a" strokeWidth={8} /><path d={`M${x - 38} -38 H${x + 38} M${x} -76 V0`} stroke="#3a2a1a" strokeWidth={4} /></g>)}
+          {value ? <g transform="translate(0 -110) scale(0.9)">{[-70, -20, 30, 80].map((x, i) => <path key={i} transform={`translate(${x} ${-(i % 2) * 18})`} d="M-30 0 Q-36 -36 -20 -54 Q0 -60 20 -54 Q36 -36 30 0 Z" fill="#cdb892" stroke={INK} strokeWidth={3} />)}</g> : null}
+        </g>
+      );
+    case 'scale':
+      return <g><rect x={-60} y={-20} width={120} height={20} fill="#6a6a6a" stroke={INK} strokeWidth={3} /><path d="M0 -20 V-110 M-70 -100 H70" stroke={INK} strokeWidth={6} /><path d="M-90 -100 L-70 -60 L-50 -100 M50 -100 L70 -60 L90 -100" fill="none" stroke={INK} strokeWidth={3} /><ellipse cx={-70} cy={-60} rx={28} ry={7} fill="#c9a24a" stroke={INK} strokeWidth={3} /><ellipse cx={70} cy={-60} rx={28} ry={7} fill="#c9a24a" stroke={INK} strokeWidth={3} /></g>;
+    case 'cards':
+      return <g>{[-18, 0, 18].map((a, i) => <g key={i} transform={`rotate(${a}) translate(0 -10)`}><rect x={-22} y={-62} width={44} height={62} rx={5} fill="#fbf8f0" stroke={INK} strokeWidth={3} /><text x={0} y={-24} textAnchor="middle" fontSize={22} fill={i === 1 ? '#b8392e' : INK}>{['♠', '♥', '♣'][i]}</text></g>)}</g>;
+    case 'knife':
+      return <g><rect x={-6} y={0} width={12} height={40} rx={4} fill="#5a3e2a" stroke={INK} strokeWidth={2.5} /><path d="M-6 0 L-6 -56 Q8 -40 6 0 Z" fill="#cfd4d8" stroke={INK} strokeWidth={2.5} /></g>;
     case 'table':
       return (
         <g fill={C.woodLight} stroke={INK} strokeWidth={4}>

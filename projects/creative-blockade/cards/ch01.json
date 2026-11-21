@@ -1,0 +1,208 @@
+{
+ "chapter": "The Crack in the Glass",
+ "cards": [
+  {"at": "Germany fed its people", "recipe": "scene",
+   "says": "Before the war Germany lived on what ships brought in.",
+   "idea": "Dawn on the Hamburg quay: a freighter lies alongside, dockers carry sacks ashore past a foreman who waves them on toward the town — the country is fed through this gate.",
+   "where": "hamburg_quay", "place_id": "hamburg_quay", "time": "dawn",
+   "people": [
+     {"who": "foreman", "at": "center_right", "depth": "near", "mood": "determined", "face": "left",
+      "do": [{"act": "beckon", "on": "fed its people"}, {"act": "point", "to": "far_left", "on": "factories"}]},
+     {"who": "docker", "at": "right", "depth": "mid", "holds": "sack", "do": [{"act": "walk_to", "to": "far_left"}]},
+     {"who": "docker2", "at": "far_right", "depth": "back", "holds": "sack", "do": [{"act": "walk_to", "to": "center_left", "on": "people"}]}],
+   "vehicles": [{"type": "freighter", "nation": "GER", "at": "center_left", "depth": 760}],
+   "camera": "pan"},
+
+  {"at": "Before the war, more than half", "recipe": "scene",
+   "says": "Most of what came in was raw material for German industry.",
+   "idea": "Inside a dock warehouse stacked to the rafters, a clerk counts the stacks in his ledger while a docker sets down one more crate and wipes his brow.",
+   "where": "hamburg_warehouse", "place_id": "hamburg_warehouse",
+   "people": [
+     {"who": "clerk", "at": "center_right", "depth": "near", "mood": "neutral", "do": [{"act": "read", "with": "ledger"}, {"act": "count", "on": "more than half"}, {"act": "read", "with": "ledger", "on": "raw material"}]},
+     {"who": "docker", "at": "left", "depth": "mid", "do": [{"act": "carry", "with": "crate"}, {"act": "wipe_brow", "on": "raw material"}]}],
+   "things": [{"what": "crate", "at": "center_left", "depth": "back"}, {"what": "sack", "at": "far_left", "depth": "near"}],
+   "camera": "push_in"},
+
+  {"at": "cotton and wool", "recipe": "scene",
+   "says": "Cotton, wool, hides, metals, oil, rubber and saltpetre all came from abroad.",
+   "idea": "Back on the quay the cargo lands as it is named — a bale of cotton, wool, hides, copper bars, an oil drum, rubber, a sack of saltpetre — while the foreman ticks each one off.",
+   "where": "hamburg_quay", "time": "day",
+   "people": [
+     {"who": "foreman", "at": "right", "depth": "near", "face": "left", "do": [{"act": "write", "with": "ledger"}, {"act": "point", "to": "center", "on": "saltpetre"}]},
+     {"who": "docker2", "at": "center", "depth": "back", "holds": "sack", "do": [{"act": "walk_to", "to": "far_left", "on": "copper"}]}],
+   "things": [
+     {"what": "bale", "text": "COTTON", "at": 330, "depth": "mid", "appear": "cotton"},
+     {"what": "bale", "text": "WOOL", "color": "#f2ede0", "at": 520, "depth": "near", "appear": "wool"},
+     {"what": "bale", "text": "HIDES", "color": "#a8784a", "at": 700, "depth": "mid", "appear": "hides"},
+     {"what": "ingots", "at": 860, "depth": "near", "appear": "copper"},
+     {"what": "oil", "at": 1020, "depth": "mid", "appear": "oil"},
+     {"what": "bale", "text": "RUBBER", "color": "#4a4440", "at": 1180, "depth": "near", "appear": "rubber"},
+     {"what": "sack", "text": "SALPETER", "at": 1350, "depth": "mid", "appear": "saltpetre"}],
+   "camera": [{"frame": "wide", "zoom": 1.25, "push": 0.0}, {"on": "rubber", "frame": "wide", "zoom": 1.05, "push": 0.03}]},
+
+  {"at": "Much of its food", "recipe": "scene",
+   "says": "A lot of Germany's food was imported too.",
+   "idea": "In a Hamburg grocer's full of foreign tins, the grocer reaches up to a shelf for a customer who points at the coffee — food from across the sea.",
+   "where": "kolonialwaren", "place_id": "kolonialwaren",
+   "people": [
+     {"who": "grocer", "at": "center_right", "depth": "back", "mood": "happy", "do": [{"act": "reach_up", "on": "food"}, {"act": "show", "with": "bread", "on": "abroad"}]},
+     {"who": "housewife", "at": "center_left", "depth": "front", "holds": "basket", "mood": "happy", "face": "right"}],
+   "things": [{"what": "counter", "at": "center", "depth": "mid"}, {"what": "scale", "on": "counter", "dx": -180}, {"what": "bread", "on": "counter", "dx": 160}],
+   "camera": "wide"},
+
+  {"at": "And most of the world's sea lanes", "recipe": "map_route",
+   "says": "The busy sea routes to Germany all passed close to Britain.",
+   "side": "german", "route": ["Western Approaches", "Dover Strait", "Hamburg"], "icon": "freighter", "count": 5},
+
+  {"at": "The British had decided", "recipe": "scene",
+   "says": "Britain planned before the war how to use its position across Germany's sea routes.",
+   "idea": "At the Admiralty an admiral taps the North Sea on the great wall chart while an older admiral listens, hands behind his back, and slowly nods — the plan is made long before the war.",
+   "where": "admiralty", "place_id": "admiralty", "time": "day",
+   "people": [
+     {"who": "admiral", "at": "center_left", "depth": "back", "mood": "determined", "face": "right",
+      "do": [{"act": "point", "to": "center", "on": "decided"}, {"act": "say", "on": "how they would use", "till": "even started"}]},
+     {"who": "admiral2", "at": "right", "depth": "near", "mood": "neutral", "pose": "behind", "face": "admiral", "do": [{"act": "nod", "on": "geography"}]}],
+   "camera": "over_shoulder", "focus": "admiral", "partner": "admiral2"},
+
+  {"at": "By July 1914", "recipe": "scene",
+   "says": "By July 1914 the plan was a distant blockade.",
+   "idea": "Same room at dusk: a young staff officer hands the admiral the finished war plan; he reads it and looks up — a distant blockade.",
+   "where": "admiralty", "place_id": "admiralty", "time": "dusk",
+   "people": [
+     {"who": "staff_officer", "at": "center_left", "depth": "mid", "holds": "folder", "do": [{"act": "give", "to": "admiral", "with": "folder", "on": "July"}]},
+     {"who": "admiral", "at": "center_right", "depth": "mid", "mood": "determined", "do": [{"act": "read", "with": "folder", "on": "settled"}, {"act": "look_up", "expr": "determined", "on": "distant blockade"}]}],
+   "paper_note": {"lines": ["A distant blockade."], "kicker": "Admiralty war plan · July 1914", "on": "distant blockade"},
+   "camera": "wide_then_close", "focus": "admiral", "close_on": "what they called"},
+
+  {"at": "The Royal Navy didn't need", "recipe": "scene",
+   "says": "Britain did not have to attack German ports; it could just shut the exits to the ocean.",
+   "idea": "In Wilhelmshaven a German naval officer watches the empty sea through binoculars while his sailors wait by the guns — no enemy ever comes; on 'closed the doors' he lowers the glasses, puzzled.",
+   "where": "wilhelmshaven", "place_id": "wilhelmshaven", "time": "day",
+   "people": [
+     {"who": "de_officer", "at": "center_right", "depth": "near", "face": "right", "do": [{"act": "binoculars"}, {"act": "scratch_head", "on": "closed the doors"}]},
+     {"who": "de_sailor", "at": "left", "depth": "mid", "mood": "tired", "pose": "pockets", "face": "right"},
+     {"who": "de_sailor", "id": "sailor2", "at": "center_left", "depth": "back", "mood": "tired", "seated": true, "face": "right"}],
+   "vehicles": [{"type": "battleship", "nation": "GER", "at": "center", "depth": 770}],
+   "camera": "push_in"},
+
+  {"at": "Ships patrolled the narrow English Channel", "recipe": "scene",
+   "says": "British warships kept watch on the narrow Channel.",
+   "idea": "On the rain-lashed bridge of a British cruiser in the Channel an officer sweeps the sea with binoculars while a sailor reports and points out to starboard.",
+   "where": "channel_bridge", "place_id": "channel_bridge", "weather": "rain",
+   "people": [
+     {"who": "staff_officer", "id": "rn_officer", "at": "center", "depth": "mid", "do": [{"act": "binoculars"}]},
+     {"who": "rn_sailor", "at": "right", "depth": "near", "face": "rn_officer", "do": [{"act": "say", "on": "patrolled"}, {"act": "point", "to": "far_right", "on": "English"}]}],
+   "camera": "medium", "focus": "rn_officer"},
+
+  {"at": "and the Northern Patrol shut the gap", "recipe": "scene",
+   "says": "In the north, a line of cruisers closed the sea between Scotland and Norway.",
+   "idea": "A line of grey cruisers ploughs through a heavy northern sea at dusk, one behind the other, closing the way out.",
+   "where": "northern_sea", "place_id": "northern_sea", "time": "dusk", "weather": "rain",
+   "vehicles": [{"type": "cruiser", "nation": "UK", "at": "far_left", "depth": 690, "to": "center_left", "scale": 0.4},
+                {"type": "cruiser", "nation": "UK", "at": "center", "depth": 660, "to": "center_right", "scale": 0.3},
+                {"type": "cruiser", "nation": "UK", "at": "right", "depth": 640, "to": "far_right", "scale": 0.22}],
+   "camera": "wide"},
+
+  {"at": "of about two hundred and fifty kilometres", "recipe": "map_front",
+   "says": "The patrol line ran about 250 km from Shetland to Norway.",
+   "side": "british", "line": ["Shetland", "Northern Patrol line", "Bergen"], "show": ["Scapa Flow"]},
+
+  {"at": "with the Grand Fleet waiting behind", "recipe": "scene",
+   "says": "The main British battle fleet waited in reserve at Scapa Flow.",
+   "idea": "On the shore at Scapa Flow two bored sailors play cards on a crate while the Grand Fleet rides at anchor behind them — waiting.",
+   "where": "scapa_shore", "place_id": "scapa_shore", "time": "day",
+   "people": [
+     {"who": "rn_sailor", "at": "center_left", "depth": "near", "seated": true, "mood": "tired", "face": "right", "do": [{"act": "hold", "with": "cards"}]},
+     {"who": "rn_sailor", "id": "sailor_b", "at": "center_right", "depth": "near", "seated": true, "mood": "smug", "face": "left", "do": [{"act": "hold", "with": "cards"}, {"act": "laugh", "on": "Scapa"}]}],
+   "things": [{"what": "crate", "at": "center", "depth": "near", "scale": 0.8}],
+   "vehicles": [{"type": "battleship", "nation": "UK", "at": "center_left", "depth": 600, "scale": 0.3}, {"type": "battleship", "nation": "UK", "at": "far_right", "depth": 585, "scale": 0.22}],
+   "camera": "wide"},
+
+  {"at": "On the 2nd of November", "recipe": "scene",
+   "says": "From November 1914 every ship crossing the North Sea entered a declared war zone.",
+   "idea": "In a Shetland pub the publican reads the Admiralty notice aloud from the newspaper while fishermen at the bar listen; the old skipper shakes his head — their sea is now a war zone.",
+   "where": "lerwick_pub", "place_id": "lerwick_pub", "time": "night",
+   "people": [
+     {"who": "publican", "at": "center", "depth": "back", "do": [{"act": "read", "with": "paper"}, {"act": "say", "on": "Britain declared", "till": "military area"}]},
+     {"who": "fisherman", "at": "center_right", "depth": "near", "mood": "worried", "do": [{"act": "shake_head", "on": "military area"}]},
+     {"who": "docker", "id": "fisher2", "at": "left", "depth": "mid", "mood": "worried", "do": [{"act": "drink", "on": "November"}]}],
+   "paper_note": {"lines": ["The whole North Sea", "is a military area."], "kicker": "Admiralty notice · 2 November 1914", "on": "declared"},
+   "camera": "wide_then_close", "focus": "fisherman", "close_on": "military area"},
+
+  {"at": "From March 1915", "recipe": "scene",
+   "says": "From 1915 Britain seized any cargo it thought was going to Germany.",
+   "idea": "On the customs quay at Kirkwall a British officer reads a neutral ship's manifest while sailors carry off crates stamped HAMBURG; the Dutch captain throws up his hands.",
+   "where": "kirkwall_quay", "place_id": "kirkwall_quay", "time": "day",
+   "people": [
+     {"who": "staff_officer", "id": "rn_officer", "at": "center_left", "depth": "mid", "mood": "determined", "do": [{"act": "read", "with": "paper"}, {"act": "point", "to": "right", "on": "seize"}]},
+     {"who": "captain", "at": "center_right", "depth": "near", "mood": "angry", "face": "rn_officer", "do": [{"act": "palms", "on": "any cargo"}, {"act": "say", "on": "believed", "till": "Germany"}]},
+     {"who": "rn_sailor", "at": "center", "depth": "back", "holds": "crate", "do": [{"act": "exit", "to": "right", "on": "cargo"}]}],
+   "things": [{"what": "crate", "text": "HAMBURG", "at": "left", "depth": "near"}],
+   "camera": "wide_then_close", "focus": "captain", "close_on": "believed"},
+
+  {"at": "It leaked, at first.", "recipe": "scene",
+   "says": "At first goods still slipped through via neutral countries next door.",
+   "idea": "A busy Rotterdam street: a docker hauls another sack from a loaded hand cart to a merchant's door, and the stout merchant rubs his hands — the neutral ports are booming.",
+   "where": "rotterdam_street", "place_id": "rotterdam_street", "time": "day",
+   "people": [
+     {"who": "merchant", "at": "center_right", "depth": "mid", "mood": "smug", "face": "left", "do": [{"act": "rub_hands", "on": "leaked"}, {"act": "beckon", "on": "Netherlands"}]},
+     {"who": "docker", "at": "left", "depth": "near", "holds": "sack", "do": [{"act": "walk_to", "to": "merchant", "on": "Neutral"}]}],
+   "things": [{"what": "cart", "at": "far_left", "depth": "near", "n": 1}],
+   "crowd": {"kind": "walkers", "n": 3, "who": ["dutch_civilian", "dutch_woman"], "depth": "back"},
+   "camera": "wide"},
+
+  {"at": "suddenly started importing", "recipe": "scene",
+   "says": "The neutrals bought far more from America and sold it on to Germany.",
+   "idea": "Same Rotterdam street at night: at the merchant's door a nervous German buyer takes a crate and counts out coins — what came from America goes on to Germany.",
+   "where": "rotterdam_street", "place_id": "rotterdam_street", "time": "night",
+   "people": [
+     {"who": "merchant", "at": "center_left", "depth": "mid", "mood": "smug", "holds": "crate", "do": [{"act": "give", "to": "buyer", "with": "crate", "on": "selling"}]},
+     {"who": "buyer", "at": "center_right", "depth": "mid", "mood": "nervous", "do": [{"act": "look_around", "on": "importing"}, {"act": "count", "on": "America"}]}],
+   "camera": "wide_then_close", "focus": "buyer", "close_on": "selling"},
+
+  {"at": "But by 1915, Germany's imports", "recipe": "scene",
+   "says": "Even so, by 1915 Germany's imports had fallen by more than half.",
+   "idea": "The Hamburg warehouse again, now half empty: the same clerk stands among the few sacks left, runs his finger down the ledger and shakes his head while a docker sits idle.",
+   "where": {"room": "warehouse", "items": ["door:open", "barrels"], "light": "dim"}, "place_id": "hamburg_warehouse", "time": "dusk",
+   "tag": "Hamburg · 1915", "revisit": true,
+   "people": [
+     {"who": "clerk", "at": "center_right", "depth": "near", "mood": "worried", "do": [{"act": "read", "with": "ledger"}, {"act": "shake_head", "on": "more than half"}, {"act": "sigh", "on": "pre-war"}]},
+     {"who": "docker", "at": "left", "depth": "back", "seated": true, "mood": "tired"}],
+   "things": [{"what": "sack", "at": "center", "depth": "back"}],
+   "camera": "close_then_wide", "focus": "clerk", "wide_on": "more than half"},
+
+  {"at": "Then came a bad harvest.", "recipe": "scene",
+   "says": "A failed potato harvest in 1916 made the hunger worse.",
+   "idea": "In a grey field in the rain a farmer kneels by a heap of rotten black potatoes and puts his hands to his head; his wife stands behind with an empty basket.",
+   "where": "rotten_field", "place_id": "rotten_field", "time": "dusk", "weather": "rain",
+   "people": [
+     {"who": "farmer", "at": "center_left", "depth": "near", "kneel": true, "mood": "sad", "do": [{"act": "look_down"}, {"act": "despair", "on": "rotted"}]},
+     {"who": "farmer_wife", "at": "center_right", "depth": "back", "mood": "grief", "holds": "basket", "do": [{"act": "shake_head", "on": "winter"}]}],
+   "things": [{"what": "potatoes", "at": "center", "depth": "front", "color": "#4a3e2e", "n": 8}],
+   "camera": "wide_then_close", "focus": "farmer", "close_on": "rotted"},
+
+  {"at": "and Germans got through it", "recipe": "scene",
+   "says": "Germans survived the winter by eating turnips.",
+   "idea": "A Berlin kitchen by candlelight: a mother drops a turnip into the pot on the stove while her two children wait at the bare table.",
+   "where": "mueller_kitchen", "place_id": "mueller_kitchen", "time": "night", "weather": "snow",
+   "people": [
+     {"who": "mother", "at": "center_right", "depth": "mid", "mood": "worried", "do": [{"act": "show", "with": "turnip"}, {"act": "stir", "on": "turnips"}]},
+     {"who": "girl", "at": "left", "depth": "near", "size": 0.74, "seated": true, "mood": "hungry", "face": "mother"},
+     {"who": "boy", "at": "center_left", "depth": "near", "size": 0.7, "seated": true, "mood": "hungry", "face": "mother"}],
+   "things": [{"what": "stove", "at": 1360, "depth": "mid"}, {"what": "pot", "on": "stove", "dx": -40},
+              {"what": "table", "at": 560, "depth": "front"}, {"what": "plate", "on": "table", "dx": -110}, {"what": "plate", "on": "table", "dx": 110}],
+   "camera": "wide"},
+
+  {"at": "They still call it the Turnip Winter.", "recipe": "scene",
+   "says": "Germans still remember it as the Turnip Winter.",
+   "idea": "Close on a plate with one boiled turnip, then out to the family at the table: the girl looks up at her mother, who lays a hand on her heart.",
+   "where": "mueller_kitchen", "place_id": "mueller_kitchen", "time": "night", "weather": "snow",
+   "people": [
+     {"who": "girl", "at": "left", "depth": "near", "size": 0.74, "seated": true, "mood": "hungry", "face": "mother", "do": [{"act": "look_at", "to": "mother", "on": "Turnip"}]},
+     {"who": "boy", "at": "center_left", "depth": "near", "size": 0.7, "seated": true, "mood": "sad", "face": "mother"},
+     {"who": "mother", "at": "center_right", "depth": "mid", "mood": "sad", "face": "girl", "do": [{"act": "hand_on_heart", "on": "Winter"}]}],
+   "things": [{"what": "table", "at": 560, "depth": "front"}, {"what": "plate", "id": "plate", "on": "table", "dx": -110},
+              {"what": "turnip", "on": "table", "dx": -110, "scale": 0.8}, {"what": "plate", "on": "table", "dx": 110}, {"what": "candle", "on": "table", "dx": 0}],
+   "camera": "detail_then_wide", "detail": "plate", "wide_on": "Turnip Winter"}
+ ]
+}

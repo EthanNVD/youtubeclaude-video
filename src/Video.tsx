@@ -20,6 +20,16 @@ const findScene = (scenes: Scene[], T: number) => {
   return ans;
 };
 
+/** film looks (meta.grade, from cards/_film.json "look": {"grade": ...}) — each film can have its own colour */
+const GRADES: Record<string, string | undefined> = {
+  film: 'saturate(0.8) sepia(0.24) contrast(1.1) brightness(0.95)',
+  warm: 'saturate(0.88) sepia(0.34) contrast(1.08) brightness(0.96)',
+  cold: 'saturate(0.72) sepia(0.1) hue-rotate(-10deg) contrast(1.1) brightness(0.95)',
+  bleak: 'saturate(0.55) sepia(0.18) contrast(1.14) brightness(0.93)',
+  sepia: 'saturate(0.6) sepia(0.55) contrast(1.08) brightness(0.95)',
+  vivid: 'saturate(0.95) sepia(0.12) contrast(1.06) brightness(0.98)',
+  none: undefined,
+};
 const SD = 0.6; // shot dissolve duration (s) — the reference films reframe inside a place with 0.4-0.9 s dissolves, not hard cuts
 
 const SceneLayer: React.FC<{ scene: Scene; t: number; plan: Plan; shotPick?: number; noHud?: boolean; style?: React.CSSProperties }> = ({ scene, t, plan, shotPick, noHud, style }) => (
@@ -85,7 +95,7 @@ export const Video: React.FC<VideoProps> = ({ plan }) => {
   return (
     <AbsoluteFill style={{ background: '#111' }}>
       {/* film grade: warm, slightly desaturated (meta.grade: 'film' default | 'none') — strong warm grade like the reference */}
-      <AbsoluteFill style={{ filter: plan.meta.grade === 'none' ? undefined : 'saturate(0.8) sepia(0.24) contrast(1.1) brightness(0.95)' }}>{content}</AbsoluteFill>
+      <AbsoluteFill style={{ filter: GRADES[plan.meta.grade ?? 'film'] ?? GRADES.film }}>{content}</AbsoluteFill>
       {tr === 'flash' && t < 0.25 ? <AbsoluteFill style={{ background: '#fff', opacity: 1 - t / 0.25 }} /> : null}
       {grain > 0 ? (
         <AbsoluteFill style={{ mixBlendMode: 'multiply', opacity: grain * 0.55, pointerEvents: 'none' }}>

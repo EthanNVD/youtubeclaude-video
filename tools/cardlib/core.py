@@ -164,6 +164,7 @@ class Card:
         self.cast = film.get("cast", {})
         self.era = raw.get("era") or film.get("era", "ww2")
         self.recipe = RECIPES[raw["recipe"]]
+        self.warns = []  # recipe warnings (unknown acts, things...): reported by the compiler
 
     # -- parameters
     def p(self, name, default=None):
@@ -316,6 +317,8 @@ def auto_coverage(scenes, end, max_gap=6.0):
     for i, s in enumerate(scenes):
         if s.get("type") != "stage" or s.get("camera"):
             continue
+        if ":scene/" in s.get("card", ""):
+            continue  # a scene card plans its own camera (recipes_scene._camera adds a second set-up to long shots itself)
         e_end = scenes[i + 1]["start"] if i + 1 < len(scenes) else end
         dur = e_end - s["start"]
         actors = [e for e in s.get("elements", []) if e.get("kind") == "actor" and e.get("view") != "back" and not e.get("lying") and not e.get("silhouette")]

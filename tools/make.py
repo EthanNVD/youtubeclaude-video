@@ -1,6 +1,8 @@
 """One entry point for the whole pipeline.
 
 python tools/make.py <project> prepare     inputs (SRT and/or voice) -> work/words.json, reading.md, understanding.md (step 1)
+python tools/make.py <project> preview     cast, story places and drawings of cards/_film.json -> review/preview/sheet_*.jpg (before the cards)
+                                           --kit every room/town style, --acts every act, --library every shared drawing
 python tools/make.py <project> check       check the cards only (fast)
 python tools/make.py <project> cards       cards/*.json -> plan.json + validate (step 4)
 python tools/make.py <project> analyze     SRT + voice -> work/reading.md, stats.json (old name, part of prepare)
@@ -9,6 +11,7 @@ python tools/make.py <project> review      stills of every scene -> review/sheet
 python tools/make.py <project> audio       voice + ambience + SFX -> out/audio/mix.wav (+ stems)
 python tools/make.py <project> video       render picture (muted) -> out/picture.mp4
 python tools/make.py <project> mux         picture + mix -> out/<slug>.mp4
+python tools/make.py <project> patch       after fixing some cards: re-render ONLY the changed scenes, splice, re-mux (--dry = list them)
 python tools/make.py <project> prompts     youtube/thumb_prompts.json -> out/youtube/thumb_prompts.md (+ character reference sheet)
 python tools/make.py <project> thumbs      thumbs.json -> out/thumbs/thumb_1..3 (engine draft, or headline composited on input/thumb_N.png)
 python tools/make.py <project> package     youtube/package.json -> out/youtube/ (checks + publish.txt)
@@ -63,6 +66,8 @@ def main():
         d = proj / "review"
         if d.exists() and not opt("scenes"):
             shutil.rmtree(d)
+        for old in d.glob("sheet_*.jpg") if d.exists() else []:
+            old.unlink()  # a partial review makes new sheets of the re-rendered scenes only: never leave stale sheets behind
         args = ["stills", merged, d, "--scale", "0.5", "--at", opt("at") or "mid"]
         if opt("scenes"):
             args += ["--scenes", opt("scenes")]
@@ -82,6 +87,16 @@ def main():
         if opt("concurrency"):
             args += ["--concurrency", opt("concurrency")]
         node(*args)
+        if not opt("from"):
+            # remember what was rendered: `patch` re-renders only the scenes that change after this
+            shutil.copyfile(merged, proj / "out" / "plan.rendered.json")
+
+    def preview():
+        run([PY, ROOT / "tools/preview.py", proj, *[r for r in rest if r.startswith("--")]])
+
+    def patch():
+        validate()
+        run([PY, ROOT / "tools/patch_video.py", proj, *[r for r in rest if r == "--dry"]])
 
     def mux():
         pic, mix = proj / "out" / "picture.mp4", proj / "out" / "audio" / "mix.wav"
@@ -138,7 +153,7 @@ def main():
     def package():
         run([PY, ROOT / "tools/seo_check.py", proj])
 
-    steps = {"prepare": [prepare], "cards": [cards], "check": [check], "analyze": [analyze], "validate": [validate], "review": [review], "audio": [audio], "video": [video], "mux": [mux],
+    steps = {"prepare": [prepare], "cards": [cards], "check": [check], "analyze": [analyze], "validate": [validate], "review": [review], "audio": [audio], "video": [video], "mux": [mux], "preview": [preview], "patch": [patch],
              "thumbs": [thumbs], "prompts": [prompts], "package": [package], "all": [audio, video, mux, prompts, thumbs, package]}
     if step not in steps:
         sys.exit(__doc__)

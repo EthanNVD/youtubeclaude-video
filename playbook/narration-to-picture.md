@@ -11,6 +11,12 @@ Text appears rarely, as a small tag, a big question, or one number.
 
 You write cards; the compiler handles the camera, dissolves and timing. Your job is to choose, for every clause, **what the camera would see if it had been there**.
 
+**Two ways to write a card:**
+- **The `scene` card** composes the picture from the clause: an idea, a place, people acting on the words, things, a camera. It is not limited to a fixed composition. Use it for most of the story ([scene-writing.md](scene-writing.md)).
+- **A recipe** is a tested composition. It is the fast way when one shows the clause exactly: battles, maps, charts, documents, and the story recipes below.
+
+When in doubt, write the scene card.
+
 ---
 
 ## 1. The picture-writing method (do this for every clause)
@@ -172,5 +178,7 @@ There is **no background music**, ever: ambience and sound effects only (added a
 
 1. Re-read the clause and answer the five questions again: who, does what, where, when.
 2. Choose the closest acted recipe, then adapt it with its fields: `setting`, `side`, `time`, `weather`, `business`, `action`.
-3. If the moment truly cannot be shown with recipes, a strong model may use `raw` ([08-advanced.md](08-advanced.md)), or add a recipe (§B there).
-4. **Never** replace an event with a label, a stat or a chart.
+3. Write a `scene` card ([scene-writing.md](scene-writing.md)). It stages any place, people, acts, things and camera; [visual-ideas.md](visual-ideas.md) has a device for most situations.
+4. If a thing, a piece of equipment or a vehicle does not exist, draw it in `cards/_film.json` `"drawings"` (scene-writing §5.2), or name it in the card's `wish` and use the closest thing.
+5. Only if even that cannot show it may a strong model use `raw` ([08-advanced.md](08-advanced.md)), or add a recipe (§B there).
+6. **Never** replace an event with a label, a stat or a chart.

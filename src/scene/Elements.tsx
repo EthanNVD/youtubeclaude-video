@@ -5,6 +5,7 @@ import { envelope, resolveKeys, smoothPath, partialPolyline, toD, clamp, easeFn,
 import { Character, POSES } from '../char/Character';
 import { resolveCast } from '../char/presets';
 import { Prop, Flag } from '../props/Props';
+import { Drawing, type Part } from '../props/Drawing';
 import { Vehicle } from '../props/Vehicles';
 import { Fx } from '../fx/Fx';
 import { Label, Stamp, Bubble, Headline, Counter, Document, NameCard, DateBadge, KineticCaption, StatCard, NoteCard, BinocularView } from '../overlays/Overlays';
@@ -181,6 +182,8 @@ const MapIcon: React.FC<{ type: string; nationKey?: string; color?: string; size
   );
 };
 
+const HOLD_ITEM: Record<string, number> = { ledger: 0.42, book: 0.8, folder: 0.8, sack: 0.72, bale: 0.6, card: 0.75, cards: 0.8, pot: 0.8, bread: 0.9, basket: 0.95, bowl: 0.9, letter: 0.9, coins: 0.7 };
+
 export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }> = ({ el, ctx, index }) => {
   const { t, dur } = ctx;
   const env = envelope(el, t, dur);
@@ -275,11 +278,18 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
         if (kk.t > t) break;
         if (typeof kk.expr === 'string' && kk.expr !== exprNow) { exprNow = kk.expr; tExpr = kk.t; }
       }
-      const holdScale: Record<string, number> = { holdUp: 0.75, hold: 0.6, carry: 0.7, write: 0.5, phone: 0.45, show: 0.6, drink: 0.4, smoke: 0.35, port: 0.5, aim: 0.52, shoulder: 0.5, charge: 0.52, ease: 0.5 };
+      const holdScale: Record<string, number> = { holdUp: 0.75, hold: 0.6, carry: 0.7, write: 0.5, phone: 0.45, show: 0.6, drink: 0.4, smoke: 0.35, port: 0.5, aim: 0.52, shoulder: 0.5, charge: 0.52, ease: 0.5,
+        stir: 0.45, ladle: 0.45, eat: 0.35, peel: 0.32, give: 0.45, read: 0.55, cradle: 0.55, sack: 0.6, basket: 0.5, hammer: 0.4, pull: 0.5 };
       const held = e.holds
         ? {
-            node: <Prop item={e.holds as string} t={t} text={e.holdsText as string} nationKey={spec.nation} />,
-            scale: (e.holdsScale as number) ?? holdScale[pose] ?? 0.5,
+            // a flipped actor would mirror the writing on what he holds: flip the prop back
+            node: (() => {
+              // a declarative drawing (cards/_film.json "drawings") or an engine prop
+              const n = e.holdsDrawing ? <Drawing parts={e.holdsDrawing as Part[]} t={t} /> : <Prop item={e.holds as string} t={t} text={e.holdsText as string} nationKey={spec.nation} />;
+              return flip < 0 ? <g transform="scale(-1 1)">{n}</g> : n;
+            })(),
+            // big drawings (an open ledger, a sack) are held smaller than a sheet of paper
+            scale: (e.holdsScale as number) ?? (holdScale[pose] ?? 0.5) * (HOLD_ITEM[e.holds as string] ?? 1),
             rotate: pose === 'phone' ? -30 : (e.holdsRotate as number) ?? 0,
             dy: pose === 'holdUp' ? -95 : pose === 'hold' || pose === 'carry' ? 4 : 0,
             grips: e.holds === 'rifle' ? ([-30, 40] as [number, number]) : undefined,
@@ -296,7 +306,7 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
         <g>
           <Character
             spec={spec}
-            state={{ pose, prevPose, poseK, expr: e.expr as string, talk: !!e.talk, look: e.look as number, view: e.view as 'front' | 'back', seated: !!e.seated, kneel: !!e.kneel, muzzle, walk, run, dir, headMove: e.headMove as string, turn: e.turn as number, exprAge: t - tExpr, take: e.take as number, gait, poseDur, bigMove: handTravel > 90 }}
+            state={{ pose, prevPose, poseK, expr: e.expr as string, talk: !!e.talk, look: e.look as number, view: e.view as 'front' | 'back', seated: !!e.seated, kneel: !!e.kneel, muzzle, walk, run, dir, headMove: e.headMove as string, turn: e.turn as number, exprAge: t - tExpr, take: e.take as number, gait, poseDur, bigMove: handTravel > 90, gaitStyle: e.walkStyle as string }}
             t={t}
             seed={seed}
             held={held}
@@ -331,6 +341,9 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
       );
       break;
     }
+    case 'drawing':
+      body = <Drawing parts={(e.parts as Part[]) ?? []} t={t} />;
+      break;
     case 'prop':
       body = <Prop item={(e.item as string) ?? 'paper'} t={t} color={e.color as string} text={e.text as string} value={e.value as number} nationKey={e.nation as string} on={!!e.on} />;
       break;

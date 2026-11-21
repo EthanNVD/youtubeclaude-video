@@ -1,10 +1,10 @@
 # 05 — Look at every scene
 
 ```
-python tools/make.py projects/<slug> review
+python tools/make.py projects/<slug> review --at all
 ```
 
-This renders the middle frame of every scene and makes contact sheets: `review/sheet_01.jpg`, `sheet_02.jpg`, … with 12 scenes per sheet. Each tile shows the scene id (`s014`), its time, and its narration.
+With `--at all` you see the start, the middle and the end of every scene: a scene card changes during the scene (somebody enters, the camera moves in, a thing appears). Without it, `review` renders the middle frame of every scene and makes contact sheets: `review/sheet_01.jpg`, `sheet_02.jpg`, … with 12 scenes per sheet. Each tile shows the scene id (`s014`), its time, and its narration.
 
 To see the start, middle and end of some scenes:
 ```
@@ -45,6 +45,16 @@ Answer each question with yes or no. Any "no" needs a fix.
 
 16. Are the named places inside the frame, with the arrows going the right way? Is the map 5 s or less?
 
+**Scene cards** (the problems seen most often; each was found and fixed while testing)
+
+17. Can you see the **focus person** in every frame? Nobody stands in front of them; a crowd between us and a speaker is `"view": "back"` (heads along the bottom edge).
+18. Is every **held thing** in the hand and the right size: not over the face, not raised out of the top of a close shot? For a close shot, use `show` (chest height), not `hold_up` (above the head).
+19. Is the **writing** readable and the right way round: signs, posters, papers? Is it in the right language for the place?
+20. Is every **flag** the right one (`flag:<NATION>`)?
+21. Are **children** small (`size` in the cast)? Does everybody who sits have a seat that fits: a chair indoors, a crate outside?
+22. Is the same card's picture different from the card before (place, people, act or camera), or a deliberate callback (`revisit`)?
+23. Does the gesture happen **on the word**: the head shake on the number, the hand to the mouth on the news?
+
 ## How to fix a "no"
 
 | problem | fix in the card |
@@ -59,11 +69,18 @@ Answer each question with yes or no. Any "no" needs a fix.
 | wrong side or uniform | fix `side` / `enemy`, or `era` in `_film.json` |
 | map frame wrong | add or remove places in `show`, or change `zoom` (`map_locate`) |
 | an engine drawing bug (floating, broken shape) | write it in `ROADMAP.md` "Known issues" and choose another variant for now |
+| scene card: someone hidden behind someone | change `at`/`depth`; put a watching crowd `"view": "back"`; move the focus person to `back` and the others to the sides |
+| scene card: a held thing covers the face | `show` instead of `hold_up`; `with` a smaller thing; put it `on` a table instead |
+| scene card: the wrong act or the act too early/late | change `act` or its `on` words |
+| scene card: a thing too big, too small or floating | `scale`; put it `on` a table/counter; for a drawing, fix `size`/`lift` and check it with `preview` |
+| scene card: a flag or sign wrong | `flag:<NATION>`; `"text"` on the shop, poster or sign |
+| scene card: looks like an earlier card | another place, person, act or camera ([visual-ideas.md](visual-ideas.md)), or `"revisit": true` if it is a deliberate callback |
 
-After the fixes:
-1. Run `cards` again.
-2. Re-run `review --scenes <the ones you changed> --at all`.
+After the fixes, **touch only the cards that were wrong**:
+1. Run `cards` again. The other cards do not change: every card's randomness is tied to its own words.
+2. Re-run `review --scenes <the ones you changed> --at all`. The sheets now show only those scenes.
 3. Look at those scenes again.
+4. If the film was already rendered, `python tools/make.py projects/<slug> patch` re-renders only the changed scenes and splices them in ([06-sound-render.md](06-sound-render.md) §5).
 
 ## Done when
 

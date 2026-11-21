@@ -62,6 +62,8 @@ export type CharState = {
   poseDur?: number;
   /** the pose change moves the hands far: add a little anticipation */
   bigMove?: boolean;
+  /** walking style: shuffle (hungry, exhausted) | march (parade) | limp (wounded) | sneak (crouched) */
+  gaitStyle?: string;
 };
 
 export type Held = { node: React.ReactNode; scale?: number; rotate?: number; dx?: number; dy?: number; both?: boolean; grip?: number;
@@ -162,6 +164,37 @@ export const POSES: Record<string, Pose> = {
   scratch: { r: [50, -258], l: [-44, -92], rb: -1, rh: 'mitten', tilt: 6 },
   count: { r: [72, -148], l: [-44, -92], rb: -1, rh: 'point' },
   surrender: { r: [70, -250], l: [-70, -250], rb: -1, lb: -1, rh: 'open', lh: 'open', tilt: -4 },
+  // ---- everyday business and gestures (creative scenes; cycles are animated in the life block) ----
+  stir: { r: [62, -112], l: [-38, -116], rb: -1, lb: 1, rh: 'grip', lh: 'grip', tilt: 7 },
+  ladle: { r: [70, -126], l: [-40, -100], rb: -1, rh: 'grip', tilt: 5 },
+  eat: { r: [12, -150], l: [-14, -122], rb: 1, lb: -1, rh: 'grip', lh: 'grip', tilt: 4 },
+  peel: { r: [30, -116], l: [-12, -120], rb: 1, lb: -1, rh: 'grip', lh: 'grip', tilt: 9 },
+  knock: { r: [96, -176], l: [-44, -92], rb: -1, rh: 'fist' },
+  hammer: { r: [70, -150], l: [-24, -116], rb: -1, lb: -1, rh: 'fist', lh: 'grip', tilt: 6 },
+  pray: { r: [5, -152], l: [-5, -152], rb: 1, lb: -1, rh: 'open', lh: 'open', tilt: 7 },
+  cry: { r: [22, -198], l: [-22, -198], rb: 1, lb: -1, rh: 'open', lh: 'open', tilt: 9 },
+  heart: { r: [-4, -146], l: [-42, -92], rb: 1, rh: 'open', tilt: 3 },
+  palms: { r: [72, -126], l: [-72, -126], rb: -1, lb: -1, rh: 'open', lh: 'open', tilt: 3 },
+  lean: { r: [58, -100], l: [-58, -100], rb: -1, lb: -1, rh: 'open', lh: 'open', tilt: 6 },
+  comfort: { r: [114, -172], l: [-42, -92], rb: -1, rh: 'open', tilt: 6 },
+  give: { r: [110, -130], l: [-42, -92], rb: -1, rh: 'grip' },
+  beckon: { r: [86, -152], l: [-42, -92], rb: -1, rh: 'open' },
+  pointdown: { r: [94, -104], l: [-36, -98], rb: -1, rh: 'point', tilt: 9 },
+  warm: { r: [60, -128], l: [-60, -128], rb: -1, lb: -1, rh: 'open', lh: 'open', tilt: 3 },
+  shiver: { r: [-30, -124], l: [30, -130], rb: 1, lb: -1, rh: 'none', lh: 'mitten', tilt: -2 },
+  clap: { r: [18, -148], l: [-18, -148], rb: 1, lb: -1, rh: 'open', lh: 'open' },
+  wring: { r: [10, -118], l: [-10, -120], rb: 1, lb: -1, rh: 'mitten', lh: 'mitten', tilt: 4 },
+  listen: { r: [46, -204], l: [-42, -92], rb: 1, rh: 'open', tilt: 10 },
+  reachup: { r: [84, -262], l: [-42, -92], rb: -1, rh: 'open', tilt: -6 },
+  cradle: { r: [34, -134], l: [-30, -126], rb: 1, lb: -1, rh: 'grip', lh: 'grip', tilt: 6 },
+  sack: { r: [24, -204], l: [-42, -92], rb: 1, rh: 'grip', tilt: -3 },
+  tiphat: { r: [34, -252], l: [-42, -92], rb: 1, rh: 'grip' },
+  push: { r: [96, -142], l: [70, -136], rb: -1, lb: -1, rh: 'open', lh: 'open', tilt: -4 },
+  pull: { r: [78, -122], l: [54, -126], rb: -1, lb: -1, rh: 'grip', lh: 'grip', tilt: 5 },
+  gasp: { r: [12, -178], l: [-42, -92], rb: 1, rh: 'open', tilt: -4 },
+  read: { r: [28, -140], l: [-28, -140], rb: 1, lb: -1, rh: 'grip', lh: 'grip', tilt: 6 },
+  wait: { r: [10, -102], l: [-10, -104], rb: 1, lb: -1, rh: 'mitten', lh: 'mitten' },
+  basket: { r: [44, -112], l: [-42, -92], rb: -1, rh: 'grip' },
   thumbsup: { r: [66, -150], l: [-44, -92], rb: -1, rh: 'fist' },
   // rifle drill (use with holds: "rifle"): port arms across the chest, aiming, slope arms on the shoulder, bayonet charge, at ease
   port: { r: [36, -96], l: [-30, -150], rb: 1, lb: -1, rh: 'grip', lh: 'grip', rifle: 'two', rifleAng: -122 },
@@ -273,11 +306,20 @@ export const Character: React.FC<{ spec: CharSpec; state: CharState; t: number; 
   const dir = state.dir ?? 1;
   const freq = run ? 2.7 : 1.75; // stride cycles per second (only when the gait is not distance-driven)
   const ph = state.gait !== undefined ? state.gait + r1 * 6 : t * Math.PI * 2 * freq + r1 * 6;
-  const stride = (run ? 30 : 19) * wAmt;
-  const lift = (run ? 26 : 13) * wAmt;
+  // walking styles change the stride, the lift of the feet, the lean and the arm swing (not the speed: that is the path)
+  const gs = run ? '' : state.gaitStyle ?? '';
+  const gStride = gs === 'shuffle' ? 0.55 : gs === 'march' ? 1.18 : gs === 'limp' ? 0.75 : gs === 'sneak' ? 0.8 : 1;
+  const gLift = gs === 'shuffle' ? 0.3 : gs === 'march' ? 1.4 : gs === 'sneak' ? 0.7 : 1;
+  const armSw = gs === 'shuffle' ? 0.35 : gs === 'march' ? 1.55 : gs === 'sneak' ? 0.45 : gs === 'limp' ? 0.7 : 1;
+  const stride = (run ? 30 : 19) * wAmt * gStride;
+  const lift = (run ? 26 : 13) * wAmt * gLift;
   const idleBob = Math.sin(t * 1.7 + r2 * 6) * 1.1;
-  const bob = walking ? lerp(idleBob, (Math.abs(Math.cos(ph)) - 0.5) * (run ? -9 : -5), wAmt) : idleBob;
-  const lean = walking ? lerp(Math.sin(t * 0.83 + r3 * 6) * 0.7, dir * (run ? 8 : 2.5), wAmt) : Math.sin(t * 0.83 + r3 * 6) * 0.7;
+  const limpDip = gs === 'limp' ? Math.max(0, Math.sin(ph)) * 8 : 0;
+  const bob = walking ? lerp(idleBob, (Math.abs(Math.cos(ph)) - 0.5) * (run ? -9 : -5) + limpDip, wAmt) : idleBob;
+  const gLean = gs === 'shuffle' ? 5 : gs === 'sneak' ? 8 : gs === 'march' ? 0.5 : gs === 'limp' ? 3.5 + Math.sin(ph) * 3 : 2.5;
+  // shivering with cold: a fine tremor of the whole body
+  const shiverX = poseName === 'shiver' ? Math.sin(t * 31) * 1.3 + Math.sin(t * 23) * 0.8 : 0;
+  const lean = (walking ? lerp(Math.sin(t * 0.83 + r3 * 6) * 0.7, dir * (run ? 8 : gLean), wAmt) : Math.sin(t * 0.83 + r3 * 6) * 0.7) + shiverX;
   const breathe = 1 + Math.sin(t * 1.7 + r2 * 6) * 0.01;
   const bp = 3.2 + r3 * 2;
   const blink = (t + rnd(seed, 4) * bp) % bp < 0.12;
@@ -327,6 +369,29 @@ export const Character: React.FC<{ spec: CharSpec; state: CharState; t: number; 
   if (poseName === 'rub') { rx += Math.sin(t * 9) * 6; lx -= Math.sin(t * 9) * 6; }
   if (poseName === 'scratch') { rx += Math.sin(t * 14) * 4; }
   if (poseName === 'count') { ry += (Math.floor(t * 1.6) % 2) * -10; }
+  // business cycles: they fade in as the hands arrive, so a pose change never starts mid-stroke
+  {
+    const settle = clamp(kRaw * 1.6, 0, 1);
+    switch (poseName) {
+      case 'stir': rx += Math.cos(t * 4.4) * 11 * settle; ry += Math.sin(t * 4.4) * 4 * settle; break;
+      case 'ladle': { const q = Math.sin(t * 2.4); rx += q * 14 * settle; ry += (-Math.abs(q) * 20 + 8) * settle; break; }
+      case 'eat': { const q = Math.pow(Math.max(0, Math.sin(t * 2.2)), 1.5); rx += (q * 6 - 6) * settle; ry += (-q * 28 + 16) * settle; break; }
+      case 'peel': rx += Math.sin(t * 6.5) * 7 * settle; ry += Math.max(0, Math.sin(t * 6.5)) * 3 * settle; break;
+      case 'knock': { const g = (t % 1.7) < 0.75 ? Math.pow(Math.max(0, Math.sin(t * 13)), 3) : 0; rx += g * 12 * settle; break; }
+      case 'hammer': { const q = Math.abs(Math.sin(t * 3.6)); ry -= q * 46 * settle; rx -= q * 10 * settle; break; }
+      case 'cry': ry += Math.sin(t * 7.5) * 2.5; ly += Math.sin(t * 7.5 + 0.4) * 2.5; break;
+      case 'clap': { const q = Math.abs(Math.sin(t * 7)); rx += q * 22 * settle; lx -= q * 22 * settle; break; }
+      case 'wring': rx += Math.cos(t * 5) * 5; ry += Math.sin(t * 5) * 4; lx -= Math.cos(t * 5) * 5; ly -= Math.sin(t * 5) * 3; break;
+      case 'warm': rx += Math.sin(t * 7) * 4; lx -= Math.sin(t * 7) * 4; break;
+      case 'beckon': { const q = Math.max(0, Math.sin(t * 6)); rx -= q * 14 * settle; ry -= q * 6 * settle; break; }
+      case 'palms': if (state.talk) { const q = Math.sin(t * 3.2); ry += q * 7; ly += q * 7; } break;
+      case 'pray': ry += Math.sin(t * 1.3) * 1.5; ly += Math.sin(t * 1.3) * 1.5; break;
+      case 'shiver': rx += Math.sin(t * 29) * 1.2; lx += Math.sin(t * 27) * 1.2; break;
+      case 'read': ry += Math.sin(t * 0.9) * 2; ly += Math.sin(t * 0.9) * 2; break;
+      case 'comfort': ry += Math.sin(t * 2.1) * 3 * settle; break;
+      default: break;
+    }
+  }
 
   // walking / running arm swing (only when the arms are free)
   if (walking) {
@@ -336,8 +401,8 @@ export const Character: React.FC<{ spec: CharSpec; state: CharState; t: number; 
         rx = lerp(rx, 30 - dir * Math.sin(pr) * 24, w); ry = lerp(ry, -136 - Math.abs(Math.sin(pr)) * 10, w);
         lx = lerp(lx, -30 - dir * Math.sin(pl) * 24, w); ly = lerp(ly, -136 - Math.abs(Math.sin(pl)) * 10, w);
       } else {
-        rx = lerp(rx, 36 - dir * Math.sin(pr) * 18, w); ry = lerp(ry, -86 - Math.abs(Math.sin(pr)) * 8, w);
-        lx = lerp(lx, -36 - dir * Math.sin(pl) * 18, w); ly = lerp(ly, -86 - Math.abs(Math.sin(pl)) * 8, w);
+        rx = lerp(rx, 36 - dir * Math.sin(pr) * 18 * armSw, w); ry = lerp(ry, -86 - Math.abs(Math.sin(pr)) * 8 * armSw + (gs === 'shuffle' ? 6 : 0), w);
+        lx = lerp(lx, -36 - dir * Math.sin(pl) * 18 * armSw, w); ly = lerp(ly, -86 - Math.abs(Math.sin(pl)) * 8 * armSw + (gs === 'shuffle' ? 6 : 0), w);
       }
     } else if (poseName !== 'carry' && poseName !== 'hold' && poseName !== 'holdUp' && pose.rifle !== 'two') {
       // keep the gesture on the right hand, swing the left one
@@ -366,7 +431,8 @@ export const Character: React.FC<{ spec: CharSpec; state: CharState; t: number; 
   let R = ik(shX, shoulderY, rx * bw2, ry, L1, L2, run ? -dir : -rb);
   let Lf = ik(-shX, shoulderY, lx * bw2, ly, L1, L2, run ? -dir : lb);
   // folded arms: fixed elbows at the sides, forearms stacked across the chest
-  const crossK = poseName === 'cross' ? clamp(kRaw * 1.4, 0, 1) : prev === POSES.cross ? 1 - clamp(kRaw * 1.4, 0, 1) : 0;
+  const folded = (n?: string) => n === 'cross' || n === 'shiver';
+  const crossK = folded(poseName) ? (folded(state.prevPose) ? 1 : clamp(kRaw * 1.4, 0, 1)) : folded(state.prevPose) ? 1 - clamp(kRaw * 1.4, 0, 1) : 0;
   if (crossK > 0) {
     const mixJ = (a: typeof R, b: typeof R) => ({ ex: lerp(a.ex, b.ex, crossK), ey: lerp(a.ey, b.ey, crossK), hx: lerp(a.hx, b.hx, crossK), hy: lerp(a.hy, b.hy, crossK) });
     const breath = Math.sin(t * 1.7 + r2 * 6) * 1.5;

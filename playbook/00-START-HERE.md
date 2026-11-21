@@ -18,12 +18,13 @@ Read this page completely once per session. It tells you which step you are on a
 | step | page | finished when |
 |---|---|---|
 | 1 prepare | [01-setup.md](01-setup.md) | `work/words.json` and `work/reading.md` exist |
-| 2 understand | [02-understand.md](02-understand.md) | every section of `understanding.md` is filled in |
-| 3 cards | [03-cards.md](03-cards.md) | one `cards/chNN.json` per chapter, covering the whole narration |
+| 2 understand | [02-understand.md](02-understand.md) | every section of `understanding.md` is filled in, with one `idea` per clause |
+| 2b pre-production | [scene-writing.md §8](scene-writing.md) | `cast`, `sets`, `drawings`, `look` in `cards/_film.json`; `preview` sheets checked |
+| 3 cards | [scene-writing.md](scene-writing.md), [03-cards.md](03-cards.md) | one `cards/chNN.json` per chapter, covering the whole narration |
 | 4 compile | [04-compile.md](04-compile.md) | `python tools/make.py projects/<slug> cards` prints `"ok": true` with no warnings left that you could fix |
-| 5 review | [05-review.md](05-review.md) | every review sheet checked, fixes compiled and re-checked |
+| 5 review | [05-review.md](05-review.md) | every review sheet checked (`--at all`); only the wrong cards fixed, compiled and re-checked |
 | 6 sound | [06-sound-render.md](06-sound-render.md) | `out/audio/mix.wav` exists, `sound_warnings` is empty |
-| 7 render | [06-sound-render.md](06-sound-render.md) | `out/<slug>.mp4` exists and you checked frames from it |
+| 7 render | [06-sound-render.md](06-sound-render.md) | `out/<slug>.mp4` exists and you checked frames from it; later fixes went through `patch` |
 | 8 YouTube | [07-youtube.md](07-youtube.md) | `out/youtube/` written, thumbnail prompts and drafts made |
 | 9 hand over | below | the user has the report |
 

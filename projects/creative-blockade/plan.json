@@ -1,0 +1,2726 @@
+{
+ "meta": {
+  "title": "The Crack in the Glass — the blockade and the Turnip Winter (creative-scene test)",
+  "lang": "en",
+  "fps": 24,
+  "duration": 93.96,
+  "grain": 0.5,
+  "grade": "film",
+  "voice": "input/voice.wav"
+ },
+ "cast": {
+  "foreman": {
+   "preset": "worker",
+   "facial": "walrus",
+   "age": 0.6
+  },
+  "docker": {
+   "preset": "worker"
+  },
+  "docker2": {
+   "preset": "worker",
+   "color": "#5a6a7a",
+   "facial": "stubble"
+  },
+  "clerk": {
+   "preset": "civilian_man",
+   "glasses": "round",
+   "age": 0.6
+  },
+  "grocer": {
+   "preset": "civilian_man",
+   "color": "#ece6d6",
+   "facial": "walrus",
+   "age": 0.5
+  },
+  "housewife": {
+   "preset": "civilian_woman"
+  },
+  "admiral": {
+   "preset": "jellicoe"
+  },
+  "admiral2": {
+   "preset": "jellicoe",
+   "facial": "beard",
+   "age": 0.85
+  },
+  "staff_officer": {
+   "preset": "jellicoe",
+   "age": 0.2,
+   "facial": "none"
+  },
+  "rn_sailor": {
+   "preset": "ww1_sailor_uk"
+  },
+  "de_officer": {
+   "preset": "scheer",
+   "age": 0.3,
+   "facial": "pencil"
+  },
+  "de_sailor": {
+   "preset": "ww1_sailor_de"
+  },
+  "fisherman": {
+   "preset": "worker",
+   "hat": "flatcap",
+   "facial": "beard",
+   "age": 0.7
+  },
+  "publican": {
+   "preset": "civilian_man",
+   "color": "#ece6d6",
+   "facial": "handlebar"
+  },
+  "captain": {
+   "preset": "dutch_civilian",
+   "hat": "navy",
+   "facial": "beard",
+   "color": "#2f3a4a"
+  },
+  "merchant": {
+   "preset": "dutch_civilian",
+   "build": 1.2,
+   "extra": [
+    "vest"
+   ]
+  },
+  "buyer": {
+   "preset": "civilian_man",
+   "hat": "fedora",
+   "color": "#4a4a52",
+   "facial": "pencil"
+  },
+  "farmer": {
+   "preset": "worker",
+   "facial": "stubble",
+   "age": 0.6
+  },
+  "farmer_wife": {
+   "preset": "civilian_woman",
+   "extra": [
+    "scarf"
+   ],
+   "scarf": "#7a5a3a",
+   "age": 0.5
+  },
+  "mother": {
+   "preset": "civilian_woman",
+   "color": "#5a4a6a",
+   "age": 0.3
+  },
+  "girl": {
+   "preset": "civilian_woman",
+   "age": 0,
+   "build": 0.85,
+   "hair": "bun",
+   "color": "#8a4a4a",
+   "size": 0.74
+  },
+  "boy": {
+   "preset": "civilian_man",
+   "age": 0,
+   "build": 0.85,
+   "facial": "none",
+   "hat": "flatcap",
+   "color": "#5a6a4a",
+   "size": 0.7
+  }
+ },
+ "scenes": [
+  {
+   "start": 0.0,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "foreman",
+     "x": 1200,
+     "y": 965,
+     "pose": "behind",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 0.72,
+       "pose": "beckon"
+      },
+      {
+       "t": 2.3,
+       "pose": "point",
+       "flip": true,
+       "turn": 0.38
+      }
+     ],
+     "id": "foreman",
+     "flip": true,
+     "turn": 0.38
+    },
+    {
+     "kind": "actor",
+     "who": "docker",
+     "x": 1450,
+     "y": 915,
+     "pose": "sack",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 0.0,
+       "view": "front"
+      },
+      {
+       "t": 3.86,
+       "x": 718,
+       "y": 915,
+       "ease": "linear"
+      }
+     ],
+     "id": "docker",
+     "flip": true,
+     "turn": 0.3,
+     "holds": "sack"
+    },
+    {
+     "kind": "actor",
+     "who": "docker2",
+     "x": 1690,
+     "y": 860,
+     "pose": "sack",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 1.3,
+       "x": 1690,
+       "y": 860,
+       "flip": true,
+       "turn": 0.3,
+       "view": "front",
+       "pose": "sack"
+      },
+      {
+       "t": 3.86,
+       "x": 1279,
+       "y": 860,
+       "ease": "linear"
+      }
+     ],
+     "id": "docker2",
+     "flip": true,
+     "turn": 0.38,
+     "holds": "sack"
+    },
+    {
+     "kind": "vehicle",
+     "id": "freighter1",
+     "type": "freighter",
+     "x": 720,
+     "y": 760,
+     "nation": "GER",
+     "scale": 0.194
+    }
+   ],
+   "set": {
+    "kind": "harbor",
+    "time": "dawn"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.16,
+     "push": 0.03,
+     "panX": 193.0
+    }
+   ],
+   "world": {
+    "scale": 1.15,
+    "y": 915
+   },
+   "sfx": [
+    {
+     "t": 0.0,
+     "id": "footsteps",
+     "vol": 0.35,
+     "dur": 3.86
+    },
+    {
+     "t": 1.3,
+     "id": "footsteps",
+     "vol": 0.35,
+     "dur": 2.56
+    }
+   ],
+   "transition": "cut",
+   "shotDissolve": true,
+   "tag": "Hamburg · 1913",
+   "tagIn": 0.3,
+   "beat": "Germany fed its people and its factories with imports.",
+   "card": "ch01.json#1:scene/A",
+   "chapter": "The Crack in the Glass",
+   "id": "s001",
+   "end": 3.86
+  },
+  {
+   "start": 3.86,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "clerk",
+     "x": 1200,
+     "y": 965,
+     "pose": "read",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 0.0,
+       "holdsDrawing": null
+      },
+      {
+       "t": 1.06,
+       "pose": "count"
+      },
+      {
+       "t": 2.94,
+       "pose": "read",
+       "holds": "ledger",
+       "holdsDrawing": null
+      }
+     ],
+     "id": "clerk",
+     "flip": true,
+     "turn": 0.38,
+     "holds": "ledger"
+    },
+    {
+     "kind": "actor",
+     "who": "docker",
+     "x": 470,
+     "y": 915,
+     "pose": "carry",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 0.0,
+       "holdsDrawing": null
+      },
+      {
+       "t": 2.94,
+       "pose": "wipe",
+       "holds": "",
+       "holdsDrawing": null,
+       "expr": "tired"
+      }
+     ],
+     "id": "docker",
+     "turn": 0.38,
+     "holds": "crate"
+    },
+    {
+     "kind": "prop",
+     "item": "crate",
+     "x": 720,
+     "y": 860,
+     "scale": 1.463,
+     "in": 0.0,
+     "id": "crate"
+    },
+    {
+     "kind": "prop",
+     "item": "sack",
+     "x": 230,
+     "y": 965,
+     "scale": 1.724,
+     "in": 0.0,
+     "id": "sack"
+    },
+    {
+     "kind": "prop",
+     "item": "crate",
+     "x": 589,
+     "y": 919,
+     "scale": 1.7,
+     "in": 3.24,
+     "id": "dropped_0",
+     "enter": "none"
+    }
+   ],
+   "set": {
+    "kind": "room",
+    "style": "warehouse",
+    "seed": 1916,
+    "items": [
+     "sacks",
+     "crates:HAMBURG",
+     "door:open",
+     "barrels",
+     "sacks"
+    ]
+   },
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.14
+    }
+   ],
+   "world": {
+    "scale": 1.7,
+    "y": 915,
+    "horizon": 520
+   },
+   "ambience": "room",
+   "sfx": [
+    {
+     "t": 0.35,
+     "id": "paper",
+     "vol": 0.4
+    },
+    {
+     "t": 3.29,
+     "id": "paper",
+     "vol": 0.4
+    }
+   ],
+   "transition": "fade",
+   "shotDissolve": true,
+   "tag": "Hamburg · 1913",
+   "tagIn": -1,
+   "beat": "Before the war, more than half of what it imported was raw material for industry:",
+   "card": "ch01.json#2:scene/A",
+   "id": "s002",
+   "end": 8.54
+  },
+  {
+   "start": 8.54,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "foreman",
+     "x": 1450,
+     "y": 965,
+     "pose": "write",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 0.0,
+       "holdsDrawing": null
+      },
+      {
+       "t": 4.56,
+       "pose": "point",
+       "flip": true,
+       "turn": 0.38
+      }
+     ],
+     "id": "foreman",
+     "flip": true,
+     "turn": 0.38,
+     "holds": "ledger"
+    },
+    {
+     "kind": "actor",
+     "who": "docker2",
+     "x": 960,
+     "y": 860,
+     "pose": "sack",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 2.0,
+       "x": 960,
+       "y": 860,
+       "flip": true,
+       "turn": 0.3,
+       "view": "front",
+       "pose": "sack"
+      },
+      {
+       "t": 6.26,
+       "x": 277,
+       "y": 860,
+       "ease": "linear"
+      }
+     ],
+     "id": "docker2",
+     "turn": 0.38,
+     "holds": "sack"
+    },
+    {
+     "kind": "prop",
+     "item": "bale",
+     "x": 330,
+     "y": 915,
+     "scale": 1.035,
+     "in": 0.12,
+     "id": "bale",
+     "text": "COTTON",
+     "enter": "pop"
+    },
+    {
+     "kind": "prop",
+     "item": "bale",
+     "x": 520,
+     "y": 965,
+     "scale": 1.181,
+     "in": 0.7,
+     "id": "bale_2",
+     "text": "WOOL",
+     "color": "#f2ede0",
+     "enter": "pop"
+    },
+    {
+     "kind": "prop",
+     "item": "bale",
+     "x": 700,
+     "y": 915,
+     "scale": 1.035,
+     "in": 1.32,
+     "id": "bale_3",
+     "text": "HIDES",
+     "color": "#a8784a",
+     "enter": "pop"
+    },
+    {
+     "kind": "prop",
+     "item": "ingots",
+     "x": 860,
+     "y": 965,
+     "scale": 1.05,
+     "in": 2.0,
+     "id": "ingots",
+     "enter": "pop"
+    },
+    {
+     "kind": "prop",
+     "item": "oil",
+     "x": 1020,
+     "y": 915,
+     "scale": 1.035,
+     "in": 3.5,
+     "id": "oil",
+     "enter": "pop"
+    },
+    {
+     "kind": "prop",
+     "item": "bale",
+     "x": 1180,
+     "y": 965,
+     "scale": 1.181,
+     "in": 4.06,
+     "id": "bale_6",
+     "text": "RUBBER",
+     "color": "#4a4440",
+     "enter": "pop"
+    },
+    {
+     "kind": "prop",
+     "item": "sack",
+     "x": 1350,
+     "y": 915,
+     "scale": 1.035,
+     "in": 4.56,
+     "id": "sack",
+     "text": "SALPETER",
+     "enter": "pop"
+    }
+   ],
+   "set": {
+    "kind": "harbor",
+    "time": "day"
+   },
+   "shots": [
+    {
+     "t": 0.0,
+     "zoom": 1.25,
+     "push": 0.0
+    },
+    {
+     "t": 4.06,
+     "zoom": 1.05,
+     "push": 0.03
+    }
+   ],
+   "world": {
+    "scale": 1.15,
+    "y": 915
+   },
+   "sfx": [
+    {
+     "t": 0.35,
+     "id": "pen",
+     "vol": 0.5
+    },
+    {
+     "t": 2.0,
+     "id": "footsteps",
+     "vol": 0.35,
+     "dur": 4.26
+    }
+   ],
+   "transition": "fade",
+   "shotDissolve": true,
+   "tag": "Hamburg · 1913",
+   "tagIn": -1,
+   "beat": "cotton and wool, hides, copper and other metals, oil, rubber, and saltpetre for explosives.",
+   "card": "ch01.json#3:scene/A",
+   "id": "s003",
+   "end": 14.8
+  },
+  {
+   "start": 14.8,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "grocer",
+     "x": 1200,
+     "y": 860,
+     "pose": "idle",
+     "expr": "happy",
+     "keys": [
+      {
+       "t": 0.6,
+       "pose": "reachup"
+      },
+      {
+       "t": 1.46,
+       "pose": "show",
+       "holds": "bread",
+       "holdsDrawing": null
+      }
+     ],
+     "id": "grocer",
+     "flip": true,
+     "turn": 0.38
+    },
+    {
+     "kind": "actor",
+     "who": "housewife",
+     "x": 720,
+     "y": 1015,
+     "pose": "basket",
+     "expr": "happy",
+     "id": "housewife",
+     "turn": 0.38,
+     "holds": "basket"
+    },
+    {
+     "kind": "prop",
+     "item": "counter",
+     "x": 960,
+     "y": 915,
+     "scale": 1.7,
+     "in": 0.0,
+     "id": "counter"
+    },
+    {
+     "kind": "prop",
+     "item": "scale",
+     "x": 654,
+     "y": 701,
+     "scale": 1.02,
+     "in": 0.0,
+     "id": "scale",
+     "depthY": 915.51
+    },
+    {
+     "kind": "prop",
+     "item": "bread",
+     "x": 1232,
+     "y": 701,
+     "scale": 0.765,
+     "in": 0.0,
+     "id": "bread",
+     "depthY": 915.52
+    }
+   ],
+   "set": {
+    "kind": "room",
+    "style": "shop",
+    "seed": 1916,
+    "items": [
+     "shelf:tins",
+     {
+      "item": "sign",
+      "text": "KOLONIALWAREN"
+     },
+     "shelf:jars",
+     "sacks"
+    ]
+   },
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.06
+    }
+   ],
+   "world": {
+    "scale": 1.7,
+    "y": 915,
+    "horizon": 520
+   },
+   "ambience": "room",
+   "transition": "fade",
+   "shotDissolve": true,
+   "tag": "Hamburg · 1913",
+   "tagIn": -1,
+   "beat": "Much of its food came from abroad too.",
+   "card": "ch01.json#4:scene/A",
+   "id": "s004",
+   "end": 17.4
+  },
+  {
+   "start": 17.4,
+   "type": "map",
+   "map": {
+    "era": "1914",
+    "center": [
+     -1.0,
+     51.58
+    ],
+    "span": 28.59,
+    "style": "paper",
+    "colors": {
+     "German Empire": "GERI"
+    }
+   },
+   "elements": [
+    {
+     "kind": "route",
+     "path": [
+      [
+       -12.0,
+       49.6
+      ],
+      [
+       1.6,
+       50.95
+      ],
+      [
+       9.99,
+       53.55
+      ]
+     ],
+     "color": "#3a6ea5",
+     "width": 5,
+     "icon": "freighter",
+     "trail": 4,
+     "gap": 90,
+     "iconSize": 1.3,
+     "nation": "GERI",
+     "enter": "draw",
+     "dur": 2.46,
+     "in": 0.3
+    },
+    {
+     "kind": "city",
+     "name": "Western Approaches",
+     "at": [
+      -12.0,
+      49.6
+     ],
+     "in": 0.2,
+     "side": "right",
+     "size": 28
+    },
+    {
+     "kind": "city",
+     "name": "Hamburg",
+     "at": [
+      9.99,
+      53.55
+     ],
+     "in": 0.4,
+     "side": "right",
+     "size": 28,
+     "tag": true
+    },
+    {
+     "kind": "legend",
+     "x": 40,
+     "y": 860,
+     "hud": true,
+     "in": 0,
+     "enter": "fade",
+     "items": [
+      {
+       "nation": "GERI",
+       "label": "German"
+      }
+     ]
+    }
+   ],
+   "transition": "fade",
+   "beat": "And most of the world's sea lanes ran past Britain.",
+   "card": "ch01.json#5:map_route/A",
+   "id": "s005",
+   "end": 20.66
+  },
+  {
+   "start": 20.66,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "admiral",
+     "x": 720,
+     "y": 860,
+     "pose": "behind",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 0.0
+      },
+      {
+       "t": 0.74,
+       "pose": "point",
+       "flip": false,
+       "turn": 0.38
+      },
+      {
+       "t": 1.08,
+       "talk": true
+      },
+      {
+       "t": 2.01,
+       "pose": "explain"
+      },
+      {
+       "t": 3.98,
+       "talk": false
+      }
+     ],
+     "id": "admiral",
+     "turn": 0.38
+    },
+    {
+     "kind": "actor",
+     "who": "admiral2",
+     "x": 1120,
+     "y": 1055,
+     "pose": "behind",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 2.16,
+       "headMove": "nod"
+      },
+      {
+       "t": 3.26,
+       "headMove": ""
+      }
+     ],
+     "id": "admiral2",
+     "flip": true,
+     "turn": 0.38,
+     "view": "back"
+    }
+   ],
+   "set": {
+    "kind": "room",
+    "style": "admiralty",
+    "seed": 1916,
+    "time": "day"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "on": "admiral",
+     "size": "medium",
+     "push": 0.04,
+     "frameX": -0.1,
+     "frameY": 0.05
+    }
+   ],
+   "world": {
+    "scale": 1.7,
+    "y": 915,
+    "horizon": 520
+   },
+   "ambience": "office",
+   "transition": "fade",
+   "shotDissolve": true,
+   "tag": "The Admiralty, London",
+   "tagIn": 0.3,
+   "beat": "The British had decided how they would use that geography before the war even started.",
+   "card": "ch01.json#6:scene/A",
+   "id": "s006",
+   "end": 25.9
+  },
+  {
+   "start": 25.9,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "staff_officer",
+     "x": 720,
+     "y": 915,
+     "pose": "hold",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 0.0,
+       "view": "front"
+      },
+      {
+       "t": 0.37,
+       "flip": false,
+       "turn": 0.38
+      },
+      {
+       "t": 0.77,
+       "x": 936,
+       "y": 915,
+       "ease": "smooth"
+      },
+      {
+       "t": 0.87,
+       "flip": false,
+       "turn": 0.38,
+       "pose": "give",
+       "holds": "folder",
+       "holdsDrawing": null
+      },
+      {
+       "t": 1.67,
+       "pose": "idle",
+       "holds": "",
+       "holdsDrawing": null
+      },
+      {
+       "t": 4.58,
+       "look": -0.01
+      }
+     ],
+     "id": "staff_officer",
+     "turn": 0.3,
+     "holds": "folder"
+    },
+    {
+     "kind": "actor",
+     "who": "admiral",
+     "x": 1200,
+     "y": 915,
+     "pose": "behind",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 0.57,
+       "flip": true,
+       "turn": 0.38
+      },
+      {
+       "t": 1.37,
+       "pose": "reach"
+      },
+      {
+       "t": 1.67,
+       "pose": "hold",
+       "holds": "folder",
+       "holdsDrawing": null
+      },
+      {
+       "t": 2.44,
+       "pose": "read",
+       "holds": "folder",
+       "holdsDrawing": null
+      },
+      {
+       "t": 4.06,
+       "expr": "determined",
+       "pose": "idle",
+       "turn": 0.0,
+       "look": 0
+      }
+     ],
+     "id": "admiral",
+     "flip": true,
+     "turn": 0.38
+    },
+    {
+     "kind": "note",
+     "lines": [
+      "A distant blockade."
+     ],
+     "kicker": "Admiralty war plan · July 1914",
+     "accentLast": false,
+     "in": 4.31,
+     "x": 1380,
+     "y": 120,
+     "speed": 26
+    }
+   ],
+   "set": {
+    "kind": "room",
+    "style": "admiralty",
+    "seed": 1916,
+    "time": "dusk"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.05
+    },
+    {
+     "t": 2.96,
+     "on": "admiral",
+     "size": "medium",
+     "push": 0.05,
+     "frameX": -0.12,
+     "frameY": 0.05
+    }
+   ],
+   "world": {
+    "scale": 1.7,
+    "y": 915,
+    "horizon": 520
+   },
+   "ambience": "office",
+   "sfx": [
+    {
+     "t": 0.0,
+     "id": "footsteps",
+     "vol": 0.35,
+     "dur": 0.77
+    },
+    {
+     "t": 1.57,
+     "id": "pop",
+     "vol": 0.4
+    },
+    {
+     "t": 2.79,
+     "id": "paper",
+     "vol": 0.4
+    }
+   ],
+   "transition": "fade",
+   "shotDissolve": true,
+   "tag": "The Admiralty, London",
+   "tagIn": -1,
+   "beat": "By July 1914, they had settled on what they called a distant blockade.",
+   "card": "ch01.json#7:scene/A",
+   "id": "s007",
+   "end": 31.42
+  },
+  {
+   "start": 31.42,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "de_officer",
+     "x": 1200,
+     "y": 965,
+     "pose": "binoculars",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 0.0,
+       "holdsDrawing": null
+      },
+      {
+       "t": 4.72,
+       "pose": "scratch",
+       "holds": "",
+       "holdsDrawing": null
+      }
+     ],
+     "id": "de_officer",
+     "turn": 0.38,
+     "holds": "binoculars"
+    },
+    {
+     "kind": "actor",
+     "who": "de_sailor",
+     "x": 470,
+     "y": 915,
+     "pose": "pockets",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 1.8,
+       "pose": "wait"
+      }
+     ],
+     "id": "de_sailor",
+     "turn": 0.38
+    },
+    {
+     "kind": "actor",
+     "who": "de_sailor",
+     "x": 720,
+     "y": 860,
+     "pose": "idle",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 2.55,
+       "look": -0.07
+      }
+     ],
+     "id": "sailor2",
+     "turn": 0.38,
+     "seated": true
+    },
+    {
+     "kind": "prop",
+     "item": "binoculars",
+     "x": 1292,
+     "y": 969,
+     "scale": 1.05,
+     "in": 5.02,
+     "id": "dropped_0",
+     "enter": "none"
+    },
+    {
+     "kind": "prop",
+     "item": "crate",
+     "x": 720,
+     "y": 858,
+     "scale": 0.972,
+     "in": 0.0,
+     "id": "seat_sailor2"
+    },
+    {
+     "kind": "vehicle",
+     "id": "battleship1",
+     "type": "battleship",
+     "x": 960,
+     "y": 770,
+     "nation": "GER",
+     "scale": 0.204
+    }
+   ],
+   "set": {
+    "kind": "harbor",
+    "time": "day"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.22
+    }
+   ],
+   "world": {
+    "scale": 1.15,
+    "y": 915
+   },
+   "transition": "fade",
+   "shotDissolve": true,
+   "tag": "Wilhelmshaven · 1914",
+   "tagIn": 0.31,
+   "beat": "The Royal Navy didn't need to fight its way into German harbours. It simply closed the doors.",
+   "card": "ch01.json#8:scene/A",
+   "id": "s008",
+   "end": 37.54
+  },
+  {
+   "start": 37.54,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "staff_officer",
+     "x": 960,
+     "y": 915,
+     "pose": "binoculars",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 0.0,
+       "holdsDrawing": null
+      }
+     ],
+     "id": "rn_officer",
+     "turn": 0.38,
+     "holds": "binoculars"
+    },
+    {
+     "kind": "actor",
+     "who": "rn_sailor",
+     "x": 1450,
+     "y": 965,
+     "pose": "idle",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 0.46,
+       "talk": true
+      },
+      {
+       "t": 1.5,
+       "pose": "point",
+       "flip": false,
+       "turn": 0.38
+      },
+      {
+       "t": 2.39,
+       "talk": false
+      }
+     ],
+     "id": "rn_sailor",
+     "flip": true,
+     "turn": 0.38
+    }
+   ],
+   "set": {
+    "kind": "bridge",
+    "weather": "rain"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "on": "rn_officer",
+     "size": "medium",
+     "push": 0.05,
+     "frameX": -0.12,
+     "frameY": 0.05
+    }
+   ],
+   "world": {
+    "scale": 1.15,
+    "y": 915
+   },
+   "transition": "fade",
+   "shotDissolve": true,
+   "tag": "The English Channel",
+   "tagIn": 0.3,
+   "beat": "Ships patrolled the narrow English Channel,",
+   "card": "ch01.json#9:scene/A",
+   "id": "s009",
+   "end": 40.08
+  },
+  {
+   "start": 40.08,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "vehicle",
+     "id": "cruiser1",
+     "type": "cruiser",
+     "x": 230,
+     "y": 690,
+     "nation": "UK",
+     "scale": 0.4,
+     "keys": [
+      {
+       "t": 0.0,
+       "x": 230
+      },
+      {
+       "t": 2.46,
+       "x": 397.3,
+       "ease": "linear"
+      }
+     ]
+    },
+    {
+     "kind": "vehicle",
+     "id": "cruiser2",
+     "type": "cruiser",
+     "x": 960,
+     "y": 660,
+     "nation": "UK",
+     "scale": 0.3,
+     "keys": [
+      {
+       "t": 0.0,
+       "x": 960
+      },
+      {
+       "t": 2.46,
+       "x": 1085.5,
+       "ease": "linear"
+      }
+     ]
+    },
+    {
+     "kind": "vehicle",
+     "id": "cruiser3",
+     "type": "cruiser",
+     "x": 1450,
+     "y": 640,
+     "nation": "UK",
+     "scale": 0.22,
+     "keys": [
+      {
+       "t": 0.0,
+       "x": 1450
+      },
+      {
+       "t": 2.46,
+       "x": 1542.0,
+       "ease": "linear"
+      }
+     ]
+    }
+   ],
+   "set": {
+    "kind": "sea",
+    "time": "dusk",
+    "weather": "rain"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.06
+    }
+   ],
+   "world": {
+    "scale": 1.15,
+    "y": 915
+   },
+   "transition": "fade",
+   "shotDissolve": true,
+   "tag": "Between Shetland and Norway",
+   "tagIn": 0.3,
+   "beat": "and the Northern Patrol shut the gap",
+   "card": "ch01.json#10:scene/A",
+   "id": "s010",
+   "end": 42.54
+  },
+  {
+   "start": 42.54,
+   "type": "map",
+   "map": {
+    "era": "1914",
+    "center": [
+     1.11,
+     59.64
+    ],
+    "span": 11.79,
+    "style": "paper",
+    "colors": {
+     "United Kingdom of Great Britain and Ireland": "UK"
+    },
+    "hatch": [
+     "United Kingdom of Great Britain and Ireland"
+    ]
+   },
+   "elements": [
+    {
+     "kind": "front",
+     "path": [
+      [
+       -1.2,
+       60.3
+      ],
+      [
+       2.0,
+       60.35
+      ],
+      [
+       5.32,
+       60.39
+      ]
+     ],
+     "color": "#7a2a22",
+     "in": 0.0,
+     "enter": "draw",
+     "dur": 1.6
+    },
+    {
+     "kind": "city",
+     "name": "Scapa Flow",
+     "at": [
+      -3.1,
+      58.9
+     ],
+     "in": 0.4,
+     "side": "right",
+     "size": 28,
+     "tag": true
+    },
+    {
+     "kind": "legend",
+     "x": 40,
+     "y": 860,
+     "hud": true,
+     "in": 0,
+     "enter": "fade",
+     "items": [
+      {
+       "nation": "UK",
+       "label": "British"
+      }
+     ]
+    }
+   ],
+   "transition": "fade",
+   "beat": "of about two hundred and fifty kilometres between Shetland and Norway,",
+   "card": "ch01.json#11:map_front/A",
+   "id": "s011",
+   "end": 46.82
+  },
+  {
+   "start": 46.82,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "rn_sailor",
+     "x": 720,
+     "y": 965,
+     "pose": "hold",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 0.0,
+       "holdsDrawing": null
+      }
+     ],
+     "id": "rn_sailor",
+     "turn": 0.38,
+     "holds": "cards",
+     "seated": true
+    },
+    {
+     "kind": "actor",
+     "who": "rn_sailor",
+     "x": 1200,
+     "y": 965,
+     "pose": "hold",
+     "expr": "smug",
+     "keys": [
+      {
+       "t": 0.0,
+       "holdsDrawing": null
+      },
+      {
+       "t": 2.24,
+       "expr": "laugh",
+       "headMove": "nod"
+      },
+      {
+       "t": 3.44,
+       "headMove": ""
+      }
+     ],
+     "id": "sailor_b",
+     "flip": true,
+     "turn": 0.38,
+     "holds": "cards",
+     "seated": true
+    },
+    {
+     "kind": "prop",
+     "item": "crate",
+     "x": 960,
+     "y": 965,
+     "scale": 1.05,
+     "in": 0.0,
+     "id": "crate"
+    },
+    {
+     "kind": "prop",
+     "item": "crate",
+     "x": 720,
+     "y": 963,
+     "scale": 1.312,
+     "in": 0.0,
+     "id": "seat_rn_sailor"
+    },
+    {
+     "kind": "prop",
+     "item": "crate",
+     "x": 1200,
+     "y": 963,
+     "scale": 1.312,
+     "in": 0.0,
+     "id": "seat_sailor_b"
+    },
+    {
+     "kind": "vehicle",
+     "id": "battleship1",
+     "type": "battleship",
+     "x": 720,
+     "y": 600,
+     "nation": "UK",
+     "scale": 0.3
+    },
+    {
+     "kind": "vehicle",
+     "id": "battleship2",
+     "type": "battleship",
+     "x": 1690,
+     "y": 585,
+     "nation": "UK",
+     "scale": 0.22
+    }
+   ],
+   "set": {
+    "kind": "beach",
+    "time": "day"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.06
+    }
+   ],
+   "world": {
+    "scale": 1.15,
+    "y": 915
+   },
+   "transition": "fade",
+   "shotDissolve": true,
+   "tag": "Scapa Flow",
+   "tagIn": 0.3,
+   "beat": "with the Grand Fleet waiting behind at Scapa Flow.",
+   "card": "ch01.json#12:scene/A",
+   "id": "s012",
+   "end": 50.16
+  },
+  {
+   "start": 50.16,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "publican",
+     "x": 960,
+     "y": 860,
+     "pose": "read",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 0.0,
+       "holdsDrawing": null
+      },
+      {
+       "t": 2.8,
+       "talk": true
+      },
+      {
+       "t": 5.16,
+       "talk": false
+      }
+     ],
+     "id": "publican",
+     "flip": true,
+     "turn": 0.38,
+     "holds": "paper"
+    },
+    {
+     "kind": "actor",
+     "who": "fisherman",
+     "x": 1200,
+     "y": 965,
+     "pose": "wring",
+     "expr": "worried",
+     "keys": [
+      {
+       "t": 1.38,
+       "pose": "idle"
+      },
+      {
+       "t": 3.41,
+       "flip": true,
+       "turn": 0.342
+      },
+      {
+       "t": 3.61,
+       "pose": "cross"
+      },
+      {
+       "t": 5.16,
+       "headMove": "shake"
+      },
+      {
+       "t": 6.26,
+       "headMove": ""
+      }
+     ],
+     "id": "fisherman",
+     "flip": true,
+     "turn": 0.38
+    },
+    {
+     "kind": "actor",
+     "who": "docker",
+     "x": 470,
+     "y": 915,
+     "pose": "wring",
+     "expr": "worried",
+     "keys": [
+      {
+       "t": 0.84,
+       "pose": "drink",
+       "holds": "cup",
+       "holdsDrawing": null
+      },
+      {
+       "t": 2.07,
+       "pose": "wait"
+      },
+      {
+       "t": 3.27,
+       "flip": false,
+       "turn": 0.342
+      },
+      {
+       "t": 3.47,
+       "pose": "idle"
+      }
+     ],
+     "id": "fisher2",
+     "turn": 0.38
+    },
+    {
+     "kind": "note",
+     "lines": [
+      "The whole North Sea",
+      "is a military area."
+     ],
+     "kicker": "Admiralty notice · 2 November 1914",
+     "accentLast": false,
+     "in": 3.27,
+     "x": 1380,
+     "y": 120,
+     "speed": 26
+    }
+   ],
+   "set": {
+    "kind": "room",
+    "style": "tavern",
+    "seed": 1916,
+    "items": [
+     "shelf:bottles",
+     "barrels",
+     {
+      "item": "poster",
+      "text": "ROYAL NAVY"
+     },
+     "window:small:sea"
+    ],
+    "time": "night"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.05
+    },
+    {
+     "t": 5.16,
+     "on": "fisherman",
+     "size": "medium",
+     "push": 0.05,
+     "frameX": -0.12,
+     "frameY": 0.05
+    }
+   ],
+   "world": {
+    "scale": 1.7,
+    "y": 915,
+    "horizon": 520
+   },
+   "ambience": "room",
+   "sfx": [
+    {
+     "t": 0.35,
+     "id": "paper",
+     "vol": 0.4
+    }
+   ],
+   "transition": "fade",
+   "shotDissolve": true,
+   "tag": "Lerwick, Shetland · November 1914",
+   "tagIn": 0.33,
+   "beat": "On the 2nd of November, 1914, Britain declared the whole North Sea a military area.",
+   "card": "ch01.json#13:scene/A",
+   "id": "s013",
+   "end": 56.7
+  },
+  {
+   "start": 56.7,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "staff_officer",
+     "x": 720,
+     "y": 915,
+     "pose": "read",
+     "expr": "determined",
+     "keys": [
+      {
+       "t": 0.0,
+       "holdsDrawing": null
+      },
+      {
+       "t": 2.38,
+       "pose": "point",
+       "flip": false,
+       "turn": 0.38
+      },
+      {
+       "t": 4.02,
+       "flip": false,
+       "turn": 0.342
+      }
+     ],
+     "id": "rn_officer",
+     "turn": 0.38,
+     "holds": "paper"
+    },
+    {
+     "kind": "actor",
+     "who": "captain",
+     "x": 1200,
+     "y": 965,
+     "pose": "hips",
+     "expr": "angry",
+     "keys": [
+      {
+       "t": 2.68,
+       "pose": "palms"
+      },
+      {
+       "t": 3.66,
+       "talk": true
+      },
+      {
+       "t": 4.76,
+       "talk": false
+      }
+     ],
+     "id": "captain",
+     "flip": true,
+     "turn": 0.38
+    },
+    {
+     "kind": "actor",
+     "who": "rn_sailor",
+     "x": 960,
+     "y": 860,
+     "pose": "carry",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 3.06,
+       "x": 960,
+       "y": 860,
+       "flip": false,
+       "turn": 0.3,
+       "view": "front",
+       "pose": "carry"
+      },
+      {
+       "t": 5.52,
+       "x": 1303,
+       "y": 860,
+       "ease": "linear"
+      }
+     ],
+     "id": "rn_sailor",
+     "turn": 0.38,
+     "holds": "crate"
+    },
+    {
+     "kind": "prop",
+     "item": "crate",
+     "x": 470,
+     "y": 965,
+     "scale": 1.141,
+     "in": 0.0,
+     "id": "crate",
+     "text": "HAMBURG"
+    }
+   ],
+   "set": {
+    "kind": "town",
+    "style": "english",
+    "seed": 1916,
+    "buildings": [
+     {
+      "item": "office",
+      "text": "CUSTOMS"
+     },
+     "house",
+     "tenement",
+     "house"
+    ],
+    "items": [
+     "crates",
+     "rope",
+     "lamppost",
+     "barrels"
+    ],
+    "time": "day"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.05
+    },
+    {
+     "t": 3.66,
+     "on": "captain",
+     "size": "medium",
+     "push": 0.05,
+     "frameX": -0.12,
+     "frameY": 0.05
+    }
+   ],
+   "world": {
+    "scale": 1.0,
+    "y": 915,
+    "horizon": 560
+   },
+   "ambience": "wind",
+   "sfx": [
+    {
+     "t": 0.35,
+     "id": "paper",
+     "vol": 0.4
+    },
+    {
+     "t": 3.06,
+     "id": "footsteps",
+     "vol": 0.35,
+     "dur": 2.46
+    }
+   ],
+   "transition": "fade",
+   "shotDissolve": true,
+   "tag": "Kirkwall · 1915",
+   "tagIn": 0.3,
+   "beat": "From March 1915, it would seize any cargo it believed was heading for Germany.",
+   "card": "ch01.json#14:scene/A",
+   "id": "s014",
+   "end": 62.22
+  },
+  {
+   "start": 62.22,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "merchant",
+     "x": 1200,
+     "y": 915,
+     "pose": "hips",
+     "expr": "smug",
+     "keys": [
+      {
+       "t": 0.24,
+       "pose": "rub"
+      },
+      {
+       "t": 3.06,
+       "pose": "beckon"
+      }
+     ],
+     "id": "merchant",
+     "flip": true,
+     "turn": 0.38
+    },
+    {
+     "kind": "actor",
+     "who": "docker",
+     "x": 470,
+     "y": 965,
+     "pose": "sack",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 1.8,
+       "x": 470,
+       "y": 965,
+       "flip": false,
+       "turn": 0.3,
+       "view": "front",
+       "pose": "sack"
+      },
+      {
+       "t": 4.74,
+       "x": 1023,
+       "y": 965,
+       "ease": "smooth"
+      },
+      {
+       "t": 4.84,
+       "flip": false,
+       "turn": 0.38
+      }
+     ],
+     "id": "docker",
+     "turn": 0.38,
+     "holds": "sack"
+    },
+    {
+     "kind": "actor",
+     "who": "dutch_civilian",
+     "x": 202,
+     "y": 860,
+     "pose": "basket",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 0.0
+      },
+      {
+       "t": 5.54,
+       "x": 1021,
+       "y": 860,
+       "ease": "linear"
+      }
+     ],
+     "id": "c0_0",
+     "holds": "basket"
+    },
+    {
+     "kind": "actor",
+     "who": "dutch_woman",
+     "x": 247,
+     "y": 900,
+     "pose": "sack",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 0.0
+      },
+      {
+       "t": 5.54,
+       "x": 1273,
+       "y": 900,
+       "ease": "linear"
+      }
+     ],
+     "id": "c0_1",
+     "holds": "sack"
+    },
+    {
+     "kind": "actor",
+     "who": "dutch_civilian",
+     "x": 2120,
+     "y": 940,
+     "pose": "behind",
+     "expr": "neutral",
+     "keys": [
+      {
+       "t": 0.0
+      },
+      {
+       "t": 5.54,
+       "x": 1063,
+       "y": 940,
+       "ease": "linear"
+      }
+     ],
+     "id": "c0_2",
+     "flip": true
+    },
+    {
+     "kind": "prop",
+     "item": "cart",
+     "x": 230,
+     "y": 965,
+     "scale": 1.141,
+     "in": 0.0,
+     "id": "cart",
+     "value": 1
+    }
+   ],
+   "set": {
+    "kind": "town",
+    "style": "dutch",
+    "seed": 1916,
+    "buildings": [
+     "house",
+     {
+      "item": "shop:grocer",
+      "text": "IMPORT · EXPORT",
+      "goods": "tins"
+     },
+     "house",
+     "tenement",
+     "house"
+    ],
+    "items": [
+     "crates",
+     "lamppost",
+     "barrels"
+    ],
+    "time": "day"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.06
+    }
+   ],
+   "world": {
+    "scale": 1.0,
+    "y": 915,
+    "horizon": 560
+   },
+   "ambience": "crowd",
+   "sfx": [
+    {
+     "t": 1.8,
+     "id": "footsteps",
+     "vol": 0.35,
+     "dur": 2.94
+    }
+   ],
+   "transition": "fade",
+   "shotDissolve": true,
+   "tag": "Rotterdam · 1915",
+   "tagIn": 0.3,
+   "beat": "It leaked, at first. Neutral neighbours like the Netherlands, Denmark, Norway and Sweden",
+   "card": "ch01.json#15:scene/A",
+   "id": "s015",
+   "end": 67.76
+  },
+  {
+   "start": 67.76,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "merchant",
+     "x": 720,
+     "y": 915,
+     "pose": "carry",
+     "expr": "smug",
+     "keys": [
+      {
+       "t": 1.74,
+       "x": 720,
+       "y": 915,
+       "flip": false,
+       "turn": 0.3,
+       "view": "front",
+       "pose": "carry"
+      },
+      {
+       "t": 3.36,
+       "flip": false,
+       "turn": 0.38
+      },
+      {
+       "t": 3.71,
+       "x": 1045,
+       "y": 915,
+       "ease": "smooth"
+      },
+      {
+       "t": 3.81,
+       "flip": false,
+       "turn": 0.38
+      },
+      {
+       "t": 3.86,
+       "pose": "give",
+       "holds": "crate",
+       "holdsDrawing": null
+      },
+      {
+       "t": 4.66,
+       "pose": "idle",
+       "holds": "",
+       "holdsDrawing": null
+      }
+     ],
+     "id": "merchant",
+     "turn": 0.38,
+     "holds": "crate"
+    },
+    {
+     "kind": "actor",
+     "who": "buyer",
+     "x": 1200,
+     "y": 915,
+     "pose": "wring",
+     "expr": "nervous",
+     "keys": [
+      {
+       "t": 1.36,
+       "look": -0.9
+      },
+      {
+       "t": 2.16,
+       "look": 0.9
+      },
+      {
+       "t": 2.94,
+       "pose": "count"
+      },
+      {
+       "t": 2.96,
+       "look": 0
+      },
+      {
+       "t": 3.56,
+       "flip": true,
+       "turn": 0.38
+      },
+      {
+       "t": 4.36,
+       "pose": "reach"
+      },
+      {
+       "t": 4.66,
+       "pose": "carry",
+       "holds": "crate",
+       "holdsDrawing": null
+      }
+     ],
+     "id": "buyer",
+     "flip": true,
+     "turn": 0.38
+    }
+   ],
+   "set": {
+    "kind": "town",
+    "style": "dutch",
+    "seed": 1916,
+    "buildings": [
+     "house",
+     {
+      "item": "shop:grocer",
+      "text": "IMPORT · EXPORT",
+      "goods": "tins"
+     },
+     "house",
+     "tenement",
+     "house"
+    ],
+    "items": [
+     "crates",
+     "lamppost",
+     "barrels"
+    ],
+    "time": "night"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.05
+    },
+    {
+     "t": 3.86,
+     "on": "buyer",
+     "size": "medium",
+     "push": 0.05,
+     "frameX": -0.12,
+     "frameY": 0.05
+    }
+   ],
+   "world": {
+    "scale": 1.0,
+    "y": 915,
+    "horizon": 560
+   },
+   "ambience": "wind",
+   "sfx": [
+    {
+     "t": 1.74,
+     "id": "footsteps",
+     "vol": 0.35,
+     "dur": 1.97
+    },
+    {
+     "t": 4.56,
+     "id": "pop",
+     "vol": 0.4
+    }
+   ],
+   "transition": "fade",
+   "shotDissolve": true,
+   "tag": "Rotterdam · 1915",
+   "tagIn": -1,
+   "beat": "suddenly started importing a lot more from America and selling a lot more to Germany.",
+   "card": "ch01.json#16:scene/A",
+   "id": "s016",
+   "end": 73.48
+  },
+  {
+   "start": 73.48,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "clerk",
+     "x": 1200,
+     "y": 965,
+     "pose": "read",
+     "expr": "worried",
+     "keys": [
+      {
+       "t": 0.0,
+       "holdsDrawing": null
+      },
+      {
+       "t": 4.14,
+       "headMove": "shake"
+      },
+      {
+       "t": 5.24,
+       "headMove": ""
+      },
+      {
+       "t": 5.46,
+       "expr": "tired",
+       "pose": "idle"
+      }
+     ],
+     "id": "clerk",
+     "flip": true,
+     "turn": 0.38,
+     "holds": "ledger"
+    },
+    {
+     "kind": "actor",
+     "who": "docker",
+     "x": 470,
+     "y": 860,
+     "pose": "idle",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 2.15,
+       "look": 0.53
+      },
+      {
+       "t": 5.07,
+       "pose": "chin"
+      }
+     ],
+     "id": "docker",
+     "turn": 0.38,
+     "seated": true
+    },
+    {
+     "kind": "prop",
+     "item": "sack",
+     "x": 960,
+     "y": 860,
+     "scale": 1.317,
+     "in": 0.0,
+     "id": "sack"
+    },
+    {
+     "kind": "prop",
+     "item": "chair",
+     "x": 470,
+     "y": 858,
+     "scale": 1.463,
+     "in": 0.0,
+     "id": "seat_docker"
+    }
+   ],
+   "set": {
+    "kind": "room",
+    "style": "warehouse",
+    "seed": 1916,
+    "items": [
+     "door:open",
+     "barrels"
+    ],
+    "light": "dim",
+    "time": "dusk"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "on": "clerk",
+     "size": "medium",
+     "push": 0.03,
+     "frameY": 0.05
+    },
+    {
+     "t": 4.14,
+     "zoom": 1.0,
+     "push": 0.04
+    }
+   ],
+   "world": {
+    "scale": 1.7,
+    "y": 915,
+    "horizon": 520
+   },
+   "ambience": "room",
+   "sfx": [
+    {
+     "t": 0.35,
+     "id": "paper",
+     "vol": 0.4
+    }
+   ],
+   "transition": "fade",
+   "shotDissolve": true,
+   "tag": "Hamburg · 1915",
+   "tagIn": 0.32,
+   "beat": "But by 1915, Germany's imports had still fallen by more than half from their pre-war level.",
+   "card": "ch01.json#17:scene/A",
+   "id": "s017",
+   "end": 79.78
+  },
+  {
+   "start": 79.78,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "farmer",
+     "x": 720,
+     "y": 965,
+     "pose": "wait",
+     "expr": "sad",
+     "keys": [
+      {
+       "t": 0.0
+      },
+      {
+       "t": 1.36,
+       "look": 0.48
+      },
+      {
+       "t": 4.82,
+       "look": -0.6
+      },
+      {
+       "t": 7.14,
+       "pose": "head",
+       "expr": "sad"
+      }
+     ],
+     "id": "farmer",
+     "turn": 0.38,
+     "kneel": true
+    },
+    {
+     "kind": "actor",
+     "who": "farmer_wife",
+     "x": 1200,
+     "y": 860,
+     "pose": "basket",
+     "expr": "sad",
+     "keys": [
+      {
+       "t": 3.06,
+       "headMove": "shake"
+      },
+      {
+       "t": 4.16,
+       "headMove": ""
+      },
+      {
+       "t": 5.78,
+       "pose": "basket"
+      }
+     ],
+     "id": "farmer_wife",
+     "flip": true,
+     "turn": 0.38,
+     "holds": "basket"
+    },
+    {
+     "kind": "prop",
+     "item": "potatoes",
+     "x": 960,
+     "y": 1015,
+     "scale": 0.811,
+     "in": 0.0,
+     "id": "potatoes",
+     "value": 8,
+     "color": "#4a3e2e"
+    }
+   ],
+   "set": {
+    "kind": "mud",
+    "time": "dusk",
+    "weather": "rain"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.05
+    },
+    {
+     "t": 3.57,
+     "on": "farmer",
+     "size": "medium",
+     "push": 0.04,
+     "frameY": 0.05
+    },
+    {
+     "t": 7.14,
+     "on": "farmer",
+     "size": "medium",
+     "push": 0.05,
+     "frameX": 0.12,
+     "frameY": 0.05
+    }
+   ],
+   "world": {
+    "scale": 1.15,
+    "y": 915
+   },
+   "transition": "fade",
+   "shotDissolve": true,
+   "tag": "East Prussia · Autumn 1916",
+   "tagIn": 0.43,
+   "beat": "Then came a bad harvest. In the winter of 1916 and 1917, much of the potato crop rotted in the fields,",
+   "card": "ch01.json#18:scene/A",
+   "id": "s018",
+   "end": 88.34
+  },
+  {
+   "start": 88.34,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "mother",
+     "x": 1200,
+     "y": 915,
+     "pose": "show",
+     "expr": "worried",
+     "keys": [
+      {
+       "t": 0.0,
+       "holdsDrawing": null
+      },
+      {
+       "t": 1.48,
+       "pose": "stir",
+       "holds": "spoon",
+       "holdsDrawing": null
+      }
+     ],
+     "id": "mother",
+     "flip": true,
+     "turn": 0.38,
+     "holds": "turnip"
+    },
+    {
+     "kind": "actor",
+     "who": "girl",
+     "x": 470,
+     "y": 965,
+     "pose": "wait",
+     "expr": "tired",
+     "id": "girl",
+     "turn": 0.38,
+     "seated": true,
+     "depthScale": 0.74
+    },
+    {
+     "kind": "actor",
+     "who": "boy",
+     "x": 720,
+     "y": 965,
+     "pose": "wait",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 1.43,
+       "look": 0.21
+      }
+     ],
+     "id": "boy",
+     "turn": 0.38,
+     "seated": true,
+     "depthScale": 0.7
+    },
+    {
+     "kind": "prop",
+     "item": "stove",
+     "x": 1360,
+     "y": 915,
+     "scale": 1.7,
+     "in": 0.0,
+     "id": "stove"
+    },
+    {
+     "kind": "prop",
+     "item": "pot",
+     "x": 1292,
+     "y": 643,
+     "scale": 0.935,
+     "in": 0.0,
+     "id": "pot",
+     "depthY": 915.51
+    },
+    {
+     "kind": "prop",
+     "item": "table",
+     "x": 560,
+     "y": 1015,
+     "scale": 2.13,
+     "in": 0.0,
+     "id": "table"
+    },
+    {
+     "kind": "prop",
+     "item": "plate",
+     "x": 326,
+     "y": 759,
+     "scale": 0.852,
+     "in": 0.0,
+     "id": "plate",
+     "depthY": 1015.53
+    },
+    {
+     "kind": "prop",
+     "item": "plate",
+     "x": 794,
+     "y": 759,
+     "scale": 0.852,
+     "in": 0.0,
+     "id": "plate_5",
+     "depthY": 1015.54
+    },
+    {
+     "kind": "prop",
+     "item": "chair",
+     "x": 470,
+     "y": 963,
+     "scale": 1.417,
+     "in": 0.0,
+     "id": "seat_girl"
+    },
+    {
+     "kind": "prop",
+     "item": "chair",
+     "x": 720,
+     "y": 963,
+     "scale": 1.341,
+     "in": 0.0,
+     "id": "seat_boy"
+    }
+   ],
+   "set": {
+    "kind": "room",
+    "style": "kitchen",
+    "seed": 1916,
+    "items": [
+     "shelf:empty",
+     "window:snow_street",
+     "clock",
+     "hooks"
+    ],
+    "light": "candle",
+    "poor": true,
+    "lightX": 760,
+    "time": "night",
+    "weather": "snow"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "zoom": 1.0,
+     "push": 0.06
+    }
+   ],
+   "world": {
+    "scale": 1.7,
+    "y": 915,
+    "horizon": 520
+   },
+   "ambience": "room",
+   "sfx": [
+    {
+     "t": 1.83,
+     "id": "metal_clank",
+     "vol": 0.25
+    }
+   ],
+   "transition": "fade",
+   "shotDissolve": true,
+   "tag": "Berlin · Winter 1916–17",
+   "tagIn": 0.3,
+   "beat": "and Germans got through it on turnips.",
+   "card": "ch01.json#19:scene/A",
+   "id": "s019",
+   "end": 90.6
+  },
+  {
+   "start": 90.6,
+   "type": "stage",
+   "elements": [
+    {
+     "kind": "actor",
+     "who": "girl",
+     "x": 470,
+     "y": 965,
+     "pose": "wait",
+     "expr": "tired",
+     "keys": [
+      {
+       "t": 1.2,
+       "flip": false,
+       "turn": 0.38,
+       "look": 0.6,
+       "view": "front"
+      }
+     ],
+     "id": "girl",
+     "turn": 0.38,
+     "seated": true,
+     "depthScale": 0.74
+    },
+    {
+     "kind": "actor",
+     "who": "boy",
+     "x": 720,
+     "y": 965,
+     "pose": "wait",
+     "expr": "sad",
+     "keys": [
+      {
+       "t": 1.47,
+       "look": 0.34
+      }
+     ],
+     "id": "boy",
+     "turn": 0.38,
+     "seated": true,
+     "depthScale": 0.7
+    },
+    {
+     "kind": "actor",
+     "who": "mother",
+     "x": 1200,
+     "y": 915,
+     "pose": "wait",
+     "expr": "sad",
+     "keys": [
+      {
+       "t": 1.6,
+       "pose": "heart"
+      }
+     ],
+     "id": "mother",
+     "flip": true,
+     "turn": 0.38
+    },
+    {
+     "kind": "prop",
+     "item": "table",
+     "x": 560,
+     "y": 1015,
+     "scale": 2.13,
+     "in": 0.0,
+     "id": "table"
+    },
+    {
+     "kind": "prop",
+     "item": "plate",
+     "x": 326,
+     "y": 759,
+     "scale": 0.852,
+     "in": 0.0,
+     "id": "plate",
+     "depthY": 1015.51
+    },
+    {
+     "kind": "prop",
+     "item": "turnip",
+     "x": 326,
+     "y": 759,
+     "scale": 0.597,
+     "in": 0.0,
+     "id": "turnip",
+     "depthY": 1015.52
+    },
+    {
+     "kind": "prop",
+     "item": "plate",
+     "x": 794,
+     "y": 759,
+     "scale": 0.852,
+     "in": 0.0,
+     "id": "plate_4",
+     "depthY": 1015.53
+    },
+    {
+     "kind": "prop",
+     "item": "candle",
+     "x": 560,
+     "y": 759,
+     "scale": 0.852,
+     "in": 0.0,
+     "id": "candle",
+     "depthY": 1015.54
+    },
+    {
+     "kind": "prop",
+     "item": "chair",
+     "x": 470,
+     "y": 963,
+     "scale": 1.417,
+     "in": 0.0,
+     "id": "seat_girl"
+    },
+    {
+     "kind": "prop",
+     "item": "chair",
+     "x": 720,
+     "y": 963,
+     "scale": 1.341,
+     "in": 0.0,
+     "id": "seat_boy"
+    }
+   ],
+   "set": {
+    "kind": "room",
+    "style": "kitchen",
+    "seed": 1916,
+    "items": [
+     "shelf:empty",
+     "window:snow_street",
+     "clock",
+     "hooks"
+    ],
+    "light": "candle",
+    "poor": true,
+    "lightX": 760,
+    "time": "night",
+    "weather": "snow"
+   },
+   "shots": [
+    {
+     "t": 0,
+     "x": 326,
+     "y": 698,
+     "zoom": 2.51,
+     "push": 0.05
+    },
+    {
+     "t": 1.2,
+     "zoom": 1.0,
+     "push": 0.04
+    }
+   ],
+   "world": {
+    "scale": 1.7,
+    "y": 915,
+    "horizon": 520
+   },
+   "ambience": "room",
+   "transition": "fade",
+   "shotDissolve": true,
+   "tag": "Berlin · Winter 1916–17",
+   "tagIn": -1,
+   "beat": "They still call it the Turnip Winter.",
+   "card": "ch01.json#20:scene/A",
+   "id": "s020",
+   "end": 93.96
+  }
+ ]
+}

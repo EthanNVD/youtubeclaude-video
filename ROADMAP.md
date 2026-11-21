@@ -109,6 +109,14 @@ Goal: a frame from our video can sit next to a frame from the reference channel 
 - [ ] S7 Period cities (Paris 1918, Berlin 1945 skylines) for `binocular_view` / `establish`: the `city` set is modern blocks
 - [ ] S8 A side-view walk for people crossing the frame (chibis walk front-facing today)
 
+### M2b — Creative scenes (done 2026-11-21)
+- [x] `scene` card: compose any moment from the narration (idea, place, people acting on the words, things, crowd, vehicles, effects, camera).
+- [x] Room and town kit; 30 new gestures; walking styles; everyday props; declarative drawings + shared library.
+- [x] Pre-production `preview`; `patch` re-render of changed scenes; repetition and staging checks; missing-asset log.
+- [ ] Grow the drawing library from each film's `work/missing_assets.json` (a horse-drawn cart without a horse, a field hospital tent interior, a soup kitchen…).
+- [ ] A WW1 battleship deck set (the `deck` set is a WW2 carrier deck with aircraft).
+- [ ] Seated crowds (a classroom or a parliament full of seated people as one `crowd`).
+
 ### M3 — Faster, safer production
 - [x] F1 Scene library: reusable shot templates (office decision, map advance, convoy, river crossing, cockpit…) so a 30-min plan is assembled from proven pieces
 - [ ] F2 Partial re-render: re-render only changed scenes and splice them into the film
@@ -117,6 +125,10 @@ Goal: a frame from our video can sit next to a frame from the reference channel 
 ---
 
 ## Known issues (fix in the engine, then tick)
+- [ ] The `deck` set is an aircraft-carrier deck (planes, US flag): wrong for a WW1 or a battleship scene. Use `beach`/`harbor` with ships behind until a battleship deck exists.
+- [ ] The `cart` VEHICLE is horse-drawn; a hand cart is the `cart` THING (`{"what": "cart", "n": 1}`).
+- [ ] Held long things (a broom) follow the right hand in gestures; give such a person `pose: hold` and few gestures, or lean the thing (`lift`) beside them.
+- [ ] A crowd's members cannot sit; seated audiences are individual people with `seated: true`.
 - [x] Hands: thumb drawn as a separate ball on top of the hand, hook on the open hand; flat props held with both hands in the middle (fixed 2026-11-16)
 - [ ] Horse and cart still flat
 - [ ] `field` set telegraph poles read as grave crosses at small size

@@ -6,8 +6,17 @@ the "Two Sides of War" style, plus its YouTube package. You are the **director**
 - the code draws it.
 
 **You do not write animation code or coordinates.**
-- You write **scene cards**: small JSON objects that pick a *recipe* (a tested kind of scene) and fill in its fields.
+- You write **scene cards**: small JSON objects.
+  - **Most cards are `scene` cards** ([playbook/scene-writing.md](playbook/scene-writing.md)): you write the director's `idea` for the clause, then the place, the people and what they do on which words, the things, and the camera.
+  - The compiler stages it: positions, depth, who faces whom, gestures, camera, dissolves, sound.
+  - Every script gets its own places, people and pictures. Nothing is a fixed template.
+- **Recipes** (tested compositions: battles, maps, charts, documents) are the fast way to show those moments.
 - A compiler turns the cards into the film.
+- What the engine lacks, you create first:
+  - people (cast entries);
+  - places (story places built from the room/street kit);
+  - objects, equipment and simple vehicles (declarative drawings);
+  - then you check them on preview sheets.
 
 ## The 9 steps (do them in order; each has its own page in `playbook/`)
 
@@ -15,12 +24,13 @@ the "Two Sides of War" style, plus its YouTube package. You are the **director**
 |---|---|---|---|
 | 0 | Start the session | read this file, `ROADMAP.md`, the project's `STATUS.md` | [00-START-HERE](playbook/00-START-HERE.md) |
 | 1 | Prepare the inputs | `python tools/make.py projects/<slug> prepare` | [01-setup](playbook/01-setup.md) |
-| 2 | Understand the script | read **all** of `work/reading.md`, fill in `understanding.md` | [02-understand](playbook/02-understand.md) |
-| 3 | Write the cards | `cards/_film.json` + `cards/ch01.json`, `ch02.json`, … | [03-cards](playbook/03-cards.md) + [narration-to-picture](playbook/narration-to-picture.md) + [recipes/CATALOG](recipes/CATALOG.md) |
-| 4 | Compile and fix | `python tools/make.py projects/<slug> cards` (repeat until `"ok": true`) | [04-compile](playbook/04-compile.md) |
-| 5 | Look at it | `python tools/make.py projects/<slug> review`, open every `review/sheet_*.jpg` | [05-review](playbook/05-review.md) |
+| 2 | Understand the script | read **all** of `work/reading.md`, fill in `understanding.md` (with one `idea` per clause) | [02-understand](playbook/02-understand.md) + [visual-ideas](playbook/visual-ideas.md) |
+| 2b | Pre-production | `cards/_film.json`: `cast` (everyone, children with `size`), `sets` (story places), `drawings` (things the engine lacks), `look`; then `python tools/make.py projects/<slug> preview` and look at every sheet | [scene-writing §8](playbook/scene-writing.md#8-pre-production-build-and-check-the-cast-places-and-drawings-first) |
+| 3 | Write the cards | `cards/ch01.json`, `ch02.json`, …: `scene` cards for the story, recipes for battles/maps/charts | [scene-writing](playbook/scene-writing.md) + [03-cards](playbook/03-cards.md) + [narration-to-picture](playbook/narration-to-picture.md) + [recipes/STAGECRAFT](recipes/STAGECRAFT.md) + [recipes/CATALOG](recipes/CATALOG.md) |
+| 4 | Compile and fix | `python tools/make.py projects/<slug> cards` (repeat until `"ok": true`, warnings fixed) | [04-compile](playbook/04-compile.md) |
+| 5 | Look at it | `python tools/make.py projects/<slug> review --at all`, open every `review/sheet_*.jpg`; fix **only the wrong cards**, re-check them with `--scenes` | [05-review](playbook/05-review.md) |
 | 6 | Sound | `python tools/make.py projects/<slug> audio` | [06-sound-render](playbook/06-sound-render.md) |
-| 7 | Render | `python tools/make.py projects/<slug> video`, then `mux` | [06-sound-render](playbook/06-sound-render.md) |
+| 7 | Render | `python tools/make.py projects/<slug> video`, then `mux`; later fixes: `patch` re-renders only the changed scenes | [06-sound-render](playbook/06-sound-render.md) |
 | 8 | YouTube package | titles, thumbnail prompts, description, tags | [07-youtube](playbook/07-youtube.md) |
 | 9 | Hand over | report to the user, update `STATUS.md` | [00-START-HERE](playbook/00-START-HERE.md#9-hand-over) |
 
@@ -42,6 +52,17 @@ the "Two Sides of War" style, plus its YouTube package. You are the **director**
 5. **Never the same recipe twice in a row** (unless it is the same place revisited).
    - After a decision, show its consequence.
    - After an attack, show the other side or the cost.
+5b. **Every card is its own picture.**
+   - Write the `idea` first.
+   - No two cards in a short span with the same place + camera + acts, unless it is a deliberate callback (`"revisit": true`). The compiler compares them.
+   - Take devices from `playbook/visual-ideas.md`, each at most twice per film.
+5c. **Build what is missing; never fake it with a label.** A person, a place, a piece of equipment or a simple vehicle:
+   - create it in `cards/_film.json` (`cast`, `sets`, `drawings`);
+   - check it with `preview`.
+5d. **Fix only what is wrong.** After `review`:
+   - change only the wrong cards;
+   - re-check them with `review --scenes …`;
+   - after a render, `patch` re-renders only those scenes.
 6. **Fix every error the tools print.**
    - Every message says exactly what to change.
    - Do not move to the next step while `"ok"` is `false`.
@@ -65,6 +86,11 @@ the "Two Sides of War" style, plus its YouTube package. You are the **director**
 | path | what |
 |---|---|
 | `playbook/` | step-by-step instructions (start at `00-START-HERE.md`) |
+| `playbook/scene-writing.md` | **the `scene` card**: method, every field, templates, examples, pre-production, fixing single scenes |
+| `playbook/visual-ideas.md` | a bank of picture devices for numbers, lists, decisions, hunger, loss, news, journeys, memory |
+| `recipes/STAGECRAFT.md` | everything a `scene` card can name (places, modules, acts, moods, crowds, things, drawings, cameras), with pictures |
+| `assets/library/drawings/` | shared declarative drawings (field kitchen, notice board, zeppelin, bicycle, …): add the good ones you draw |
+| `projects/creative-blockade/`, `projects/creative-austria/` | two complete scene-card films (WW1 blockade; how Austria taught Hitler) |
 | `recipes/CATALOG.md` | every recipe: when to use it, its fields, preview images |
 | `recipes/PEOPLE.md` | sides, uniforms, character presets |
 | `data/places.json` | map places by name |

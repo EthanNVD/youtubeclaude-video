@@ -1,0 +1,115 @@
+{
+ "title": "How Countries Teach Hitler — classroom two, Austria (creative-scene test 2)",
+ "lang": "en",
+ "era": "modern",
+ "sides": ["german", "american"],
+ "look": {"seed": 1991, "grade": "warm"},
+ "sets": {
+  "classroom_two": {"room": "classroom", "items": ["map", {"item": "blackboard", "text": "1943"}, "crucifix", "window:street", "clock"], "tag": "Classroom two · Austria"},
+  "vienna_ministry": {"room": "ministry", "items": ["window:tall", "portrait", "flag:AUS", "window:tall"], "tag": "Vienna · 1945"},
+  "textbook_archive": {"room": "office", "items": ["drawers", "window", {"item": "shelf", "arg": "books"}, "cabinet"], "tag": "Textbook research"},
+  "classroom_1960s": {"room": "classroom", "items": ["window:street", {"item": "blackboard", "text": "1938"}, "map", "crucifix"], "light": "window", "tag": "An Austrian school · 1960s"},
+  "vienna_street": {"town": "austrian", "buildings": ["tenement", {"item": "shop:cafe"}, "tenement", "house"], "items": [{"item": "poster", "text": "WALDHEIM", "x": 330}, {"item": "lamppost", "x": 1290}, {"item": "poster", "text": "WALDHEIM", "x": 1080}, {"item": "tree", "x": 1760}], "tag": "Vienna · 1986"},
+  "press_room": {"room": "ministry", "items": ["window:tall", "portrait", "window:tall"], "tag": "Vienna · 1986"},
+  "parliament": {"set": "parliament", "tag": "Parliament, Vienna · July 1991"}
+ },
+ "drawings": {
+  "broom": {
+   "doc": "a long broom — the caretaker's; drawn around the hand (0,0) because it is mostly held",
+   "size": 1.0, "h": 420,
+   "parts": [
+    {"line": [[0, -150], [0, 196]], "width": 11, "stroke": "#7a5232"},
+    {"poly": [[-46, 196], [46, 196], [60, 264], [-60, 264]], "fill": "#c9a24a"},
+    {"rect": [-50, 186, 100, 18], "r": 5, "fill": "#5a3e2a"},
+    {"line": [[-30, 210], [-38, 258]], "width": 3, "stroke": "#8a6a2a"},
+    {"line": [[0, 210], [0, 258]], "width": 3, "stroke": "#8a6a2a"},
+    {"line": [[30, 210], [38, 258]], "width": 3, "stroke": "#8a6a2a"}
+   ]
+  },
+  "school_desk": {
+   "doc": "a pupil's wooden school desk with a slanted lid and an inkwell; a seated pupil sits behind it",
+   "size": 0.85, "h": 130, "top": 112,
+   "parts": [
+    {"line": [[-96, 0], [-96, -96]], "width": 11, "stroke": "#4a3424"},
+    {"line": [[96, 0], [96, -96]], "width": 11, "stroke": "#4a3424"},
+    {"rect": [-104, -98, 208, 48], "fill": "#7a5232"},
+    {"poly": [[-114, -98], [114, -98], [114, -114], [-114, -126]], "fill": "#9a6a3a"},
+    {"circle": [84, -120, 8], "fill": "#2a2a3a", "width": 3}
+   ]
+  },
+  "lectern": {
+   "doc": "a speaker's lectern (parliament, lecture hall, press conference); put papers \"on\" it",
+   "size": 1.0, "h": 150, "top": 140,
+   "parts": [
+    {"poly": [[-72, 0], [72, 0], [58, -126], [-58, -126]], "fill": "#6a4428"},
+    {"poly": [[-86, -126], [86, -126], [78, -150], [-78, -142]], "fill": "#8a5a32"},
+    {"rect": [-40, -100, 80, 54], "fill": "none", "stroke": "#2a1a10", "width": 4, "opacity": 0.4}
+   ]
+  },
+  "declaration_half": {
+   "doc": "the 1943 Moscow Declaration on Austria: paragraph one in black, paragraph two faded — the half that was read (held like a paper)",
+   "size": 1.0, "h": 200,
+   "parts": [
+    {"rect": [-72, -100, 144, 200], "fill": "#f4ecd8"},
+    {"text": "MOSCOW · 1943", "at": [0, -72], "size": 17},
+    {"line": [[-58, -50], [58, -50]], "width": 5},
+    {"line": [[-58, -36], [58, -36]], "width": 5},
+    {"line": [[-58, -22], [58, -22]], "width": 5},
+    {"line": [[-58, -8], [20, -8]], "width": 5},
+    {"line": [[-58, 22], [58, 22]], "width": 5, "opacity": 0.15},
+    {"line": [[-58, 36], [58, 36]], "width": 5, "opacity": 0.15},
+    {"line": [[-58, 50], [58, 50]], "width": 5, "opacity": 0.15},
+    {"line": [[-58, 64], [10, 64]], "width": 5, "opacity": 0.15}
+   ]
+  },
+  "declaration_full": {
+   "doc": "the same declaration with paragraph two read out at last (underlined in red)",
+   "size": 1.0, "h": 200,
+   "parts": [
+    {"rect": [-72, -100, 144, 200], "fill": "#f4ecd8"},
+    {"text": "MOSCOW · 1943", "at": [0, -72], "size": 17},
+    {"line": [[-58, -50], [58, -50]], "width": 5},
+    {"line": [[-58, -36], [58, -36]], "width": 5},
+    {"line": [[-58, -22], [58, -22]], "width": 5},
+    {"line": [[-58, -8], [20, -8]], "width": 5},
+    {"line": [[-58, 22], [58, 22]], "width": 5},
+    {"line": [[-58, 36], [58, 36]], "width": 5},
+    {"line": [[-58, 50], [58, 50]], "width": 5},
+    {"line": [[-58, 64], [10, 64]], "width": 5},
+    {"line": [[-62, 74], [62, 74]], "width": 4, "stroke": "#b8392e"}
+   ]
+  },
+  "newspaper_1986": {
+   "doc": "a 1986 newspaper with a WALDHEIM headline (held up by a newsboy)",
+   "size": 1.0, "h": 130,
+   "parts": [
+    {"rect": [-90, -64, 180, 128], "fill": "#f2ede0"},
+    {"rect": [-80, -56, 160, 22], "fill": "#2a2a2a", "stroke": false},
+    {"text": "WALDHEIM", "at": [0, -16], "size": 30, "font": "title"},
+    {"line": [[-76, 4], [76, 4]], "width": 4},
+    {"line": [[-76, 18], [40, 18]], "width": 4},
+    {"rect": [-76, 28, 60, 30], "fill": "#9a9a9a", "width": 2},
+    {"line": [[-8, 36], [76, 36]], "width": 4},
+    {"line": [[-8, 50], [60, 50]], "width": 4}
+   ]
+  }
+ },
+ "cast": {
+  "teacher": {"preset": "host", "name": "The Teacher"},
+  "caretaker": {"preset": "worker", "color": "#5a5a62", "hat": "flatcap", "age": 0.75, "facial": "walrus", "name": "The Caretaker"},
+  "official": {"preset": "diplomat", "age": 0.6},
+  "official2": {"preset": "civilian_man", "outfit": "suit", "glasses": "round", "age": 0.7, "facial": "walrus"},
+  "official3": {"preset": "civilian_man", "outfit": "suit", "color": "#4a4a52", "age": 0.5},
+  "researcher": {"preset": "civilian_woman", "glasses": "round", "age": 0.4, "color": "#7a4a3a"},
+  "teacher60s": {"preset": "civilian_woman", "age": 0.55, "glasses": "round", "color": "#4a5a6a", "hair": "bun"},
+  "pupil_a": {"preset": "civilian_man", "age": 0, "build": 0.85, "facial": "none", "hat": "none", "color": "#6a7a5a", "size": 0.72},
+  "pupil_b": {"preset": "civilian_woman", "age": 0, "build": 0.85, "hair": "bun", "color": "#8a5a4a", "size": 0.7},
+  "pupil_c": {"preset": "civilian_man", "age": 0, "build": 0.85, "facial": "none", "hat": "none", "hair": "part", "color": "#5a6a8a", "size": 0.72},
+  "newsboy": {"preset": "civilian_man", "age": 0, "build": 0.9, "hat": "flatcap", "facial": "none", "color": "#7a5a3c", "size": 0.82},
+  "waldheim": {"preset": "diplomat", "age": 0.7, "glasses": "none", "name": "Kurt Waldheim", "role": "Presidential candidate, 1986"},
+  "vranitzky": {"preset": "civilian_man", "outfit": "suit", "color": "#2f3440", "age": 0.45, "hair": "side", "facial": "none", "name": "Franz Vranitzky", "role": "Chancellor of Austria"},
+  "mp_a": {"preset": "civilian_man", "outfit": "suit", "color": "#3b3a3f", "age": 0.6, "glasses": "round"},
+  "mp_b": {"preset": "civilian_woman", "color": "#5a4a6a", "age": 0.5},
+  "reporter": {"preset": "reporter"}
+ }
+}

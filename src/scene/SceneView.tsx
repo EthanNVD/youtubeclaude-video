@@ -176,7 +176,7 @@ export const SceneView: React.FC<{ scene: Scene; t: number; cast?: Record<string
   // with a depth model, people and vehicles are drawn far → near (by their current ground y); other elements keep their slots
   // ground effects (a shell bursting, smoke from a gun) and props lying on the ground are part of that depth order too:
   // a burst behind a man is drawn behind him, one in front of him covers him (never a far explosion over a near face)
-  const DEPTH_KINDS = new Set(['actor', 'vehicle', 'crowd', 'prop']);
+  const DEPTH_KINDS = new Set(['actor', 'vehicle', 'crowd', 'prop', 'drawing']);
   const inDepth = (el: ElementBase) => (DEPTH_KINDS.has(el.kind) || (el.kind === 'fx' && GROUND_FX.has(el.type as string))) && !el.fixedLayer;
   // without a world model only battle scenes are re-ordered (people, vehicles and ground bursts by their feet y), so a
   // shell landing far behind a sentry never covers him; other scenes keep the authored order
@@ -219,7 +219,7 @@ export const SceneView: React.FC<{ scene: Scene; t: number; cast?: Record<string
         {frontEls.map(({ el, i }) => <ElementView key={'f' + i} el={el} ctx={ctx} index={i} />)}
       </g>
       {scene.type === 'map' && scene.map && (scene.map as { paper?: boolean }).paper !== false && scene.map.style !== 'poster' && scene.map.style !== 'dark' ? <PaperOverlay /> : null}
-      {weather === 'rain' || weather === 'snow' ? (
+      {(weather === 'rain' || weather === 'snow') && scene.set?.kind !== 'room' ? (
         <g transform="translate(960 540)">
           <ElementView el={{ kind: 'fx', type: weather, enter: 'none' }} ctx={ctx} index={999} />
         </g>

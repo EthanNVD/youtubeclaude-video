@@ -20,9 +20,18 @@ The film is told like an animated movie: one clause → one concrete picture of 
    - symbols and **big questions**;
    - numbers (spoken / stat / chart);
    - chapters;
-   - for every clause: WHO · DOES WHAT · WHERE · WHEN · recipe (`playbook/narration-to-picture.md` §1).
+   - for every clause: WHO · DOES WHAT · WHERE · WHEN · **IDEA** (what we see, why) · scene card or recipe (`playbook/narration-to-picture.md` §1, `playbook/visual-ideas.md`).
+   - **Pre-production lists**: every person, story place, thing and vehicle the pictures need (template §8b).
+2b. Pre-production, in `cards/_film.json`:
+   - `cast`: everyone; children with `"size": 0.7–0.8`;
+   - `sets`: story places from the room/street kit, with tags;
+   - `drawings`: things the engine lacks, drawn from shapes;
+   - `look`: seed and grade, so each film looks and moves differently.
+
+   Then run `python tools/make.py projects/<slug> preview` and fix until every sheet is right (`playbook/scene-writing.md` §8).
 3. Write the cards:
-   - `cards/_film.json`: era, sides, cast with name and role, extra places.
+   - `cards/_film.json`: era, sides, cast with name and role, extra places, `look`, `sets`, `drawings`.
+   - **Most cards are `scene` cards**: `idea` → `where` → `people` with `do` acts on the words → `things` → `camera` (`playbook/scene-writing.md`; vocabulary in `recipes/STAGECRAFT.md`). Recipes for battles, maps, charts and documents.
    - `cards/chNN.json`: one card per idea, 3–10 s. Each card has:
      - `at`: the first words, copied exactly;
      - `recipe`;
@@ -43,8 +52,8 @@ The film is told like an animated movie: one clause → one concrete picture of 
    - `says` copied from the narration.
 
    Targets: acted cards (action + talk recipes) ≥ 75 % of every chapter; maps ≤ 10 % (≤ 5 s each); documents/charts ≤ 10 %; host ≤ 8 %.
-5. `review`. Open every `review/sheet_*.jpg` and answer the yes/no checklist in `playbook/05-review.md`.
-6. `audio` → `video` → `mux`. Run one render at a time. Then check frames of the final MP4.
+5. `review --at all`. Open every `review/sheet_*.jpg` and answer the yes/no checklist in `playbook/05-review.md` (23 questions; 17–23 are the scene-card problems). Fix **only the wrong cards**; re-check them with `review --scenes … --at all`.
+6. `audio` → `video` → `mux`. Run one render at a time. Then check frames of the final MP4. Later fixes: `cards` → `review --scenes` → `patch` (re-renders only the changed scenes).
 7. The YouTube package (`playbook/07-youtube.md`).
 
 ## Fixed choices (never ask)
@@ -58,7 +67,9 @@ Talk to the user in their language (Vietnamese by default). On-screen text and m
 
 ## When recipes are not enough (strong models)
 - **A recurring kind of sentence**: add a recipe in `tools/cardlib/recipes_*.py`. Then run `python tools/catalog.py --previews`, check its preview tiles, and add a row to `narration-to-picture.md` (`playbook/08-advanced.md` §B).
-- **A one-off moment**: use the `raw` recipe, which takes an engine scene. Schema: [references/plan-schema.md](references/plan-schema.md).
+- **A moment no recipe shows**: write a `scene` card. It composes any place, people, acts, things, crowd, vehicles and camera (`playbook/scene-writing.md`).
+- **A thing the engine lacks**: draw it in `cards/_film.json` `"drawings"` (shapes, no code). Copy good ones to `assets/library/drawings/`.
+- **A one-off moment beyond that**: use the `raw` recipe, which takes an engine scene. Schema: [references/plan-schema.md](references/plan-schema.md).
 - **A missing visual** (set, prop, vehicle, pose, fx): extend the engine in `src/`, then run `npx tsc --noEmit` and render a still. Follow the neighbouring code's style. Never fake a missing visual with a label.
 
 ## Reference material (for recipe and engine work)

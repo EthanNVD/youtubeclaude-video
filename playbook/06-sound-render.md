@@ -36,6 +36,18 @@ ffmpeg -ss 120 -i projects/<slug>/out/<slug>.mp4 -frames:v 1 -vf scale=640:-1 pr
 - Look at the frames: picture and timing should be right.
 - If you can play audio, listen to a minute around a busy battle.
 
+## 5. Fix a few scenes after the render (no full re-render)
+```
+python tools/make.py projects/<slug> cards              # after fixing the wrong cards
+python tools/make.py projects/<slug> review --scenes s012,s013 --at all
+python tools/make.py projects/<slug> patch --dry        # lists the scenes that changed and the time ranges
+python tools/make.py projects/<slug> patch              # re-renders only those ranges, splices them in, rebuilds the sound, muxes
+```
+- `video` saves the plan it rendered in `out/plan.rendered.json`.
+- `patch` compares the current plan with that file, scene by scene, and re-renders each changed scene plus the 0.7 s dissolve after it. A 2.7 s scene re-rendered in about one minute in the test, instead of the whole film.
+- The splice is frame-exact. The previous picture is kept as `out/picture.prev.mp4`.
+- A change of the film's `look` (grade) needs a full `video`. A change to a person in the `cast` re-renders the scenes where they appear.
+
 ## Done when
 
 `out/<slug>.mp4` exists, the frames look right, and `STATUS.md` is ticked.

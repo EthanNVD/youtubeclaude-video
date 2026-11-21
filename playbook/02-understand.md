@@ -62,3 +62,20 @@ The compiler keeps a place's setting and tag the same wherever its `place_id` is
 ## Done when
 
 Every section has content, and §8 is filled in for the chapter you are about to build. Tick "understand" in `STATUS.md`.
+
+## The idea column (storyboard)
+
+For every beat, after WHO / DOES WHAT / WHERE / WHEN, write the **idea**: one sentence of what the viewer sees and why that picture tells this clause. It becomes the card's `idea` field ([scene-writing.md](scene-writing.md) §1).
+
+- Read the ideas of a whole chapter together before writing its cards. Two ideas that would look alike → change one: another person, another act, a detail, the consequence, the same place at another time.
+- Stuck? Find the clause's situation in [visual-ideas.md](visual-ideas.md) (a number, a list, a decision, hunger, loss, news, a journey, memory) and take a device.
+
+## Pre-production lists (§8b of the template)
+
+While you understand the script, list everything the pictures need:
+- **people**: everyone who appears, named or not: the mother, the clerk, the admiral, the children;
+- **story places** with their tags;
+- **things** the engine has no prop for: a field kitchen, a declaration, a school desk;
+- **vehicles**.
+
+They become `cast`, `sets` and `drawings` in `cards/_film.json`. Check them with `python tools/make.py projects/<slug> preview` before writing cards.

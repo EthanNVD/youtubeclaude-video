@@ -112,6 +112,7 @@ def compile_project(proj: Path, write=True):
         try:
             s = RECIPES[raw["recipe"]].fn(c)
             s = apply_common(c, s)
+            warns += [f"{_where(raw)}: {m}" for m in c.warns]
         except CardError as e:
             errors.append(str(e))
             continue
@@ -155,8 +156,19 @@ def compile_project(proj: Path, write=True):
 
     # 5. checks that need the whole film
     warns += film_checks(scenes)
+    warns += scene_checks(scenes)
+    # things the writers wanted but the engine lacks: the to-do list for the next engine upgrade (playbook/scene-writing.md §9)
+    missing = film.pop("_missing", [])
+    if write:
+        (proj / "work").mkdir(exist_ok=True)
+        (proj / "work" / "missing_assets.json").write_text(json.dumps(missing, indent=1, ensure_ascii=False), encoding="utf-8")
+    if missing:
+        names = sorted({f"{m['kind']} '{m['name']}'" for m in missing})
+        warns.append(f"{len(missing)} missing asset(s) logged in work/missing_assets.json: {', '.join(names[:12])}{' …' if len(names) > 12 else ''}")
 
     meta = {"title": film.get("title", proj.name), "lang": film.get("lang", "en"), "fps": 24, "duration": end_time, "grain": 0.5}
+    if (film.get("look") or {}).get("grade"):
+        meta["grade"] = film["look"]["grade"]
     v = _voice_file(proj)
     if v:
         meta["voice"] = v
@@ -195,7 +207,7 @@ def film_checks(scenes):
         cur["scenes"].append(s)
     for k in range(1, len(scenes)):
         a, b = scenes[k - 1]["_raw"], scenes[k]["_raw"]
-        if a["recipe"] == b["recipe"] and RECIPES[a["recipe"]].cls != "map":
+        if a["recipe"] == b["recipe"] and RECIPES[a["recipe"]].cls != "map" and b["recipe"] != "scene":
             w.append(f"{_where(b)}: same recipe '{b['recipe']}' as the card before. Two scenes in a row that look alike feel like a loop: "
                      f"show the NEXT thing (the consequence, the other side, a close detail). See playbook/narration-to-picture.md.")
     for c in chap:
@@ -205,7 +217,7 @@ def film_checks(scenes):
         for s in c["scenes"]:
             counts[s["_raw"]["recipe"]] = counts.get(s["_raw"]["recipe"], 0) + 1
         for rid, m in counts.items():
-            if n >= 6 and m / n > 0.3 and RECIPES[rid].cls != "map":
+            if n >= 6 and m / n > 0.3 and RECIPES[rid].cls != "map" and rid != "scene":
                 w.append(f"chapter '{c['title']}': recipe '{rid}' is used {m} times in {n} cards. Use at most ~30 % per recipe; pick other recipes for some of them.")
         shares = mix_of(c["scenes"])
         acted = shares.get("action", 0) + shares.get("talk", 0)
@@ -232,6 +244,54 @@ def film_checks(scenes):
         says = raw.get("says", "")
         if says and difflib.SequenceMatcher(None, says.lower(), s["beat"].lower()[:len(says) + 20]).ratio() > 0.8:
             w.append(f"{_where(raw)}: \"says\" copies the narration. Write what it MEANS (who does what, why it matters) in your own words.")
+    return w
+
+
+def _words(s):
+    return {w for w in "".join(ch.lower() if ch.isalnum() else " " for ch in s).split() if len(w) > 3}
+
+
+def scene_checks(scenes):
+    """Anti-repetition for scene cards: the same place + camera + action twice in a short span, or an idea that repeats
+    an earlier one, reads as a loop to the viewer. Deliberate callbacks carry "revisit": true."""
+    w = []
+    seen = []  # (index, sig, raw)
+    for k, s in enumerate(scenes):
+        raw = s["_raw"]
+        sig = raw.get("_sig")
+        if not sig or raw.get("revisit"):
+            if sig:
+                seen.append((k, sig, raw))
+            continue
+        for k2, sig2, raw2 in reversed(seen):
+            if k - k2 > 8:
+                break
+            same_look = sig["where"] == sig2["where"] and sig["camera"] == sig2["camera"] and sig["acts"] == sig2["acts"]
+            if same_look:
+                w.append(f"{_where(raw)}: looks like {_where(raw2)} (same place, camera \"{sig['camera']}\" and the same acts {sig['acts']}). "
+                         f"Show the NEXT thing: another person, another act, a detail, the consequence, or the same place at another time "
+                         f"(playbook/scene-writing.md §6). If it is a deliberate callback, add \"revisit\": true.")
+                break
+        a = _words(sig.get("idea") or "")
+        for k2, sig2, raw2 in seen:
+            b = _words(sig2.get("idea") or "")
+            if a and b and len(a & b) / max(1, min(len(a), len(b))) > 0.7:
+                w.append(f"{_where(raw)}: its idea repeats {_where(raw2)} (\"{(sig2.get('idea') or '')[:70]}…\"). "
+                         f"Every card needs its own picture: pick another device from playbook/visual-ideas.md.")
+                break
+        seen.append((k, sig, raw))
+    # one place for too long without a change of time, people or camera
+    run = 1
+    for k in range(1, len(scenes)):
+        a, b = scenes[k - 1]["_raw"].get("_sig"), scenes[k]["_raw"].get("_sig")
+        run = run + 1 if a and b and a["where"] == b["where"] else 1
+        if run == 5:
+            w.append(f"{_where(scenes[k]['_raw'])}: 5 scene cards in a row in \"{b['where']}\". Cut away (the other side, the street outside, a detail, a map bridge) and come back.")
+    cams = [s["_raw"]["_sig"]["camera"] for s in scenes if s["_raw"].get("_sig")]
+    for k in range(2, len(cams)):
+        if cams[k] == cams[k - 1] == cams[k - 2] and cams[k] != "custom":
+            w.append(f"three scene cards in a row use camera \"{cams[k]}\" (around card {k + 1} of the scene cards). Vary the camera (or leave it \"auto\").")
+            break
     return w
 
 

@@ -52,11 +52,12 @@ Fill this in one chapter at a time, just before you write that chapter's cards.
 
 For every clause, answer the five questions of `playbook/narration-to-picture.md` §1 in one line:
 
-`time | first words | WHO | DOES WHAT (visible action) | WHERE (place_id) | WHEN (time/weather) | recipe`
+`time | first words | WHO | DOES WHAT (visible action) | WHERE (place_id) | WHEN (time/weather) | IDEA (what we see, why) | scene or recipe`
 
 Rules:
 - Every line names a visible action. "is shown", "map of", or "text saying" are not actions.
-- Never write the same recipe on two lines in a row, unless it is the same place revisited.
+- Never write the same recipe on two lines in a row, unless it is the same place revisited. Two `scene` lines in a row must differ in place, people, act or camera.
+- The IDEA is one sentence a stranger could draw: who, doing what, where, and why it tells the clause (`playbook/scene-writing.md` §1).
 - At least 3 lines in 4 are acted recipes (sections A, B and C of the lookup table).
 - Maps are at most 5 s each; numbers are spoken, not written, unless the line says "stat".
 
@@ -69,6 +70,17 @@ Example:
 0:20 | Germany needed an armistice | Ludendorff → Kaiser | fist on the desk on "immediately"  | kaiser_study | day | confront
 0:23 | The Kaiser could hardly  | Kaiser                | walks to the window, back to us     | kaiser_study | dusk | contemplate
 ```
+
+## 8b. Pre-production — what the pictures need (becomes `cast`, `sets`, `drawings` in cards/_film.json)
+
+| kind | id | description (preset + look / room or town style + modules / parts) | first used at |
+|---|---|---|---|
+| person | mother | civilian_woman, dark purple dress, age 0.3 | 1:22 |
+| person | girl | civilian_woman, age 0, build 0.85, size 0.74 (a child) | 1:22 |
+| place | mueller_kitchen | room kitchen: shelf:empty, window:snow_street, clock; candle light; poor | 1:22 |
+| thing | declaration_half | drawing: a paper, paragraph two faded | 0:00 |
+
+Then run `python tools/make.py projects/<slug> preview` and look at every sheet.
 
 ## 9. Fact flags
 List anything that is uncertain or debated, and any name that may be misspelled. Fix the spelling on screen; never change the timing.

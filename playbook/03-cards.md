@@ -6,6 +6,15 @@ A **card** is one scene: one place and one idea, usually 3–10 seconds of narra
 - walking and timing;
 - sound.
 
+**Most cards are `scene` cards.** A `scene` card composes the picture from the clause:
+- the `idea`;
+- the place;
+- the people and their acts on the words;
+- the things;
+- the camera.
+
+Learn it in [scene-writing.md](scene-writing.md); its whole vocabulary is in [recipes/STAGECRAFT.md](../recipes/STAGECRAFT.md). Use a **recipe** (below and in `recipes/CATALOG.md`) when one shows the moment exactly: a battle, a map move, a chart, a document.
+
 ## 1. Film settings: `cards/_film.json`
 
 `prepare` already copied a template. Fill it in from `understanding.md`:
@@ -32,6 +41,11 @@ A **card** is one scene: one place and one idea, usually 3–10 seconds of narra
 | `host_set` | Where the narrator stands: a set name, e.g. `study`, `station`, `workshop`. |
 | `cast` | Every named person: `preset` (from `recipes/PEOPLE.md`), plus the `name` and `role` that appear on their name card. |
 | `places` | Only places missing from `data/places.json`, as `[longitude, latitude]`. |
+| `look` | `{"seed": 1916, "grade": "film"}`. The seed gives this film its own gestures and camera choices; `grade` its colour: `film warm cold bleak sepia vivid`. |
+| `sets` | Story places for `scene` cards: `{"mueller_kitchen": {"room": "kitchen", "items": [...], "light": "candle", "tag": "Berlin · 1916"}}` ([scene-writing.md](scene-writing.md) §3). |
+| `drawings` | Things the engine has no prop for, drawn from shapes ([scene-writing.md](scene-writing.md) §5.2). |
+
+Children and other small people: give the cast entry `"size": 0.7–0.8`. Check the cast, the places and the drawings with `python tools/make.py projects/<slug> preview` before writing cards.
 
 ## 2. Chapter files: `cards/ch01.json`, `cards/ch02.json`, …
 

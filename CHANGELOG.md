@@ -2,6 +2,62 @@
 
 Newest first. One entry per change that matters to the look, the pipeline or the docs.
 
+## 2026-11-21 — Creative scenes: every clause composed from the narration, not picked from a template
+Why:
+- The recipes are fixed compositions with 2–3 variants, so long films repeated scenes.
+- The user wanted every film told from its own content, creative and never repeating.
+- They also wanted better character and hand movement, and the ability to create characters, equipment, places and vehicles first.
+- After the build: check everything, and fix only the scenes that are wrong.
+
+What changed:
+- **The `scene` card** (`tools/cardlib/recipes_scene.py`, vocabulary in `tools/cardlib/stagecraft.py`). A director's `idea`, then:
+  - `where`: a story place, room/town kit or engine set;
+  - `people`: slot, depth, facing, mood, holds, seated/kneel, walking style, size, `do` acts on phrases;
+  - `crowd`: queue, watchers, walkers, marchers, mourners, cheering, workers, protest, listeners; `"view": "back"` puts heads along the bottom edge;
+  - `things` (on other things, appear on a word, moving, in the sky), `vehicles`, `effects`, `camera` (12 presets or a shot list).
+
+  The compiler computes:
+  - positions, depth, sizes;
+  - who faces whom;
+  - hand-overs: the giver walks up to the receiver;
+  - putting big things down before a free-hand gesture;
+  - seats: a chair indoors, a crate outside;
+  - automatic acting: gestures on stressed words while talking, by mood; small shifts while listening; glances while waiting;
+  - camera shots, dissolves, a second set-up for long shots, tracking of walking subjects;
+  - footsteps and business sounds, ambience.
+
+  Randomness is seeded by the film's `look.seed` and the card's own words: each film moves differently, and editing one card does not reshuffle the others.
+- **Set kit** (`src/sets/Kit.tsx`):
+  - `room`: 18 styles; 35 modules (windows with an outside view, shelves with contents or empty, stoves, ovens, beds, drawers, posters, flags, signs…); walls, floors, light (window shafts, lamp/candle/fire pools); poor/cold variants.
+  - `town`: 8 styles with shop signs in the place's language; 10 building types (shops with awnings and window goods incl. "sold out"); 13 street items.
+- **Characters**:
+  - 30 new gestures and business poses with motion cycles (stir, ladle, eat, peel, knock, hammer, pray, cry, hand on heart, palms, lean, comfort, give, beckon, point down, warm hands, shiver, clap, wring, listen, reach up, cradle, sack, tip hat, push, pull, gasp, read, wait, basket);
+  - walking styles `shuffle`, `march`, `limp`, `sneak`;
+  - held props never mirror their writing; per-item hold sizes; children by `size`.
+- **Props**: bowl, pot, bread, spoon, plate, cup, bottle, jug, sack, bale, ingots, basket, ration card, letter, bucket, lantern, baby, potatoes, turnips, counter, bench, stool, stove, cart, scale, knife, playing cards.
+- **Declarative drawings** (`src/props/Drawing.tsx`): things the engine lacks, drawn in JSON from shapes, in the same style.
+  - Placed, held, moved, stacked; motion: spin, flicker, sway, blink, drift.
+  - Films define them in `cards/_film.json` `"drawings"`; the shared library is `assets/library/drawings/` (field_kitchen, notice_board, zeppelin, bicycle).
+- **Pre-production preview** (`make.py <proj> preview`, `tools/preview.py`): sheets of the cast (standing and acting), every story place with a man for scale, every drawing; `--kit`, `--acts`, `--library`.
+- **Patch render** (`make.py <proj> patch`, `tools/patch_video.py`): after fixing some cards, re-renders only the changed scenes (+ the dissolve after), splices them frame-exact, rebuilds the sound, re-muxes. Tested: a 2.7 s change re-rendered in about 1 min.
+- **Checks**:
+  - repetition of look (place + camera + acts) and of ideas;
+  - three equal cameras in a row; five cards in one place;
+  - people at the frame edge; a flag without a nation;
+  - unknown acts/things replaced by the closest and logged in `work/missing_assets.json` (with the card's `wish`).
+- **Look per film**: `look.grade` = film | warm | cold | bleak | sepia | vivid.
+- **Partial review** no longer leaves stale sheets. Scene cards plan their own coverage (the old auto-coverage skips them).
+- **Docs**:
+  - `playbook/scene-writing.md`: method, fields, places, cast, acts, crowds, things, drawings, vehicles, effects, cameras, 9 templates, pre-production, fixing single scenes, mistakes, examples from many kinds of stories;
+  - `playbook/visual-ideas.md`: a bank of ~50 picture devices;
+  - `recipes/STAGECRAFT.md`, generated with pictures;
+  - AGENTS, 00-START-HERE, 02, 03, 05 (questions 17–23), 06 (§5 patch), narration-to-picture, understanding template (IDEA column, pre-production lists), SKILL, QUALITY, CLAUDE.
+- **Examples**:
+  - `projects/creative-blockade/`: WW1 blockade → Turnip Winter, 20 cards, 94 s;
+  - `projects/creative-austria/`: how Austria taught Hitler, 13 cards, 65 s, a different script with its own drawings.
+
+  Both compiled without warnings, were reviewed frame by frame (start, middle, end), and rendered.
+
 ## 2026-11-21 — Story grammar: tell it like an animated film (every clause one acted picture)
 Why: the user wanted films that tell the story with pictures the way Ember History does — characters acting in places that follow
 the narration, not numbers and paper on screen. Two Ember films were measured frame by frame (projects/ember-test/ANALYSIS.md):

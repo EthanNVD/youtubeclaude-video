@@ -3,6 +3,7 @@ import { C, INK, nation, FONT } from '../theme';
 import { rnd } from '../lib/anim';
 import { Flag } from '../props/Props';
 import { RICH_SETS, RichSet, Lighting } from './Rich';
+import { RoomKit, TownKit } from './Kit';
 
 /**
  * Parametric backgrounds. Drawn on a 2400x1400 canvas centered on the 1920x1080 frame
@@ -295,6 +296,11 @@ const BaseSet: React.FC<SetProps> = (p) => {
   const wall = (p.wall as string) ?? undefined;
 
   switch (kind) {
+    // ---------------- kit: rooms and streets assembled from modules (src/sets/Kit.tsx) ----------------
+    case 'room':
+      return <RoomKit {...p} />;
+    case 'town':
+      return <TownKit {...p} />;
     // ---------------- interiors ----------------
     case 'office':
     case 'study': {
