@@ -1,10 +1,10 @@
 # Quy trình tra cứu
 
-Mục tiêu: kịch bản kể đúng nội dung cuốn sách đã chọn, đúng bối cảnh, đúng tư tưởng. Không dựa vào trí nhớ, không dựa vào video khác.
+Mục tiêu: kịch bản kể đúng nội dung tác phẩm đã chọn, đúng bối cảnh, đúng tư tưởng. Dùng cho Bước 2 (Tra cứu và Fact Ledger) ở mục 6 và cho chế độ viết mới ở mục 14 của SKILL.md. Không dựa vào trí nhớ, không dựa vào video khác.
 
 ## 1. Thứ bậc nguồn
 
-1. **Văn bản gốc chính thức**: jkrishnamurti.org (thư viện bài nói, đối thoại, nhật ký và trích sách của Krishnamurti Foundation Trust và Krishnamurti Foundation of America, có ngày và nơi chốn), kfoundation.org (Ấn Độ), kfa.org, trang của nhà xuất bản (Krishnamurti Publications, HarperCollins, Gollancz…), các trang mẫu sách chính thức.
+1. **Văn bản gốc chính thức**: với Osho là osho.com; với kinh Pali là suttacentral.net, accesstoinsight.org; bản dịch Việt Phật học ở thuvienhoasen.org, budsas.org. Với Krishnamurti: jkrishnamurti.org (thư viện bài nói, đối thoại, nhật ký và trích sách của Krishnamurti Foundation Trust và Krishnamurti Foundation of America, có ngày và nơi chốn), kfoundation.org (Ấn Độ), kfa.org, trang của nhà xuất bản (Krishnamurti Publications, HarperCollins, Gollancz…), các trang mẫu sách chính thức.
 2. **Tiểu sử và học thuật**: Mary Lutyens, Pupul Jayakar; Britannica; bài báo học thuật; báo chí uy tín (ví dụ cáo phó năm 1986); trang về David Bohm của các tổ chức khoa học.
 3. **Wikipedia và mục lục sách**: dùng để định hướng (thư mục sách, năm xuất bản), phải đối chiếu với bậc 1–2 khi đưa vào kịch bản.
 4. **Không đủ để xác nhận**: trang tổng hợp "câu nói hay", Pinterest, ảnh trích dẫn, blog, video YouTube (kể cả ABooks, BBooks), bản dịch không rõ người dịch. Rất nhiều "câu nói của Krishnamurti" lan truyền trên mạng là giả hoặc bị cắt ghép.

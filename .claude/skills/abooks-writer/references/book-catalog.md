@@ -1,4 +1,8 @@
-# Danh mục sách và tiểu sử Krishnamurti (để định hướng)
+# Danh mục tác phẩm (để định hướng)
+
+Phần lớn danh mục dưới đây là Krishnamurti. Với Osho và Phật học, xem mục cuối: chỉ là điểm xuất phát, mọi tên sách, năm, nơi giảng phải kiểm lại theo research-protocol.md.
+
+# Krishnamurti
 
 **Đây là bản đồ định hướng, không phải nguồn.** Năm, tên bản dịch tiếng Việt, người biên tập và mọi chi tiết tiểu sử phải được kiểm lại theo [research-protocol.md](research-protocol.md) rồi ghi vào Fact Ledger trước khi đưa vào kịch bản hay tiêu đề. Dấu "(kiểm)" nghĩa là thông tin chưa chắc, phải tra kỹ.
 
@@ -88,3 +92,9 @@ Cột "Góc mạnh" gợi ý nỗi đau người xem mà cuốn sách trả lờ
 ABooks: The Book of Life; The Ending of Time; tuyển về thiền; The Future Is Now (hai video); bài nói về thiền và AI; thời gian tâm lý; bẫy tâm linh; cái tôi; áp lực cuộc sống. BBooks: tổng hợp tư tưởng; giáo dục ("Bằng Cấp Hay Chiếc Lồng Vô Hình?"); chữa lành; nhiều video tiếng Anh (On Living and Dying, On Education, Love and Total Transformation).
 
 Một cuốn sách có nhiều lát cắt. Ví dụ The Ending of Time: ABooks khai thác thời gian tâm lý và nền tảng; còn lại chặng về cái chết, về tuệ giác và tế bào não, về "nhân loại là một". Khi làm lại, đổi câu hỏi trung tâm, đổi lát cắt chương và đổi câu mồi.
+
+# Osho và Phật học (điểm xuất phát, phải kiểm)
+
+- Osho: phần lớn sách của Osho là bản ghi các buổi giảng, được biên tập thành sách; nguồn chính thức là osho.com (thư viện bài giảng theo tên sách, năm, nơi). Khi chọn một cuốn, dựng Bản đồ tác phẩm từ danh sách bài giảng chính thức, ghi rõ năm và nơi giảng sau khi đã kiểm.
+- Phật học: ưu tiên một bài kinh hay một phẩm kinh cụ thể (ví dụ Trung Bộ kinh, Tương Ưng bộ, Kinh Pháp Cú) qua suttacentral.net (bản Pali và bản dịch) và thuvienhoasen.org (bản dịch tiếng Việt, ghi tên dịch giả). Dùng đúng thuật ngữ Hán Việt thông dụng.
+- Không lấy "câu nói của Osho" hay "lời Phật dạy" từ ảnh trích dẫn, mạng xã hội, video khác. Rất nhiều câu lan truyền là giả.

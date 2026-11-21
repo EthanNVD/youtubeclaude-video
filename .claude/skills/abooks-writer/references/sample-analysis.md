@@ -1,6 +1,25 @@
 # Phân tích 7 video mẫu (ảnh chụp ngày 17/11/2026)
 
-Nguồn: metadata và phụ đề tự động tiếng Việt tải bằng yt-dlp. Phụ đề tự động nghe nhầm tên riêng ("Chris Namy" là Krishnamurti, "David Bom" là David Bohm), nên trích dẫn dưới đây là thuật lại, không phải nguyên văn. Transcript là chứng cứ về **cách kể**, không phải nguồn tư liệu về Krishnamurti.
+Nguồn: metadata và phụ đề tự động tiếng Việt tải bằng yt-dlp. Phụ đề tự động nghe nhầm tên riêng ("Chris Namy" là Krishnamurti, "David Bom" là David Bohm), nên trích dẫn dưới đây là thuật lại, không phải nguyên văn. Transcript là chứng cứ về **cách kể**, không phải nguồn tư liệu về Krishnamurti. Bản transcript có mốc giờ lưu ở `D:\youtubeclaude\krishnamurti\_mau\` (không commit).
+
+## 0. Cách mở bài và triển khai (phân tích ngày 21/11/2026, đọc lại toàn bộ 7 video)
+
+### Mở bài: giống nhau ở cả 7 video
+- Dài 2–3 phút đầu (khoảng 1.800–3.200 ký tự) trước đoạn mời mua sách. Không chào kênh.
+- Câu đầu là một câu trích hay nghịch lý đứng một mình: "người ta có thể đi vòng quanh thế giới để tìm sự thật, nhưng nếu không biết lặng yên nhìn vào chính mình, mọi chuyến đi đều chỉ là lẩn trốn" (79k), "nếu não bộ nhận ra rằng đi về phương Bắc suốt hàng ngàn năm là xung đột vĩnh cửu và nó dừng lại thì điều gì sẽ diễn ra?" (57k), câu Kafka về cái rìu (50k), "sự chuyển hóa thực sự là một vụ nổ, không phải tiến hóa" (33k), "tự do không ở cuối con đường mà hiện hữu trong từng bước đi" (BBooks nguồn).
+- Tiếp theo: cuốn sách như một vật thể ("trên tay tôi", "nằm trong tay tôi", "có những cuốn sách…"), tả bằng phủ định ba nhịp và một so sánh (tấm gương trong suốt, nhát cắt, cái rìu); bối cảnh thật (năm, nơi, người đối thoại); chân dung tác giả bằng nghịch lý ("người chối bỏ ngai vàng giáo chủ"); một chuỗi câu hỏi tu từ ("Liệu con người có thể lắng nghe mà không phán xét? Có thể yêu mà không sở hữu…?"); lời cảnh báo hay lời hứa ("không phải để ru ngủ", "cuộc phẫu thuật không gây mê", "vùng đất không có bản đồ").
+- Ngoại lệ: video Thiền & AI (36k) mở bằng "kéo ghế ngồi xuống, tách trà" nhưng ngay câu sau là Krishnamurti nói thẳng "Đừng gọi tôi là thầy"; cảnh ấm chỉ là bệ phóng, không kéo dài.
+
+### Triển khai thân bài: ba mô hình
+| Mô hình | Video (lượt xem) | Động cơ giữ chân |
+|---|---|---|
+| Lời thầy: Krishnamurti xưng "tôi" nói thẳng với "bạn" | Cuốn Sách Của Đời Sống (79k), Càng "Cố" Thiền (50k), Thiền & AI (36k), Tương Lai Chính Là Hiện Tại (16k) | Cứ khoảng 2 phút một người hỏi ("Một người hỏi tôi: thưa ông…"), ông trả lời bằng hình ảnh; cảnh buổi nói chuyện ("tiếng gió lùa qua hàng cây", "buổi nói chuyện kết thúc trong im lặng, có người ngồi khóc"); chuyển chủ đề nối xích ("Từ lắng nghe, con người học được điều kế tiếp…", "Rồi tôi nói đến ngôn từ…"); leo thang ("Nếu phần trước là gáo nước lạnh thì hôm nay…") |
+| Phim tài liệu: ngôi thứ ba, dựng cảnh, thoại | Đối thoại với Bohm (57k), Tương Lai Bắt Đầu Từ Hôm Nay (33k) | Cảnh có ngày tháng và nơi chốn ("tháng 10 năm 1985", "ba ngày sau", "tháng 9 năm 1980", Rajghat, Rishi Valley, bãi biển Adyar); người hỏi và câu trả lời gay gắt; móc "cú sốc thực sự vẫn chưa tới"; chi tiết khoa học, thời sự (AI, kỹ thuật gen) |
+| Người dẫn chia sẻ: ngôi thứ ba, ôn tồn giải thích | BBooks Giải phóng tâm trí (19k, thấp nhất) | Ít; chủ yếu giải thích, ví dụ đời thường |
+
+### Quyết định của người dùng (21/11/2026)
+- Giữ **người dẫn ngôi thứ ba** như bản v3 đã duyệt (không nhập vai), nhưng mượn các động cơ của hai mô hình mạnh: dựng cảnh có thật trước khi giảng ý; người hỏi và câu trả lời của tác giả kể ở ngôi thứ ba ("Một người đàn ông đứng lên hỏi ông… Krishnamurti nhìn ông ta và trả lời đại ý…"); chuyển chủ đề nối xích; leo thang giữa các chặng; móc thời sự.
+- Giai thoại ưu tiên lấy từ **thế giới của chính tác giả** (người hỏi trong các buổi nói, các cuộc gặp trong sách, người đối thoại, đời ông). Truyện Thiền, kinh Phật chỉ xen 1–2 lần mỗi bài với Krishnamurti.
 
 ## 1. Bảng tổng quan
 
