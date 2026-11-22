@@ -425,7 +425,7 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
       break;
     }
     case 'fx':
-      body = <Fx kind={(e.type as string) ?? 'smoke'} a={a} t={t} seed={seed} size={1} dir={e.dir as number} color={e.color as string} count={e.count as number} />;
+      body = <Fx kind={(e.type as string) ?? 'smoke'} a={a} t={t} seed={seed} size={1} dir={e.dir as number} color={e.color as string} count={e.count as number} w={e.w as number | undefined} h={e.h as number | undefined} />;
       break;
     case 'label':
       body = <Label text={String(e.text ?? '')} style={e.style as string} size={e.size as number} color={e.color as string} tx={e.tx as number} ty={e.ty as number} rotate={e.tilt as number} />;

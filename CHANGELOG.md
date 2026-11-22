@@ -2,6 +2,19 @@
 
 Newest first. One entry per change that matters to the look, the pipeline or the docs.
 
+## 2026-11-22 — Rain and snow cover the whole frame
+Why: the user saw rain (and snow) only in the bottom-right quarter of the picture, in this film and in earlier ones.
+
+Cause:
+- `src/scene/SceneView.tsx` drew the weather as an fx element. An fx element is already centred on the frame (x 960, y 540 by default).
+- It was also wrapped in a second `translate(960 540)`. The rain field, centred on its origin, ended up centred on (1920, 1080): a quarter of the frame.
+
+Fix:
+- the extra translate is gone; the weather layer is placed once, at the frame centre;
+- the fx element now passes its `w`/`h` to the drawing; the weather layer uses 2200×1300, so camera moves never show an edge.
+
+Every film with `weather: rain|snow` outdoors is affected. Re-render the whole film with `video`: `patch` cannot see engine changes.
+
 ## 2026-11-22 — Natural arms and hands: no "chicken-wing" loops, things held in the hand
 Why: the user flagged arms that curl inward in loops:
 - hands in the pockets, holding cards or a crate;

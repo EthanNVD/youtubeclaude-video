@@ -219,10 +219,10 @@ export const SceneView: React.FC<{ scene: Scene; t: number; cast?: Record<string
         {frontEls.map(({ el, i }) => <ElementView key={'f' + i} el={el} ctx={ctx} index={i} />)}
       </g>
       {scene.type === 'map' && scene.map && (scene.map as { paper?: boolean }).paper !== false && scene.map.style !== 'poster' && scene.map.style !== 'dark' ? <PaperOverlay /> : null}
+      {/* weather covers the whole screen: the fx element is centred on the frame by itself (x 960, y 540 by default),
+          so it must NOT be wrapped in another translate (that pushed the rain into the bottom-right quarter) */}
       {(weather === 'rain' || weather === 'snow') && scene.set?.kind !== 'room' ? (
-        <g transform="translate(960 540)">
-          <ElementView el={{ kind: 'fx', type: weather, enter: 'none' }} ctx={ctx} index={999} />
-        </g>
+        <ElementView el={{ kind: 'fx', type: weather, enter: 'none', x: 960, y: 540, w: 2200, h: 1300 }} ctx={ctx} index={999} />
       ) : null}
       {hudEls.map(({ el, i }) => <ElementView key={'h' + i} el={el} ctx={ctx} index={i} />)}
       {!noHud && scene.tag ? <PlaceTag text={scene.tag as string} a={((scene.tagIn as number) ?? 0.3) < 0 ? 99 : t - ((scene.tagIn as number) ?? 0.3)} /> : null}
