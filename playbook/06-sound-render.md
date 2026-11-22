@@ -47,6 +47,7 @@ python tools/make.py projects/<slug> patch              # re-renders only those 
 - `patch` compares the current plan with that file, scene by scene, and re-renders each changed scene plus the 0.7 s dissolve after it. A 2.7 s scene re-rendered in about one minute in the test, instead of the whole film.
 - The splice is frame-exact. The previous picture is kept as `out/picture.prev.mp4`.
 - A change of the film's `look` (grade) needs a full `video`. A change to a person in the `cast` re-renders the scenes where they appear.
+- `patch` compares plans, so it cannot see a change in the engine (`src/`: how arms, sets or props are drawn). After an engine change, run the full `video` again.
 
 ## Done when
 

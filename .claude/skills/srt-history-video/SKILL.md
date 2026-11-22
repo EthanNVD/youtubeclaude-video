@@ -52,9 +52,21 @@ The film is told like an animated movie: one clause → one concrete picture of 
    - `says` copied from the narration.
 
    Targets: acted cards (action + talk recipes) ≥ 75 % of every chapter; maps ≤ 10 % (≤ 5 s each); documents/charts ≤ 10 %; host ≤ 8 %.
-5. `review --at all`. Open every `review/sheet_*.jpg` and answer the yes/no checklist in `playbook/05-review.md` (23 questions; 17–23 are the scene-card problems). Fix **only the wrong cards**; re-check them with `review --scenes … --at all`.
+5. `review --at all`. Open every `review/sheet_*.jpg` and answer the yes/no checklist in `playbook/05-review.md` (24 questions; 17–24 are the scene-card problems: hidden focus, things over faces, writing, flags, children, seats, timing, natural arms). Fix **only the wrong cards**; re-check them with `review --scenes … --at all`.
 6. `audio` → `video` → `mux`. Run one render at a time. Then check frames of the final MP4. Later fixes: `cards` → `review --scenes` → `patch` (re-renders only the changed scenes).
 7. The YouTube package (`playbook/07-youtube.md`).
+
+## Hands and held things (what the engine does, what you choose)
+- **Arms:** hands in front of the body (holding, carrying, clasped, in the pockets, binoculars, praying, eating) are drawn foreshortened. The arm comes straight from the shoulder with the elbow down, never in an inward loop. Elbow-out poses keep the bent arm: hands on hips, salute, telephone, hand to the ear, head or chin.
+- **Held things sit in the hand:**
+  - every prop has a grip point (the neck of a sack, the handle of a basket, the middle of a crate);
+  - two-handed things are held by their sides;
+  - a drawing you make can say where it is held: `"grip": [x, y]`.
+- **Choose the act that keeps the face clear:**
+  - `show` presents a paper or an object at chest height (use it in close shots); `hold_up` lifts it above the head (a newsboy, a protester, in a wide shot);
+  - `carry` holds a sack or a crate in front; `carry_sack` puts a sack on the shoulder, behind the head;
+  - covering the face only when the story says so: `cry`, `gasp`, `binoculars`, `drink`.
+- After a change in `src/` (how arms, props or sets are drawn), `patch` cannot see it: render the whole film with `video`.
 
 ## Fixed choices (never ask)
 - Military history.

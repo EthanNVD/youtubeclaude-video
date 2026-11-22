@@ -2,6 +2,32 @@
 
 Newest first. One entry per change that matters to the look, the pipeline or the docs.
 
+## 2026-11-22 — Natural arms and hands: no "chicken-wing" loops, things held in the hand
+Why: the user flagged arms that curl inward in loops:
+- hands in the pockets, holding cards or a crate;
+- hands clasped, holding binoculars, carrying a sack in front of the face.
+
+Cause: chibi arms are short. A full-length two-bone arm can reach a hand held in front of the chest or the face only by throwing the elbow out sideways and folding the forearm back.
+
+What changed:
+- `src/char/Character.tsx` `softIk`: an arm whose hand is in front of the body is drawn foreshortened, as if it pointed toward the camera.
+  - It is a short tube from the shoulder to the hand, with a gentle bend (at most 0.45·d/2 + 5 px).
+  - The elbow bows down and outward, never up or inward.
+  - Poses whose look is the elbow out keep the bent arm: hands on hips, salute, telephone, a hand to the ear, the head, the face or the chin. So do rifle handling and running.
+  - The switch between the two kinds of arm follows the pose blend: no elbow pops.
+- **Held things sit in the hand.** The user flagged a sack floating beside a hand.
+  - Every prop now has a grip point (`HOLD_ANCHOR` in `src/scene/Elements.tsx`): the neck of a sack, the handle of a basket, a bucket, a lantern or a suitcase, the middle of a crate or a pot, the handle of a spoon or a knife. That point is put in the palm.
+  - Two-handed things have a half-width (`HOLD_WIDTH`), and the hands move to their sides.
+  - A drawing can declare `"grip": [x, y]`.
+- Sacks:
+  - A sack on the shoulder (`sack` pose) is drawn big, tilted onto the shoulder and behind the head, with the hand over it.
+  - A person who just holds a sack carries it in front with both arms (`HOLD_POSE` sack → carry); walkers carry a basket or a sack in front.
+  - The face stays clear.
+- Docs:
+  - `playbook/05-review.md` question 24 (natural arms);
+  - `patch` cannot see engine changes: after a change in `src/`, render the whole film (06-sound-render §5, `tools/patch_video.py`).
+- Both example films re-rendered; `recipes/img/stagecraft/` act pictures re-rendered.
+
 ## 2026-11-21 — Creative scenes: every clause composed from the narration, not picked from a template
 Why:
 - The recipes are fixed compositions with 2–3 variants, so long films repeated scenes.

@@ -8,6 +8,8 @@ current work/plan.merged.json with it scene by scene (ignoring ids, card numbers
 is re-rendered from its start to its end + 0.7 s (the dissolve into the next scene), neighbouring ranges are merged, and
 the new pieces replace the old frames in out/picture.mp4 (the previous picture is kept as out/picture.prev.mp4).
 Changes to the cast re-render the scenes where that person appears; a change of look/grade/size needs a full `video`.
+`patch` compares PLANS: it cannot see a change in the engine (src/: how arms, sets or props are drawn). After an engine
+change, render the whole film again with `video`.
 
     --dry      only print what would be re-rendered
 """

@@ -77,17 +77,17 @@ def _thing_ok(c, what):
 def _hold_kv(c, item):
     """keys that make a person hold `item` (an engine prop or a declarative drawing)"""
     if not item:
-        return {"holds": "", "holdsDrawing": None}
+        return {"holds": "", "holdsDrawing": None, "holdsGrip": None}
     dw = drawings(c.film).get(item)
     if dw:
-        return {"holds": item, "holdsDrawing": dw["parts"]}
+        return {"holds": item, "holdsDrawing": dw["parts"], "holdsGrip": dw.get("grip")}
     if item not in vocab()["props"]:
         near = _near(item, list(vocab()["props"]) + list(drawings(c.film)))
         _warn(c, f"held thing \"{item}\" is neither an engine prop nor a drawing (shown as paper). Did you mean {near}? "
                  f"Define it in cards/_film.json \"drawings\" (playbook/scene-writing.md §5). Logged in work/missing_assets.json.")
         _missing(c, "thing", item, "paper")
-        return {"holds": "paper", "holdsDrawing": None}
-    return {"holds": item, "holdsDrawing": None}
+        return {"holds": "paper", "holdsDrawing": None, "holdsGrip": None}
+    return {"holds": item, "holdsDrawing": None, "holdsGrip": None}
 
 
 HOLDING_POSES = {"hold", "holdUp", "show", "give", "carry", "sack", "basket", "cradle", "port", "shoulder", "aim", "charge", "ease", "binoculars", "drink",
@@ -281,7 +281,7 @@ def _facing(actor, target_x=None, side=None):
     return False, 0.0
 
 
-HOLD_POSE = {"basket": "basket", "sack": "sack", "baby": "cradle", "crate": "carry", "rifle": "port", "binoculars": "binoculars",
+HOLD_POSE = {"basket": "basket", "sack": "carry", "baby": "cradle", "crate": "carry", "rifle": "port", "binoculars": "binoculars",
              "paper": "hold", "letter": "hold", "telegram": "hold", "card": "hold", "folder": "hold", "bowl": "hold", "pot": "hold",
              "bread": "hold", "turnip": "show", "cup": "drink", "lantern": "basket", "bucket": "basket", "suitcase": "basket", "coins": "hold"}
 BIG_HOLDS = {"basket", "sack", "baby", "crate", "rifle", "pot", "bucket", "suitcase", "binoculars"}
@@ -414,7 +414,7 @@ def _crowd(c, place, actors, rng, focus_x):
                 a.flip = d < 0
                 a.moves.append((0, T))
                 if rng.random() < 0.35:
-                    a.rest, a.holds = rng.choice([("basket", "basket"), ("sack", "sack")])
+                    a.rest, a.holds = rng.choice([("basket", "basket"), ("carry", "sack")])
                     a.pose0 = a.rest
             elif kind == "queue":
                 a.face = "right" if tdir > 0 else "left"
@@ -781,6 +781,8 @@ def _things(c, actors, world, drops=(), indoor=False):
             a.holds = what
             if dw:
                 a.extra["holdsDrawing"] = dw["parts"]
+                if dw.get("grip"):
+                    a.extra["holdsGrip"] = dw["grip"]
             if th.get("text"):
                 a.extra["holdsText"] = th["text"]
             continue

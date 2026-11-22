@@ -341,7 +341,7 @@ Coordinates:
 - `y` goes **up** with negative numbers;
 - a man is about **260 units** tall: a table is ~120 high, a door ~230.
 
-Things you mostly hold (a broom, a newspaper, a document) are drawn **around the hand**, `(0, 0)` = the grip.
+Things you mostly hold (a broom, a newspaper, a document) are drawn **around the hand**, `(0, 0)` = the grip. A drawing that stands on the ground but is also carried says where the hand goes: `"grip": [x, y]`, e.g. the top of a handle. The engine puts that point in the palm, so the thing never floats beside the hand.
 
 Parts:
 - shapes: `rect [x, y, w, h]` (+ `r` for round corners), `circle [cx, cy, r]`, `ellipse [cx, cy, rx, ry]`, `poly [[x, y], …]`;

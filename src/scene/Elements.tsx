@@ -182,6 +182,19 @@ const MapIcon: React.FC<{ type: string; nationKey?: string; color?: string; size
   );
 };
 
+/** where the hand holds each thing, in the thing's own units (most things stand on y = 0; papers are centred) */
+const HOLD_ANCHOR: Record<string, number[]> = {
+  sack: [0, -62], bale: [0, -60], crate: [0, -45], basket: [0, -58], bucket: [0, -118], lantern: [0, -84], suitcase: [0, -72],
+  pot: [0, -48], bread: [0, -24], cup: [0, -28], bottle: [0, -50], jug: [0, -60], coins: [0, -20], ingots: [0, -24], scale: [0, -55],
+  candle: [0, -70], cards: [0, -36], spoon: [0, 26], knife: [0, 22], pen: [-3, -28], phone: [0, 12], turnip: [0, -6], turnips: [0, -30],
+  potatoes: [0, -26], helmet: [0, -20], medal: [0, -60], bowl: [0, 4],
+};
+/** half-width of two-handed things (the hands go to their sides) */
+const HOLD_WIDTH: Record<string, number> = {
+  paper: 52, telegram: 98, folder: 118, book: 68, crate: 58, document: 98, newspaper: 98, map: 110, sack: 58, bale: 78, pot: 72,
+  bowl: 60, bread: 62, basket: 60, baby: 56, card: 60, letter: 68, turnips: 84, potatoes: 84, coins: 40, ingots: 52, cards: 30, ledger: 150,
+};
+
 const HOLD_ITEM: Record<string, number> = { ledger: 0.42, book: 0.8, folder: 0.8, sack: 0.72, bale: 0.6, card: 0.75, cards: 0.8, pot: 0.8, bread: 0.9, basket: 0.95, bowl: 0.9, letter: 0.9, coins: 0.7 };
 
 export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }> = ({ el, ctx, index }) => {
@@ -280,6 +293,10 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
       }
       const holdScale: Record<string, number> = { holdUp: 0.75, hold: 0.6, carry: 0.7, write: 0.5, phone: 0.45, show: 0.6, drink: 0.4, smoke: 0.35, port: 0.5, aim: 0.52, shoulder: 0.5, charge: 0.52, ease: 0.5,
         stir: 0.45, ladle: 0.45, eat: 0.35, peel: 0.32, give: 0.45, read: 0.55, cradle: 0.55, sack: 0.6, basket: 0.5, hammer: 0.4, pull: 0.5 };
+      // a sack on the shoulder: big (a heavy load), tilted onto the shoulder and out beside the head (drawn behind it)
+      const shoulderSack = pose === 'sack' && e.holds === 'sack';
+      const holdS = (e.holdsScale as number) ?? (shoulderSack ? 0.6 : (holdScale[pose] ?? 0.5) * (HOLD_ITEM[e.holds as string] ?? 1));
+      const anchor = (e.holdsGrip as number[] | undefined) ?? (shoulderSack ? [-47, -33] : HOLD_ANCHOR[e.holds as string]) ?? [0, 0];
       const held = e.holds
         ? {
             // a flipped actor would mirror the writing on what he holds: flip the prop back
@@ -289,11 +306,14 @@ export const ElementView: React.FC<{ el: ElementBase; ctx: Ctx; index: number }>
               return flip < 0 ? <g transform="scale(-1 1)">{n}</g> : n;
             })(),
             // big drawings (an open ledger, a sack) are held smaller than a sheet of paper
-            scale: (e.holdsScale as number) ?? (holdScale[pose] ?? 0.5) * (HOLD_ITEM[e.holds as string] ?? 1),
-            rotate: pose === 'phone' ? -30 : (e.holdsRotate as number) ?? 0,
-            dy: pose === 'holdUp' ? -95 : pose === 'hold' || pose === 'carry' ? 4 : 0,
+            scale: holdS,
+            rotate: pose === 'phone' ? -30 : shoulderSack ? 16 : (e.holdsRotate as number) ?? 0,
+            // the thing's own grip point (the neck of a sack, the handle of a basket, the middle of a crate) sits IN the hand
+            dx: -anchor[0] * holdS,
+            dy: (pose === 'holdUp' ? -95 : pose === 'hold' || pose === 'carry' ? 4 : 0) - anchor[1] * holdS,
             grips: e.holds === 'rifle' ? ([-30, 40] as [number, number]) : undefined,
-            grip: ({ paper: 52, telegram: 98, folder: 118, book: 68, crate: 58, document: 98, newspaper: 98, map: 110 } as Record<string, number>)[e.holds as string],
+            // two-handed things are held by their sides: the hands move to the thing's edges
+            grip: (e.holdsGripWidth as number) ?? HOLD_WIDTH[e.holds as string],
           }
         : undefined;
       // firing a held rifle: `fireAt: [t, ...]` single shots, or `fire: [from, to, period]` automatic fire (machine gun)

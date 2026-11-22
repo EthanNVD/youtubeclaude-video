@@ -271,7 +271,8 @@
          "width": 5,
          "opacity": 0.15
         }
-       ]
+       ],
+       "holdsGrip": null
       }
      ],
      "id": "teacher",
@@ -731,7 +732,8 @@
          "width": 5,
          "opacity": 0.15
         }
-       ]
+       ],
+       "holdsGrip": null
       },
       {
        "t": 1.98,
@@ -1090,7 +1092,8 @@
          "width": 5,
          "opacity": 0.15
         }
-       ]
+       ],
+       "holdsGrip": null
       }
      ],
      "id": "official",
@@ -1276,7 +1279,8 @@
      "keys": [
       {
        "t": 0.0,
-       "holdsDrawing": null
+       "holdsDrawing": null,
+       "holdsGrip": null
       },
       {
        "t": 3.06,
@@ -1286,7 +1290,8 @@
        "t": 5.12,
        "pose": "read",
        "holds": "book",
-       "holdsDrawing": null
+       "holdsDrawing": null,
+       "holdsGrip": null
       },
       {
        "t": 5.48,
@@ -2314,7 +2319,8 @@
          ],
          "width": 4
         }
-       ]
+       ],
+       "holdsGrip": null
       },
       {
        "t": 0.6,
@@ -2429,7 +2435,7 @@
      "who": "civilian_man",
      "x": -200,
      "y": 820,
-     "pose": "sack",
+     "pose": "carry",
      "expr": "neutral",
      "keys": [
       {
@@ -2751,7 +2757,8 @@
        "t": 6.22,
        "pose": "read",
        "holds": "paper",
-       "holdsDrawing": null
+       "holdsDrawing": null,
+       "holdsGrip": null
       },
       {
        "t": 7.02,
@@ -3318,7 +3325,8 @@
          "width": 4,
          "stroke": "#b8392e"
         }
-       ]
+       ],
+       "holdsGrip": null
       }
      ],
      "id": "teacher",

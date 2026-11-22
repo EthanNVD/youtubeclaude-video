@@ -54,6 +54,7 @@ Answer each question with yes or no. Any "no" needs a fix.
 21. Are **children** small (`size` in the cast)? Does everybody who sits have a seat that fits: a chair indoors, a crate outside?
 22. Is the same card's picture different from the card before (place, people, act or camera), or a deliberate callback (`revisit`)?
 23. Does the gesture happen **on the word**: the head shake on the number, the hand to the mouth on the news?
+24. Do the **arms** look natural? Hands in front of the body come straight from the shoulders, with the elbows down. Something is wrong if an elbow sticks out sideways while the forearm folds back into a loop, or if a carried thing sits in front of the face without a reason. If you see either, note the frame in `ROADMAP.md` "Known issues" (an engine fix) and choose another act for now.
 
 ## How to fix a "no"
 

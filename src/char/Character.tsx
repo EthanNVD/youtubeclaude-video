@@ -94,6 +94,34 @@ function ik(sx: number, sy: number, hx: number, hy: number, l1: number, l2: numb
   return { ex, ey, hx, hy };
 }
 
+/**
+ * Arms that reach toward the viewer. A chibi arm is short: with a hand held in front of the chest or the face (holding a
+ * crate, cards, binoculars, hands clasped or in the pockets) a full-length two-bone arm can only get there by throwing the
+ * elbow out sideways and folding the forearm back: a "chicken-wing" loop. A real arm in that position points toward the
+ * camera, so it is drawn foreshortened: a short tube from the shoulder to the hand with a gentle bend (at most
+ * 0.45·d/2 + 5 px), the elbow bowing down and outward, never up or inward.
+ */
+function softIk(sx: number, sy: number, hx: number, hy: number, l1: number, l2: number, side: number) {
+  let dx = hx - sx, dy = hy - sy;
+  let d = Math.hypot(dx, dy) || 0.001;
+  const max = l1 + l2 - 0.5;
+  if (d > max) {
+    dx *= max / d;
+    dy *= max / d;
+    hx = sx + dx;
+    hy = sy + dy;
+    d = max;
+  }
+  const full = Math.sqrt(Math.max(0, ((l1 + l2) / 2) ** 2 - (d / 2) ** 2));
+  const sag = Math.min(full, 0.45 * (d / 2) + 5);
+  const nx = -dy / d, ny = dx / d;
+  // of the two sides of the shoulder→hand line, take the one that points down and away from the body
+  const sgn = nx * side * 0.55 + ny >= 0 ? 1 : -1;
+  return { ex: (sx + hx) / 2 + sgn * nx * sag, ey: (sy + hy) / 2 + sgn * ny * sag, hx, hy };
+}
+/** poses whose look IS the elbow sticking out (akimbo, salute, a hand to the ear or the head): keep the bent two-bone arm */
+const ELBOW_OUT = new Set(['hips', 'salute', 'phone', 'listen', 'tiphat', 'scratch', 'wipe', 'head', 'facepalm', 'chin', 'think']);
+
 /** Smooth rubber-hose limb: quadratic curve from root through the IK joint to the end. */
 function hose(r: V, j: V, e: V, k = 0.62) {
   // control point between the chord midpoint and the point that would pass through the joint: soft rubber-hose bend
@@ -187,7 +215,7 @@ export const POSES: Record<string, Pose> = {
   listen: { r: [46, -204], l: [-42, -92], rb: 1, rh: 'open', tilt: 10 },
   reachup: { r: [84, -262], l: [-42, -92], rb: -1, rh: 'open', tilt: -6 },
   cradle: { r: [34, -134], l: [-30, -126], rb: 1, lb: -1, rh: 'grip', lh: 'grip', tilt: 6 },
-  sack: { r: [24, -204], l: [-42, -92], rb: 1, rh: 'grip', tilt: -3 },
+  sack: { r: [64, -186], l: [-42, -92], rb: 1, rh: 'grip', tilt: -5 },
   tiphat: { r: [34, -252], l: [-42, -92], rb: 1, rh: 'grip' },
   push: { r: [96, -142], l: [70, -136], rb: -1, lb: -1, rh: 'open', lh: 'open', tilt: -4 },
   pull: { r: [78, -122], l: [54, -126], rb: -1, lb: -1, rh: 'grip', lh: 'grip', tilt: 5 },
@@ -430,6 +458,18 @@ export const Character: React.FC<{ spec: CharSpec; state: CharState; t: number; 
   const bw2 = build ** 0.3;
   let R = ik(shX, shoulderY, rx * bw2, ry, L1, L2, run ? -dir : -rb);
   let Lf = ik(-shX, shoulderY, lx * bw2, ly, L1, L2, run ? -dir : lb);
+  // arms toward the viewer are foreshortened (softIk) except in elbow-out poses, rifle handling and running;
+  // the change between the two kinds of arm follows the pose blend, so an elbow never pops
+  {
+    const isSoft = (name: string, q: Pose) => !ELBOW_OUT.has(name) && !q.rifle;
+    const f = run ? 0 : lerp(isSoft(state.prevPose ?? poseName, prev) ? 1 : 0, isSoft(poseName, pose) ? 1 : 0, clamp(kRaw * 1.25, 0, 1));
+    if (f > 0) {
+      const sR = softIk(shX, shoulderY, rx * bw2, ry, L1, L2, 1);
+      const sL = softIk(-shX, shoulderY, lx * bw2, ly, L1, L2, -1);
+      R = { ex: lerp(R.ex, sR.ex, f), ey: lerp(R.ey, sR.ey, f), hx: lerp(R.hx, sR.hx, f), hy: lerp(R.hy, sR.hy, f) };
+      Lf = { ex: lerp(Lf.ex, sL.ex, f), ey: lerp(Lf.ey, sL.ey, f), hx: lerp(Lf.hx, sL.hx, f), hy: lerp(Lf.hy, sL.hy, f) };
+    }
+  }
   // folded arms: fixed elbows at the sides, forearms stacked across the chest
   const folded = (n?: string) => n === 'cross' || n === 'shiver';
   const crossK = folded(poseName) ? (folded(state.prevPose) ? 1 : clamp(kRaw * 1.4, 0, 1)) : folded(state.prevPose) ? 1 - clamp(kRaw * 1.4, 0, 1) : 0;
@@ -573,6 +613,8 @@ export const Character: React.FC<{ spec: CharSpec; state: CharState; t: number; 
   })() : null;
 
   const behindArms = pose.behind && kRaw > 0.5;
+  // a load carried on the shoulder (a sack) sits behind the head, not across the face; the hand is still drawn over it
+  const onShoulder = poseName === 'sack' && kRaw > 0.5;
   return (
     <g>
       <ellipse cx={0} cy={2} rx={54 * build} ry={9} fill="#000" opacity={0.16} />
@@ -585,7 +627,7 @@ export const Character: React.FC<{ spec: CharSpec; state: CharState; t: number; 
               {armTube(1, R)}
             </>
           ) : null}
-          {pose.rifleBehind && rifleOn ? heldNode : null}
+          {(pose.rifleBehind && rifleOn) || onShoulder ? heldNode : null}
           {body}
           {scarf}
           <g transform={`translate(${headDx} ${headDy}) rotate(${tilt} 0 ${hy + 46})`}>
@@ -597,7 +639,7 @@ export const Character: React.FC<{ spec: CharSpec; state: CharState; t: number; 
               {armTube(1, R)}
             </>
           )}
-          {pose.rifleBehind && rifleOn ? null : heldNode}
+          {(pose.rifleBehind && rifleOn) || onShoulder ? null : heldNode}
           {back || behindArms ? null : (
             <>
               {handOf(-1, Lf, lh)}

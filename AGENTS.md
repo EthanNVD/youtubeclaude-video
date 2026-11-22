@@ -63,6 +63,10 @@ the "Two Sides of War" style, plus its YouTube package. You are the **director**
    - change only the wrong cards;
    - re-check them with `review --scenes …`;
    - after a render, `patch` re-renders only those scenes.
+5e. **Read only what you need.**
+   - Read your own project and the example projects a page names.
+   - Do not open or search other films in `projects/`: their generated plans are large and only cost tokens.
+   - Search in `tools/`, `src/`, `playbook/`, `recipes/` and your own project folder.
 6. **Fix every error the tools print.**
    - Every message says exactly what to change.
    - Do not move to the next step while `"ok"` is `false`.

@@ -159,7 +159,7 @@
      "who": "docker",
      "x": 1450,
      "y": 915,
-     "pose": "sack",
+     "pose": "carry",
      "expr": "neutral",
      "keys": [
       {
@@ -183,7 +183,7 @@
      "who": "docker2",
      "x": 1690,
      "y": 860,
-     "pose": "sack",
+     "pose": "carry",
      "expr": "neutral",
      "keys": [
       {
@@ -193,7 +193,7 @@
        "flip": true,
        "turn": 0.3,
        "view": "front",
-       "pose": "sack"
+       "pose": "carry"
       },
       {
        "t": 3.86,
@@ -271,7 +271,8 @@
      "keys": [
       {
        "t": 0.0,
-       "holdsDrawing": null
+       "holdsDrawing": null,
+       "holdsGrip": null
       },
       {
        "t": 1.06,
@@ -281,7 +282,8 @@
        "t": 2.94,
        "pose": "read",
        "holds": "ledger",
-       "holdsDrawing": null
+       "holdsDrawing": null,
+       "holdsGrip": null
       }
      ],
      "id": "clerk",
@@ -299,13 +301,15 @@
      "keys": [
       {
        "t": 0.0,
-       "holdsDrawing": null
+       "holdsDrawing": null,
+       "holdsGrip": null
       },
       {
        "t": 2.94,
        "pose": "wipe",
        "holds": "",
        "holdsDrawing": null,
+       "holdsGrip": null,
        "expr": "tired"
       }
      ],
@@ -402,7 +406,8 @@
      "keys": [
       {
        "t": 0.0,
-       "holdsDrawing": null
+       "holdsDrawing": null,
+       "holdsGrip": null
       },
       {
        "t": 4.56,
@@ -421,7 +426,7 @@
      "who": "docker2",
      "x": 960,
      "y": 860,
-     "pose": "sack",
+     "pose": "carry",
      "expr": "neutral",
      "keys": [
       {
@@ -431,7 +436,7 @@
        "flip": true,
        "turn": 0.3,
        "view": "front",
-       "pose": "sack"
+       "pose": "carry"
       },
       {
        "t": 6.26,
@@ -585,7 +590,8 @@
        "t": 1.46,
        "pose": "show",
        "holds": "bread",
-       "holdsDrawing": null
+       "holdsDrawing": null,
+       "holdsGrip": null
       }
      ],
      "id": "grocer",
@@ -880,13 +886,15 @@
        "turn": 0.38,
        "pose": "give",
        "holds": "folder",
-       "holdsDrawing": null
+       "holdsDrawing": null,
+       "holdsGrip": null
       },
       {
        "t": 1.67,
        "pose": "idle",
        "holds": "",
-       "holdsDrawing": null
+       "holdsDrawing": null,
+       "holdsGrip": null
       },
       {
        "t": 4.58,
@@ -918,13 +926,15 @@
        "t": 1.67,
        "pose": "hold",
        "holds": "folder",
-       "holdsDrawing": null
+       "holdsDrawing": null,
+       "holdsGrip": null
       },
       {
        "t": 2.44,
        "pose": "read",
        "holds": "folder",
-       "holdsDrawing": null
+       "holdsDrawing": null,
+       "holdsGrip": null
       },
       {
        "t": 4.06,
@@ -1019,13 +1029,15 @@
      "keys": [
       {
        "t": 0.0,
-       "holdsDrawing": null
+       "holdsDrawing": null,
+       "holdsGrip": null
       },
       {
        "t": 4.72,
        "pose": "scratch",
        "holds": "",
-       "holdsDrawing": null
+       "holdsDrawing": null,
+       "holdsGrip": null
       }
      ],
      "id": "de_officer",
@@ -1132,7 +1144,8 @@
      "keys": [
       {
        "t": 0.0,
-       "holdsDrawing": null
+       "holdsDrawing": null,
+       "holdsGrip": null
       }
      ],
      "id": "rn_officer",
@@ -1371,7 +1384,8 @@
      "keys": [
       {
        "t": 0.0,
-       "holdsDrawing": null
+       "holdsDrawing": null,
+       "holdsGrip": null
       }
      ],
      "id": "rn_sailor",
@@ -1389,7 +1403,8 @@
      "keys": [
       {
        "t": 0.0,
-       "holdsDrawing": null
+       "holdsDrawing": null,
+       "holdsGrip": null
       },
       {
        "t": 2.24,
@@ -1491,7 +1506,8 @@
      "keys": [
       {
        "t": 0.0,
-       "holdsDrawing": null
+       "holdsDrawing": null,
+       "holdsGrip": null
       },
       {
        "t": 2.8,
@@ -1553,7 +1569,8 @@
        "t": 0.84,
        "pose": "drink",
        "holds": "cup",
-       "holdsDrawing": null
+       "holdsDrawing": null,
+       "holdsGrip": null
       },
       {
        "t": 2.07,
@@ -1652,7 +1669,8 @@
      "keys": [
       {
        "t": 0.0,
-       "holdsDrawing": null
+       "holdsDrawing": null,
+       "holdsGrip": null
       },
       {
        "t": 2.38,
@@ -1828,7 +1846,7 @@
      "who": "docker",
      "x": 470,
      "y": 965,
-     "pose": "sack",
+     "pose": "carry",
      "expr": "neutral",
      "keys": [
       {
@@ -1838,7 +1856,7 @@
        "flip": false,
        "turn": 0.3,
        "view": "front",
-       "pose": "sack"
+       "pose": "carry"
       },
       {
        "t": 4.74,
@@ -1882,7 +1900,7 @@
      "who": "dutch_woman",
      "x": 247,
      "y": 900,
-     "pose": "sack",
+     "pose": "carry",
      "expr": "neutral",
      "keys": [
       {
@@ -2023,13 +2041,15 @@
        "t": 3.86,
        "pose": "give",
        "holds": "crate",
-       "holdsDrawing": null
+       "holdsDrawing": null,
+       "holdsGrip": null
       },
       {
        "t": 4.66,
        "pose": "idle",
        "holds": "",
-       "holdsDrawing": null
+       "holdsDrawing": null,
+       "holdsGrip": null
       }
      ],
      "id": "merchant",
@@ -2073,7 +2093,8 @@
        "t": 4.66,
        "pose": "carry",
        "holds": "crate",
-       "holdsDrawing": null
+       "holdsDrawing": null,
+       "holdsGrip": null
       }
      ],
      "id": "buyer",
@@ -2160,7 +2181,8 @@
      "keys": [
       {
        "t": 0.0,
-       "holdsDrawing": null
+       "holdsDrawing": null,
+       "holdsGrip": null
       },
       {
        "t": 4.14,
@@ -2393,13 +2415,15 @@
      "keys": [
       {
        "t": 0.0,
-       "holdsDrawing": null
+       "holdsDrawing": null,
+       "holdsGrip": null
       },
       {
        "t": 1.48,
        "pose": "stir",
        "holds": "spoon",
-       "holdsDrawing": null
+       "holdsDrawing": null,
+       "holdsGrip": null
       }
      ],
      "id": "mother",
