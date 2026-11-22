@@ -1,4 +1,0 @@
-interface:
-  display_name: "Two Sides War Script Writer"
-  short_description: "Write war documentaries or rewrite a script in its original order"
-  default_prompt: "Use $two-sides-war-script-writer to write an English war documentary from a title, or rewrite my supplied script while preserving its structure and sequence."

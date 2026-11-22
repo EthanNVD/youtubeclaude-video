@@ -1,8 +1,17 @@
-# Studio: SRT/giọng đọc → video lịch sử quân sự hoạt hình (bản dành cho mọi model)
+# youtubeclaude-video: SRT/giọng đọc → video lịch sử quân sự hoạt hình
 
-Bản nâng cấp của repo `youtubeclaude` (giữ nguyên lịch sử git). Khác biệt chính: model **không viết JSON dựng hình nữa**, mà điền **thẻ cảnh**
-(chọn 1 trong 59 công thức đã kiểm thử + vài trường từ menu); trình biên dịch tự lo vị trí, chiều sâu, camera, chuyển động, âm thanh.
-Nhờ vậy model nhỏ hơn (Sonnet, Muse…) vẫn dựng được đúng nội dung, không lặp cảnh, chất lượng ngang bản dựng tay.
+**Repo này CHỈ dựng video.** Đầu vào là lời dẫn (phụ đề `.srt`, file giọng, hoặc cả hai) đặt vào `projects/<slug>/input/`.
+Viết kịch bản nằm ở repo riêng:
+- [youtubeclaude-war-scripts](https://github.com/EthanNVD/youtubeclaude-war-scripts): kịch bản kiểu Two Sides of War;
+- [youtubeclaude-abooks](https://github.com/EthanNVD/youtubeclaude-abooks): kịch bản abook.
+
+Repo được tách ngày 2026-11-22 từ `youtubeclaude`, giữ nguyên lịch sử git; phần viết kịch bản đã được bỏ ra.
+
+Model **không viết JSON dựng hình**. Model viết **thẻ cảnh**:
+- thẻ `scene` cho từng vế câu: ý đồ đạo diễn → nơi chốn (ghép từ bộ phòng/phố) → người diễn đúng chữ → đồ vật → góc máy;
+- hoặc một trong 59 công thức có sẵn cho trận đánh, bản đồ, biểu đồ.
+
+Trình biên dịch tự lo vị trí, chiều sâu, cử chỉ, camera, hoà cảnh, âm thanh. Nhân vật, bối cảnh, đồ vật và phương tiện mới được tạo trước rồi kiểm bằng `preview`. Sửa cảnh sai xong thì `patch` chỉ render lại đúng các cảnh đó.
 
 - Hướng dẫn cho model: [AGENTS.md](AGENTS.md) → [playbook/](playbook/00-START-HERE.md) (từng bước, tiếng Anh).
 - Danh mục công thức cảnh có ảnh mẫu: [recipes/CATALOG.md](recipes/CATALOG.md).

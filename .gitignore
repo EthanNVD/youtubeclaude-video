@@ -14,3 +14,7 @@ projects/*/input/*.flac
 projects/*/input/*.ogg
 projects/*/input/thumb_*
 projects/_recipes/
+# script writing lives in its own repos (youtubeclaude-war-scripts, youtubeclaude-abooks)
+scripts_out/
+krishnamurti/
+abooks/

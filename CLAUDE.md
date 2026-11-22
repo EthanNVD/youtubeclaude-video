@@ -1,5 +1,7 @@
 # Project: narration → military-history animated video + YouTube package (studio edition)
 
+- **This repo makes videos only.** Scripts are written elsewhere: `youtubeclaude-war-scripts` (Two Sides of War) and `youtubeclaude-abooks` (audiobook scripts). The narration arrives here as an SRT and/or a voice file in `projects/<slug>/input/`.
+
 - **Read `AGENTS.md` first, every session.** It is the whole workflow in one page; `playbook/` has every step in detail.
 - Videos are planned as **scene cards** (`projects/<slug>/cards/*.json`) compiled by `python tools/make.py projects/<slug> cards`.
   Most cards are `scene` cards (`playbook/scene-writing.md`, vocabulary `recipes/STAGECRAFT.md`): an `idea` per clause, then place, people acting on the words, things, camera. Recipes (`recipes/CATALOG.md`) for battles, maps, charts. Do not hand-write engine JSON unless a scene card truly cannot show the moment (`playbook/08-advanced.md`).
